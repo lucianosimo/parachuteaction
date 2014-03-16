@@ -47,5 +47,13 @@ public abstract class Player extends AnimatedSprite{
 	public void openParachute() {
 		openParachute = true;
 	}
+	
+	public void upperImpulse() {
+		body.setLinearVelocity(new Vector2(0, 50));
+	}
+	
+	public int getFallVelocity() {
+		return (int) body.getLinearVelocity().y;
+	}
 
 }
