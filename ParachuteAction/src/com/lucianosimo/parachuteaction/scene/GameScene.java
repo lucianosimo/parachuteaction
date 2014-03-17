@@ -190,7 +190,7 @@ public class GameScene extends BaseScene{
 											fliedMeters = fliedMeters + getMetersBeforeImpulse();
 											meterCounterText.setText("Flied Meters: " + fliedMeters);
 										}
-										if (distanceToFloor < (levelHeight/(PIXEL_METER_RATE * 2))) {
+										if (distanceToFloor < (levelHeight/(PIXEL_METER_RATE))) {
 											player.openParachute();
 										}
 									}
