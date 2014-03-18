@@ -23,7 +23,6 @@ import org.andengine.util.level.simple.SimpleLevelEntityLoaderData;
 import org.andengine.util.level.simple.SimpleLevelLoader;
 import org.xml.sax.Attributes;
 
-import android.hardware.SensorManager;
 import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
@@ -211,7 +210,18 @@ public class GameScene extends BaseScene{
 							
 							@Override
 							public void onDie() {
-
+								engine.runOnUpdateThread(new Runnable() {
+									
+									@Override
+									public void run() {
+										GameScene.this.setIgnoreUpdate(true);
+								        camera.setChaseEntity(null);
+								        Text levelCompleted = new Text(240, 427, resourcesManager.gameOverFont, "Game over!", new TextOptions(HorizontalAlign.LEFT), vbom);
+										levelCompleted.setText("Game over!!");
+										GameScene.this.attachChild(levelCompleted);
+									}
+								});
+								
 							}
 							
 						};
