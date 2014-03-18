@@ -10,6 +10,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.lucianosimo.parachuteaction.GameActivity;
 import com.lucianosimo.parachuteaction.manager.ResourcesManager;
 
 public abstract class Player extends AnimatedSprite{
@@ -38,8 +39,10 @@ public abstract class Player extends AnimatedSprite{
 					onDie();
 				}
 				if (openParachute) {
-					body.setLinearVelocity(new Vector2(0, -10));
-				}
+					body.setLinearVelocity(new Vector2(GameActivity.mGravityX, -10));
+				} else {
+					body.setLinearVelocity(new Vector2(GameActivity.mGravityX, body.getLinearVelocity().y));
+				}				
 			}
 		});
 	}

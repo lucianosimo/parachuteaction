@@ -21,9 +21,6 @@
     <entity x="360" y="1000" type="cloud"/>
     
     <entity x="240" y="5000" type="upperImpulse"/>
-    <entity x="240" y="2000" type="upperImpulse"/>
-    <entity x="240" y="1900" type="upperImpulse"/>
-    <entity x="240" y="1800" type="upperImpulse"/>
     
     <entity x="240" y="9900" type="player"/>
 

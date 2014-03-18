@@ -20,6 +20,8 @@ import org.andengine.util.level.simple.SimpleLevelEntityLoaderData;
 import org.andengine.util.level.simple.SimpleLevelLoader;
 import org.xml.sax.Attributes;
 
+import android.hardware.SensorManager;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -95,7 +97,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void createPhysics() {
-		physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, -17), false);
+		physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, -SensorManager.GRAVITY_EARTH), false);
 		physicsWorld.setContactListener(contactListener());
 		registerUpdateHandler(physicsWorld);
 	}
@@ -256,6 +258,5 @@ public class GameScene extends BaseScene{
 	public void disposeScene() {
 		
 	}
-
 	
 }

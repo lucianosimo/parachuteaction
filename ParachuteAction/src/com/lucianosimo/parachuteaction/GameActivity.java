@@ -12,6 +12,8 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
+import org.andengine.input.sensor.acceleration.AccelerationData;
+import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.ui.activity.BaseGameActivity;
 
 import android.view.KeyEvent;
@@ -19,10 +21,16 @@ import android.view.KeyEvent;
 import com.lucianosimo.parachuteaction.manager.ResourcesManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
 
-public class GameActivity extends BaseGameActivity{
+public class GameActivity extends BaseGameActivity implements IAccelerationListener{
 
 	private BoundCamera camera;
 	private ResourcesManager resourcesManager;
+	
+	//public static PhysicsWorld mPhysicsWorld;
+	
+	public static float mGravityX = 0;
+    //private float mGravityY = 0;
+
 	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -93,5 +101,34 @@ public class GameActivity extends BaseGameActivity{
 		}
 		return false;
 	}
+
+
+	@Override
+	public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onAccelerationChanged(AccelerationData pAccelerationData) {
+		GameActivity.mGravityX = pAccelerationData.getX()*5;
+        //this.mGravityY = SensorManager.GRAVITY_EARTH;
+        //GameActivity.mPhysicsWorld = new FixedStepPhysicsWorld(60, new Vector2(mGravityX, -mGravityY), false);
+		
+	}
+	
+	@Override
+    public void onResumeGame() {
+            super.onResumeGame();
+            this.enableAccelerationSensor(this);
+    }
+
+    @Override
+    public void onPauseGame() {
+            super.onPauseGame();
+            this.disableAccelerationSensor();
+    }
+
 
 }
