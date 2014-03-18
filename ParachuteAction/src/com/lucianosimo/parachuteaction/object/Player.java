@@ -52,7 +52,7 @@ public abstract class Player extends AnimatedSprite{
 	}
 	
 	public void upperImpulse() {
-		body.setLinearVelocity(new Vector2(0, 50));
+		body.setLinearVelocity(new Vector2(0, 25));
 	}
 	
 	public int getFallVelocity() {

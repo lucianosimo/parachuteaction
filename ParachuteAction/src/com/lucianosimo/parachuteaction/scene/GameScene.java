@@ -103,7 +103,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void createPhysics() {
-		physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, -SensorManager.GRAVITY_EARTH), false);
+		physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, -5), false);
 		physicsWorld.setContactListener(contactListener());
 		registerUpdateHandler(physicsWorld);
 	}
@@ -151,9 +151,9 @@ public class GameScene extends BaseScene{
 						levelObject = new Sprite(x + n, y, resourcesManager.upperImpulse_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
-								int distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
-								int levelHeight = (int) camera.getBoundsHeight();
-								if (player.collidesWith(this) && distanceToFloor > (levelHeight/(PIXEL_METER_RATE * 2))) {
+								//int distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
+								//int levelHeight = (int) camera.getBoundsHeight();
+								if (player.collidesWith(this)) {
 									player.upperImpulse();
 									this.setVisible(false);
 									this.setIgnoreUpdate(true);
