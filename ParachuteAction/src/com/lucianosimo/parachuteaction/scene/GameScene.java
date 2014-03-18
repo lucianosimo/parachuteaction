@@ -1,6 +1,8 @@
 package com.lucianosimo.parachuteaction.scene;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Random;
 
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.IEntity;
@@ -14,6 +16,7 @@ import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.util.SAXUtils;
 import org.andengine.util.adt.align.HorizontalAlign;
+import org.andengine.util.debug.Debug;
 import org.andengine.util.level.EntityLoader;
 import org.andengine.util.level.constants.LevelConstants;
 import org.andengine.util.level.simple.SimpleLevelEntityLoaderData;
@@ -21,8 +24,10 @@ import org.andengine.util.level.simple.SimpleLevelLoader;
 import org.xml.sax.Attributes;
 
 import android.hardware.SensorManager;
+import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -30,6 +35,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.lucianosimo.parachuteaction.base.BaseScene;
+import com.lucianosimo.parachuteaction.manager.SceneManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
 import com.lucianosimo.parachuteaction.object.Player;
 
@@ -138,7 +144,11 @@ public class GameScene extends BaseScene{
 					if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD)) {
 						levelObject = new Sprite(x, y, resourcesManager.cloud_region, vbom);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE)) {
-						levelObject = new Sprite(x, y, resourcesManager.upperImpulse_region, vbom) {
+						//n = rand.nextInt(max - min + 1) + min;
+						Random rand = new Random();
+						int n = rand.nextInt(481) - 240;
+						Log.e("parachute", "n " + n);
+						levelObject = new Sprite(x + n, y, resourcesManager.upperImpulse_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								int distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
@@ -246,6 +256,17 @@ public class GameScene extends BaseScene{
 
 	@Override
 	public void onBackKeyPressed() {
+		engine.runOnUpdateThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				GameScene.this.setIgnoreUpdate(true);
+				camera.setChaseEntity(null);
+				gameHud.setVisible(false);
+				myGarbageCollection();
+				SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
+			}
+		});
 		
 	}
 
@@ -257,6 +278,28 @@ public class GameScene extends BaseScene{
 	@Override
 	public void disposeScene() {
 		
+	}
+	
+	private void myGarbageCollection() {
+		Iterator<Body> allMyBodies = physicsWorld.getBodies();
+        while(allMyBodies.hasNext()) {
+        	try {
+        		final Body myCurrentBody = allMyBodies.next();
+                	physicsWorld.destroyBody(myCurrentBody);                
+            } catch (Exception e) {
+            	Debug.e(e);
+            }
+        }
+               
+        this.clearChildScene();
+        this.detachChildren();
+        this.reset();
+        this.detachSelf();
+        physicsWorld.clearForces();
+        physicsWorld.clearPhysicsConnectors();
+        physicsWorld.reset();
+ 
+        System.gc();
 	}
 	
 }

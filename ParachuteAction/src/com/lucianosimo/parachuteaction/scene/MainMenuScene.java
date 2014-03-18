@@ -1,13 +1,15 @@
 package com.lucianosimo.parachuteaction.scene;
 
-import org.andengine.engine.camera.Camera;
+import org.andengine.entity.scene.background.AutoParallaxBackground;
+import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.opengl.util.GLState;
+
+import android.util.Log;
 
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
@@ -39,15 +41,19 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	}
 	
 	public void createBackground() {
-		float screenWidth = resourcesManager.camera.getWidth();
-		float screenHeight = resourcesManager.camera.getHeight();
-		attachChild(new Sprite(screenWidth/2, screenHeight/2, resourcesManager.menu_background_region, vbom){
-			@Override
-			protected void preDraw(GLState pGLState, Camera pCamera) {
-				super.preDraw(pGLState, pCamera);
-				pGLState.enableDither();
-			}
-		});
+		Log.e("parachute", "menu back");
+		AutoParallaxBackground background = new AutoParallaxBackground(0, 0, 0, 12);
+		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.menu_background_region, vbom)));
+		this.setBackground(background);
+//		float screenWidth = resourcesManager.camera.getWidth();
+//		float screenHeight = resourcesManager.camera.getHeight();
+//		attachChild(new Sprite(screenWidth/2, screenHeight/2, resourcesManager.menu_background_region, vbom){
+//			@Override
+//			protected void preDraw(GLState pGLState, Camera pCamera) {
+//				super.preDraw(pGLState, pCamera);
+//				pGLState.enableDither();
+//			}
+//		});
 	}
 	
 	private void createMenuChildScene() {
