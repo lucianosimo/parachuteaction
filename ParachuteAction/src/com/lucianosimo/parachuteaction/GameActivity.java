@@ -24,13 +24,8 @@ import com.lucianosimo.parachuteaction.manager.SceneManager;
 public class GameActivity extends BaseGameActivity implements IAccelerationListener{
 
 	private BoundCamera camera;
-	private ResourcesManager resourcesManager;
-	
-	//public static PhysicsWorld mPhysicsWorld;
-	
+	private ResourcesManager resourcesManager;	
 	public static float mGravityX = 0;
-    //private float mGravityY = 0;
-
 	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -113,8 +108,6 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	@Override
 	public void onAccelerationChanged(AccelerationData pAccelerationData) {
 		GameActivity.mGravityX = pAccelerationData.getX()*5;
-        //this.mGravityY = SensorManager.GRAVITY_EARTH;
-        //GameActivity.mPhysicsWorld = new FixedStepPhysicsWorld(60, new Vector2(mGravityX, -mGravityY), false);
 		
 	}
 	

@@ -23,8 +23,6 @@ import org.andengine.util.level.simple.SimpleLevelEntityLoaderData;
 import org.andengine.util.level.simple.SimpleLevelLoader;
 import org.xml.sax.Attributes;
 
-import android.util.Log;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -45,7 +43,8 @@ public class GameScene extends BaseScene{
 	
 	//Counters
 	private int fliedMeters = 0;
-	private int metersBeforeImpulse = 0;
+	private int distanceToFloor = 0;
+	private int oldDistanceToFloor = 0;
 	
 	//Texts variables
 	private Text meterCounterText;
@@ -107,14 +106,6 @@ public class GameScene extends BaseScene{
 		registerUpdateHandler(physicsWorld);
 	}
 	
-	private void setMetersBeforeImpulse(int meters) {
-		metersBeforeImpulse = meters;
-	}
-	
-	private int getMetersBeforeImpulse() {
-		return metersBeforeImpulse;
-	}
-	
 	//Parse level from XML file
 		private void loadLevel (int level) {
 			final SimpleLevelLoader levelLoader = new SimpleLevelLoader(vbom);
@@ -146,12 +137,9 @@ public class GameScene extends BaseScene{
 						//n = rand.nextInt(max - min + 1) + min;
 						Random rand = new Random();
 						int n = rand.nextInt(481) - 240;
-						Log.e("parachute", "n " + n);
 						levelObject = new Sprite(x + n, y, resourcesManager.upperImpulse_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
-								//int distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
-								//int levelHeight = (int) camera.getBoundsHeight();
 								if (player.collidesWith(this)) {
 									player.upperImpulse();
 									this.setVisible(false);
@@ -159,27 +147,6 @@ public class GameScene extends BaseScene{
 								}
 							};
 						};
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM)) {
-						levelObject = new Sprite(x, y, resourcesManager.landing_platfom_region, vbom) {
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if (player.collidesWith(this)) {
-									engine.runOnUpdateThread(new Runnable() {
-										
-										@Override
-										public void run() {
-											GameScene.this.setIgnoreUpdate(true);
-											camera.setChaseEntity(null);
-											Text levelCompleted = new Text(240, 427, resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
-											levelCompleted.setText("You landed safely!! You flied " + fliedMeters + " meters");
-											GameScene.this.attachChild(levelCompleted);											
-										}
-									});
-								}
-							};
-						};
-						//final Body body = PhysicsFactory.createBoxBody(physicsWorld, levelObject, BodyType.StaticBody, FIXTURE_DEF);
-						//body.setUserData("landingPlatform");
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
 						player = new Player(x, y, vbom, camera, physicsWorld) {
 							
@@ -190,20 +157,20 @@ public class GameScene extends BaseScene{
 									
 									@Override
 									public void run() {
-										int distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
-										int levelHeight = (int) (camera.getBoundsHeight() / PIXEL_METER_RATE);
-										fliedMeters = levelHeight - distanceToFloor; 
-										altimeterText.setText("Meters to go: " + distanceToFloor);
-										if (player.getFallVelocity() > 0) {
-											setMetersBeforeImpulse(fliedMeters);
+										if (distanceToFloor == y) {
+											oldDistanceToFloor = distanceToFloor;
 										}
+										distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
+										int levelHeight = (int) (camera.getBoundsHeight() / PIXEL_METER_RATE);
+										altimeterText.setText("Meters to go: " + distanceToFloor);
 										if (player.getFallVelocity() < 0) {
-											fliedMeters = fliedMeters + getMetersBeforeImpulse();
+											fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
 											meterCounterText.setText("Flied Meters: " + fliedMeters);
 										}
 										if (distanceToFloor < (levelHeight/(PIXEL_METER_RATE))) {
 											player.openParachute();
 										}
+										oldDistanceToFloor = distanceToFloor;
 									}
 								});
 							};
@@ -226,6 +193,25 @@ public class GameScene extends BaseScene{
 							
 						};
 						levelObject = player;
+					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM)) {
+						levelObject = new Sprite(x, y, resourcesManager.landing_platfom_region, vbom) {
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								if (player.collidesWith(this)) {
+									engine.runOnUpdateThread(new Runnable() {
+										
+										@Override
+										public void run() {
+											GameScene.this.setIgnoreUpdate(true);
+											camera.setChaseEntity(null);
+											Text levelCompleted = new Text(240, 427, resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
+											levelCompleted.setText("You landed safely!! You flied " + fliedMeters + " meters");
+											GameScene.this.attachChild(levelCompleted);											
+										}
+									});
+								}
+							};
+						};
 					} else {
 						throw new IllegalArgumentException();
 					}
