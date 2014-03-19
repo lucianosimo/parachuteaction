@@ -8,7 +8,6 @@ import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.background.AutoParallaxBackground;
 import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
-import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
@@ -16,6 +15,7 @@ import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.SAXUtils;
 import org.andengine.util.adt.align.HorizontalAlign;
 import org.andengine.util.debug.Debug;
@@ -25,8 +25,6 @@ import org.andengine.util.level.simple.SimpleLevelEntityLoaderData;
 import org.andengine.util.level.simple.SimpleLevelLoader;
 import org.xml.sax.Attributes;
 
-import android.util.Log;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -35,10 +33,10 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
+import com.lucianosimo.parachuteaction.object.Helicopter;
 import com.lucianosimo.parachuteaction.object.Player;
 
 public class GameScene extends BaseScene{
@@ -57,6 +55,7 @@ public class GameScene extends BaseScene{
 	
 	//Instances
 	private Player player;
+	private Helicopter helicopter;
 	
 	//Physics world variable
 	private PhysicsWorld physicsWorld;
@@ -154,13 +153,22 @@ public class GameScene extends BaseScene{
 							};
 						};
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
-						levelObject = new AnimatedSprite(x, y, resourcesManager.helicopter_region, vbom);
-						final Body body = PhysicsFactory.createBoxBody(physicsWorld, levelObject, BodyType.KinematicBody, FIXTURE_DEF);
-						body.setLinearVelocity(1, 0);
-						body.setUserData("helicopter");
-						body.setFixedRotation(true);
-						physicsWorld.registerPhysicsConnector(new PhysicsConnector(levelObject, body, true, false) {
-						});
+						helicopter = new Helicopter(x, y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								this.startMoving();
+							};
+							public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+								if (pSceneTouchEvent.isActionDown()) {
+									final Sprite helicopterRef = this; 
+									this.setVisible(false);
+									destroySprite(helicopterRef);					
+								}
+								return true;
+							};
+						};
+						levelObject = helicopter;
+						GameScene.this.registerTouchArea(levelObject);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
 						player = new Player(x, y, vbom, camera, physicsWorld) {
 							
@@ -262,9 +270,10 @@ public class GameScene extends BaseScene{
 				final Fixture x2 = contact.getFixtureB();
 				
 				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player")) {
+					/*player.reduceLifes();
 					player.reduceLifes();
-					player.reduceLifes();
-					player.reduceLifes();
+					player.reduceLifes();*/
+					player.killPlayer();
 					setInactiveBody(x1.getBody());
 				}
 			}
@@ -281,7 +290,6 @@ public class GameScene extends BaseScene{
 				GameScene.this.setIgnoreUpdate(true);
 				camera.setChaseEntity(null);
 				gameHud.dispose();
-				//gameHud.setVisible(false);
 				myGarbageCollection();
 				SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
 			}
@@ -305,6 +313,22 @@ public class GameScene extends BaseScene{
 			@Override
 			public void run() {
 				body.setActive(false);
+			}
+		});
+	}
+	
+	private void destroySprite(final Sprite sp) {
+		engine.runOnUpdateThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				final PhysicsConnector pc = physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(sp);
+				physicsWorld.unregisterPhysicsConnector(pc);
+				Body body = pc.getBody();
+				body.setActive(false);
+				physicsWorld.destroyBody(body);
+				GameScene.this.unregisterTouchArea(sp);
+				GameScene.this.detachChild(sp);
 			}
 		});
 	}
