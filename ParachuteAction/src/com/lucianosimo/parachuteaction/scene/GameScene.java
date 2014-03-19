@@ -25,6 +25,8 @@ import org.andengine.util.level.simple.SimpleLevelEntityLoaderData;
 import org.andengine.util.level.simple.SimpleLevelLoader;
 import org.xml.sax.Attributes;
 
+import android.util.Log;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -48,6 +50,9 @@ public class GameScene extends BaseScene{
 	private int fliedMeters = 0;
 	private int distanceToFloor = 0;
 	private int oldDistanceToFloor = 0;
+	
+	//Booleans
+	private Boolean firstFall = true;
 	
 	//Texts variables
 	private Text meterCounterText;
@@ -106,7 +111,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void createPhysics() {
-		physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, -5), false);
+		physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, -3), false);
 		physicsWorld.setContactListener(contactListener());
 		registerUpdateHandler(physicsWorld);
 	}
@@ -180,17 +185,19 @@ public class GameScene extends BaseScene{
 									@Override
 									public void run() {
 										//bug..corregir
-										if (distanceToFloor == y) {
+										int levelHeight = (int) (camera.getBoundsHeight() / PIXEL_METER_RATE);
+										distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
+										if (firstFall) {
 											oldDistanceToFloor = distanceToFloor;
 										}
-										distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
-										int levelHeight = (int) (camera.getBoundsHeight() / PIXEL_METER_RATE);
+										firstFall = false;
 										altimeterText.setText("Meters to go: " + distanceToFloor);
 										if (player.getFallVelocity() < 0) {
 											fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
 											meterCounterText.setText("Flied Meters: " + fliedMeters);
 										}
-										if (distanceToFloor < (levelHeight/(PIXEL_METER_RATE))) {
+										Log.e("parachute", "level/rate " + levelHeight/PIXEL_METER_RATE);
+										if (distanceToFloor < (levelHeight/4)) {
 											player.openParachute();
 										}
 										oldDistanceToFloor = distanceToFloor;
@@ -228,7 +235,7 @@ public class GameScene extends BaseScene{
 										public void run() {
 											GameScene.this.setIgnoreUpdate(true);
 											camera.setChaseEntity(null);
-											Text levelCompleted = new Text(240, 427, resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
+											Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
 											levelCompleted.setText("You landed safely!! You flied " + fliedMeters + " meters");
 											GameScene.this.attachChild(levelCompleted);											
 										}
@@ -290,6 +297,8 @@ public class GameScene extends BaseScene{
 				GameScene.this.setIgnoreUpdate(true);
 				camera.setChaseEntity(null);
 				gameHud.dispose();
+				gameHud.setVisible(false);
+				detachChild(gameHud);
 				myGarbageCollection();
 				SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
 			}
