@@ -171,6 +171,7 @@ public class GameScene extends BaseScene{
 									
 									@Override
 									public void run() {
+										//bug..corregir
 										if (distanceToFloor == y) {
 											oldDistanceToFloor = distanceToFloor;
 										}
@@ -195,8 +196,7 @@ public class GameScene extends BaseScene{
 									
 									@Override
 									public void run() {
-										Log.e("parachute", "ondie");
-										Text gameOver = new Text(240, 427, resourcesManager.gameOverFont, "Game over!", new TextOptions(HorizontalAlign.LEFT), vbom);
+										Text gameOver = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.gameOverFont, "Game over!", new TextOptions(HorizontalAlign.LEFT), vbom);
 								        gameOver.setText("Game over!!");
 										GameScene.this.attachChild(gameOver);
 										GameScene.this.setIgnoreUpdate(true);
@@ -280,7 +280,8 @@ public class GameScene extends BaseScene{
 			public void run() {
 				GameScene.this.setIgnoreUpdate(true);
 				camera.setChaseEntity(null);
-				gameHud.setVisible(false);
+				gameHud.dispose();
+				//gameHud.setVisible(false);
 				myGarbageCollection();
 				SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
 			}
