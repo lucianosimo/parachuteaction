@@ -66,6 +66,7 @@ public class ResourcesManager {
 
 	//Animated
 	public ITiledTextureRegion player_region;
+	public ITiledTextureRegion helicopter_region;
 	
 	//Game Textures
 	private BuildableBitmapTextureAtlas animatedTextureAtlas;
@@ -141,7 +142,7 @@ public class ResourcesManager {
 	private void loadGameGraphics() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/game/");
 		
-		animatedTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 400, 400, TextureOptions.BILINEAR);
+		animatedTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1000, 1000, TextureOptions.BILINEAR);
 		backgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
 		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 250, 250, TextureOptions.BILINEAR);
 		
@@ -151,6 +152,7 @@ public class ResourcesManager {
 		landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform.png");
 		
 		player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "player.png", 2, 1);
+		helicopter_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "helicopter.png", 2, 1);
 		
 		try {
 			this.animatedTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));

@@ -35,6 +35,11 @@
     <entity x="240" y="3500" type="upperImpulse"/>
     <entity x="240" y="3000" type="upperImpulse"/>
     
+    <entity x="0" y="9500" type="helicopter"/>
+    <entity x="0" y="8000" type="helicopter"/>
+    <entity x="0" y="7000" type="helicopter"/>
+    <entity x="0" y="6000" type="helicopter"/>
+    
     <entity x="240" y="10000" type="player"/>
 
     <entity x="240" y="50" type="landingPlatform"/>

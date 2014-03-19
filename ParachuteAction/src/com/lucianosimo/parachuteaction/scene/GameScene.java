@@ -8,10 +8,12 @@ import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.background.AutoParallaxBackground;
 import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
+import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.util.SAXUtils;
@@ -23,6 +25,8 @@ import org.andengine.util.level.simple.SimpleLevelEntityLoaderData;
 import org.andengine.util.level.simple.SimpleLevelLoader;
 import org.xml.sax.Attributes;
 
+import android.util.Log;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -31,6 +35,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
@@ -64,6 +69,7 @@ public class GameScene extends BaseScene{
 	private static final String TAG_ENTITY_ATTRIBUTE_Y = "y";
 	private static final String TAG_ENTITY_ATTRIBUTE_TYPE = "type";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER = "player";
+	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER = "helicopter";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD = "cloud";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE = "upperImpulse";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM = "landingPlatform";
@@ -147,6 +153,14 @@ public class GameScene extends BaseScene{
 								}
 							};
 						};
+					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
+						levelObject = new AnimatedSprite(x, y, resourcesManager.helicopter_region, vbom);
+						final Body body = PhysicsFactory.createBoxBody(physicsWorld, levelObject, BodyType.KinematicBody, FIXTURE_DEF);
+						body.setLinearVelocity(1, 0);
+						body.setUserData("helicopter");
+						body.setFixedRotation(true);
+						physicsWorld.registerPhysicsConnector(new PhysicsConnector(levelObject, body, true, false) {
+						});
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
 						player = new Player(x, y, vbom, camera, physicsWorld) {
 							
@@ -181,11 +195,13 @@ public class GameScene extends BaseScene{
 									
 									@Override
 									public void run() {
+										Log.e("parachute", "ondie");
+										Text gameOver = new Text(240, 427, resourcesManager.gameOverFont, "Game over!", new TextOptions(HorizontalAlign.LEFT), vbom);
+								        gameOver.setText("Game over!!");
+										GameScene.this.attachChild(gameOver);
 										GameScene.this.setIgnoreUpdate(true);
 								        camera.setChaseEntity(null);
-								        Text levelCompleted = new Text(240, 427, resourcesManager.gameOverFont, "Game over!", new TextOptions(HorizontalAlign.LEFT), vbom);
-										levelCompleted.setText("Game over!!");
-										GameScene.this.attachChild(levelCompleted);
+								        
 									}
 								});
 								
@@ -245,6 +261,12 @@ public class GameScene extends BaseScene{
 				final Fixture x1 = contact.getFixtureA();
 				final Fixture x2 = contact.getFixtureB();
 				
+				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player")) {
+					player.reduceLifes();
+					player.reduceLifes();
+					player.reduceLifes();
+					setInactiveBody(x1.getBody());
+				}
 			}
 		};
 		return contactListener;
@@ -274,6 +296,16 @@ public class GameScene extends BaseScene{
 	@Override
 	public void disposeScene() {
 		
+	}
+	
+	private void setInactiveBody(final Body body) {
+		engine.runOnUpdateThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				body.setActive(false);
+			}
+		});
 	}
 	
 	private void myGarbageCollection() {
