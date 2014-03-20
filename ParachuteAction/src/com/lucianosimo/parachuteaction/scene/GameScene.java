@@ -6,6 +6,8 @@ import java.util.Random;
 
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.DelayModifier;
+import org.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.andengine.entity.scene.background.AutoParallaxBackground;
 import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.andengine.entity.sprite.Sprite;
@@ -23,9 +25,8 @@ import org.andengine.util.level.EntityLoader;
 import org.andengine.util.level.constants.LevelConstants;
 import org.andengine.util.level.simple.SimpleLevelEntityLoaderData;
 import org.andengine.util.level.simple.SimpleLevelLoader;
+import org.andengine.util.modifier.IModifier;
 import org.xml.sax.Attributes;
-
-import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -53,6 +54,7 @@ public class GameScene extends BaseScene{
 	
 	//Booleans
 	private Boolean firstFall = true;
+	private Boolean shield = false;
 	
 	//Texts variables
 	private Text meterCounterText;
@@ -75,6 +77,7 @@ public class GameScene extends BaseScene{
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER = "player";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER = "helicopter";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD = "cloud";
+	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD = "shield";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE = "upperImpulse";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM = "landingPlatform";
 
@@ -143,6 +146,28 @@ public class GameScene extends BaseScene{
 					
 					if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD)) {
 						levelObject = new Sprite(x, y, resourcesManager.cloud_region, vbom);
+					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
+						levelObject = new Sprite(x, y, resourcesManager.shield_region, vbom) {
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								if (player.collidesWith(this)) {
+									this.setVisible(false);
+									player.registerEntityModifier(new DelayModifier(5, new IEntityModifierListener() {
+										
+										@Override
+										public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+											shield = true;											
+										}
+										
+										@Override
+										public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
+											shield = false;
+											
+										}
+									}));
+								}
+							};
+						};
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE)) {
 						//n = rand.nextInt(max - min + 1) + min;
 						Random rand = new Random();
@@ -196,7 +221,6 @@ public class GameScene extends BaseScene{
 											fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
 											meterCounterText.setText("Flied Meters: " + fliedMeters);
 										}
-										Log.e("parachute", "level/rate " + levelHeight/PIXEL_METER_RATE);
 										if (distanceToFloor < (levelHeight/4)) {
 											player.openParachute();
 										}
@@ -276,10 +300,7 @@ public class GameScene extends BaseScene{
 				final Fixture x1 = contact.getFixtureA();
 				final Fixture x2 = contact.getFixtureB();
 				
-				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player")) {
-					/*player.reduceLifes();
-					player.reduceLifes();
-					player.reduceLifes();*/
+				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player") && !shield ) {
 					player.killPlayer();
 					setInactiveBody(x1.getBody());
 				}

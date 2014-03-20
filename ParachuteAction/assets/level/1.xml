@@ -38,16 +38,18 @@
     <entity x="120" y="1500" type="cloud"/>
     <entity x="360" y="1000" type="cloud"/>
     
+    <entity x="500" y="12250" type="shield"/>
+    
     <entity x="240" y="11000" type="upperImpulse"/>
     <entity x="500" y="10000" type="upperImpulse"/>
     <entity x="720" y="9000" type="upperImpulse"/>
     <entity x="500" y="8000" type="upperImpulse"/>
     <entity x="240" y="7000" type="upperImpulse"/>
     
-    <entity x="0" y="9500" type="helicopter"/>
-    <entity x="0" y="8000" type="helicopter"/>
-    <entity x="0" y="7000" type="helicopter"/>
-    <entity x="0" y="6000" type="helicopter"/>
+    <entity x="500" y="12250" type="helicopter"/>
+    <entity x="400" y="12000" type="helicopter"/>
+    <entity x="300" y="11750" type="helicopter"/>
+    <entity x="200" y="11500" type="helicopter"/>
     
     <entity x="500" y="12500" type="player"/>
 
