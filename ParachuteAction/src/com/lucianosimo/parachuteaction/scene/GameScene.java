@@ -28,6 +28,9 @@ import org.andengine.util.level.simple.SimpleLevelLoader;
 import org.andengine.util.modifier.IModifier;
 import org.xml.sax.Attributes;
 
+import android.graphics.LightingColorFilter;
+import android.util.Log;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -66,6 +69,9 @@ public class GameScene extends BaseScene{
 	
 	//Physics world variable
 	private PhysicsWorld physicsWorld;
+	
+	//Shield Halo
+	private Sprite shieldHalo; 
 	
 	//Constants	
 	private static final int PIXEL_METER_RATE = 16;
@@ -184,6 +190,7 @@ public class GameScene extends BaseScene{
 						};
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
 						helicopter = new Helicopter(x, y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
+							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								this.startMoving();
@@ -200,6 +207,7 @@ public class GameScene extends BaseScene{
 						levelObject = helicopter;
 						GameScene.this.registerTouchArea(levelObject);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
+						shieldHalo = new Sprite(23, 46, resourcesManager.shieldHalo_region, vbom);
 						player = new Player(x, y, vbom, camera, physicsWorld) {
 							
 							@Override
@@ -208,7 +216,12 @@ public class GameScene extends BaseScene{
 								engine.runOnUpdateThread(new Runnable() {
 									
 									@Override
-									public void run() {
+									public void run() {										
+										if (shield) {
+											shieldHalo.setVisible(true);
+										} else {
+											shieldHalo.setVisible(false);
+										}
 										//bug..corregir
 										int levelHeight = (int) (camera.getBoundsHeight() / PIXEL_METER_RATE);
 										distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
@@ -247,6 +260,7 @@ public class GameScene extends BaseScene{
 							}
 							
 						};
+						player.attachChild(shieldHalo);
 						levelObject = player;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM)) {
 						levelObject = new Sprite(x, y, resourcesManager.landing_platfom_region, vbom) {
@@ -299,6 +313,15 @@ public class GameScene extends BaseScene{
 			public void beginContact(Contact contact) {
 				final Fixture x1 = contact.getFixtureA();
 				final Fixture x2 = contact.getFixtureB();
+				
+				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player") && shield ) {
+					engine.runOnUpdateThread(new Runnable() {
+						@Override
+						public void run() {
+							physicsWorld.destroyBody(x1.getBody());
+						}
+					});
+				}
 				
 				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player") && !shield ) {
 					player.killPlayer();
