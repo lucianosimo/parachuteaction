@@ -28,9 +28,6 @@ import org.andengine.util.level.simple.SimpleLevelLoader;
 import org.andengine.util.modifier.IModifier;
 import org.xml.sax.Attributes;
 
-import android.graphics.LightingColorFilter;
-import android.util.Log;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -193,6 +190,11 @@ public class GameScene extends BaseScene{
 							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
+								if (player.collidesWith(this)) {
+									final Sprite helicopterRef = this; 
+									this.setVisible(false);
+									destroySprite(helicopterRef);
+								}
 								this.startMoving();
 							};
 							public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
