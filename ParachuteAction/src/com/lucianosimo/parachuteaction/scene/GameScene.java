@@ -82,6 +82,7 @@ public class GameScene extends BaseScene{
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD = "cloud";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD = "shield";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE = "upperImpulse";
+	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITY = "antigravity";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM = "landingPlatform";
 
 	@Override
@@ -182,6 +183,29 @@ public class GameScene extends BaseScene{
 									player.upperImpulse();
 									this.setVisible(false);
 									this.setIgnoreUpdate(true);
+								}
+							};
+						};
+					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITY)) {
+						levelObject = new Sprite(x, y, resourcesManager.antiGravity_region, vbom) {
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								if (player.collidesWith(this)) {
+									this.setVisible(false);
+									//this.setIgnoreUpdate(true);
+									player.registerEntityModifier(new DelayModifier(7, new IEntityModifierListener() {
+										
+										@Override
+										public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+											physicsWorld.setGravity(new Vector2(0, 5));										
+										}
+										
+										@Override
+										public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
+											physicsWorld.setGravity(new Vector2(0, -3));											
+										}
+									}));
+																		
 								}
 							};
 						};

@@ -63,6 +63,7 @@ public class ResourcesManager {
 	//Objects
 	public ITextureRegion cloud_region;
 	public ITextureRegion upperImpulse_region;
+	public ITextureRegion antiGravity_region;
 	
 	//Shield
 	public ITextureRegion shield_region;
@@ -152,7 +153,8 @@ public class ResourcesManager {
 		
 		background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundTextureAtlas, activity, "background.png");
 		cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "cloud.png");
-		upperImpulse_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "coin.png");
+		upperImpulse_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperImpulse.png");
+		antiGravity_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "antiGravity.png");
 		landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform.png");
 		shield_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shield.png");
 		shieldHalo_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shieldHalo.png");
