@@ -71,6 +71,7 @@ public class GameScene extends BaseScene{
 	private Sprite shieldHalo; 
 	
 	//Constants	
+	//16 pixels == 1 meter
 	private static final int PIXEL_METER_RATE = 16;
 	
 	private static final String TAG_ENTITY = "entity";
