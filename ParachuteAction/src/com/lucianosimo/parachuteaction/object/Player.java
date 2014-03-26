@@ -17,11 +17,9 @@ public abstract class Player extends AnimatedSprite{
 
 	private Body body;
 	private Boolean openParachute = false;
-	//private int lifes = 0;
 	
 	public Player(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld) {
 		super(pX, pY, ResourcesManager.getInstance().player_region, vbom);
-		//lifes = 3;
 		createPhysics(camera, physicsWorld);
 		camera.setChaseEntity(this);
 	}
@@ -41,10 +39,17 @@ public abstract class Player extends AnimatedSprite{
 				if (getY() <= 0) {
 					onDie();
 				}
-				if (openParachute) {
-					body.setLinearVelocity(new Vector2(GameActivity.mGravityX, -10));
+				if (getX() < 30) {
+					body.setLinearVelocity(new Vector2( 1, body.getLinearVelocity().y));
+				} else if (getX() > 970) {
+					body.setLinearVelocity(new Vector2(-1, body.getLinearVelocity().y));
 				} else {
 					body.setLinearVelocity(new Vector2(GameActivity.mGravityX, body.getLinearVelocity().y));
+				}
+				if (openParachute) {
+					body.setLinearVelocity(new Vector2(body.getLinearVelocity().x, -10));
+				} else {
+					body.setLinearVelocity(new Vector2(body.getLinearVelocity().x, body.getLinearVelocity().y));
 				}				
 			}
 		});
@@ -65,16 +70,5 @@ public abstract class Player extends AnimatedSprite{
 	public void killPlayer() {
 		onDie();
 	}
-	/*public void reduceLifes() {
-		lifes--;
-	}
-	
-	public void addLife() {
-		lifes++;
-	}
-	
-	public int getLifes() {
-		return lifes;
-	}*/
 
 }

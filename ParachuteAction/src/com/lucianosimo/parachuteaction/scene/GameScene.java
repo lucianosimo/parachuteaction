@@ -8,7 +8,7 @@ import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.DelayModifier;
 import org.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
-import org.andengine.entity.scene.background.AutoParallaxBackground;
+import org.andengine.entity.scene.background.ParallaxBackground;
 import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
@@ -94,8 +94,8 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void createBackground() {
-		AutoParallaxBackground background = new AutoParallaxBackground(0, 0, 0, 12);
-		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.background_region, vbom)));
+		ParallaxBackground background = new ParallaxBackground(0, 0, 0);
+		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 1000, resourcesManager.background_region, vbom)));
 		this.setBackground(background);
 	}
 	
