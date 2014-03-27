@@ -43,6 +43,7 @@ public class ResourcesManager {
 	
 	//Menu y loading fonts 
 	public Font loadingFont;
+	public Font highScoreFont;
 	
 	//Game fonts
 	public Font meterCounterFont;
@@ -120,8 +121,11 @@ public class ResourcesManager {
 	private void loadMenuFonts() {
 		FontFactory.setAssetBasePath("font/menu/");
 		final ITexture loadingTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture highScoreTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		loadingFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), loadingTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		highScoreFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), highScoreTexture, activity.getAssets(), "inky.ttf", 40, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
 		loadingFont.load();
+		highScoreFont.load();
 	}
 	
 	public void unloadMenuTextures() {

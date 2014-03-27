@@ -29,6 +29,10 @@ import org.andengine.util.level.simple.SimpleLevelLoader;
 import org.andengine.util.modifier.IModifier;
 import org.xml.sax.Attributes;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -123,6 +127,15 @@ public class GameScene extends BaseScene{
 		physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, -3), false);
 		physicsWorld.setContactListener(contactListener());
 		registerUpdateHandler(physicsWorld);
+	}
+	
+	private void saveMaxFliedMeters(String key, int fliedMeters) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		if (sharedPreferences.getInt("fliedMeters", 0) < fliedMeters) {
+			editor.putInt("fliedMeters", fliedMeters);
+		}		
+		editor.commit();
 	}
 	
 	//Parse level from XML file
@@ -311,6 +324,7 @@ public class GameScene extends BaseScene{
 										public void run() {
 											GameScene.this.setIgnoreUpdate(true);
 											camera.setChaseEntity(null);
+											saveMaxFliedMeters("fliedMeters", fliedMeters);
 											Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
 											levelCompleted.setText("You landed safely!! You flied " + fliedMeters + " meters");
 											GameScene.this.attachChild(levelCompleted);											

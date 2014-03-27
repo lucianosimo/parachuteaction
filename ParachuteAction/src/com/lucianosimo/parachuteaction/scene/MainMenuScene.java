@@ -8,6 +8,12 @@ import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
+import org.andengine.entity.text.TextOptions;
+import org.andengine.util.adt.align.HorizontalAlign;
+
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
@@ -17,6 +23,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	
 	private MenuScene menuChildScene;
 	private final int MENU_PLAY = 0;
+	private Text highScoreText;
 	
 	@Override
 	public void createScene() {
@@ -47,6 +54,9 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	private void createMenuChildScene() {
 		float screenWidth = resourcesManager.camera.getWidth();
 		float screenHeight = resourcesManager.camera.getHeight();
+		
+		highScoreText = new Text(20, 430, resourcesManager.highScoreFont, "Longest fly:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		loadSavedPreferences();
 
 		menuChildScene = new MenuScene(camera);
 		menuChildScene.setPosition(screenWidth/2, screenHeight/2);
@@ -57,12 +67,20 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
 		
+		menuChildScene.attachChild(highScoreText);
+		
+		highScoreText.setPosition(0, -145);		
 		playMenuItem.setPosition(0, 80);
 		
 		menuChildScene.setOnMenuItemClickListener(this);
 		setChildScene(menuChildScene);
 	}
 	
+	private void loadSavedPreferences() {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		int score = sharedPreferences.getInt("fliedMeters", 0);
+		highScoreText.setText("Longest fly: " + score);
+	}
 
 	@Override
 	public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem,	float pMenuItemLocalX, float pMenuItemLocalY) {
