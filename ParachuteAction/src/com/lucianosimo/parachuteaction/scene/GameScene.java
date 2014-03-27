@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import org.andengine.engine.camera.hud.HUD;
+import org.andengine.engine.handler.physics.PhysicsHandler;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.DelayModifier;
 import org.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
@@ -150,7 +151,17 @@ public class GameScene extends BaseScene{
 					final Sprite levelObject;
 					
 					if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD)) {
-						levelObject = new Sprite(x, y, resourcesManager.cloud_region, vbom);
+						levelObject = new Sprite(x, y, resourcesManager.cloud_region, vbom) {
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								if (this.getX() < 0) {
+									this.setPosition(1000, y);
+								}
+							};
+						};
+						PhysicsHandler handler = new PhysicsHandler(levelObject);
+						levelObject.registerUpdateHandler(handler);
+						handler.setVelocity(-75,0);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
 						levelObject = new Sprite(x, y, resourcesManager.shield_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
