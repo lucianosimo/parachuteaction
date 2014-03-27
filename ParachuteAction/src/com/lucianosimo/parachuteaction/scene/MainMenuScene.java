@@ -23,7 +23,10 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	
 	private MenuScene menuChildScene;
 	private final int MENU_PLAY = 0;
-	private Text highScoreText;
+	private Text numberOfJumpsText;
+	private Text maxFliedMetersText;
+	private Text freeFliedMetersText;
+	private Text parachuteFliedMetersText;
 	
 	@Override
 	public void createScene() {
@@ -55,7 +58,10 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		float screenWidth = resourcesManager.camera.getWidth();
 		float screenHeight = resourcesManager.camera.getHeight();
 		
-		highScoreText = new Text(20, 430, resourcesManager.highScoreFont, "Longest fly:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		numberOfJumpsText = new Text(20, 430, resourcesManager.numberOfJumpsFont, "Jumps :0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		maxFliedMetersText = new Text(20, 430, resourcesManager.maxFliedMetersFont, "Longest fly:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		freeFliedMetersText = new Text(20, 430, resourcesManager.freeFliedMetersFont, "Free flied meters:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		parachuteFliedMetersText = new Text(20, 430, resourcesManager.parachuteFliedMetersFont, "Parachute flied meters:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		loadSavedPreferences();
 
 		menuChildScene = new MenuScene(camera);
@@ -67,9 +73,15 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
 		
-		menuChildScene.attachChild(highScoreText);
+		menuChildScene.attachChild(numberOfJumpsText);
+		menuChildScene.attachChild(maxFliedMetersText);
+		menuChildScene.attachChild(freeFliedMetersText);
+		menuChildScene.attachChild(parachuteFliedMetersText);
 		
-		highScoreText.setPosition(0, -145);		
+		numberOfJumpsText.setPosition(0, -100);
+		maxFliedMetersText.setPosition(0, -140);
+		freeFliedMetersText.setPosition(0, -180);
+		parachuteFliedMetersText.setPosition(0, -220);
 		playMenuItem.setPosition(0, 80);
 		
 		menuChildScene.setOnMenuItemClickListener(this);
@@ -78,8 +90,14 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	
 	private void loadSavedPreferences() {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-		int score = sharedPreferences.getInt("fliedMeters", 0);
-		highScoreText.setText("Longest fly: " + score);
+		int maxFliedMeters = sharedPreferences.getInt("fliedMeters", 0);
+		int numberOfJumps = sharedPreferences.getInt("numberOfJumps", 0);
+		int freeFliedMeters = sharedPreferences.getInt("freeFliedMeters", 0);
+		int parachuteFliedMeters = sharedPreferences.getInt("parachuteFliedMeters", 0);
+		numberOfJumpsText.setText("Jumps: " + numberOfJumps);
+		maxFliedMetersText.setText("Longest fly: " + maxFliedMeters);
+		freeFliedMetersText.setText("Free flied meters: " + freeFliedMeters);
+		parachuteFliedMetersText.setText("Parachute flied meters: " + parachuteFliedMeters);
 	}
 
 	@Override

@@ -16,7 +16,6 @@ import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
-import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.SAXUtils;
@@ -39,7 +38,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
@@ -53,12 +51,16 @@ public class GameScene extends BaseScene{
 	private HUD gameHud;
 	
 	//Counters
+	//private int numberOfJumps = 0;
 	private int fliedMeters = 0;
+	private int freeFliedMeters = 0;
+	private int parachuteFliedMeters = 0;
 	private int distanceToFloor = 0;
 	private int oldDistanceToFloor = 0;
 	
 	//Booleans
 	private Boolean firstFall = true;
+	private Boolean openParachute = false;
 	private Boolean shield = false;
 	
 	//Texts variables
@@ -129,6 +131,15 @@ public class GameScene extends BaseScene{
 		registerUpdateHandler(physicsWorld);
 	}
 	
+	private void saveNumbreOfJumps(String key) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		int numberOfJumps = sharedPreferences.getInt("numberOfJumps", 0);
+		numberOfJumps++;
+		editor.putInt("numberOfJumps", numberOfJumps);
+		editor.commit();
+	}
+	
 	private void saveMaxFliedMeters(String key, int fliedMeters) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
@@ -138,10 +149,28 @@ public class GameScene extends BaseScene{
 		editor.commit();
 	}
 	
+	private void saveMaxFreeFliedMeters(String key, int freeFliedMeters) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		if (sharedPreferences.getInt("freeFliedMeters", 0) < freeFliedMeters) {
+			editor.putInt("freeFliedMeters", freeFliedMeters);
+		}		
+		editor.commit();
+	}
+	
+	private void saveMaxParachuteFliedMeters(String key, int parachuteFliedMeters) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		if (sharedPreferences.getInt("parachuteFliedMeters", 0) < parachuteFliedMeters) {
+			editor.putInt("parachuteFliedMeters", parachuteFliedMeters);
+		}		
+		editor.commit();
+	}
+	
 	//Parse level from XML file
 		private void loadLevel (int level) {
 			final SimpleLevelLoader levelLoader = new SimpleLevelLoader(vbom);
-			final FixtureDef FIXTURE_DEF= PhysicsFactory.createFixtureDef(0, 0f, 0.5f);
+			//final FixtureDef FIXTURE_DEF= PhysicsFactory.createFixtureDef(0, 0f, 0.5f);
 			levelLoader.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(LevelConstants.TAG_LEVEL) {
 				
 				@Override
@@ -287,6 +316,12 @@ public class GameScene extends BaseScene{
 										}
 										if (distanceToFloor < (levelHeight/4)) {
 											player.openParachute();
+											openParachute = true;
+										}
+										if (openParachute) {
+											parachuteFliedMeters = fliedMeters - freeFliedMeters;
+										} else {
+											freeFliedMeters = fliedMeters;
 										}
 										oldDistanceToFloor = distanceToFloor;
 									}
@@ -324,7 +359,10 @@ public class GameScene extends BaseScene{
 										public void run() {
 											GameScene.this.setIgnoreUpdate(true);
 											camera.setChaseEntity(null);
+											saveNumbreOfJumps("numberOfJumps");
 											saveMaxFliedMeters("fliedMeters", fliedMeters);
+											saveMaxFreeFliedMeters("freeFliedMeters", freeFliedMeters);
+											saveMaxParachuteFliedMeters("parachuteFliedMeters", parachuteFliedMeters);
 											Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
 											levelCompleted.setText("You landed safely!! You flied " + fliedMeters + " meters");
 											GameScene.this.attachChild(levelCompleted);											
@@ -356,8 +394,6 @@ public class GameScene extends BaseScene{
 			
 			@Override
 			public void endContact(Contact contact) {
-				final Fixture x1 = contact.getFixtureA();
-				final Fixture x2 = contact.getFixtureB();
 				
 			}
 			
