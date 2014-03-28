@@ -8,12 +8,6 @@ import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.text.Text;
-import org.andengine.entity.text.TextOptions;
-import org.andengine.util.adt.align.HorizontalAlign;
-
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
@@ -23,11 +17,8 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	
 	private MenuScene menuChildScene;
 	private final int MENU_PLAY = 0;
-	private Text numberOfJumpsText;
-	private Text maxFliedMetersText;
-	private Text freeFliedMetersText;
-	private Text parachuteFliedMetersText;
-	
+	private final int MENU_STATISTICS = 1;
+
 	@Override
 	public void createScene() {
 		createBackground();
@@ -58,53 +49,33 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		float screenWidth = resourcesManager.camera.getWidth();
 		float screenHeight = resourcesManager.camera.getHeight();
 		
-		numberOfJumpsText = new Text(20, 430, resourcesManager.numberOfJumpsFont, "Jumps :0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-		maxFliedMetersText = new Text(20, 430, resourcesManager.maxFliedMetersFont, "Longest fly:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-		freeFliedMetersText = new Text(20, 430, resourcesManager.freeFliedMetersFont, "Free flied meters:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-		parachuteFliedMetersText = new Text(20, 430, resourcesManager.parachuteFliedMetersFont, "Parachute flied meters:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-		loadSavedPreferences();
-
 		menuChildScene = new MenuScene(camera);
 		menuChildScene.setPosition(screenWidth/2, screenHeight/2);
 		
 		final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourcesManager.play_region, vbom), 1.2f, 1);
+		final IMenuItem statisticsMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_STATISTICS, resourcesManager.statistics_region, vbom), 1.2f, 1);
 		
 		menuChildScene.addMenuItem(playMenuItem);
+		menuChildScene.addMenuItem(statisticsMenuItem);
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
 		
-		menuChildScene.attachChild(numberOfJumpsText);
-		menuChildScene.attachChild(maxFliedMetersText);
-		menuChildScene.attachChild(freeFliedMetersText);
-		menuChildScene.attachChild(parachuteFliedMetersText);
-		
-		numberOfJumpsText.setPosition(0, -100);
-		maxFliedMetersText.setPosition(0, -140);
-		freeFliedMetersText.setPosition(0, -180);
-		parachuteFliedMetersText.setPosition(0, -220);
-		playMenuItem.setPosition(0, 80);
+		playMenuItem.setPosition(0, 100);
+		statisticsMenuItem.setPosition(0, 0);
 		
 		menuChildScene.setOnMenuItemClickListener(this);
 		setChildScene(menuChildScene);
 	}
 	
-	private void loadSavedPreferences() {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-		int maxFliedMeters = sharedPreferences.getInt("fliedMeters", 0);
-		int numberOfJumps = sharedPreferences.getInt("numberOfJumps", 0);
-		int freeFliedMeters = sharedPreferences.getInt("freeFliedMeters", 0);
-		int parachuteFliedMeters = sharedPreferences.getInt("parachuteFliedMeters", 0);
-		numberOfJumpsText.setText("Jumps: " + numberOfJumps);
-		maxFliedMetersText.setText("Longest fly: " + maxFliedMeters);
-		freeFliedMetersText.setText("Free flied meters: " + freeFliedMeters);
-		parachuteFliedMetersText.setText("Parachute flied meters: " + parachuteFliedMeters);
-	}
 
 	@Override
 	public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem,	float pMenuItemLocalX, float pMenuItemLocalY) {
 		switch (pMenuItem.getID()) {
 			case MENU_PLAY:
 				SceneManager.getInstance().loadGameScene(engine, this);
+				return true;
+			case MENU_STATISTICS:
+				SceneManager.getInstance().loadStatisticsScene(engine, this);
 				return true;
 			default:
 				return false;

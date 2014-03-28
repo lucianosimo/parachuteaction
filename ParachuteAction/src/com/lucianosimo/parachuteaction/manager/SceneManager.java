@@ -10,11 +10,13 @@ import com.lucianosimo.parachuteaction.scene.GameScene;
 import com.lucianosimo.parachuteaction.scene.LoadingScene;
 import com.lucianosimo.parachuteaction.scene.MainMenuScene;
 import com.lucianosimo.parachuteaction.scene.SplashScene;
+import com.lucianosimo.parachuteaction.scene.StatisticsScene;
 
 public class SceneManager {
 
 	private BaseScene splashScene;
 	private BaseScene menuScene;
+	private BaseScene statisticsScene;
 	private BaseScene loadingScene;
 	private BaseScene gameScene;
 	
@@ -26,6 +28,7 @@ public class SceneManager {
 	public enum SceneType {
 		SCENE_SPLASH,
 		SCENE_MENU,
+		SCENE_STATISTICS,
 		SCENE_LOADING,
 		SCENE_GAME,
 	}
@@ -42,6 +45,9 @@ public class SceneManager {
 				setScene(splashScene);
 				break;
 			case SCENE_MENU:
+				setScene(menuScene);
+				break;
+			case SCENE_STATISTICS:
 				setScene(menuScene);
 				break;
 			case SCENE_GAME:
@@ -107,7 +113,15 @@ public class SceneManager {
 		loadingScene = new LoadingScene();
 		setScene(loadingScene);
 		scene.disposeScene();
-		ResourcesManager.getInstance().unloadGameTextures();
+		switch (scene.getSceneType()) {
+			case SCENE_STATISTICS:
+				break;
+			case SCENE_GAME:
+				ResourcesManager.getInstance().unloadGameTextures();
+				break;
+			default:
+				break;
+		}
 		mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 			
 			@Override
@@ -116,6 +130,23 @@ public class SceneManager {
 				ResourcesManager.getInstance().loadMenuResources();
 				menuScene = new MainMenuScene();
 				setScene(menuScene);
+			}
+		}));
+	}
+	
+	public void loadStatisticsScene(final Engine mEngine, final BaseScene scene) {
+		loadingScene = new LoadingScene();
+		setScene(loadingScene);
+		scene.disposeScene();
+		//ResourcesManager.getInstance().unloadMenuTextures();
+		mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+			
+			@Override
+			public void onTimePassed(final TimerHandler pTimerHandler) {
+				mEngine.unregisterUpdateHandler(pTimerHandler);
+				//ResourcesManager.getInstance().loadMenuResources();
+				statisticsScene = new StatisticsScene();
+				setScene(statisticsScene);
 			}
 		}));
 	}
