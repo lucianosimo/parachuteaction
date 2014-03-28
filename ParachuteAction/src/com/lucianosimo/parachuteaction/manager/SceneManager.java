@@ -138,13 +138,11 @@ public class SceneManager {
 		loadingScene = new LoadingScene();
 		setScene(loadingScene);
 		scene.disposeScene();
-		//ResourcesManager.getInstance().unloadMenuTextures();
 		mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 			
 			@Override
 			public void onTimePassed(final TimerHandler pTimerHandler) {
 				mEngine.unregisterUpdateHandler(pTimerHandler);
-				//ResourcesManager.getInstance().loadMenuResources();
 				statisticsScene = new StatisticsScene();
 				setScene(statisticsScene);
 			}

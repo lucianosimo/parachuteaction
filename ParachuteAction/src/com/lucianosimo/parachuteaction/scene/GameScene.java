@@ -80,6 +80,13 @@ public class GameScene extends BaseScene{
 	//Constants	
 	//16 pixels == 1 meter
 	private static final int PIXEL_METER_RATE = 16;
+	private static final int LEFT_MARGIN = 0;
+	private static final int RIGHT_MARGIN = 480;
+	private static final int BOTTOM_MARGIN = 0;
+	private static final int TOP_MARGIN = 854;
+	private static final int CLOUD_SPEED = -25;
+	private static final int SHIELD_DURATION = 5;
+	private static final int ANTIGRAVITY_DURATION = 7;
 	
 	private static final String TAG_ENTITY = "entity";
 	private static final String TAG_ENTITY_ATTRIBUTE_X = "x";
@@ -196,21 +203,21 @@ public class GameScene extends BaseScene{
 						levelObject = new Sprite(x, y, resourcesManager.cloud_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
-								if (this.getX() < 0) {
-									this.setPosition(1000, y);
+								if (this.getX() < LEFT_MARGIN) {
+									this.setPosition(RIGHT_MARGIN, y);
 								}
 							};
 						};
 						PhysicsHandler handler = new PhysicsHandler(levelObject);
 						levelObject.registerUpdateHandler(handler);
-						handler.setVelocity(-75,0);
+						handler.setVelocity(CLOUD_SPEED,0);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
 						levelObject = new Sprite(x, y, resourcesManager.shield_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
 									this.setVisible(false);
-									player.registerEntityModifier(new DelayModifier(5, new IEntityModifierListener() {
+									player.registerEntityModifier(new DelayModifier(SHIELD_DURATION, new IEntityModifierListener() {
 										
 										@Override
 										public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
@@ -247,7 +254,7 @@ public class GameScene extends BaseScene{
 								if (player.collidesWith(this)) {
 									this.setVisible(false);
 									//this.setIgnoreUpdate(true);
-									player.registerEntityModifier(new DelayModifier(7, new IEntityModifierListener() {
+									player.registerEntityModifier(new DelayModifier(ANTIGRAVITY_DURATION, new IEntityModifierListener() {
 										
 										@Override
 										public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {

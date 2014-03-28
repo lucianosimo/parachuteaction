@@ -18,6 +18,11 @@ public abstract class Player extends AnimatedSprite{
 	private Body body;
 	private Boolean openParachute = false;
 	
+	private static final int LEFT_MARGIN = 0;
+	private static final int RIGHT_MARGIN = 480;
+	private static final int BOTTOM_MARGIN = 0;
+	private static final int TOP_MARGIN = 854;
+	
 	public Player(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld) {
 		super(pX, pY, ResourcesManager.getInstance().player_region, vbom);
 		createPhysics(camera, physicsWorld);
@@ -38,9 +43,9 @@ public abstract class Player extends AnimatedSprite{
 				if (getY() <= 0) {
 					onDie();
 				}
-				if (getX() < 30) {
+				if (getX() < (LEFT_MARGIN + 30)) {
 					body.setLinearVelocity(new Vector2( 1, body.getLinearVelocity().y));
-				} else if (getX() > 970) {
+				} else if (getX() > RIGHT_MARGIN - 30) {
 					body.setLinearVelocity(new Vector2(-1, body.getLinearVelocity().y));
 				} else {
 					body.setLinearVelocity(new Vector2(GameActivity.mGravityX, body.getLinearVelocity().y));
