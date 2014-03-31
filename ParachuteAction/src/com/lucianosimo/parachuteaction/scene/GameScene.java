@@ -110,7 +110,7 @@ public class GameScene extends BaseScene{
 	
 	private void createBackground() {
 		ParallaxBackground background = new ParallaxBackground(0, 0, 0);
-		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 1000, resourcesManager.background_region, vbom)));
+		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.background_region, vbom)));
 		this.setBackground(background);
 	}
 	
@@ -275,12 +275,14 @@ public class GameScene extends BaseScene{
 							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
+								if ((this.getY() - player.getY()) < 854) {
+									this.startMoving();
+								}
 								if (player.collidesWith(this)) {
 									final Sprite helicopterRef = this; 
 									this.setVisible(false);
 									destroySprite(helicopterRef);
 								}
-								this.startMoving();
 							};
 							public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 								if (pSceneTouchEvent.isActionDown()) {

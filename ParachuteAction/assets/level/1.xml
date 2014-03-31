@@ -48,9 +48,9 @@
     <entity x="240" y="8000" type="upperImpulse"/>
     <entity x="240" y="7000" type="upperImpulse"/>
     
-    <entity x="120" y="9000" type="helicopter"/>
-    <entity x="240" y="7500" type="helicopter"/>
-    <entity x="360" y="5000" type="helicopter"/>
+    <entity x="480" y="12000" type="helicopter"/>
+    <entity x="480" y="7500" type="helicopter"/>
+    <entity x="480" y="5000" type="helicopter"/>
     
     <entity x="240" y="12500" type="player"/>
 

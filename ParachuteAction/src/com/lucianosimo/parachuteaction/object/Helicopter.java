@@ -30,12 +30,12 @@ public class Helicopter extends AnimatedSprite{
 	}
 	
 	public void startAnimation() {
-		final long[] HELICOPTER_ANIMATE = new long[] {150, 150};
+		final long[] HELICOPTER_ANIMATE = new long[] {100, 100};
 		animate(HELICOPTER_ANIMATE, 0, 1, true);
 	}
 	
 	public void startMoving() {
-		body.setLinearVelocity(new Vector2(3, body.getLinearVelocity().y));
+		body.setLinearVelocity(new Vector2(-3, body.getLinearVelocity().y));
 	}
 	
 }
