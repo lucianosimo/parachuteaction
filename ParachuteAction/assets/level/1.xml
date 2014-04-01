@@ -48,6 +48,8 @@
     <entity x="480" y="7500" type="helicopter"/>
     <entity x="480" y="5000" type="helicopter"/>
     
+    <entity x="240" y="300" type="balloon"/>
+    
     <entity x="240" y="15000" type="player"/>
 
     <entity x="240" y="20" type="landingPlatform"/>

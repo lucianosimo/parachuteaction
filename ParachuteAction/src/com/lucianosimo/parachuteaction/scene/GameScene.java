@@ -42,6 +42,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
+import com.lucianosimo.parachuteaction.object.Balloon;
 import com.lucianosimo.parachuteaction.object.Helicopter;
 import com.lucianosimo.parachuteaction.object.Player;
 
@@ -70,6 +71,7 @@ public class GameScene extends BaseScene{
 	//Instances
 	private Player player;
 	private Helicopter helicopter;
+	private Balloon balloon;
 	
 	//Physics world variable
 	private PhysicsWorld physicsWorld;
@@ -94,6 +96,7 @@ public class GameScene extends BaseScene{
 	private static final String TAG_ENTITY_ATTRIBUTE_TYPE = "type";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER = "player";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER = "helicopter";
+	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON = "balloon";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD = "cloud";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD = "shield";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE = "upperImpulse";
@@ -319,6 +322,31 @@ public class GameScene extends BaseScene{
 						};
 						levelObject = helicopter;
 						GameScene.this.registerTouchArea(levelObject);
+					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON)) {
+						Random rand = new Random();
+						int n = rand.nextInt(441) - 220;
+						balloon = new Balloon(x + n, y, vbom, camera, physicsWorld, resourcesManager.balloon_region.deepCopy()) {
+							
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								this.startMoving();
+								if (player.collidesWith(this)) {
+									final Sprite balloonRef = this; 
+									this.setVisible(false);
+									destroySprite(balloonRef);
+								}
+							};
+							public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+								if (pSceneTouchEvent.isActionDown()) {
+									final Sprite balloonRef = this; 
+									this.setVisible(false);
+									destroySprite(balloonRef);					
+								}
+								return true;
+							};
+						};
+						levelObject = balloon;
+						GameScene.this.registerTouchArea(levelObject);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
 						shieldHalo = new Sprite(23, 46, resourcesManager.shieldHalo_region, vbom);
 						player = new Player(x, y, vbom, camera, physicsWorld) {
@@ -444,7 +472,21 @@ public class GameScene extends BaseScene{
 					});
 				}
 				
+				if (x1.getBody().getUserData().equals("balloon") && x2.getBody().getUserData().equals("player") && shield ) {
+					engine.runOnUpdateThread(new Runnable() {
+						@Override
+						public void run() {
+							physicsWorld.destroyBody(x1.getBody());
+						}
+					});
+				}
+				
 				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player") && !shield ) {
+					player.killPlayer();
+					setInactiveBody(x1.getBody());
+				}
+				
+				if (x1.getBody().getUserData().equals("balloon") && x2.getBody().getUserData().equals("player") && !shield ) {
 					player.killPlayer();
 					setInactiveBody(x1.getBody());
 				}

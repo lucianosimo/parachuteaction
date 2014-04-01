@@ -82,6 +82,7 @@ public class ResourcesManager {
 	//Animated
 	public ITiledTextureRegion player_region;
 	public ITiledTextureRegion helicopter_region;
+	public ITiledTextureRegion balloon_region;
 	
 	//Game Textures
 	private BuildableBitmapTextureAtlas animatedTextureAtlas;
@@ -188,6 +189,7 @@ public class ResourcesManager {
 		
 		player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "player.png", 2, 1);
 		helicopter_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "helicopter.png", 2, 1);
+		balloon_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "balloon.png", 2, 1);
 		
 		try {
 			this.animatedTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
