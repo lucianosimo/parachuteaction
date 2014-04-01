@@ -216,7 +216,7 @@ public class GameScene extends BaseScene{
 						handler.setVelocity(CLOUD_SPEED,0);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
 						Random rand = new Random();
-						int n = rand.nextInt(481) - 240;
+						int n = rand.nextInt(441) - 220;
 						final Sprite sign = new Sprite(x + n, y + 500, resourcesManager.shieldSign_region, vbom);
 						GameScene.this.attachChild(sign);
 						levelObject = new Sprite(x + n, y, resourcesManager.shield_region, vbom) {
@@ -224,10 +224,10 @@ public class GameScene extends BaseScene{
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
 									Random rand = new Random();
-									int n = rand.nextInt(481) - 240;
-									int randomy = rand.nextInt(12501) - 6250;
-									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 500);
-									this.setPosition(RIGHT_MARGIN/2 + n, randomy);
+									int n = rand.nextInt(441) - 220;
+									int randomy = rand.nextInt(6251) - 3125;
+									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 6750);
+									this.setPosition(RIGHT_MARGIN/2 + n, randomy + 6250);
 									player.registerEntityModifier(new DelayModifier(SHIELD_DURATION, new IEntityModifierListener() {
 										
 										@Override
@@ -247,7 +247,7 @@ public class GameScene extends BaseScene{
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE)) {
 						//n = rand.nextInt(max - min + 1) + min;
 						Random rand = new Random();
-						int n = rand.nextInt(481) - 240;
+						int n = rand.nextInt(441) - 220;
 						final Sprite sign = new Sprite(x + n, y + 500, resourcesManager.upperImpulseSign_region, vbom);
 						GameScene.this.attachChild(sign);
 						levelObject = new Sprite(x + n, y, resourcesManager.upperImpulse_region, vbom) {
@@ -256,16 +256,16 @@ public class GameScene extends BaseScene{
 								if (player.collidesWith(this)) {
 									player.upperImpulse();
 									Random rand = new Random();
-									int n = rand.nextInt(481) - 240;
-									int randomy = rand.nextInt(12501) - 6250;
-									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 500);
-									this.setPosition(RIGHT_MARGIN/2 + n, randomy);
+									int n = rand.nextInt(441) - 220;
+									int randomy = rand.nextInt(6251) - 3125;
+									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 6750);
+									this.setPosition(RIGHT_MARGIN/2 + n, randomy + 6250);
 								}
 							};
 						};
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITY)) {
 						Random rand = new Random();
-						int n = rand.nextInt(481) - 240;
+						int n = rand.nextInt(441) - 220;
 						final Sprite sign = new Sprite(x + n, y + 500, resourcesManager.antigravitySign_region, vbom);
 						GameScene.this.attachChild(sign);
 						levelObject = new Sprite(x + n, y, resourcesManager.antiGravity_region, vbom) {
@@ -273,10 +273,11 @@ public class GameScene extends BaseScene{
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
 									Random rand = new Random();
-									int n = rand.nextInt(481) - 240;
-									int randomy = rand.nextInt(12501) - 6250;
-									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 500);
-									this.setPosition(RIGHT_MARGIN/2 + n, randomy);
+									int n = rand.nextInt(441) - 220;
+									//int randomy = rand.nextInt(12501) - 6250;
+									int randomy = rand.nextInt(6251) - 3125;
+									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 6750);
+									this.setPosition(RIGHT_MARGIN/2 + n, randomy + 6250);
 									player.registerEntityModifier(new DelayModifier(ANTIGRAVITY_DURATION, new IEntityModifierListener() {
 										
 										@Override
@@ -298,7 +299,7 @@ public class GameScene extends BaseScene{
 							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
-								if ((this.getY() - player.getY()) < 854) {
+								if ((player.getY() - this.getY()) < 400) {
 									this.startMoving();
 								}
 								if (player.collidesWith(this)) {

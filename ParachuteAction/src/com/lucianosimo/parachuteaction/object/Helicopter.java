@@ -35,7 +35,7 @@ public class Helicopter extends AnimatedSprite{
 	}
 	
 	public void startMoving() {
-		body.setLinearVelocity(new Vector2(-3, body.getLinearVelocity().y));
+		body.setLinearVelocity(new Vector2(-2, body.getLinearVelocity().y));
 	}
 	
 }
