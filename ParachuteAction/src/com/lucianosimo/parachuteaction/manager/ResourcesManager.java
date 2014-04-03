@@ -57,6 +57,9 @@ public class ResourcesManager {
 	
 	//Game items
 	
+	//Game HUD
+	public ITextureRegion openButton;
+	
 	//Platforms
 	public ITextureRegion landing_platfom_region;
 	
@@ -182,6 +185,8 @@ public class ResourcesManager {
 		landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform.png");
 		shield_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shield.png");
 		shieldHalo_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shieldHalo.png");
+		
+		openButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "openButton.png");
 		
 		antigravitySign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "antigravitySign.png");
 		shieldSign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shieldSign.png");

@@ -58,11 +58,13 @@ public class GameScene extends BaseScene{
 	private int parachuteFliedMeters = 0;
 	private int distanceToFloor = 0;
 	private int oldDistanceToFloor = 0;
+	private int distanceToFloorAtOpenParachute = 0;
 	
 	//Booleans
 	private Boolean firstFall = true;
 	private Boolean openParachute = false;
 	private Boolean shield = false;
+	private Boolean openParachuteDistanceSaved = false;
 	
 	//Texts variables
 	private Text meterCounterText;
@@ -75,6 +77,9 @@ public class GameScene extends BaseScene{
 	
 	//Physics world variable
 	private PhysicsWorld physicsWorld;
+	
+	//HUD Buttons
+	private Sprite openButton;
 	
 	//Shield Halo
 	private Sprite shieldHalo; 
@@ -123,8 +128,19 @@ public class GameScene extends BaseScene{
 	private void createHud() {
 		gameHud = new HUD();
 		
-		meterCounterText = new Text(20, 820, resourcesManager.meterCounterFont, "Meter Counter: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-		altimeterText = new Text(275, 820, resourcesManager.altimeterFont, "Meters to go: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		altimeterText = new Text(20, 820, resourcesManager.altimeterFont, "Meters to go: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		meterCounterText = new Text(20, 770, resourcesManager.meterCounterFont, "Meter Counter: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		
+		openButton = new Sprite(400, 800, resourcesManager.openButton, vbom){
+			@Override
+			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				if (pSceneTouchEvent.isActionDown()) {
+					//player.openParachute();
+					openParachute = true;
+				}
+				return true;
+			}
+		};
 		
 		meterCounterText.setAnchorCenter(0, 0);
 		altimeterText.setAnchorCenter(0, 0);
@@ -134,6 +150,9 @@ public class GameScene extends BaseScene{
 		
 		gameHud.attachChild(meterCounterText);
 		gameHud.attachChild(altimeterText);
+		gameHud.attachChild(openButton);
+		
+		gameHud.registerTouchArea(openButton);
 		
 		camera.setHUD(gameHud);
 	}
@@ -357,14 +376,14 @@ public class GameScene extends BaseScene{
 								engine.runOnUpdateThread(new Runnable() {
 									
 									@Override
-									public void run() {										
+									public void run() {
 										if (shield) {
 											shieldHalo.setVisible(true);
 										} else {
 											shieldHalo.setVisible(false);
 										}
 										//bug..corregir
-										int levelHeight = (int) (camera.getBoundsHeight() / PIXEL_METER_RATE);
+										//int levelHeight = (int) (camera.getBoundsHeight() / PIXEL_METER_RATE);
 										distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
 										if (firstFall) {
 											oldDistanceToFloor = distanceToFloor;
@@ -375,12 +394,17 @@ public class GameScene extends BaseScene{
 											fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
 											meterCounterText.setText("Flied Meters: " + fliedMeters);
 										}
-										if (distanceToFloor < (levelHeight/4)) {
+										/*if (distanceToFloor < (levelHeight/4)) {
 											player.openParachute();
 											openParachute = true;
-										}
+										}*/
 										if (openParachute) {
+											player.openParachute();
 											parachuteFliedMeters = fliedMeters - freeFliedMeters;
+											if (!openParachuteDistanceSaved) {
+												openParachuteDistanceSaved = true;
+												distanceToFloorAtOpenParachute = distanceToFloor;
+											}
 										} else {
 											freeFliedMeters = fliedMeters;
 										}
@@ -414,10 +438,10 @@ public class GameScene extends BaseScene{
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
-									engine.runOnUpdateThread(new Runnable() {
-										
-										@Override
-										public void run() {
+								engine.runOnUpdateThread(new Runnable() {
+									@Override
+									public void run() {
+										if (distanceToFloorAtOpenParachute >= 1000) {
 											GameScene.this.setIgnoreUpdate(true);
 											camera.setChaseEntity(null);
 											saveNumbreOfJumps("numberOfJumps");
@@ -427,8 +451,13 @@ public class GameScene extends BaseScene{
 											Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
 											levelCompleted.setText("You landed safely!! You flied " + fliedMeters + " meters");
 											GameScene.this.attachChild(levelCompleted);											
+										} else {
+											GameScene.this.setIgnoreUpdate(true);
+											camera.setChaseEntity(null);
+											player.killPlayer();
 										}
-									});
+									}
+								});
 								}
 							};
 						};
