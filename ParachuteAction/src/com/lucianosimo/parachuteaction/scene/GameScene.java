@@ -61,6 +61,7 @@ public class GameScene extends BaseScene{
 	private int oldDistanceToFloor = 0;
 	private int distanceToFloorAtOpenParachute = 0;
 	private int meterCounterForReduceSpeed = 0;
+	private int levelHeight = 0;
 	
 	//Booleans
 	private Boolean firstFall = true;
@@ -213,6 +214,8 @@ public class GameScene extends BaseScene{
 					final int height = SAXUtils.getIntAttributeOrThrow(pAttributes, LevelConstants.TAG_LEVEL_ATTRIBUTE_HEIGHT);
 					camera.setBounds(0, 0, width, height);
 					camera.setBoundsEnabled(true);
+					levelHeight = height / PIXEL_METER_RATE;
+					Log.e("parachute","level height " + levelHeight);
 					return GameScene.this;
 				}
 			});
@@ -241,7 +244,7 @@ public class GameScene extends BaseScene{
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
 						Random rand = new Random();
 						int n = rand.nextInt(441) - 220;
-						final Sprite sign = new Sprite(x + n, y + 500, resourcesManager.shieldSign_region, vbom);
+						final Sprite sign = new Sprite(x + n, y + 1000, resourcesManager.shieldSign_region, vbom);
 						GameScene.this.attachChild(sign);
 						levelObject = new Sprite(x + n, y, resourcesManager.shield_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
@@ -249,9 +252,12 @@ public class GameScene extends BaseScene{
 								if (player.collidesWith(this)) {
 									Random rand = new Random();
 									int n = rand.nextInt(441) - 220;
-									int randomy = rand.nextInt(6251) - 3125;
-									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 6750);
-									this.setPosition(RIGHT_MARGIN/2 + n, randomy + 6250);
+									//int randomy = rand.nextInt(6251) - 3125;
+									int randomy = rand.nextInt(((levelHeight/8)*3) + 1) - ((levelHeight/16)*3);
+									//sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 6750);
+									//this.setPosition(RIGHT_MARGIN/2 + n, randomy + 6250);
+									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 17000);
+									this.setPosition(RIGHT_MARGIN/2 + n, randomy + 16000);
 									player.registerEntityModifier(new DelayModifier(SHIELD_DURATION, new IEntityModifierListener() {
 										
 										@Override
@@ -272,7 +278,7 @@ public class GameScene extends BaseScene{
 						//n = rand.nextInt(max - min + 1) + min;
 						Random rand = new Random();
 						int n = rand.nextInt(441) - 220;
-						final Sprite sign = new Sprite(x + n, y + 500, resourcesManager.upperImpulseSign_region, vbom);
+						final Sprite sign = new Sprite(x + n, y + 1000, resourcesManager.upperImpulseSign_region, vbom);
 						GameScene.this.attachChild(sign);
 						levelObject = new Sprite(x + n, y, resourcesManager.upperImpulse_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
@@ -281,16 +287,19 @@ public class GameScene extends BaseScene{
 									player.upperImpulse();
 									Random rand = new Random();
 									int n = rand.nextInt(441) - 220;
-									int randomy = rand.nextInt(6251) - 3125;
-									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 6750);
-									this.setPosition(RIGHT_MARGIN/2 + n, randomy + 6250);
+									//int randomy = rand.nextInt(6251) - 3125;
+									//sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 6750);
+									//this.setPosition(RIGHT_MARGIN/2 + n, randomy + 6250);
+									int randomy = rand.nextInt(((levelHeight/8)*3) + 1) - ((levelHeight/16)*3);
+									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 17000);
+									this.setPosition(RIGHT_MARGIN/2 + n, randomy + 16000);
 								}
 							};
 						};
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITY)) {
 						Random rand = new Random();
 						int n = rand.nextInt(441) - 220;
-						final Sprite sign = new Sprite(x + n, y + 500, resourcesManager.antigravitySign_region, vbom);
+						final Sprite sign = new Sprite(x + n, y + 1000, resourcesManager.antigravitySign_region, vbom);
 						GameScene.this.attachChild(sign);
 						levelObject = new Sprite(x + n, y, resourcesManager.antiGravity_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
@@ -299,9 +308,12 @@ public class GameScene extends BaseScene{
 									Random rand = new Random();
 									int n = rand.nextInt(441) - 220;
 									//int randomy = rand.nextInt(12501) - 6250;
-									int randomy = rand.nextInt(6251) - 3125;
-									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 6750);
-									this.setPosition(RIGHT_MARGIN/2 + n, randomy + 6250);
+									//int randomy = rand.nextInt(6251) - 3125;
+									//sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 6750);
+									//this.setPosition(RIGHT_MARGIN/2 + n, randomy + 6250);
+									int randomy = rand.nextInt(((levelHeight/8)*3) + 1) - ((levelHeight/16)*3);
+									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 17000);
+									this.setPosition(RIGHT_MARGIN/2 + n, randomy + 16000);
 									player.registerEntityModifier(new DelayModifier(ANTIGRAVITY_DURATION, new IEntityModifierListener() {
 										
 										@Override
@@ -327,9 +339,11 @@ public class GameScene extends BaseScene{
 									this.startMoving();
 								}
 								if (player.collidesWith(this)) {
-									final Sprite helicopterRef = this; 
-									this.setVisible(false);
-									destroySprite(helicopterRef);
+									if (shield) {
+										final Sprite helicopterRef = this; 
+										this.setVisible(false);
+										destroySprite(helicopterRef);
+									}									
 								}
 							};
 							public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
@@ -352,10 +366,12 @@ public class GameScene extends BaseScene{
 								super.onManagedUpdate(pSecondsElapsed);
 								this.startMoving();
 								if (player.collidesWith(this)) {
-									final Sprite balloonRef = this; 
-									this.setVisible(false);
-									destroySprite(balloonRef);
-									Log.e("parachute", "kill sprite");
+									if (shield) {
+										final Sprite balloonRef = this; 
+										this.setVisible(false);
+										destroySprite(balloonRef);
+										Log.e("parachute", "kill sprite");
+									}									
 								}
 							};
 							public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
@@ -501,26 +517,38 @@ public class GameScene extends BaseScene{
 				final Fixture x1 = contact.getFixtureA();
 				final Fixture x2 = contact.getFixtureB();
 				
-				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player") && shield ) {
-					engine.runOnUpdateThread(new Runnable() {
-						@Override
-						public void run() {
-							physicsWorld.destroyBody(x1.getBody());
-						}
-					});
+				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player")) {
+					if (shield) {
+						engine.runOnUpdateThread(new Runnable() {
+							@Override
+							public void run() {
+								physicsWorld.destroyBody(x1.getBody());	
+							}
+						});
+					} else {
+						player.killPlayer();
+						setInactiveBody(x1.getBody());
+					}
+					
 				}
 				
-				if (x1.getBody().getUserData().equals("balloon") && x2.getBody().getUserData().equals("player") && shield ) {
-					Log.e("parachute", "kill balloon");
-					engine.runOnUpdateThread(new Runnable() {
-						@Override
-						public void run() {
-							physicsWorld.destroyBody(x1.getBody());
-						}
-					});
+				if (x1.getBody().getUserData().equals("balloon") && x2.getBody().getUserData().equals("player")) {
+					if (shield) {
+						engine.runOnUpdateThread(new Runnable() {
+							@Override
+							public void run() {
+								Log.e("parachute", "kill balloon");
+								physicsWorld.destroyBody(x1.getBody());															
+							}
+						});
+					} else {
+						Log.e("parachute", "kill player");
+						player.killPlayer();
+						setInactiveBody(x1.getBody());
+					}
 				}
 				
-				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player") && !shield ) {
+				/*if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player") && !shield ) {
 					player.killPlayer();
 					setInactiveBody(x1.getBody());
 				}
@@ -529,7 +557,7 @@ public class GameScene extends BaseScene{
 					Log.e("parachute", "kill player");
 					player.killPlayer();
 					setInactiveBody(x1.getBody());
-				}
+				}*/
 			}
 		};
 		return contactListener;
