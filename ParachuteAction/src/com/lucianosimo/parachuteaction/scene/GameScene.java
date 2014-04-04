@@ -31,6 +31,7 @@ import org.xml.sax.Attributes;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -59,6 +60,7 @@ public class GameScene extends BaseScene{
 	private int distanceToFloor = 0;
 	private int oldDistanceToFloor = 0;
 	private int distanceToFloorAtOpenParachute = 0;
+	private int meterCounterForReduceSpeed = 0;
 	
 	//Booleans
 	private Boolean firstFall = true;
@@ -353,6 +355,7 @@ public class GameScene extends BaseScene{
 									final Sprite balloonRef = this; 
 									this.setVisible(false);
 									destroySprite(balloonRef);
+									Log.e("parachute", "kill sprite");
 								}
 							};
 							public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
@@ -368,6 +371,7 @@ public class GameScene extends BaseScene{
 						GameScene.this.registerTouchArea(levelObject);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
 						shieldHalo = new Sprite(23, 46, resourcesManager.shieldHalo_region, vbom);
+						shieldHalo.setVisible(false);
 						player = new Player(x, y, vbom, camera, physicsWorld) {
 							
 							@Override
@@ -404,6 +408,11 @@ public class GameScene extends BaseScene{
 											if (!openParachuteDistanceSaved) {
 												openParachuteDistanceSaved = true;
 												distanceToFloorAtOpenParachute = distanceToFloor;
+												meterCounterForReduceSpeed = distanceToFloor;
+											}
+											if (distanceToFloor == meterCounterForReduceSpeed - 100) {
+												meterCounterForReduceSpeed -= 100;
+												player.reduceParachuteSpeed();
 											}
 										} else {
 											freeFliedMeters = fliedMeters;
@@ -502,6 +511,7 @@ public class GameScene extends BaseScene{
 				}
 				
 				if (x1.getBody().getUserData().equals("balloon") && x2.getBody().getUserData().equals("player") && shield ) {
+					Log.e("parachute", "kill balloon");
 					engine.runOnUpdateThread(new Runnable() {
 						@Override
 						public void run() {
@@ -516,6 +526,7 @@ public class GameScene extends BaseScene{
 				}
 				
 				if (x1.getBody().getUserData().equals("balloon") && x2.getBody().getUserData().equals("player") && !shield ) {
+					Log.e("parachute", "kill player");
 					player.killPlayer();
 					setInactiveBody(x1.getBody());
 				}
