@@ -44,6 +44,7 @@ import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
 import com.lucianosimo.parachuteaction.object.Balloon;
+import com.lucianosimo.parachuteaction.object.Bird;
 import com.lucianosimo.parachuteaction.object.Helicopter;
 import com.lucianosimo.parachuteaction.object.Player;
 
@@ -77,6 +78,7 @@ public class GameScene extends BaseScene{
 	private Player player;
 	private Helicopter helicopter;
 	private Balloon balloon;
+	private Bird bird;
 	
 	//Physics world variable
 	private PhysicsWorld physicsWorld;
@@ -104,9 +106,11 @@ public class GameScene extends BaseScene{
 	private static final String TAG_ENTITY_ATTRIBUTE_TYPE = "type";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER = "player";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER = "helicopter";
+	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD = "bird";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON = "balloon";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD = "cloud";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD = "shield";
+	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SLOW = "slow";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE = "upperImpulse";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITY = "antigravity";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM = "landingPlatform";
@@ -330,6 +334,18 @@ public class GameScene extends BaseScene{
 								}
 							};
 						};
+					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SLOW)) {
+						levelObject = new Sprite(x, y, resourcesManager.slow_region, vbom) {
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								if (player.collidesWith(this)) {
+									final Sprite slowRef = this; 
+									this.setVisible(false);
+									//destroySprite(slowRef);
+									player.slowDownPlayer();
+								}
+							};
+						};
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
 						helicopter = new Helicopter(x, y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
 							
@@ -356,6 +372,33 @@ public class GameScene extends BaseScene{
 							};
 						};
 						levelObject = helicopter;
+						GameScene.this.registerTouchArea(levelObject);
+					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
+						bird = new Bird(x, y, vbom, camera, physicsWorld, resourcesManager.bird_region.deepCopy()) {
+							
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								if ((player.getY() - this.getY()) < 400) {
+									this.startMoving();
+								}
+								if (player.collidesWith(this)) {
+									if (shield) {
+										final Sprite birdRef = this; 
+										this.setVisible(false);
+										destroySprite(birdRef);
+									}									
+								}
+							};
+							public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+								if (pSceneTouchEvent.isActionDown()) {
+									final Sprite birdRef = this; 
+									this.setVisible(false);
+									destroySprite(birdRef);					
+								}
+								return true;
+							};
+						};
+						levelObject = bird;
 						GameScene.this.registerTouchArea(levelObject);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON)) {
 						Random rand = new Random();
@@ -516,6 +559,21 @@ public class GameScene extends BaseScene{
 			public void beginContact(Contact contact) {
 				final Fixture x1 = contact.getFixtureA();
 				final Fixture x2 = contact.getFixtureB();
+				
+				if (x1.getBody().getUserData().equals("bird") && x2.getBody().getUserData().equals("player")) {
+					if (shield) {
+						engine.runOnUpdateThread(new Runnable() {
+							@Override
+							public void run() {
+								physicsWorld.destroyBody(x1.getBody());	
+							}
+						});
+					} else {
+						player.killPlayer();
+						setInactiveBody(x1.getBody());
+					}
+					
+				}
 				
 				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player")) {
 					if (shield) {

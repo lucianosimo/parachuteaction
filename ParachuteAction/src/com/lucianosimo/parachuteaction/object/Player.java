@@ -92,5 +92,9 @@ public abstract class Player extends AnimatedSprite{
 	public void killPlayer() {
 		onDie();
 	}
+	
+	public void slowDownPlayer() {
+		body.setLinearVelocity(new Vector2(body.getLinearVelocity().x, -6));
+	}
 
 }
