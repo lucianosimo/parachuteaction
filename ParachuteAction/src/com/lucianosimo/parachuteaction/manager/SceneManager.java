@@ -97,7 +97,7 @@ public class SceneManager {
 		loadingScene = new LoadingScene();
 		setScene(loadingScene);
 		scene.disposeScene();
-		ResourcesManager.getInstance().unloadMenuTextures();
+		ResourcesManager.getInstance().unloadMenuResources();
 		mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 			@Override
 			public void onTimePassed(final TimerHandler pTimerHandler) {
@@ -117,7 +117,7 @@ public class SceneManager {
 			case SCENE_STATISTICS:
 				break;
 			case SCENE_GAME:
-				ResourcesManager.getInstance().unloadGameTextures();
+				ResourcesManager.getInstance().unloadGameResources();
 				break;
 			default:
 				break;

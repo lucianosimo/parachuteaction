@@ -166,12 +166,21 @@ public class GameScene extends BaseScene{
 		registerUpdateHandler(physicsWorld);
 	}
 	
-	private void saveNumbreOfJumps(String key) {
+	private void saveUnsuccessfulJumps(String key) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		int numberOfJumps = sharedPreferences.getInt("numberOfJumps", 0);
-		numberOfJumps++;
-		editor.putInt("numberOfJumps", numberOfJumps);
+		int numberOfUnsuccessfulJumps = sharedPreferences.getInt("unsuccessfulJumps", 0);
+		numberOfUnsuccessfulJumps++;
+		editor.putInt("unsuccessfulJumps", numberOfUnsuccessfulJumps);
+		editor.commit();
+	}
+	
+	private void saveSuccessfulJumps(String key) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		int numberOfSuccessfulJumps = sharedPreferences.getInt("successfulJumps", 0);
+		numberOfSuccessfulJumps++;
+		editor.putInt("successfulJumps", numberOfSuccessfulJumps);
 		editor.commit();
 	}
 	
@@ -480,6 +489,7 @@ public class GameScene extends BaseScene{
 									
 									@Override
 									public void run() {
+										saveUnsuccessfulJumps("unsuccessfulJumps");
 										Text gameOver = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.gameOverFont, "Game over!", new TextOptions(HorizontalAlign.LEFT), vbom);
 								        gameOver.setText("Game over!!");
 										GameScene.this.attachChild(gameOver);
@@ -504,7 +514,7 @@ public class GameScene extends BaseScene{
 									public void run() {
 										if (distanceToFloorAtOpenParachute >= 1000) {
 											//SAVE VARIABLES
-											saveNumbreOfJumps("numberOfJumps");
+											saveSuccessfulJumps("successfulJumps");
 											saveMaxFliedMeters("fliedMeters", fliedMeters);
 											saveMaxFreeFliedMeters("freeFliedMeters", freeFliedMeters);
 											saveMaxParachuteFliedMeters("parachuteFliedMeters", parachuteFliedMeters);
@@ -514,7 +524,7 @@ public class GameScene extends BaseScene{
 											camera.setChaseEntity(null);
 											Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfreefliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
 											Text maxSpeed = new Text(camera.getCenterX(), camera.getCenterY() - 50, resourcesManager.maxSpeedFont, "Yourmaxspeedwas: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-											levelCompleted.setText("You landed safely!! You free flied " + fliedMeters + " meters");
+											levelCompleted.setText("You landed safely!! You free flied " + freeFliedMeters + " meters");
 											maxSpeed.setText("Your max speed was: " + GameScene.this.maxSpeed);
 											GameScene.this.attachChild(levelCompleted);	
 											GameScene.this.attachChild(maxSpeed);

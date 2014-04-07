@@ -20,7 +20,8 @@ import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
 public class StatisticsScene extends BaseScene implements IOnMenuItemClickListener{
 	
 	private MenuScene menuChildScene;	
-	private Text numberOfJumpsText;
+	private Text numberOfSuccessfulJumpsText;
+	private Text numberOfUnsuccessfulJumpsText;
 	private Text maxFliedMetersText;
 	private Text freeFliedMetersText;
 	private Text parachuteFliedMetersText;
@@ -55,7 +56,8 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		float screenWidth = resourcesManager.camera.getWidth();
 		float screenHeight = resourcesManager.camera.getHeight();
 		
-		numberOfJumpsText = new Text(20, 430, resourcesManager.numberOfJumpsFont, "Jumps :0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		numberOfSuccessfulJumpsText = new Text(20, 430, resourcesManager.numberOfSuccessfulJumpsFont, "Successfuljumps :0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		numberOfUnsuccessfulJumpsText = new Text(20, 430, resourcesManager.numberOfUnsuccessfulJumpsFont, "Unsuccessfuljumps :0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		maxFliedMetersText = new Text(20, 430, resourcesManager.maxFliedMetersFont, "Longest fly:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		freeFliedMetersText = new Text(20, 430, resourcesManager.freeFliedMetersFont, "Free flied meters:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		parachuteFliedMetersText = new Text(20, 430, resourcesManager.parachuteFliedMetersFont, "Parachute flied meters:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
@@ -67,15 +69,17 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
 		
-		menuChildScene.attachChild(numberOfJumpsText);
+		menuChildScene.attachChild(numberOfSuccessfulJumpsText);
+		menuChildScene.attachChild(numberOfUnsuccessfulJumpsText);
 		menuChildScene.attachChild(maxFliedMetersText);
 		menuChildScene.attachChild(freeFliedMetersText);
 		menuChildScene.attachChild(parachuteFliedMetersText);
 		
-		numberOfJumpsText.setPosition(0, 220);
-		maxFliedMetersText.setPosition(0, 180);
-		freeFliedMetersText.setPosition(0, 140);
-		parachuteFliedMetersText.setPosition(0, 100);
+		numberOfSuccessfulJumpsText.setPosition(0, 220);
+		numberOfUnsuccessfulJumpsText.setPosition(0, 180);
+		maxFliedMetersText.setPosition(0, 140);
+		freeFliedMetersText.setPosition(0, 100);
+		parachuteFliedMetersText.setPosition(0, 60);
 		
 		menuChildScene.setOnMenuItemClickListener(this);
 		setChildScene(menuChildScene);
@@ -84,10 +88,12 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 	private void loadSavedPreferences() {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		int maxFliedMeters = sharedPreferences.getInt("fliedMeters", 0);
-		int numberOfJumps = sharedPreferences.getInt("numberOfJumps", 0);
+		int numberOfSuccessfulJumps = sharedPreferences.getInt("successfulJumps", 0);
+		int numberOfUnsuccessfulJumps = sharedPreferences.getInt("unsuccessfulJumps", 0);
 		int freeFliedMeters = sharedPreferences.getInt("freeFliedMeters", 0);
 		int parachuteFliedMeters = sharedPreferences.getInt("parachuteFliedMeters", 0);
-		numberOfJumpsText.setText("Jumps: " + numberOfJumps);
+		numberOfSuccessfulJumpsText.setText("Successful jumps: " + numberOfSuccessfulJumps);
+		numberOfUnsuccessfulJumpsText.setText("Unsuccessful jumps: " + numberOfUnsuccessfulJumps);
 		maxFliedMetersText.setText("Longest fly: " + maxFliedMeters);
 		freeFliedMetersText.setText("Free flied meters: " + freeFliedMeters);
 		parachuteFliedMetersText.setText("Parachute flied meters: " + parachuteFliedMeters);
