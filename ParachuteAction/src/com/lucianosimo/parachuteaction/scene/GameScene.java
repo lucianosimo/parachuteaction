@@ -63,7 +63,7 @@ public class GameScene extends BaseScene{
 	private int distanceToFloorAtOpenParachute = 0;
 	private int meterCounterForReduceSpeed = 0;
 	private int levelHeight = 0;
-	private float maxSpeed = 0;
+	private int maxSpeed = 0;
 	
 	//Booleans
 	private Boolean firstFall = true;
@@ -184,11 +184,11 @@ public class GameScene extends BaseScene{
 		editor.commit();
 	}
 	
-	private void saveMaxSpeed(String key, float maxSpeed) {
+	private void saveMaxSpeed(String key, int maxSpeed) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		if (sharedPreferences.getInt("maxSpeed", 0) < maxSpeed) {
-			editor.putFloat("maxSpeed", maxSpeed);
+			editor.putInt("maxSpeed", maxSpeed);
 		}		
 		editor.commit();
 	}
@@ -263,8 +263,8 @@ public class GameScene extends BaseScene{
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
-									sign.setVisible(false);
-									this.setVisible(false);
+									destroySprite(sign);
+									destroySprite(this);
 									player.registerEntityModifier(new DelayModifier(SHIELD_DURATION, new IEntityModifierListener() {
 										
 										@Override
@@ -293,8 +293,8 @@ public class GameScene extends BaseScene{
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
 									player.upperImpulse();
-									sign.setVisible(false);
-									this.setVisible(false);
+									destroySprite(sign);
+									destroySprite(this);
 								}
 							};
 						};
@@ -308,8 +308,8 @@ public class GameScene extends BaseScene{
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
-									sign.setVisible(false);
-									this.setVisible(false);
+									destroySprite(sign);
+									destroySprite(this);
 									player.registerEntityModifier(new DelayModifier(ANTIGRAVITY_DURATION, new IEntityModifierListener() {
 										
 										@Override
@@ -334,8 +334,7 @@ public class GameScene extends BaseScene{
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
-									this.setVisible(false);
-									this.setVisible(false);
+									destroySprite(this);
 									player.slowDownPlayer();
 								}
 							};
@@ -354,7 +353,7 @@ public class GameScene extends BaseScene{
 									if (shield) {
 										final Sprite helicopterRef = this; 
 										this.setVisible(false);
-										destroySprite(helicopterRef);
+										destroyBodyWithSprite(helicopterRef);
 									}									
 								}
 							};
@@ -362,7 +361,7 @@ public class GameScene extends BaseScene{
 								if (pSceneTouchEvent.isActionDown()) {
 									final Sprite helicopterRef = this; 
 									this.setVisible(false);
-									destroySprite(helicopterRef);					
+									destroyBodyWithSprite(helicopterRef);					
 								}
 								return true;
 							};
@@ -383,7 +382,7 @@ public class GameScene extends BaseScene{
 									if (shield) {
 										final Sprite birdRef = this; 
 										this.setVisible(false);
-										destroySprite(birdRef);
+										destroyBodyWithSprite(birdRef);
 									}									
 								}
 							};
@@ -391,7 +390,7 @@ public class GameScene extends BaseScene{
 								if (pSceneTouchEvent.isActionDown()) {
 									final Sprite birdRef = this; 
 									this.setVisible(false);
-									destroySprite(birdRef);					
+									destroyBodyWithSprite(birdRef);					
 								}
 								return true;
 							};
@@ -410,7 +409,7 @@ public class GameScene extends BaseScene{
 									if (shield) {
 										final Sprite balloonRef = this; 
 										this.setVisible(false);
-										destroySprite(balloonRef);
+										destroyBodyWithSprite(balloonRef);
 									}									
 								}
 							};
@@ -418,7 +417,7 @@ public class GameScene extends BaseScene{
 								if (pSceneTouchEvent.isActionDown()) {
 									final Sprite balloonRef = this; 
 									this.setVisible(false);
-									destroySprite(balloonRef);					
+									destroyBodyWithSprite(balloonRef);					
 								}
 								return true;
 							};
@@ -443,7 +442,7 @@ public class GameScene extends BaseScene{
 											shieldHalo.setVisible(false);
 										}
 										if (player.getPlayerSpeed() > maxSpeed) {
-											maxSpeed = player.getPlayerSpeed();
+											maxSpeed = (int) player.getPlayerSpeed();
 										}
 										distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
 										if (firstFall) {
@@ -647,7 +646,7 @@ public class GameScene extends BaseScene{
 		});
 	}
 	
-	private void destroySprite(final Sprite sp) {
+	private void destroyBodyWithSprite(final Sprite sp) {
 		engine.runOnUpdateThread(new Runnable() {
 			
 			@Override
@@ -658,6 +657,17 @@ public class GameScene extends BaseScene{
 				body.setActive(false);
 				physicsWorld.destroyBody(body);
 				GameScene.this.unregisterTouchArea(sp);
+				GameScene.this.detachChild(sp);
+			}
+		});
+	}
+	
+	private void destroySprite(final Sprite sp) {
+		engine.runOnUpdateThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				sp.setVisible(false);
 				GameScene.this.detachChild(sp);
 			}
 		});

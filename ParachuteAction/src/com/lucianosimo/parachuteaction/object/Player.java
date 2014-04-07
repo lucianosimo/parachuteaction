@@ -19,6 +19,8 @@ public abstract class Player extends AnimatedSprite{
 	private Boolean openParachute = false;
 	private int parachuteSpeed = -20;
 	
+	private static final int MAX_FREEFALL_SPEED = -40;
+	
 	private static final int LEFT_MARGIN = 0;
 	private static final int RIGHT_MARGIN = 480;
 	
@@ -48,6 +50,9 @@ public abstract class Player extends AnimatedSprite{
 					body.setLinearVelocity(new Vector2(-1, body.getLinearVelocity().y));
 				} else {
 					body.setLinearVelocity(new Vector2(GameActivity.mGravityX, body.getLinearVelocity().y));
+				}
+				if (body.getLinearVelocity().y < MAX_FREEFALL_SPEED) {
+					body.setLinearVelocity(body.getLinearVelocity().x, MAX_FREEFALL_SPEED);
 				}
 				if (openParachute) {
 					body.setLinearVelocity(new Vector2(body.getLinearVelocity().x, parachuteSpeed));
