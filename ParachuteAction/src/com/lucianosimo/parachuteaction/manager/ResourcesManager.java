@@ -41,9 +41,13 @@ public class ResourcesManager {
 	public ITextureRegion statistics_region;
 	public ITextureRegion menu_button;
 	public ITextureRegion achivements_button;
+	public ITextureRegion statistics_button;
+	public ITextureRegion upperAchivementLocked;
+	public ITextureRegion upperAchivementUnlocked;
 	private BuildableBitmapTextureAtlas menuTextureAtlas;
 	private BuildableBitmapTextureAtlas backgroundMenuTextureAtlas;
 	private BuildableBitmapTextureAtlas statisticsTextureAtlas;
+	private BuildableBitmapTextureAtlas achivementsTextureAtlas;
 	
 	//Menu y loading fonts 
 	public Font loadingFont;
@@ -133,18 +137,25 @@ public class ResourcesManager {
 		menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 500, 500, TextureOptions.BILINEAR);
 		backgroundMenuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
 		statisticsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 500, 500, TextureOptions.BILINEAR);
+		achivementsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 500, 500, TextureOptions.BILINEAR);
+		
 		menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundMenuTextureAtlas, activity, "menu_background.png");
 		play_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "play.png");
 		statistics_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "statistics.png");
 		menu_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(statisticsTextureAtlas, activity, "menu_button.png");
 		achivements_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(statisticsTextureAtlas, activity, "achivements_button.png");
+		statistics_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "statistics_button.png");
+		upperAchivementLocked = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "upperAchivementLocked.png");
+		upperAchivementUnlocked = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "upperAchivementUnlocked.png");
 		try {
 			this.menuTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			this.backgroundMenuTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			this.statisticsTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.achivementsTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			this.menuTextureAtlas.load();
 			this.backgroundMenuTextureAtlas.load();
 			this.statisticsTextureAtlas.load();
+			this.achivementsTextureAtlas.load();
 		} catch (final TextureAtlasBuilderException e) {
 			org.andengine.util.debug.Debug.e(e);
 		}
@@ -191,6 +202,7 @@ public class ResourcesManager {
 		this.menuTextureAtlas.unload();
 		this.backgroundMenuTextureAtlas.unload();
 		this.statisticsTextureAtlas.unload();
+		this.achivementsTextureAtlas.unload();
 	}
 	
 	public void unloadMenuFonts() {

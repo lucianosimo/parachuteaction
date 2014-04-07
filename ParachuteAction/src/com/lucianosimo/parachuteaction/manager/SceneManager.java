@@ -6,6 +6,7 @@ import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.ui.IGameInterface.OnCreateSceneCallback;
 
 import com.lucianosimo.parachuteaction.base.BaseScene;
+import com.lucianosimo.parachuteaction.scene.AchivementsScene;
 import com.lucianosimo.parachuteaction.scene.GameScene;
 import com.lucianosimo.parachuteaction.scene.LoadingScene;
 import com.lucianosimo.parachuteaction.scene.MainMenuScene;
@@ -17,6 +18,7 @@ public class SceneManager {
 	private BaseScene splashScene;
 	private BaseScene menuScene;
 	private BaseScene statisticsScene;
+	private BaseScene achivementsScene;
 	private BaseScene loadingScene;
 	private BaseScene gameScene;
 	
@@ -29,6 +31,7 @@ public class SceneManager {
 		SCENE_SPLASH,
 		SCENE_MENU,
 		SCENE_STATISTICS,
+		SCENE_ACHIVEMENTS,
 		SCENE_LOADING,
 		SCENE_GAME,
 	}
@@ -48,7 +51,10 @@ public class SceneManager {
 				setScene(menuScene);
 				break;
 			case SCENE_STATISTICS:
-				setScene(menuScene);
+				setScene(statisticsScene);
+				break;
+			case SCENE_ACHIVEMENTS:
+				setScene(achivementsScene);
 				break;
 			case SCENE_GAME:
 				setScene(gameScene);
@@ -116,6 +122,8 @@ public class SceneManager {
 		switch (scene.getSceneType()) {
 			case SCENE_STATISTICS:
 				break;
+			case SCENE_ACHIVEMENTS:
+				break;
 			case SCENE_GAME:
 				ResourcesManager.getInstance().unloadGameResources();
 				break;
@@ -145,6 +153,21 @@ public class SceneManager {
 				mEngine.unregisterUpdateHandler(pTimerHandler);
 				statisticsScene = new StatisticsScene();
 				setScene(statisticsScene);
+			}
+		}));
+	}
+	
+	public void loadAchivementsScene(final Engine mEngine, final BaseScene scene) {
+		loadingScene = new LoadingScene();
+		setScene(loadingScene);
+		scene.disposeScene();
+		mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+			
+			@Override
+			public void onTimePassed(final TimerHandler pTimerHandler) {
+				mEngine.unregisterUpdateHandler(pTimerHandler);
+				achivementsScene = new AchivementsScene();
+				setScene(achivementsScene);
 			}
 		}));
 	}

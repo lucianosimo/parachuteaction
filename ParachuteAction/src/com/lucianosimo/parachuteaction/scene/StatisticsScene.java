@@ -143,7 +143,7 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 				SceneManager.getInstance().loadMenuScene(engine, StatisticsScene.this);
 				return true;
 			case STATISTICS_ACHIVEMENTS:
-				SceneManager.getInstance().loadStatisticsScene(engine, this);
+				SceneManager.getInstance().loadAchivementsScene(engine, this);
 				return true;
 			default:
 				return false;
