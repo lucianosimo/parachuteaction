@@ -1,77 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <level width="480" height="65000">
     
-    <entity x="120" y="62500" type="cloud"/>
-    <entity x="120" y="60000" type="cloud"/>
-    <entity x="120" y="57500" type="cloud"/>
-    <entity x="120" y="55000" type="cloud"/>
-    <entity x="120" y="52500" type="cloud"/>
-    <entity x="120" y="50000" type="cloud"/>
-    <entity x="120" y="47500" type="cloud"/>
-    <entity x="120" y="45000" type="cloud"/>
-    <entity x="240" y="42500" type="cloud"/>
-    <entity x="360" y="40000" type="cloud"/>
-    <entity x="120" y="37500" type="cloud"/>
+    <entity x="240" y="64000" type="cloud"/>
+    <entity x="240" y="63000" type="cloud"/>
+    <entity x="240" y="62000" type="cloud"/>
+    <entity x="240" y="61000" type="cloud"/>
+    <entity x="240" y="60000" type="cloud"/>
+    <entity x="240" y="59000" type="cloud"/>
+    <entity x="240" y="58000" type="cloud"/>
+    <entity x="240" y="57000" type="cloud"/>
+    <entity x="240" y="56000" type="cloud"/>
+    <entity x="240" y="55000" type="cloud"/>
+    <entity x="240" y="54000" type="cloud"/>
+    <entity x="240" y="53000" type="cloud"/>
+    <entity x="240" y="52000" type="cloud"/>
+    <entity x="240" y="51000" type="cloud"/>    
+    <entity x="240" y="50000" type="cloud"/>
+    <entity x="240" y="49000" type="cloud"/>
+    <entity x="240" y="48000" type="cloud"/>
+    <entity x="240" y="47000" type="cloud"/>
+    <entity x="240" y="46000" type="cloud"/>
+    <entity x="240" y="45000" type="cloud"/>
+    <entity x="240" y="44000" type="cloud"/>
+    <entity x="240" y="43000" type="cloud"/>
+    <entity x="240" y="42000" type="cloud"/>
+    <entity x="240" y="41000" type="cloud"/>
+    <entity x="240" y="40000" type="cloud"/>
+    <entity x="240" y="39000" type="cloud"/>
+    <entity x="240" y="38000" type="cloud"/>
+    <entity x="240" y="37000" type="cloud"/>
+    <entity x="240" y="36000" type="cloud"/>
     <entity x="240" y="35000" type="cloud"/>
-    <entity x="360" y="32500" type="cloud"/>    
-    
-    <entity x="120" y="30000" type="cloud"/>
-    <entity x="120" y="27500" type="cloud"/>
-    <entity x="120" y="25000" type="cloud"/>
-    <entity x="120" y="22500" type="cloud"/>
-    <entity x="120" y="20000" type="cloud"/>
-    <entity x="120" y="18500" type="cloud"/>
+    <entity x="240" y="34000" type="cloud"/>
+    <entity x="240" y="33000" type="cloud"/>
+    <entity x="240" y="32000" type="cloud"/>
+    <entity x="240" y="31000" type="cloud"/>
+    <entity x="240" y="30000" type="cloud"/>
+    <entity x="240" y="29000" type="cloud"/>
+    <entity x="240" y="28000" type="cloud"/>
+    <entity x="240" y="27000" type="cloud"/>
+    <entity x="240" y="26000" type="cloud"/>
+    <entity x="240" y="25000" type="cloud"/>
+    <entity x="240" y="24000" type="cloud"/>
+    <entity x="240" y="23000" type="cloud"/>
+    <entity x="240" y="22000" type="cloud"/>
+    <entity x="240" y="21000" type="cloud"/>
+    <entity x="240" y="20000" type="cloud"/>
+    <entity x="240" y="19000" type="cloud"/>
     <entity x="240" y="18000" type="cloud"/>
-    <entity x="360" y="17500" type="cloud"/>
-    <entity x="120" y="17000" type="cloud"/>
-    <entity x="240" y="16500" type="cloud"/>
-    <entity x="360" y="16000" type="cloud"/>
-    <entity x="120" y="15500" type="cloud"/>
+    <entity x="240" y="17000" type="cloud"/>
+    <entity x="240" y="16000" type="cloud"/>
     <entity x="240" y="15000" type="cloud"/>
-    <entity x="360" y="14500" type="cloud"/>
-    <entity x="120" y="14000" type="cloud"/>
-    <entity x="240" y="13500" type="cloud"/>
-    <entity x="360" y="13000" type="cloud"/>
-    <entity x="120" y="12500" type="cloud"/>
+    <entity x="240" y="14000" type="cloud"/>
+    <entity x="240" y="13000" type="cloud"/>
     <entity x="240" y="12000" type="cloud"/>
-    <entity x="360" y="11500" type="cloud"/>
-    <entity x="120" y="11000" type="cloud"/>
-    <entity x="240" y="10500" type="cloud"/>
-    <entity x="360" y="10000" type="cloud"/>
-    <entity x="120" y="9500" type="cloud"/>
-    <entity x="240" y="9000" type="cloud"/>
-    <entity x="360" y="8500" type="cloud"/>
-    <entity x="120" y="8000" type="cloud"/>
-    <entity x="240" y="7500" type="cloud"/>
-    <entity x="360" y="7000" type="cloud"/>
-    <entity x="120" y="6500" type="cloud"/>
-    <entity x="240" y="6000" type="cloud"/>
-    <entity x="360" y="5500" type="cloud"/>
-    <entity x="120" y="5000" type="cloud"/>
-    <entity x="240" y="4500" type="cloud"/>
-    <entity x="360" y="4000" type="cloud"/>
-    <entity x="120" y="3500" type="cloud"/>
-    <entity x="240" y="3000" type="cloud"/>
-    <entity x="360" y="2500" type="cloud"/>
-    <entity x="120" y="2000" type="cloud"/>
-    <entity x="240" y="1500" type="cloud"/>
-    <entity x="360" y="1000" type="cloud"/>
+    <entity x="240" y="11000" type="cloud"/>
+    <entity x="240" y="10000" type="cloud"/>
     
     <entity x="240" y="25000" type="shield"/>
+    <entity x="240" y="8000" type="shield"/>
     
-    <entity x="240" y="15000" type="antigravity"/>
+    <entity x="240" y="35000" type="antigravity"/>
     
-    <entity x="240" y="10000" type="upperImpulse"/>
+    <entity x="240" y="60000" type="upperImpulse"/>
+    <entity x="240" y="55000" type="upperImpulse"/>
+    <entity x="240" y="30000" type="upperImpulse"/>
+    <entity x="240" y="20000" type="upperImpulse"/>
+    <entity x="240" y="15000" type="upperImpulse"/>
     
-    <entity x="240" y="40000" type="slow"/>
-    
-    <entity x="480" y="12000" type="helicopter"/>
+    <entity x="480" y="40000" type="helicopter"/>
+    <entity x="480" y="20000" type="helicopter"/>
     <entity x="480" y="7500" type="helicopter"/>
     <entity x="480" y="5000" type="helicopter"/>
+    <entity x="480" y="2500" type="helicopter"/>
    
-    <entity x="480" y="60000" type="bird"/>
+    <entity x="0" y="30000" type="bird"/>
     
+    <entity x="240" y="30000" type="balloon"/>
     <entity x="240" y="15000" type="balloon"/>
+    <entity x="240" y="1000" type="balloon"/>
     
     <entity x="240" y="64000" type="player"/>
 

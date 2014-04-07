@@ -7,8 +7,6 @@ import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-import android.util.Log;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -19,12 +17,10 @@ public abstract class Player extends AnimatedSprite{
 
 	private Body body;
 	private Boolean openParachute = false;
-	private int parachuteSpeed = -15;
+	private int parachuteSpeed = -20;
 	
 	private static final int LEFT_MARGIN = 0;
 	private static final int RIGHT_MARGIN = 480;
-	//private static final int BOTTOM_MARGIN = 0;
-	//private static final int TOP_MARGIN = 854;
 	
 	public Player(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld) {
 		super(pX, pY, ResourcesManager.getInstance().player_region, vbom);
@@ -75,10 +71,9 @@ public abstract class Player extends AnimatedSprite{
 	}
 	
 	public void reduceParachuteSpeed() {
-		if (parachuteSpeed < -6) {
+		if (parachuteSpeed < -10) {
 			parachuteSpeed++;
 		}		
-		Log.e("parachute", "speed " + parachuteSpeed);
 	}
 	
 	public void upperImpulse() {
@@ -95,6 +90,10 @@ public abstract class Player extends AnimatedSprite{
 	
 	public void slowDownPlayer() {
 		body.setLinearVelocity(new Vector2(body.getLinearVelocity().x, -6));
+	}
+	
+	public float getPlayerSpeed() {
+		return -body.getLinearVelocity().y;
 	}
 
 }

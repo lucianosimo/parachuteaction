@@ -63,6 +63,7 @@ public class GameScene extends BaseScene{
 	private int distanceToFloorAtOpenParachute = 0;
 	private int meterCounterForReduceSpeed = 0;
 	private int levelHeight = 0;
+	private float maxSpeed = 0;
 	
 	//Booleans
 	private Boolean firstFall = true;
@@ -94,9 +95,7 @@ public class GameScene extends BaseScene{
 	private static final int PIXEL_METER_RATE = 16;
 	private static final int LEFT_MARGIN = 0;
 	private static final int RIGHT_MARGIN = 480;
-	//private static final int BOTTOM_MARGIN = 0;
-	//private static final int TOP_MARGIN = 854;
-	private static final int CLOUD_SPEED = -25;
+	private static final int CLOUD_SPEED = -50;
 	private static final int SHIELD_DURATION = 5;
 	private static final int ANTIGRAVITY_DURATION = 7;
 	
@@ -114,9 +113,6 @@ public class GameScene extends BaseScene{
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE = "upperImpulse";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITY = "antigravity";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM = "landingPlatform";
-	//private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPERIMPULSESIGN = "upperImpulseSign";
-	//private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITYSIGN = "antigravitySign";
-	//private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELDSIGN = "shieldSign";
 
 	@Override
 	public void createScene() {
@@ -188,6 +184,15 @@ public class GameScene extends BaseScene{
 		editor.commit();
 	}
 	
+	private void saveMaxSpeed(String key, float maxSpeed) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		if (sharedPreferences.getInt("maxSpeed", 0) < maxSpeed) {
+			editor.putFloat("maxSpeed", maxSpeed);
+		}		
+		editor.commit();
+	}
+	
 	private void saveMaxFreeFliedMeters(String key, int freeFliedMeters) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
@@ -234,7 +239,10 @@ public class GameScene extends BaseScene{
 					final Sprite levelObject;
 					
 					if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD)) {
-						levelObject = new Sprite(x, y, resourcesManager.cloud_region, vbom) {
+						Random rand = new Random();
+						int randX = rand.nextInt(441) - 220;
+						int randY = rand.nextInt(201) - 100;
+						levelObject = new Sprite(x + randX, y + randY, resourcesManager.cloud_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (this.getX() < LEFT_MARGIN) {
@@ -247,21 +255,16 @@ public class GameScene extends BaseScene{
 						handler.setVelocity(CLOUD_SPEED,0);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
 						Random rand = new Random();
-						int n = rand.nextInt(441) - 220;
-						final Sprite sign = new Sprite(x + n, y + 1000, resourcesManager.shieldSign_region, vbom);
+						int randX = rand.nextInt(441) - 220;
+						int randY = rand.nextInt(5001) - 2500;
+						final Sprite sign = new Sprite(x + randX, y + randY + 1500, resourcesManager.shieldSign_region, vbom);
 						GameScene.this.attachChild(sign);
-						levelObject = new Sprite(x + n, y, resourcesManager.shield_region, vbom) {
+						levelObject = new Sprite(x + randX, y + randY, resourcesManager.shield_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
-									Random rand = new Random();
-									int n = rand.nextInt(441) - 220;
-									//int randomy = rand.nextInt(6251) - 3125;
-									int randomy = rand.nextInt(((levelHeight/8)*3) + 1) - ((levelHeight/16)*3);
-									//sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 6750);
-									//this.setPosition(RIGHT_MARGIN/2 + n, randomy + 6250);
-									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 17000);
-									this.setPosition(RIGHT_MARGIN/2 + n, randomy + 16000);
+									sign.setVisible(false);
+									this.setVisible(false);
 									player.registerEntityModifier(new DelayModifier(SHIELD_DURATION, new IEntityModifierListener() {
 										
 										@Override
@@ -281,43 +284,32 @@ public class GameScene extends BaseScene{
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE)) {
 						//n = rand.nextInt(max - min + 1) + min;
 						Random rand = new Random();
-						int n = rand.nextInt(441) - 220;
-						final Sprite sign = new Sprite(x + n, y + 1000, resourcesManager.upperImpulseSign_region, vbom);
+						int randX = rand.nextInt(441) - 220;
+						int randY = rand.nextInt(5001) - 2500;
+						final Sprite sign = new Sprite(x + randX, y + randY + 1500, resourcesManager.upperImpulseSign_region, vbom);
 						GameScene.this.attachChild(sign);
-						levelObject = new Sprite(x + n, y, resourcesManager.upperImpulse_region, vbom) {
+						levelObject = new Sprite(x + randX, y + randY, resourcesManager.upperImpulse_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
 									player.upperImpulse();
-									Random rand = new Random();
-									int n = rand.nextInt(441) - 220;
-									//int randomy = rand.nextInt(6251) - 3125;
-									//sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 6750);
-									//this.setPosition(RIGHT_MARGIN/2 + n, randomy + 6250);
-									int randomy = rand.nextInt(((levelHeight/8)*3) + 1) - ((levelHeight/16)*3);
-									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 17000);
-									this.setPosition(RIGHT_MARGIN/2 + n, randomy + 16000);
+									sign.setVisible(false);
+									this.setVisible(false);
 								}
 							};
 						};
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITY)) {
 						Random rand = new Random();
-						int n = rand.nextInt(441) - 220;
-						final Sprite sign = new Sprite(x + n, y + 1000, resourcesManager.antigravitySign_region, vbom);
+						int randX = rand.nextInt(441) - 220;
+						int randY = rand.nextInt(5001) - 2500;
+						final Sprite sign = new Sprite(x + randX, y + randY + 1000, resourcesManager.antigravitySign_region, vbom);
 						GameScene.this.attachChild(sign);
-						levelObject = new Sprite(x + n, y, resourcesManager.antiGravity_region, vbom) {
+						levelObject = new Sprite(x + randX, y + randY, resourcesManager.antiGravity_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
-									Random rand = new Random();
-									int n = rand.nextInt(441) - 220;
-									//int randomy = rand.nextInt(12501) - 6250;
-									//int randomy = rand.nextInt(6251) - 3125;
-									//sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 6750);
-									//this.setPosition(RIGHT_MARGIN/2 + n, randomy + 6250);
-									int randomy = rand.nextInt(((levelHeight/8)*3) + 1) - ((levelHeight/16)*3);
-									sign.setPosition(RIGHT_MARGIN/2 + n, randomy + 17000);
-									this.setPosition(RIGHT_MARGIN/2 + n, randomy + 16000);
+									sign.setVisible(false);
+									this.setVisible(false);
 									player.registerEntityModifier(new DelayModifier(ANTIGRAVITY_DURATION, new IEntityModifierListener() {
 										
 										@Override
@@ -335,19 +327,23 @@ public class GameScene extends BaseScene{
 							};
 						};
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SLOW)) {
-						levelObject = new Sprite(x, y, resourcesManager.slow_region, vbom) {
+						Random rand = new Random();
+						int randX = rand.nextInt(441) - 220;
+						int randY = rand.nextInt(5001) - 2500;
+						levelObject = new Sprite(x + randX, y + randY, resourcesManager.slow_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
-									final Sprite slowRef = this; 
 									this.setVisible(false);
-									//destroySprite(slowRef);
+									this.setVisible(false);
 									player.slowDownPlayer();
 								}
 							};
 						};
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
-						helicopter = new Helicopter(x, y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
+						Random rand = new Random();
+						int randY = rand.nextInt(2501) - 1250;
+						helicopter = new Helicopter(x, y + randY, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
 							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
@@ -374,7 +370,9 @@ public class GameScene extends BaseScene{
 						levelObject = helicopter;
 						GameScene.this.registerTouchArea(levelObject);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
-						bird = new Bird(x, y, vbom, camera, physicsWorld, resourcesManager.bird_region.deepCopy()) {
+						Random rand = new Random();
+						int randY = rand.nextInt(2501) - 1250;
+						bird = new Bird(x, y + randY, vbom, camera, physicsWorld, resourcesManager.bird_region.deepCopy()) {
 							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
@@ -402,8 +400,8 @@ public class GameScene extends BaseScene{
 						GameScene.this.registerTouchArea(levelObject);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON)) {
 						Random rand = new Random();
-						int n = rand.nextInt(441) - 220;
-						balloon = new Balloon(x + n, y, vbom, camera, physicsWorld, resourcesManager.balloon_region.deepCopy()) {
+						int randX = rand.nextInt(441) - 220;
+						balloon = new Balloon(x + randX, y, vbom, camera, physicsWorld, resourcesManager.balloon_region.deepCopy()) {
 							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
@@ -413,7 +411,6 @@ public class GameScene extends BaseScene{
 										final Sprite balloonRef = this; 
 										this.setVisible(false);
 										destroySprite(balloonRef);
-										Log.e("parachute", "kill sprite");
 									}									
 								}
 							};
@@ -445,8 +442,9 @@ public class GameScene extends BaseScene{
 										} else {
 											shieldHalo.setVisible(false);
 										}
-										//bug..corregir
-										//int levelHeight = (int) (camera.getBoundsHeight() / PIXEL_METER_RATE);
+										if (player.getPlayerSpeed() > maxSpeed) {
+											maxSpeed = player.getPlayerSpeed();
+										}
 										distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
 										if (firstFall) {
 											oldDistanceToFloor = distanceToFloor;
@@ -457,10 +455,6 @@ public class GameScene extends BaseScene{
 											fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
 											meterCounterText.setText("Flied Meters: " + fliedMeters);
 										}
-										/*if (distanceToFloor < (levelHeight/4)) {
-											player.openParachute();
-											openParachute = true;
-										}*/
 										if (openParachute) {
 											player.openParachute();
 											parachuteFliedMeters = fliedMeters - freeFliedMeters;
@@ -510,15 +504,21 @@ public class GameScene extends BaseScene{
 									@Override
 									public void run() {
 										if (distanceToFloorAtOpenParachute >= 1000) {
-											GameScene.this.setIgnoreUpdate(true);
-											camera.setChaseEntity(null);
+											//SAVE VARIABLES
 											saveNumbreOfJumps("numberOfJumps");
 											saveMaxFliedMeters("fliedMeters", fliedMeters);
 											saveMaxFreeFliedMeters("freeFliedMeters", freeFliedMeters);
 											saveMaxParachuteFliedMeters("parachuteFliedMeters", parachuteFliedMeters);
-											Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
-											levelCompleted.setText("You landed safely!! You flied " + fliedMeters + " meters");
-											GameScene.this.attachChild(levelCompleted);											
+											saveMaxSpeed("maxSpeed", maxSpeed);
+											//END SAVE VARIABLES
+											GameScene.this.setIgnoreUpdate(true);
+											camera.setChaseEntity(null);
+											Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfreefliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
+											Text maxSpeed = new Text(camera.getCenterX(), camera.getCenterY() - 50, resourcesManager.maxSpeedFont, "Yourmaxspeedwas: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+											levelCompleted.setText("You landed safely!! You free flied " + fliedMeters + " meters");
+											maxSpeed.setText("Your max speed was: " + GameScene.this.maxSpeed);
+											GameScene.this.attachChild(levelCompleted);	
+											GameScene.this.attachChild(maxSpeed);
 										} else {
 											GameScene.this.setIgnoreUpdate(true);
 											camera.setChaseEntity(null);
@@ -595,27 +595,15 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
-								Log.e("parachute", "kill balloon");
 								physicsWorld.destroyBody(x1.getBody());															
 							}
 						});
 					} else {
-						Log.e("parachute", "kill player");
 						player.killPlayer();
 						setInactiveBody(x1.getBody());
 					}
 				}
 				
-				/*if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player") && !shield ) {
-					player.killPlayer();
-					setInactiveBody(x1.getBody());
-				}
-				
-				if (x1.getBody().getUserData().equals("balloon") && x2.getBody().getUserData().equals("player") && !shield ) {
-					Log.e("parachute", "kill player");
-					player.killPlayer();
-					setInactiveBody(x1.getBody());
-				}*/
 			}
 		};
 		return contactListener;
