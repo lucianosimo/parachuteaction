@@ -64,6 +64,10 @@ public class GameScene extends BaseScene{
 	private int meterCounterForReduceSpeed = 0;
 	private int levelHeight = 0;
 	private int maxSpeed = 0;
+	//private int upperImpulseCounter = 0;
+	//private int antigravityCounter = 0;
+	//private int shieldCounter = 0;
+	//private int slowCounter = 0;
 	
 	//Booleans
 	private Boolean firstFall = true;
@@ -164,6 +168,78 @@ public class GameScene extends BaseScene{
 		physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, -3), false);
 		physicsWorld.setContactListener(contactListener());
 		registerUpdateHandler(physicsWorld);
+	}
+	
+	/*private void saveUpperImpulseCounter(String key, int upperImpulseCounter) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		int uiCounter = sharedPreferences.getInt("upperImpulseCounter", 0);
+		uiCounter += upperImpulseCounter;
+		editor.putInt("upperImpulseCounter", uiCounter);
+		editor.commit();
+	}
+	
+	private void saveAntigravityCounter(String key, int antigravityCounter) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		int agCounter = sharedPreferences.getInt("antigravityCounter", 0);
+		agCounter += antigravityCounter;
+		editor.putInt("antigravityCounter", agCounter);
+		editor.commit();
+	}
+	
+	private void saveShieldCounter(String key, int shieldCounter) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		int shCounter = sharedPreferences.getInt("shieldCounter", 0);
+		shCounter += shieldCounter;
+		editor.putInt("shieldCounter", shCounter);
+		editor.commit();
+	}
+	
+	private void saveSlowCounter(String key, int slowCounter) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		int sCounter = sharedPreferences.getInt("slowCounter", 0);
+		sCounter += slowCounter;
+		editor.putInt("slowCounter", sCounter);
+		editor.commit();
+	}*/
+	
+	private void saveUpperImpulseCounter(String key) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		int uiCounter = sharedPreferences.getInt("upperImpulseCounter", 0);
+		uiCounter++;
+		editor.putInt("upperImpulseCounter", uiCounter);
+		editor.commit();
+	}
+	
+	private void saveAntigravityCounter(String key) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		int agCounter = sharedPreferences.getInt("antigravityCounter", 0);
+		agCounter++;
+		editor.putInt("antigravityCounter", agCounter);
+		editor.commit();
+	}
+	
+	private void saveShieldCounter(String key) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		int shCounter = sharedPreferences.getInt("shieldCounter", 0);
+		shCounter++;
+		editor.putInt("shieldCounter", shCounter);
+		editor.commit();
+	}
+	
+	private void saveSlowCounter(String key) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		int sCounter = sharedPreferences.getInt("slowCounter", 0);
+		sCounter++;
+		editor.putInt("slowCounter", sCounter);
+		editor.commit();
 	}
 	
 	private void saveUnsuccessfulJumps(String key) {
@@ -272,6 +348,8 @@ public class GameScene extends BaseScene{
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
+									//shieldCounter++;
+									saveShieldCounter("shieldCounter");
 									destroySprite(sign);
 									destroySprite(this);
 									player.registerEntityModifier(new DelayModifier(SHIELD_DURATION, new IEntityModifierListener() {
@@ -301,6 +379,8 @@ public class GameScene extends BaseScene{
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
+									//upperImpulseCounter++;
+									saveUpperImpulseCounter("upperImpulseCounter");
 									player.upperImpulse();
 									destroySprite(sign);
 									destroySprite(this);
@@ -317,6 +397,8 @@ public class GameScene extends BaseScene{
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
+									//antigravityCounter++;
+									saveAntigravityCounter("antigravityCounter");
 									destroySprite(sign);
 									destroySprite(this);
 									player.registerEntityModifier(new DelayModifier(ANTIGRAVITY_DURATION, new IEntityModifierListener() {
@@ -343,6 +425,8 @@ public class GameScene extends BaseScene{
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
+									//slowCounter++;
+									saveSlowCounter("slowCounter");
 									destroySprite(this);
 									player.slowDownPlayer();
 								}
@@ -490,6 +574,10 @@ public class GameScene extends BaseScene{
 									@Override
 									public void run() {
 										saveUnsuccessfulJumps("unsuccessfulJumps");
+										/*saveUpperImpulseCounter("upperImpulseCounter", upperImpulseCounter);
+										saveAntigravityCounter("antigravityCounter", antigravityCounter);
+										saveShieldCounter("shieldCounter", shieldCounter);
+										saveSlowCounter("slowCounter", slowCounter);*/
 										Text gameOver = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.gameOverFont, "Game over!", new TextOptions(HorizontalAlign.LEFT), vbom);
 								        gameOver.setText("Game over!!");
 										GameScene.this.attachChild(gameOver);
@@ -519,12 +607,16 @@ public class GameScene extends BaseScene{
 											saveMaxFreeFliedMeters("freeFliedMeters", freeFliedMeters);
 											saveMaxParachuteFliedMeters("parachuteFliedMeters", parachuteFliedMeters);
 											saveMaxSpeed("maxSpeed", maxSpeed);
+											/*saveUpperImpulseCounter("upperImpulseCounter", upperImpulseCounter);
+											saveAntigravityCounter("antigravityCounter", antigravityCounter);
+											saveShieldCounter("shieldCounter", shieldCounter);
+											saveSlowCounter("slowCounter", slowCounter);*/
 											//END SAVE VARIABLES
 											GameScene.this.setIgnoreUpdate(true);
 											camera.setChaseEntity(null);
 											Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfreefliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
 											Text maxSpeed = new Text(camera.getCenterX(), camera.getCenterY() - 50, resourcesManager.maxSpeedFont, "Yourmaxspeedwas: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-											levelCompleted.setText("You landed safely!! You free flied " + freeFliedMeters + " meters");
+											levelCompleted.setText("You landed safely!! You flied " + freeFliedMeters + " meters");
 											maxSpeed.setText("Your max speed was: " + GameScene.this.maxSpeed);
 											GameScene.this.attachChild(levelCompleted);	
 											GameScene.this.attachChild(maxSpeed);
