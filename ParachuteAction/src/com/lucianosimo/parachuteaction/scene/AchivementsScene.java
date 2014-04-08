@@ -58,17 +58,12 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 		menuChildScene = new MenuScene(camera);
 		menuChildScene.setPosition(screenWidth/2, screenHeight/2);
 		
-		loadSavedPreferences();
+		loadAchievements();
 		
 		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(ACHIVEMENTS_MENU, resourcesManager.menu_button, vbom), 1.2f, 1);
 		final IMenuItem statisticsButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(ACHIVEMENTS_STATISTICS, resourcesManager.statistics_button, vbom), 1.2f, 1);
-		
-		if (upperImpulse < 3) {
-			upperAchivement = new Sprite(-200, 400, resourcesManager.upperAchivementLocked, vbom);
-		} else {
-			upperAchivement = new Sprite(-200, 400, resourcesManager.upperAchivementUnlocked, vbom);
-		}
-		
+				
+				
 		menuChildScene.addMenuItem(menuButtonItem);
 		menuChildScene.addMenuItem(statisticsButtonItem);
 		
@@ -85,12 +80,22 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 		setChildScene(menuChildScene);
 	}
 	
+	private void loadAchievements() {
+		loadSavedPreferences();
+		//UPPER IMPULSE ACHIEVEMENT
+		if (upperImpulse < 14) {
+			upperAchivement = new Sprite(-200, 400, resourcesManager.upperAchivementLocked, vbom);
+		} else {
+			upperAchivement = new Sprite(-200, 400, resourcesManager.upperAchivementUnlocked, vbom);
+		}
+	}
+	
 	private void loadSavedPreferences() {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		upperImpulse = sharedPreferences.getInt("upperImpulseCounter", 0);
 	}
 	
-
+	
 	@Override
 	public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem,	float pMenuItemLocalX, float pMenuItemLocalY) {
 		switch (pMenuItem.getID()) {

@@ -54,7 +54,6 @@ public class GameScene extends BaseScene{
 	private HUD gameHud;
 	
 	//Counters
-	//private int numberOfJumps = 0;
 	private int fliedMeters = 0;
 	private int freeFliedMeters = 0;
 	private int parachuteFliedMeters = 0;
@@ -64,16 +63,17 @@ public class GameScene extends BaseScene{
 	private int meterCounterForReduceSpeed = 0;
 	private int levelHeight = 0;
 	private int maxSpeed = 0;
-	//private int upperImpulseCounter = 0;
-	//private int antigravityCounter = 0;
-	//private int shieldCounter = 0;
-	//private int slowCounter = 0;
-	
+
 	//Booleans
-	private Boolean firstFall = true;
-	private Boolean openParachute = false;
-	private Boolean shield = false;
-	private Boolean openParachuteDistanceSaved = false;
+	private boolean firstFall = true;
+	private boolean openParachute = false;
+	private boolean shield = false;
+	private boolean openParachuteDistanceSaved = false;
+	
+	//Booleans de achievements
+	private boolean achievementsLoaded = false;
+	private boolean upperAchievementUnlockedBefore = false;
+	private boolean upperAchievementUnlockedAfter = false;
 	
 	//Texts variables
 	private Text meterCounterText;
@@ -123,6 +123,7 @@ public class GameScene extends BaseScene{
 		createBackground();
 		createHud();
 		createPhysics();
+		checkUnlockedUpperImpulse();
 		loadLevel(1);
 	}
 	
@@ -169,42 +170,6 @@ public class GameScene extends BaseScene{
 		physicsWorld.setContactListener(contactListener());
 		registerUpdateHandler(physicsWorld);
 	}
-	
-	/*private void saveUpperImpulseCounter(String key, int upperImpulseCounter) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-		Editor editor = sharedPreferences.edit();
-		int uiCounter = sharedPreferences.getInt("upperImpulseCounter", 0);
-		uiCounter += upperImpulseCounter;
-		editor.putInt("upperImpulseCounter", uiCounter);
-		editor.commit();
-	}
-	
-	private void saveAntigravityCounter(String key, int antigravityCounter) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-		Editor editor = sharedPreferences.edit();
-		int agCounter = sharedPreferences.getInt("antigravityCounter", 0);
-		agCounter += antigravityCounter;
-		editor.putInt("antigravityCounter", agCounter);
-		editor.commit();
-	}
-	
-	private void saveShieldCounter(String key, int shieldCounter) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-		Editor editor = sharedPreferences.edit();
-		int shCounter = sharedPreferences.getInt("shieldCounter", 0);
-		shCounter += shieldCounter;
-		editor.putInt("shieldCounter", shCounter);
-		editor.commit();
-	}
-	
-	private void saveSlowCounter(String key, int slowCounter) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-		Editor editor = sharedPreferences.edit();
-		int sCounter = sharedPreferences.getInt("slowCounter", 0);
-		sCounter += slowCounter;
-		editor.putInt("slowCounter", sCounter);
-		editor.commit();
-	}*/
 	
 	private void saveUpperImpulseCounter(String key) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
@@ -309,7 +274,6 @@ public class GameScene extends BaseScene{
 					camera.setBounds(0, 0, width, height);
 					camera.setBoundsEnabled(true);
 					levelHeight = height / PIXEL_METER_RATE;
-					Log.e("parachute","level height " + levelHeight);
 					return GameScene.this;
 				}
 			});
@@ -574,10 +538,6 @@ public class GameScene extends BaseScene{
 									@Override
 									public void run() {
 										saveUnsuccessfulJumps("unsuccessfulJumps");
-										/*saveUpperImpulseCounter("upperImpulseCounter", upperImpulseCounter);
-										saveAntigravityCounter("antigravityCounter", antigravityCounter);
-										saveShieldCounter("shieldCounter", shieldCounter);
-										saveSlowCounter("slowCounter", slowCounter);*/
 										Text gameOver = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.gameOverFont, "Game over!", new TextOptions(HorizontalAlign.LEFT), vbom);
 								        gameOver.setText("Game over!!");
 										GameScene.this.attachChild(gameOver);
@@ -601,25 +561,34 @@ public class GameScene extends BaseScene{
 									@Override
 									public void run() {
 										if (distanceToFloorAtOpenParachute >= 1000) {
-											//SAVE VARIABLES
 											saveSuccessfulJumps("successfulJumps");
 											saveMaxFliedMeters("fliedMeters", fliedMeters);
 											saveMaxFreeFliedMeters("freeFliedMeters", freeFliedMeters);
 											saveMaxParachuteFliedMeters("parachuteFliedMeters", parachuteFliedMeters);
 											saveMaxSpeed("maxSpeed", maxSpeed);
-											/*saveUpperImpulseCounter("upperImpulseCounter", upperImpulseCounter);
-											saveAntigravityCounter("antigravityCounter", antigravityCounter);
-											saveShieldCounter("shieldCounter", shieldCounter);
-											saveSlowCounter("slowCounter", slowCounter);*/
-											//END SAVE VARIABLES
 											GameScene.this.setIgnoreUpdate(true);
 											camera.setChaseEntity(null);
 											Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfreefliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
 											Text maxSpeed = new Text(camera.getCenterX(), camera.getCenterY() - 50, resourcesManager.maxSpeedFont, "Yourmaxspeedwas: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+											Text achievementsUnlocked = new Text(camera.getCenterX(), camera.getCenterY() - 100, resourcesManager.achievementsUnlockedFont, "Achievements unlocked", new TextOptions(HorizontalAlign.LEFT), vbom); 
 											levelCompleted.setText("You landed safely!! You flied " + freeFliedMeters + " meters");
 											maxSpeed.setText("Your max speed was: " + GameScene.this.maxSpeed);
+											achievementsUnlocked.setText("Achievements unlocked");
 											GameScene.this.attachChild(levelCompleted);	
 											GameScene.this.attachChild(maxSpeed);
+											GameScene.this.attachChild(achievementsUnlocked);
+											checkUnlockedUpperImpulse();
+											Log.e("parachute", "before " + upperAchievementUnlockedBefore);
+											Log.e("parachute", "after " + upperAchievementUnlockedAfter);
+											if (upperAchievementUnlockedAfter) {
+												if (!upperAchievementUnlockedBefore) {
+													Sprite upperImpulseAchievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.upperAchivementUnlocked, vbom);
+													GameScene.this.attachChild(upperImpulseAchievement);
+												} else {
+													Sprite upperImpulseAchievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.upperAchivementLocked, vbom);
+													GameScene.this.attachChild(upperImpulseAchievement);
+												}
+											}
 										} else {
 											GameScene.this.setIgnoreUpdate(true);
 											camera.setChaseEntity(null);
@@ -795,6 +764,21 @@ public class GameScene extends BaseScene{
         physicsWorld.reset();
  
         System.gc();
+	}
+	
+	private void checkUnlockedUpperImpulse() {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		int upperImpulse = sharedPreferences.getInt("upperImpulseCounter", 0);
+		if (upperImpulse >= 14) {
+			if (achievementsLoaded) {
+				upperAchievementUnlockedBefore = true;
+			} else {
+				upperAchievementUnlockedAfter = true;
+			}
+		}
+		achievementsLoaded = true;
+		Log.e("parachute", "before " + upperAchievementUnlockedBefore);
+		Log.e("parachute", "after " + upperAchievementUnlockedAfter);
 	}
 	
 }

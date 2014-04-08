@@ -68,18 +68,6 @@
     <entity x="240" y="20000" type="upperImpulse"/>
     <entity x="240" y="15000" type="upperImpulse"/>
     
-    <entity x="480" y="40000" type="helicopter"/>
-    <entity x="480" y="20000" type="helicopter"/>
-    <entity x="480" y="7500" type="helicopter"/>
-    <entity x="480" y="5000" type="helicopter"/>
-    <entity x="480" y="2500" type="helicopter"/>
-   
-    <entity x="0" y="30000" type="bird"/>
-    
-    <entity x="240" y="30000" type="balloon"/>
-    <entity x="240" y="15000" type="balloon"/>
-    <entity x="240" y="1000" type="balloon"/>
-    
     <entity x="240" y="64000" type="player"/>
 
     <entity x="240" y="20" type="landingPlatform"/>
