@@ -578,8 +578,6 @@ public class GameScene extends BaseScene{
 											GameScene.this.attachChild(maxSpeed);
 											GameScene.this.attachChild(achievementsUnlocked);
 											checkUnlockedUpperImpulse();
-											Log.e("parachute", "before " + upperAchievementUnlockedBefore);
-											Log.e("parachute", "after " + upperAchievementUnlockedAfter);
 											if (upperAchievementUnlockedAfter) {
 												if (!upperAchievementUnlockedBefore) {
 													Sprite upperImpulseAchievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.upperAchivementUnlocked, vbom);
@@ -769,14 +767,18 @@ public class GameScene extends BaseScene{
 	private void checkUnlockedUpperImpulse() {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		int upperImpulse = sharedPreferences.getInt("upperImpulseCounter", 0);
-		if (upperImpulse >= 14) {
+		Log.e("parachute", "achievementLoaded before if: " + achievementsLoaded);
+		if (upperImpulse >= 2) {
 			if (achievementsLoaded) {
+				Log.e("parachute", "if");
 				upperAchievementUnlockedBefore = true;
 			} else {
+				Log.e("parachute", "else");
 				upperAchievementUnlockedAfter = true;
 			}
 		}
 		achievementsLoaded = true;
+		Log.e("parachute", "achievementLoaded after if: " + achievementsLoaded);
 		Log.e("parachute", "before " + upperAchievementUnlockedBefore);
 		Log.e("parachute", "after " + upperAchievementUnlockedAfter);
 	}

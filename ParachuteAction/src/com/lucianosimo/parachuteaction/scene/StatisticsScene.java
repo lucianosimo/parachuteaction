@@ -12,8 +12,12 @@ import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.util.adt.align.HorizontalAlign;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
@@ -34,6 +38,7 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 	
 	private final int STATISTICS_MENU = 0;
 	private final int STATISTICS_ACHIVEMENTS = 1;
+	private final int RESET_STATISTICS = 2;
 	
 	@Override
 	public void createScene() {
@@ -78,6 +83,7 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		
 		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(STATISTICS_MENU, resourcesManager.menu_button, vbom), 1.2f, 1);
 		final IMenuItem achivementsButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(STATISTICS_ACHIVEMENTS, resourcesManager.achivements_button, vbom), 1.2f, 1);
+		final IMenuItem resetStatisticsItem = new ScaleMenuItemDecorator(new SpriteMenuItem(RESET_STATISTICS, resourcesManager.resetStatistics_button, vbom), 1.2f, 1);
 
 		statisticsChildScene = new MenuScene(camera);
 		statisticsChildScene.setPosition(screenWidth/2, screenHeight/2);
@@ -87,6 +93,7 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		
 		statisticsChildScene.addMenuItem(menuButtonItem);
 		statisticsChildScene.addMenuItem(achivementsButtonItem);
+		statisticsChildScene.addMenuItem(resetStatisticsItem);
 		
 		statisticsChildScene.attachChild(numberOfSuccessfulJumpsText);
 		statisticsChildScene.attachChild(numberOfUnsuccessfulJumpsText);
@@ -100,6 +107,7 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		
 		menuButtonItem.setPosition(-180, -350);
 		achivementsButtonItem.setPosition(180, -350);
+		resetStatisticsItem.setPosition(0, -200);
 		numberOfSuccessfulJumpsText.setPosition(0, 220);
 		numberOfUnsuccessfulJumpsText.setPosition(0, 180);
 		maxFliedMetersText.setPosition(0, 140);
@@ -145,9 +153,42 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 			case STATISTICS_ACHIVEMENTS:
 				SceneManager.getInstance().loadAchivementsScene(engine, this);
 				return true;
+			case RESET_STATISTICS:
+				resetStatistics();
+				return true;
 			default:
 				return false;
 		}
+	}
+	
+	private void resetStatistics() {
+		StatisticsScene.this.activity.runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				new AlertDialog.Builder(StatisticsScene.this.activity)
+				.setMessage("Do you really want to reset your statistics")
+				.setPositiveButton("Of course!!!", new DialogInterface.OnClickListener() {
+
+				    public void onClick(DialogInterface dialog, int whichButton) {
+				    	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+						Editor editor = sharedPreferences.edit();
+						editor.putInt("fliedMeters", 0);
+						editor.putInt("successfulJumps", 0);
+						editor.putInt("unsuccessfulJumps", 0);
+						editor.putInt("freeFliedMeters", 0);
+						editor.putInt("parachuteFliedMeters", 0);
+						editor.putInt("upperImpulseCounter", 0);
+						editor.putInt("antigravityCounter", 0);
+						editor.putInt("shieldCounter", 0);
+						editor.putInt("slowCounter", 0);
+						editor.commit();
+				        Toast.makeText(activity, "Statistics restarted", Toast.LENGTH_LONG).show();
+				    }})
+				 .setNegativeButton("Mmmm, not really", null).show();	
+				
+			}
+		});
 	}
 
 }

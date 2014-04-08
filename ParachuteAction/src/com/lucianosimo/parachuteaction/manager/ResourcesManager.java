@@ -42,6 +42,7 @@ public class ResourcesManager {
 	public ITextureRegion menu_button;
 	public ITextureRegion achivements_button;
 	public ITextureRegion statistics_button;
+	public ITextureRegion resetStatistics_button;
 	public ITextureRegion upperAchivementLocked;
 	public ITextureRegion upperAchivementUnlocked;
 	private BuildableBitmapTextureAtlas menuTextureAtlas;
@@ -145,7 +146,8 @@ public class ResourcesManager {
 		statistics_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "statistics.png");
 		menu_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(statisticsTextureAtlas, activity, "menu_button.png");
 		achivements_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(statisticsTextureAtlas, activity, "achivements_button.png");
-		statistics_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "statistics_button.png");
+		resetStatistics_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(statisticsTextureAtlas, activity, "reset_statistics.png");
+		statistics_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "statistics_button.png");		
 		upperAchivementLocked = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "upperAchivementLocked.png");
 		upperAchivementUnlocked = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "upperAchivementUnlocked.png");
 		try {
@@ -203,7 +205,7 @@ public class ResourcesManager {
 		this.menuTextureAtlas.unload();
 		this.backgroundMenuTextureAtlas.unload();
 		this.statisticsTextureAtlas.unload();
-		this.achivementsTextureAtlas.unload();
+		//this.achivementsTextureAtlas.unload();
 	}
 	
 	public void unloadMenuFonts() {
@@ -253,6 +255,9 @@ public class ResourcesManager {
 		landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform.png");
 		shield_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shield.png");
 		shieldHalo_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shieldHalo.png");
+		
+		//upperAchivementLocked = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperAchivementLocked.png");
+		//upperAchivementUnlocked = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperAchivementUnlocked.png");
 		
 		openButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "openButton.png");
 		
