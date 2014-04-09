@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.lucianosimo.parachuteaction.base.BaseScene;
+import com.lucianosimo.parachuteaction.helper.AchievementsHelper;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
 
@@ -83,10 +84,10 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 	private void loadAchievements() {
 		loadSavedPreferences();
 		//UPPER IMPULSE ACHIEVEMENT
-		if (upperImpulse < 2) {
-			upperAchivement = new Sprite(-200, 400, resourcesManager.upperAchivementLocked, vbom);
-		} else {
+		if (AchievementsHelper.upperAchievementUnlocked(upperImpulse)) {
 			upperAchivement = new Sprite(-200, 400, resourcesManager.upperAchivementUnlocked, vbom);
+		} else {
+			upperAchivement = new Sprite(-200, 400, resourcesManager.upperAchivementLocked, vbom);
 		}
 	}
 	

@@ -31,7 +31,6 @@ import org.xml.sax.Attributes;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -41,6 +40,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.lucianosimo.parachuteaction.base.BaseScene;
+import com.lucianosimo.parachuteaction.helper.AchievementsHelper;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
 import com.lucianosimo.parachuteaction.object.Balloon;
@@ -69,6 +69,7 @@ public class GameScene extends BaseScene{
 	private boolean openParachute = false;
 	private boolean shield = false;
 	private boolean openParachuteDistanceSaved = false;
+	private boolean loadedCountersBefore = false;
 	
 	//Texts variables
 	private Text meterCounterText;
@@ -557,31 +558,19 @@ public class GameScene extends BaseScene{
 									@Override
 									public void run() {
 										if (distanceToFloorAtOpenParachute >= 1000) {
-											upperImpulseCounterBefore = loadUpperImpulseCounter();
+											loadCounters();
+											loadedCountersBefore = true;
 											saveUpperImpulseCounter("upperImpulseCounter", upperImpulseCounter);
-											upperImpulseCounterAfter = loadUpperImpulseCounter();
-											Log.e("parachute", "before " + upperImpulseCounterBefore);
-											Log.e("parachute", "after " + upperImpulseCounterAfter);
-											if (upperImpulseCounterBefore < 2 && upperImpulseCounterAfter >= 2) {
-												Text achievementsUnlocked = new Text(camera.getCenterX(), camera.getCenterY() - 100, resourcesManager.achievementsUnlockedFont, "Achievements unlocked", new TextOptions(HorizontalAlign.LEFT), vbom);
-												Sprite upperImpulseAchievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.upperAchivementUnlocked, vbom);
-												achievementsUnlocked.setText("Achievements unlocked");
-												GameScene.this.attachChild(achievementsUnlocked);
-												GameScene.this.attachChild(upperImpulseAchievement);
-											}
 											saveSuccessfulJumps("successfulJumps");
 											saveMaxFliedMeters("fliedMeters", fliedMeters);
 											saveMaxFreeFliedMeters("freeFliedMeters", freeFliedMeters);
 											saveMaxParachuteFliedMeters("parachuteFliedMeters", parachuteFliedMeters);
 											saveMaxSpeed("maxSpeed", maxSpeed);
+											loadCounters();
+											displayAchievements();											
 											GameScene.this.setIgnoreUpdate(true);
 											camera.setChaseEntity(null);
-											Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfreefliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
-											Text maxSpeed = new Text(camera.getCenterX(), camera.getCenterY() - 50, resourcesManager.maxSpeedFont, "Yourmaxspeedwas: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-											levelCompleted.setText("You landed safely!! You flied " + freeFliedMeters + " meters");
-											maxSpeed.setText("Your max speed was: " + GameScene.this.maxSpeed);
-											GameScene.this.attachChild(levelCompleted);	
-											GameScene.this.attachChild(maxSpeed);
+											displayLevelCompleted();
 										} else {
 											GameScene.this.setIgnoreUpdate(true);
 											camera.setChaseEntity(null);
@@ -760,9 +749,32 @@ public class GameScene extends BaseScene{
 	}
 	
 	
-	private int loadUpperImpulseCounter() {
+	private void loadCounters() {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		int upperImpulseCounter = sharedPreferences.getInt("upperImpulseCounter", 0);
-		return upperImpulseCounter;
+		if (!loadedCountersBefore) {
+			upperImpulseCounterBefore = upperImpulseCounter;
+		} else {
+			upperImpulseCounterAfter = upperImpulseCounter;
+		}			
+	}
+	
+	private void displayAchievements() {
+		if (AchievementsHelper.upperAchievementUnlockedInLevel(upperImpulseCounterBefore, upperImpulseCounterAfter)) {
+			Text achievementsUnlocked = new Text(camera.getCenterX(), camera.getCenterY() - 100, resourcesManager.achievementsUnlockedFont, "Achievements unlocked", new TextOptions(HorizontalAlign.LEFT), vbom);
+			Sprite upperImpulseAchievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.upperAchivementUnlocked, vbom);
+			achievementsUnlocked.setText("Achievements unlocked");
+			GameScene.this.attachChild(achievementsUnlocked);
+			GameScene.this.attachChild(upperImpulseAchievement);
+		}
+	}
+	
+	private void displayLevelCompleted() {
+		Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfreefliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
+		Text maxSpeed = new Text(camera.getCenterX(), camera.getCenterY() - 50, resourcesManager.maxSpeedFont, "Yourmaxspeedwas: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		levelCompleted.setText("You landed safely!! You flied " + freeFliedMeters + " meters");
+		maxSpeed.setText("Your max speed was: " + GameScene.this.maxSpeed);
+		GameScene.this.attachChild(levelCompleted);	
+		GameScene.this.attachChild(maxSpeed);
 	}
 }
