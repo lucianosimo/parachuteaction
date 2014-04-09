@@ -184,6 +184,15 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 						editor.putInt("slowCounter", 0);
 						editor.commit();
 				        Toast.makeText(activity, "Statistics restarted", Toast.LENGTH_LONG).show();
+				        numberOfSuccessfulJumpsText.setText("Successful jumps: " + 0);
+						numberOfUnsuccessfulJumpsText.setText("Unsuccessful jumps: " + 0);
+						maxFliedMetersText.setText("Longest fly: " + 0);
+						freeFliedMetersText.setText("Free flied meters: " + 0);
+						parachuteFliedMetersText.setText("Parachute flied meters: " + 0);
+						upperImpulseText.setText("Upper impulses collected: " + 0);
+						antigravityText.setText("Antigravity collected: " + 0);
+						shieldText.setText("Shields collected: " + 0);
+						slowText.setText("Slow objects collected: " + 0);
 				    }})
 				 .setNegativeButton("Mmmm, not really", null).show();	
 				
