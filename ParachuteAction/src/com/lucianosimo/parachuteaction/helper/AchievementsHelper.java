@@ -2,7 +2,7 @@ package com.lucianosimo.parachuteaction.helper;
 
 public class AchievementsHelper {
 
-	private final static int UPPER_ACHIEVEMENT = 2;
+	private final static int UPPER_ACHIEVEMENT = 10;
 	
 	//UPPER ACHIEVEMENTS METHODS
 	public static boolean upperAchievementUnlocked(int upperCounter) {

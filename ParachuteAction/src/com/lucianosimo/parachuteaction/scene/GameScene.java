@@ -802,7 +802,7 @@ public class GameScene extends BaseScene{
 	private void displayAchievements() {
 		if (AchievementsHelper.upperAchievementUnlockedInLevel(upperImpulseCounterBefore, upperImpulseCounterAfter)) {
 			Text achievementsUnlocked = new Text(camera.getCenterX(), camera.getCenterY() - 100, resourcesManager.achievementsUnlockedFont, "Achievements unlocked", new TextOptions(HorizontalAlign.LEFT), vbom);
-			Sprite upperImpulseAchievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.upperAchivementUnlocked, vbom);
+			Sprite upperImpulseAchievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.ui10award, vbom);
 			achievementsUnlocked.setText("Achievements unlocked");
 			GameScene.this.attachChild(achievementsUnlocked);
 			GameScene.this.attachChild(upperImpulseAchievement);
