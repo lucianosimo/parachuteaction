@@ -84,10 +84,10 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 	private void loadAchievements() {
 		loadSavedPreferences();
 		//UPPER IMPULSE ACHIEVEMENT
-		if (AchievementsHelper.upperAchievementUnlocked(upperImpulse)) {
-			upperAchivement = new Sprite(-200, 400, resourcesManager.ui10award, vbom);
-		} else {
-			upperAchivement = new Sprite(-200, 400, resourcesManager.ui10award, vbom);
+		upperAchivement = new Sprite(-200, 400, resourcesManager.ui10award, vbom);
+		if (!AchievementsHelper.upperAchievementUnlocked(upperImpulse)) {
+			Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+			upperAchivement.attachChild(locked);
 		}
 	}
 	
