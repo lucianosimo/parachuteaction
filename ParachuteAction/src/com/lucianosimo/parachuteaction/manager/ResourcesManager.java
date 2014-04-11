@@ -43,6 +43,9 @@ public class ResourcesManager {
 	public ITextureRegion achivements_button;
 	public ITextureRegion statistics_button;
 	public ITextureRegion resetStatistics_button;
+	public ITextureRegion one_button;
+	public ITextureRegion two_button;
+	public ITextureRegion three_button;
 	//public ITextureRegion upperAchivementLocked;
 	//public ITextureRegion upperAchivementUnlocked;
 	public ITextureRegion firstJumpAward;
@@ -188,6 +191,10 @@ public class ResourcesManager {
 		statistics_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "statistics_button.png");		
 		//upperAchivementLocked = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "upperAchivementLocked.png");
 		//upperAchivementUnlocked = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "upperAchivementUnlocked.png");
+		
+		one_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "1button.png");
+		two_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "2button.png");
+		three_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "3button.png");
 		
 		lockedAward = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "lockedAward.png");		
 		firstJumpAward = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "firstJumpAward.png");

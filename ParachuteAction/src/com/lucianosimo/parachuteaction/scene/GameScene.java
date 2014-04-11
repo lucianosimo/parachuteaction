@@ -239,6 +239,24 @@ public class GameScene extends BaseScene{
 		editor.commit();
 	}
 	
+	private void saveFreeFliedMeters(String key, int freeFliedCounter) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		int ffCounter = sharedPreferences.getInt("freeFliedMetersCounter", 0);
+		ffCounter += freeFliedCounter;
+		editor.putInt("freeFliedMetersCounter", ffCounter);
+		editor.commit();
+	}
+	
+	private void saveParachuteFliedMeters(String key, int parachuteFliedCounter) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		int pfCounter = sharedPreferences.getInt("parachuteFliedMetersCounter", 0);
+		pfCounter += parachuteFliedCounter;
+		editor.putInt("parachuteFliedMetersCounter", pfCounter);
+		editor.commit();
+	}
+	
 	private void saveUnsuccessfulJumps(String key) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
@@ -818,6 +836,8 @@ public class GameScene extends BaseScene{
 		saveBalloonCounter("balloonCounter", balloonCounter);
 		saveBirdCounter("birdCounter", birdCounter);
 		saveSuccessfulJumps("successfulJumps");
+		saveFreeFliedMeters("freeFliedMetersCounter", freeFliedMeters);
+		saveParachuteFliedMeters("parachuteFliedMetersCounter", parachuteFliedMeters);
 		saveMaxFliedMeters("fliedMeters", fliedMeters);
 		saveMaxFreeFliedMeters("freeFliedMeters", freeFliedMeters);
 		saveMaxParachuteFliedMeters("parachuteFliedMeters", parachuteFliedMeters);
