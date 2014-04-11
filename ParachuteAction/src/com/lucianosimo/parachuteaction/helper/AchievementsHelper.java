@@ -587,7 +587,7 @@ public class AchievementsHelper {
 		}
 	}
 		
-	public static boolean birds5balloonsAchievementUnlockedInLevel(int before, int after) {
+	public static boolean destroy5birdsAchievementUnlockedInLevel(int before, int after) {
 		if (before < DESTROY_5_BIRDS_ACHIEVEMENT && after >= DESTROY_5_BIRDS_ACHIEVEMENT) {
 			return true;
 		} else {
@@ -603,7 +603,7 @@ public class AchievementsHelper {
 		}
 	}
 		
-	public static boolean birds25balloonsAchievementUnlockedInLevel(int before, int after) {
+	public static boolean destroy25birdsAchievementUnlockedInLevel(int before, int after) {
 		if (before < DESTROY_25_BIRDS_ACHIEVEMENT && after >= DESTROY_25_BIRDS_ACHIEVEMENT) {
 			return true;
 		} else {
@@ -619,7 +619,7 @@ public class AchievementsHelper {
 		}
 	}
 		
-	public static boolean birds100balloonsAchievementUnlockedInLevel(int before, int after) {
+	public static boolean destroy100birdsAchievementUnlockedInLevel(int before, int after) {
 		if (before < DESTROY_100_BIRDS_ACHIEVEMENT && after >= DESTROY_100_BIRDS_ACHIEVEMENT) {
 			return true;
 		} else {
