@@ -121,8 +121,10 @@ public class SceneManager {
 		scene.disposeScene();
 		switch (scene.getSceneType()) {
 			case SCENE_STATISTICS:
+				ResourcesManager.getInstance().unloadStatisticsResources();
 				break;
 			case SCENE_ACHIVEMENTS:
+				ResourcesManager.getInstance().unloadAchievementsResources();
 				break;
 			case SCENE_GAME:
 				ResourcesManager.getInstance().unloadGameResources();
@@ -146,11 +148,22 @@ public class SceneManager {
 		loadingScene = new LoadingScene();
 		setScene(loadingScene);
 		scene.disposeScene();
+		switch (scene.getSceneType()) {
+			case SCENE_MENU:
+				ResourcesManager.getInstance().unloadMenuResources();
+				break;
+			case SCENE_ACHIVEMENTS:
+				ResourcesManager.getInstance().unloadAchievementsResources();
+				break;
+			default:
+				break;
+		}
 		mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 			
 			@Override
 			public void onTimePassed(final TimerHandler pTimerHandler) {
 				mEngine.unregisterUpdateHandler(pTimerHandler);
+				ResourcesManager.getInstance().loadStatisticsResources();
 				statisticsScene = new StatisticsScene();
 				setScene(statisticsScene);
 			}
@@ -161,11 +174,13 @@ public class SceneManager {
 		loadingScene = new LoadingScene();
 		setScene(loadingScene);
 		scene.disposeScene();
+		ResourcesManager.getInstance().unloadStatisticsResources();
 		mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 			
 			@Override
 			public void onTimePassed(final TimerHandler pTimerHandler) {
 				mEngine.unregisterUpdateHandler(pTimerHandler);
+				ResourcesManager.getInstance().loadAchievementsResources();
 				achivementsScene = new AchivementsScene();
 				setScene(achivementsScene);
 			}

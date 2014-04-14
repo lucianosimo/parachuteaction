@@ -24,7 +24,7 @@ import com.lucianosimo.parachuteaction.manager.SceneManager;
 public class GameActivity extends BaseGameActivity implements IAccelerationListener{
 
 	private BoundCamera camera;
-	private ResourcesManager resourcesManager;	
+	//private ResourcesManager resourcesManager;	
 	public static float mGravityX = 0;
 	
 	@Override
@@ -55,7 +55,7 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	@Override
 	public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback)	throws IOException {
 		ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager());
-		resourcesManager = ResourcesManager.getInstance();
+		//resourcesManager = ResourcesManager.getInstance();
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
@@ -100,7 +100,6 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 
 	@Override
 	public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {
-		// TODO Auto-generated method stub
 		
 	}
 

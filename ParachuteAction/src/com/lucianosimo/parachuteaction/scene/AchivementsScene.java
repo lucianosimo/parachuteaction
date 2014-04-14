@@ -98,7 +98,7 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 	
 	public void createBackground() {
 		AutoParallaxBackground background = new AutoParallaxBackground(0, 0, 0, 12);
-		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.menu_background_region, vbom)));
+		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.achievements_background_region, vbom)));
 		this.setBackground(background);
 	}
 	
@@ -111,8 +111,8 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 		
 		loadAchievements(1);
 		
-		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(ACHIVEMENTS_MENU, resourcesManager.menu_button, vbom), 1.2f, 1);
-		final IMenuItem statisticsButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(ACHIVEMENTS_STATISTICS, resourcesManager.statistics_button, vbom), 1.2f, 1);
+		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(ACHIVEMENTS_MENU, resourcesManager.menu_from_achievements_button, vbom), 1.2f, 1);
+		final IMenuItem statisticsButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(ACHIVEMENTS_STATISTICS, resourcesManager.statistics_from_achievements_region, vbom), 1.2f, 1);
 		final IMenuItem oneButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(ACHIVEMENTS_ONE_BUTTON, resourcesManager.one_button, vbom), 1.2f, 1);
 		final IMenuItem twoButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(ACHIVEMENTS_TWO_BUTTON, resourcesManager.two_button, vbom), 1.2f, 1);
 		final IMenuItem threeButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(ACHIVEMENTS_THREE_BUTTON, resourcesManager.three_button, vbom), 1.2f, 1);

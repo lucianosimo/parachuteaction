@@ -62,7 +62,7 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 	
 	public void createBackground() {
 		AutoParallaxBackground background = new AutoParallaxBackground(0, 0, 0, 12);
-		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.menu_background_region, vbom)));
+		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.statistics_background_region, vbom)));
 		this.setBackground(background);
 	}
 	
@@ -81,9 +81,9 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		slowText = new Text(20, 430, resourcesManager.slowCounterFont, "Slowobjectscollected: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		loadSavedPreferences();
 		
-		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(STATISTICS_MENU, resourcesManager.menu_button, vbom), 1.2f, 1);
-		final IMenuItem achivementsButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(STATISTICS_ACHIVEMENTS, resourcesManager.achivements_button, vbom), 1.2f, 1);
-		final IMenuItem resetStatisticsItem = new ScaleMenuItemDecorator(new SpriteMenuItem(RESET_STATISTICS, resourcesManager.resetStatistics_button, vbom), 1.2f, 1);
+		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(STATISTICS_MENU, resourcesManager.menu_from_statistics_region, vbom), 1.2f, 1);
+		final IMenuItem achivementsButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(STATISTICS_ACHIVEMENTS, resourcesManager.achivements_region, vbom), 1.2f, 1);
+		final IMenuItem resetStatisticsItem = new ScaleMenuItemDecorator(new SpriteMenuItem(RESET_STATISTICS, resourcesManager.resetStatistics_region, vbom), 1.2f, 1);
 
 		statisticsChildScene = new MenuScene(camera);
 		statisticsChildScene.setPosition(screenWidth/2, screenHeight/2);

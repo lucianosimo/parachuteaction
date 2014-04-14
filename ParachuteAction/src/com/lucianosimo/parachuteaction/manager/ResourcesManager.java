@@ -39,15 +39,39 @@ public class ResourcesManager {
 	public ITextureRegion menu_background_region;
 	public ITextureRegion play_region;
 	public ITextureRegion statistics_region;
-	public ITextureRegion menu_button;
-	public ITextureRegion achivements_button;
-	public ITextureRegion statistics_button;
-	public ITextureRegion resetStatistics_button;
+	
+	private BuildableBitmapTextureAtlas menuTextureAtlas;
+	private BuildableBitmapTextureAtlas backgroundMenuTextureAtlas;
+
+	//Menu y loading fonts 
+	public Font loadingFont;
+	
+	//Statistics items
+	public ITextureRegion statistics_background_region;
+	public ITextureRegion menu_from_statistics_region;
+	public ITextureRegion achivements_region;
+	public ITextureRegion resetStatistics_region;	
+	private BuildableBitmapTextureAtlas statisticsTextureAtlas;
+	private BuildableBitmapTextureAtlas backgroundStatisticsTextureAtlas;
+	
+	//Statistics fonts
+	public Font numberOfSuccessfulJumpsFont;
+	public Font numberOfUnsuccessfulJumpsFont;
+	public Font maxFliedMetersFont;
+	public Font freeFliedMetersFont;
+	public Font parachuteFliedMetersFont;
+	public Font upperImpulseCounterFont;
+	public Font antigravityCounterFont;
+	public Font shieldCounterFont;
+	public Font slowCounterFont;
+	
+	//Achievements items
+	public ITextureRegion statistics_from_achievements_region;
+	public ITextureRegion menu_from_achievements_button;
+	public ITextureRegion achievements_background_region;	
 	public ITextureRegion one_button;
 	public ITextureRegion two_button;
 	public ITextureRegion three_button;
-	//public ITextureRegion upperAchivementLocked;
-	//public ITextureRegion upperAchivementUnlocked;
 	public ITextureRegion firstJumpAward;
 	public ITextureRegion jumps10award;
 	public ITextureRegion jumps50award;
@@ -86,22 +110,8 @@ public class ResourcesManager {
 	public ITextureRegion destroy100birdsAward;
 	public ITextureRegion lockedAward;
 	
-	private BuildableBitmapTextureAtlas menuTextureAtlas;
-	private BuildableBitmapTextureAtlas backgroundMenuTextureAtlas;
-	private BuildableBitmapTextureAtlas statisticsTextureAtlas;
 	private BuildableBitmapTextureAtlas achivementsTextureAtlas;
-	
-	//Menu y loading fonts 
-	public Font loadingFont;
-	public Font numberOfSuccessfulJumpsFont;
-	public Font numberOfUnsuccessfulJumpsFont;
-	public Font maxFliedMetersFont;
-	public Font freeFliedMetersFont;
-	public Font parachuteFliedMetersFont;
-	public Font upperImpulseCounterFont;
-	public Font antigravityCounterFont;
-	public Font shieldCounterFont;
-	public Font slowCounterFont;
+	private BuildableBitmapTextureAtlas achivementsBackgroundTextureAtlas;
 	
 	//Game fonts
 	public Font meterCounterFont;
@@ -118,8 +128,6 @@ public class ResourcesManager {
 	
 	//Platforms
 	public ITextureRegion landing_platfom_region;
-	
-	//Decoration
 
 	//Backgrounds
 	public ITextureRegion background_region;
@@ -173,29 +181,256 @@ public class ResourcesManager {
 	public void unloadMenuResources() {
 		unloadMenuTextures();
 		unloadMenuFonts();
+		unloadMenuAudio();
 	}
 
 	private void loadMenuGraphics() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/menu/");
 		menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 500, 500, TextureOptions.BILINEAR);
 		backgroundMenuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
-		statisticsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 500, 500, TextureOptions.BILINEAR);
-		achivementsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 2048, 2048, TextureOptions.BILINEAR);
 		
 		menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundMenuTextureAtlas, activity, "menu_background.png");
 		play_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "play.png");
 		statistics_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "statistics.png");
-		menu_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(statisticsTextureAtlas, activity, "menu_button.png");
-		achivements_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(statisticsTextureAtlas, activity, "achivements_button.png");
-		resetStatistics_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(statisticsTextureAtlas, activity, "reset_statistics.png");
-		statistics_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "statistics_button.png");		
-		//upperAchivementLocked = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "upperAchivementLocked.png");
-		//upperAchivementUnlocked = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "upperAchivementUnlocked.png");
 		
+		try {
+			this.menuTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.backgroundMenuTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.menuTextureAtlas.load();
+			this.backgroundMenuTextureAtlas.load();
+		} catch (final TextureAtlasBuilderException e) {
+			org.andengine.util.debug.Debug.e(e);
+		}
+	}
+	
+	private void loadMenuAudio() {
+	}
+	
+	private void loadMenuFonts() {
+		FontFactory.setAssetBasePath("font/menu/");
+		final ITexture loadingTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		loadingFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), loadingTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		loadingFont.load();
+	}
+	
+	private void unloadMenuTextures() {
+		this.menuTextureAtlas.unload();
+		this.backgroundMenuTextureAtlas.unload();
+	}
+	
+	private void unloadMenuFonts() {
+		
+	}
+	
+	private void unloadMenuAudio() {
+		
+	}
+	
+	//Game Methods
+	public void loadGameResources() {
+		loadGameGraphics();
+		loadGameAudio();
+		loadGameFonts();
+	}
+	
+	public void unloadGameResources() {
+		unloadGameTextures();
+		unloadGameFonts();	
+		unloadGameAudio();
+	}
+	
+	private void loadGameGraphics() {
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/game/");
+		
+		animatedTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1500, 1500, TextureOptions.BILINEAR);
+		backgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1000, 1000, TextureOptions.BILINEAR);
+		
+		background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundTextureAtlas, activity, "background.png");
+		cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "cloud.png");
+		upperImpulse_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperImpulse.png");
+		antiGravity_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "antigravity.png");
+		slow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "slow.png");
+		landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform.png");
+		shield_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shield.png");
+		shieldHalo_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shieldHalo.png");
+		
+		openButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "openButton.png");
+		
+		antigravitySign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "antigravitySign.png");
+		shieldSign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shieldSign.png");
+		upperImpulseSign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperImpulseSign.png");
+		
+		player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "player.png", 2, 1);
+		helicopter_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "helicopter.png", 2, 1);
+		balloon_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "balloon.png", 2, 1);
+		bird_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "bird.png", 2, 1);
+		
+		try {
+			this.animatedTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.backgroundTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.objectsTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.animatedTextureAtlas.load();
+			this.backgroundTextureAtlas.load();
+			this.objectsTextureAtlas.load();
+		} catch (final TextureAtlasBuilderException e) {
+			Debug.e(e);
+		}
+	}
+
+	private void loadGameAudio() {
+		MusicFactory.setAssetBasePath("music/game/");
+		SoundFactory.setAssetBasePath("sound/game/");
+	}
+	
+	private void unloadGameAudio() {
+		
+	}
+	
+	private void loadGameFonts() {
+		FontFactory.setAssetBasePath("font/game/");
+		final ITexture meterCounterTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture altimeterTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture levelCompletedTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture gameOverTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture maxSpeedTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture achievementsUnlockedTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		meterCounterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), meterCounterTexture, activity.getAssets(), "inky.ttf", 23, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		altimeterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), altimeterTexture, activity.getAssets(), "inky.ttf", 23, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		levelCompletedFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), levelCompletedTexture, activity.getAssets(), "inky.ttf", 25, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		maxSpeedFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), maxSpeedTexture, activity.getAssets(), "inky.ttf", 25, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		gameOverFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), gameOverTexture, activity.getAssets(), "inky.ttf", 35, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		achievementsUnlockedFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), achievementsUnlockedTexture, activity.getAssets(), "inky.ttf", 35, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT); 
+		maxSpeedFont.load();
+		meterCounterFont.load();
+		altimeterFont.load();
+		levelCompletedFont.load();
+		gameOverFont.load();
+		achievementsUnlockedFont.load();
+	}
+	
+	private void unloadGameTextures() {
+		this.animatedTextureAtlas.unload();
+		this.backgroundTextureAtlas.unload();
+		this.objectsTextureAtlas.unload();
+	}
+	
+	private void unloadGameFonts() {
+		maxSpeedFont.unload();
+		meterCounterFont.unload();
+		altimeterFont.unload();
+		levelCompletedFont.unload();
+		gameOverFont.unload();
+		achievementsUnlockedFont.unload();
+	}
+	
+	//Statistics methods
+	public void loadStatisticsResources() {
+		loadStatisticsGraphics();
+		loadStatisticsAudio();
+		loadStatisticsFonts();
+	}
+	
+	public void unloadStatisticsResources() {
+		unloadStatisticsTextures();
+		unloadStatisticsFonts();		
+	}
+	
+	private void loadStatisticsGraphics() {
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/statistics/");
+		backgroundStatisticsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		statisticsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 500, 500, TextureOptions.BILINEAR);
+		
+		statistics_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundStatisticsTextureAtlas, activity, "statistics_background.png");
+		menu_from_statistics_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(statisticsTextureAtlas, activity, "menu_button.png");
+		achivements_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(statisticsTextureAtlas, activity, "achivements_button.png");
+		resetStatistics_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(statisticsTextureAtlas, activity, "reset_statistics.png");
+		
+		try {
+			this.statisticsTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.backgroundStatisticsTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.statisticsTextureAtlas.load();
+			this.backgroundStatisticsTextureAtlas.load();
+		} catch (final TextureAtlasBuilderException e) {
+			org.andengine.util.debug.Debug.e(e);
+		}
+	}
+	
+	private void loadStatisticsAudio() {
+		
+	}
+	
+	private void loadStatisticsFonts() {
+		FontFactory.setAssetBasePath("font/statistics/");
+		final ITexture maxFliedMetersTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture numberOfSuccessfulJumpsTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture numberOfUnsuccessfulJumpsTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture freeFliedMetersTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture parachuteFliedMetersTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture upperImpulseCounterTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture antigravityCounterTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture shieldCounterTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		final ITexture slowCounterTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		numberOfSuccessfulJumpsFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), numberOfSuccessfulJumpsTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		numberOfUnsuccessfulJumpsFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), numberOfUnsuccessfulJumpsTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		maxFliedMetersFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), maxFliedMetersTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		freeFliedMetersFont  = FontFactory.createStrokeFromAsset(activity.getFontManager(), freeFliedMetersTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		parachuteFliedMetersFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), parachuteFliedMetersTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		upperImpulseCounterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), upperImpulseCounterTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT); 
+		antigravityCounterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), antigravityCounterTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		shieldCounterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), shieldCounterTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		slowCounterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), slowCounterTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		maxFliedMetersFont.load();
+		numberOfSuccessfulJumpsFont.load();
+		numberOfUnsuccessfulJumpsFont.load();
+		freeFliedMetersFont.load();
+		parachuteFliedMetersFont.load();
+		upperImpulseCounterFont.load();
+		antigravityCounterFont.load();
+		shieldCounterFont.load();
+		slowCounterFont.load();
+	}
+	
+	private void unloadStatisticsTextures() {
+		this.statisticsTextureAtlas.unload();
+		this.backgroundStatisticsTextureAtlas.unload();
+	}
+	
+	private void unloadStatisticsFonts() {
+		maxFliedMetersFont.unload();
+		numberOfSuccessfulJumpsFont.unload();
+		numberOfUnsuccessfulJumpsFont.unload();
+		freeFliedMetersFont.unload();
+		parachuteFliedMetersFont.unload();
+		upperImpulseCounterFont.unload();
+		antigravityCounterFont.unload();
+		shieldCounterFont.unload();
+		slowCounterFont.unload();
+	}
+	
+	//Achievements methods
+	public void loadAchievementsResources() {
+		loadAchievementsGraphics();
+		loadAchievementsAudio();
+		loadAchievementsFonts();
+	}
+	
+	public void unloadAchievementsResources() {
+		unloadAchievementsTextures();
+		unloadAchievementsFonts();		
+	}
+	
+	private void loadAchievementsGraphics() {
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/achievements/");
+		achivementsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
+		achivementsBackgroundTextureAtlas  = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		
+		achievements_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsBackgroundTextureAtlas, activity, "achievements_background.png");
+		menu_from_achievements_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "menu_button.png");
+		statistics_from_achievements_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "statistics_button.png");		
 		one_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "1button.png");
 		two_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "2button.png");
 		three_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "3button.png");
-		
 		lockedAward = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "lockedAward.png");		
 		firstJumpAward = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "firstJumpAward.png");
 		jumps10award = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "jumps10award.png");
@@ -233,183 +468,31 @@ public class ResourcesManager {
 		destroy5birdsAward = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "destroy5birdsAward.png");
 		destroy25birdsAward = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "destroy25birdsAward.png");
 		destroy100birdsAward = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "destroy100birdsAward.png");
-		
 		try {
-			this.menuTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
-			this.backgroundMenuTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
-			this.statisticsTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			this.achivementsTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
-			this.menuTextureAtlas.load();
-			this.backgroundMenuTextureAtlas.load();
-			this.statisticsTextureAtlas.load();
+			this.achivementsBackgroundTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			this.achivementsTextureAtlas.load();
+			this.achivementsBackgroundTextureAtlas.load();
 		} catch (final TextureAtlasBuilderException e) {
 			org.andengine.util.debug.Debug.e(e);
 		}
 	}
 	
-	private void loadMenuAudio() {
-	}
-	
-	private void loadMenuFonts() {
-		FontFactory.setAssetBasePath("font/menu/");
-		final ITexture loadingTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture maxFliedMetersTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture numberOfSuccessfulJumpsTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture numberOfUnsuccessfulJumpsTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture freeFliedMetersTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture parachuteFliedMetersTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture upperImpulseCounterTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture antigravityCounterTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture shieldCounterTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture slowCounterTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		loadingFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), loadingTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		numberOfSuccessfulJumpsFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), numberOfSuccessfulJumpsTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		numberOfUnsuccessfulJumpsFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), numberOfUnsuccessfulJumpsTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		maxFliedMetersFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), maxFliedMetersTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		freeFliedMetersFont  = FontFactory.createStrokeFromAsset(activity.getFontManager(), freeFliedMetersTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		parachuteFliedMetersFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), parachuteFliedMetersTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		upperImpulseCounterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), upperImpulseCounterTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT); 
-		antigravityCounterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), antigravityCounterTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		shieldCounterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), shieldCounterTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		slowCounterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), slowCounterTexture, activity.getAssets(), "inky.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		loadingFont.load();
-		maxFliedMetersFont.load();
-		numberOfSuccessfulJumpsFont.load();
-		numberOfUnsuccessfulJumpsFont.load();
-		freeFliedMetersFont.load();
-		parachuteFliedMetersFont.load();
-		upperImpulseCounterFont.load();
-		antigravityCounterFont.load();
-		shieldCounterFont.load();
-		slowCounterFont.load();
-	}
-	
-	public void unloadMenuTextures() {
-		this.menuTextureAtlas.unload();
-		this.backgroundMenuTextureAtlas.unload();
-		this.statisticsTextureAtlas.unload();
-		//this.achivementsTextureAtlas.unload();
-	}
-	
-	public void unloadMenuFonts() {
-		maxFliedMetersFont.unload();
-		numberOfSuccessfulJumpsFont.unload();
-		numberOfUnsuccessfulJumpsFont.unload();
-		freeFliedMetersFont.unload();
-		parachuteFliedMetersFont.unload();
-		upperImpulseCounterFont.unload();
-		antigravityCounterFont.unload();
-		shieldCounterFont.unload();
-		slowCounterFont.unload();
-	}
-	
-	/*public void loadMenuTextures() {
-		
-	}*/
-	
-	public void unloadMenuAudio() {
+	private void loadAchievementsAudio() {
 		
 	}
 	
-	//Game Methods
-	public void loadGameResources() {
-		loadGameGraphics();
-		loadGameAudio();
-		loadGameFonts();
-	}
-	
-	public void unloadGameResources() {
-		unloadGameTextures();
-		unloadGameFonts();		
-	}
-	
-	private void loadGameGraphics() {
-		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/game/");
-		
-		animatedTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1500, 1500, TextureOptions.BILINEAR);
-		backgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
-		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1000, 1000, TextureOptions.BILINEAR);
-		
-		background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundTextureAtlas, activity, "background.png");
-		cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "cloud.png");
-		upperImpulse_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperImpulse.png");
-		antiGravity_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "antigravity.png");
-		slow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "slow.png");
-		landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform.png");
-		shield_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shield.png");
-		shieldHalo_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shieldHalo.png");
-		
-		//upperAchivementLocked = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperAchivementLocked.png");
-		//upperAchivementUnlocked = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperAchivementUnlocked.png");
-		
-		openButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "openButton.png");
-		
-		antigravitySign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "antigravitySign.png");
-		shieldSign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shieldSign.png");
-		upperImpulseSign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperImpulseSign.png");
-		
-		player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "player.png", 2, 1);
-		helicopter_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "helicopter.png", 2, 1);
-		balloon_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "balloon.png", 2, 1);
-		bird_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "bird.png", 2, 1);
-		
-		try {
-			this.animatedTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
-			this.backgroundTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
-			this.objectsTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
-			this.animatedTextureAtlas.load();
-			this.backgroundTextureAtlas.load();
-			this.objectsTextureAtlas.load();
-		} catch (final TextureAtlasBuilderException e) {
-			Debug.e(e);
-		}
-	}
-
-	private void loadGameAudio() {
-		MusicFactory.setAssetBasePath("music/game/");
-		SoundFactory.setAssetBasePath("sound/game/");
-	}
-	
-	public void unloadGameAudio() {
+	private void loadAchievementsFonts() {
 		
 	}
 	
-	private void loadGameFonts() {
-		FontFactory.setAssetBasePath("font/game/");
-		final ITexture meterCounterTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture altimeterTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture levelCompletedTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture gameOverTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture maxSpeedTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		final ITexture achievementsUnlockedTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		meterCounterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), meterCounterTexture, activity.getAssets(), "inky.ttf", 23, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		altimeterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), altimeterTexture, activity.getAssets(), "inky.ttf", 23, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		levelCompletedFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), levelCompletedTexture, activity.getAssets(), "inky.ttf", 25, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		maxSpeedFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), maxSpeedTexture, activity.getAssets(), "inky.ttf", 25, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		gameOverFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), gameOverTexture, activity.getAssets(), "inky.ttf", 35, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		achievementsUnlockedFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), achievementsUnlockedTexture, activity.getAssets(), "inky.ttf", 35, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT); 
-		maxSpeedFont.load();
-		meterCounterFont.load();
-		altimeterFont.load();
-		levelCompletedFont.load();
-		gameOverFont.load();
-		achievementsUnlockedFont.load();
+	private void unloadAchievementsTextures() {
+		this.achivementsTextureAtlas.unload();
+		this.achivementsBackgroundTextureAtlas.unload();
 	}
 	
-	public void unloadGameTextures() {
-		this.animatedTextureAtlas.unload();
-		this.backgroundTextureAtlas.unload();
-		this.objectsTextureAtlas.unload();
-	}
-	
-	public void unloadGameFonts() {
-		maxSpeedFont.unload();
-		meterCounterFont.unload();
-		altimeterFont.unload();
-		levelCompletedFont.unload();
-		gameOverFont.unload();
-		achievementsUnlockedFont.unload();
+	private void unloadAchievementsFonts() {
+		
 	}
 	
 	//Manager Methods
@@ -423,8 +506,7 @@ public class ResourcesManager {
 	public static ResourcesManager getInstance() {
 		return INSTANCE;
 	}
-	
-
 
 }
+
 

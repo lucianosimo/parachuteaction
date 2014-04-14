@@ -70,10 +70,10 @@ public class GameScene extends BaseScene{
 	private int helicopterCounter = 0;
 	private int balloonCounter = 0;
 	private int birdCounter = 0;
-	private int jumpsCounter = 0;
+	/*private int jumpsCounter = 0;
 	private int freeFliedCounter = 0;
 	private int parachuteFliedCounter = 0;
-	private int failedJumpsCounter = 0;
+	private int failedJumpsCounter = 0;*/
 
 	//Booleans
 	private boolean firstFall = true;
