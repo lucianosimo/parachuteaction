@@ -676,9 +676,6 @@ public class GameScene extends BaseScene{
 											loadedCountersBefore = true;
 											saveScoreData();
 											loadCounters();
-											displayAchievements();											
-											//GameScene.this.setIgnoreUpdate(true);
-											//camera.setChaseEntity(null);
 											displayLevelCompleted();
 										} else {
 											GameScene.this.setIgnoreUpdate(true);
@@ -970,6 +967,7 @@ public class GameScene extends BaseScene{
 	    levelCompleteWindow.attachChild(flyAgainButton);
 	    GameScene.this.attachChild(levelCompleted);
 	    GameScene.this.attachChild(maxSpeed);
+	    displayAchievements();
 	}
 	
 	private void displayAchievements() {
@@ -1122,7 +1120,7 @@ public class GameScene extends BaseScene{
 		}
 		
 		if (newAchievement) {
-			Text achievementsUnlocked = new Text(camera.getCenterX(), camera.getCenterY() - 100, resourcesManager.achievementsUnlockedFont, "New achievement unlocked!!!", new TextOptions(HorizontalAlign.LEFT), vbom);
+			Text achievementsUnlocked = new Text(camera.getCenterX(), camera.getCenterY() - 40, resourcesManager.achievementsUnlockedFont, "New achievement unlocked!!!", new TextOptions(HorizontalAlign.LEFT), vbom);
 			achievementsUnlocked.setText("New achievement unlocked!!!");
 			GameScene.this.attachChild(achievementsUnlocked);
 		}
