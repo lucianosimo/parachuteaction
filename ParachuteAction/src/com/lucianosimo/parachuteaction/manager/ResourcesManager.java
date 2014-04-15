@@ -153,10 +153,21 @@ public class ResourcesManager {
 	public ITiledTextureRegion balloon_region;
 	public ITiledTextureRegion bird_region;
 	
+	//Windows
+	public ITextureRegion level_complete_window_region;
+	public ITextureRegion pause_window_region;
+	public ITextureRegion game_over_window_region;
+	
+	public ITextureRegion quit_button_region;
+	public ITextureRegion fly_again_button_region;
+	public ITextureRegion resume_button_region;
+	public ITextureRegion retry_button_region;
+	
 	//Game Textures
 	private BuildableBitmapTextureAtlas animatedTextureAtlas;
 	private BuildableBitmapTextureAtlas backgroundTextureAtlas;
 	private BuildableBitmapTextureAtlas objectsTextureAtlas;
+	private BuildableBitmapTextureAtlas windowsTextureAtlas;
 	
 	//Splash Methods
 	public void loadSplashScreen() {
@@ -245,8 +256,12 @@ public class ResourcesManager {
 		animatedTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1500, 1500, TextureOptions.BILINEAR);
 		backgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
 		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1000, 1000, TextureOptions.BILINEAR);
+		windowsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1000, 1000, TextureOptions.BILINEAR);
 		
+		//Background texture objects
 		background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundTextureAtlas, activity, "background.png");
+		
+		//Objects texture objects
 		cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "cloud.png");
 		upperImpulse_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperImpulse.png");
 		antiGravity_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "antigravity.png");
@@ -254,13 +269,21 @@ public class ResourcesManager {
 		landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform.png");
 		shield_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shield.png");
 		shieldHalo_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shieldHalo.png");
-		
 		openButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "openButton.png");
-		
 		antigravitySign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "antigravitySign.png");
 		shieldSign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shieldSign.png");
 		upperImpulseSign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperImpulseSign.png");
 		
+		//Windows texture objects
+		level_complete_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "level_complete_window.png");
+		pause_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "pause_window.png");
+		game_over_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_over_window.png");
+		quit_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "quit_button.png");
+		fly_again_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "fly_again_button.png");
+		resume_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "resume_button.png");
+		retry_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "retry_button.png");
+		
+		//Animated texture objects
 		player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "player.png", 2, 1);
 		helicopter_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "helicopter.png", 2, 1);
 		balloon_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "balloon.png", 2, 1);
@@ -270,9 +293,11 @@ public class ResourcesManager {
 			this.animatedTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			this.backgroundTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			this.objectsTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.windowsTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			this.animatedTextureAtlas.load();
 			this.backgroundTextureAtlas.load();
 			this.objectsTextureAtlas.load();
+			this.windowsTextureAtlas.load();
 		} catch (final TextureAtlasBuilderException e) {
 			Debug.e(e);
 		}
@@ -313,6 +338,7 @@ public class ResourcesManager {
 		this.animatedTextureAtlas.unload();
 		this.backgroundTextureAtlas.unload();
 		this.objectsTextureAtlas.unload();
+		this.windowsTextureAtlas.unload();
 	}
 	
 	private void unloadGameFonts() {

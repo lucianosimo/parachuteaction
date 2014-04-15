@@ -70,10 +70,6 @@ public class GameScene extends BaseScene{
 	private int helicopterCounter = 0;
 	private int balloonCounter = 0;
 	private int birdCounter = 0;
-	/*private int jumpsCounter = 0;
-	private int freeFliedCounter = 0;
-	private int parachuteFliedCounter = 0;
-	private int failedJumpsCounter = 0;*/
 
 	//Booleans
 	private boolean firstFall = true;
@@ -81,6 +77,7 @@ public class GameScene extends BaseScene{
 	private boolean shield = false;
 	private boolean openParachuteDistanceSaved = false;
 	private boolean loadedCountersBefore = false;
+	private boolean availablePause = true;
 	
 	//Texts variables
 	private Text meterCounterText;
@@ -91,6 +88,11 @@ public class GameScene extends BaseScene{
 	private Helicopter helicopter;
 	private Balloon balloon;
 	private Bird bird;
+	
+	//Windows
+	private Sprite gameOverWindow;
+	private Sprite levelCompleteWindow;
+	private Sprite pauseWindow;
 	
 	//Achievements
 	private int antigravityCounterBefore = 0;
@@ -152,6 +154,7 @@ public class GameScene extends BaseScene{
 	@Override
 	public void createScene() {
 		createBackground();
+		createWindows();
 		createHud();
 		createPhysics();
 		loadLevel(1);
@@ -163,17 +166,22 @@ public class GameScene extends BaseScene{
 		this.setBackground(background);
 	}
 	
+	private void createWindows() {
+		gameOverWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.game_over_window_region, vbom);
+		levelCompleteWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.level_complete_window_region, vbom);
+		pauseWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.pause_window_region, vbom);
+	}
+	
 	private void createHud() {
 		gameHud = new HUD();
 		
 		altimeterText = new Text(20, 820, resourcesManager.altimeterFont, "Meters to go: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		meterCounterText = new Text(20, 770, resourcesManager.meterCounterFont, "Meter Counter: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		
-		openButton = new Sprite(400, 800, resourcesManager.openButton, vbom){
+		openButton = new Sprite(400, 780, resourcesManager.openButton, vbom){
 			@Override
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 				if (pSceneTouchEvent.isActionDown()) {
-					//player.openParachute();
 					openParachute = true;
 				}
 				return true;
@@ -614,12 +622,38 @@ public class GameScene extends BaseScene{
 									@Override
 									public void run() {
 										saveUnsuccessfulJumps("unsuccessfulJumps");
-										Text gameOver = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.gameOverFont, "Game over!", new TextOptions(HorizontalAlign.LEFT), vbom);
-								        gameOver.setText("Game over!!");
-										GameScene.this.attachChild(gameOver);
 										GameScene.this.setIgnoreUpdate(true);
 								        camera.setChaseEntity(null);
-								        
+								        gameOverWindow.setPosition(camera.getCenterX(), camera.getCenterY());
+										GameScene.this.attachChild(gameOverWindow);
+									    final Sprite retryButton = new Sprite(345, 45, resourcesManager.retry_button_region, vbom){
+									    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+									    		if (pSceneTouchEvent.isActionDown()) {
+									    			gameHud.dispose();
+													gameHud.setVisible(false);
+													detachChild(gameHud);
+													myGarbageCollection();
+													SceneManager.getInstance().loadGameScene(engine, GameScene.this);
+												}
+									    		return true;
+									    	};
+									    };
+									    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
+									    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+									    		if (pSceneTouchEvent.isActionDown()) {
+									    			gameHud.dispose();
+													gameHud.setVisible(false);
+													detachChild(gameHud);
+													myGarbageCollection();
+													SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
+									    		}
+									    		return true;
+									    	};
+									    };
+									    GameScene.this.registerTouchArea(retryButton);
+									    GameScene.this.registerTouchArea(quitButton);
+									    gameOverWindow.attachChild(quitButton);
+									    gameOverWindow.attachChild(retryButton);								        
 									}
 								});
 								
@@ -741,13 +775,43 @@ public class GameScene extends BaseScene{
 			
 			@Override
 			public void run() {
-				GameScene.this.setIgnoreUpdate(true);
-				camera.setChaseEntity(null);
-				gameHud.dispose();
-				gameHud.setVisible(false);
-				detachChild(gameHud);
-				myGarbageCollection();
-				SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
+				if (availablePause) {
+					availablePause = false;
+					GameScene.this.setIgnoreUpdate(true);
+					camera.setChaseEntity(null);
+					pauseWindow.setPosition(camera.getCenterX(), camera.getCenterY());
+					GameScene.this.attachChild(pauseWindow);
+					final Sprite resumeButton = new Sprite(345, 45, resourcesManager.resume_button_region, vbom){
+				    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				    		if (pSceneTouchEvent.isActionDown()) {
+				    			GameScene.this.detachChild(pauseWindow);
+				    			GameScene.this.setIgnoreUpdate(false);
+				    			camera.setChaseEntity(player);
+				    		}
+				    		return true;
+				    	};
+				    };
+				    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
+				    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				    		if (pSceneTouchEvent.isActionDown()) {
+				    			gameHud.dispose();
+								gameHud.setVisible(false);
+								detachChild(gameHud);
+								myGarbageCollection();
+								SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
+				    		}
+				    		return true;
+				    	};
+				    };
+				    GameScene.this.registerTouchArea(resumeButton);
+				    GameScene.this.registerTouchArea(quitButton);
+				    pauseWindow.attachChild(quitButton);
+				    pauseWindow.attachChild(resumeButton);
+				} else {
+					GameScene.this.detachChild(pauseWindow);
+	    			GameScene.this.setIgnoreUpdate(false);
+	    			camera.setChaseEntity(player);
+				}				
 			}
 		});
 		
