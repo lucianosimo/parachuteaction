@@ -624,6 +624,7 @@ public class GameScene extends BaseScene{
 										saveUnsuccessfulJumps("unsuccessfulJumps");
 										GameScene.this.setIgnoreUpdate(true);
 								        camera.setChaseEntity(null);
+								        availablePause = false;
 								        gameOverWindow.setPosition(camera.getCenterX(), camera.getCenterY());
 										GameScene.this.attachChild(gameOverWindow);
 									    final Sprite retryButton = new Sprite(345, 45, resourcesManager.retry_button_region, vbom){
@@ -676,8 +677,8 @@ public class GameScene extends BaseScene{
 											saveScoreData();
 											loadCounters();
 											displayAchievements();											
-											GameScene.this.setIgnoreUpdate(true);
-											camera.setChaseEntity(null);
+											//GameScene.this.setIgnoreUpdate(true);
+											//camera.setChaseEntity(null);
 											displayLevelCompleted();
 										} else {
 											GameScene.this.setIgnoreUpdate(true);
@@ -784,6 +785,7 @@ public class GameScene extends BaseScene{
 					final Sprite resumeButton = new Sprite(345, 45, resourcesManager.resume_button_region, vbom){
 				    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 				    		if (pSceneTouchEvent.isActionDown()) {
+				    			availablePause = true;
 				    			GameScene.this.detachChild(pauseWindow);
 				    			GameScene.this.setIgnoreUpdate(false);
 				    			camera.setChaseEntity(player);
@@ -808,6 +810,7 @@ public class GameScene extends BaseScene{
 				    pauseWindow.attachChild(quitButton);
 				    pauseWindow.attachChild(resumeButton);
 				} else {
+					availablePause = true;
 					GameScene.this.detachChild(pauseWindow);
 	    			GameScene.this.setIgnoreUpdate(false);
 	    			camera.setChaseEntity(player);
@@ -928,12 +931,45 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void displayLevelCompleted() {
-		Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfreefliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
-		Text maxSpeed = new Text(camera.getCenterX(), camera.getCenterY() - 50, resourcesManager.maxSpeedFont, "Yourmaxspeedwas: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		GameScene.this.setIgnoreUpdate(true);
+        camera.setChaseEntity(null);
+        availablePause = false;
+        levelCompleteWindow.setPosition(camera.getCenterX(), camera.getCenterY());
+		GameScene.this.attachChild(levelCompleteWindow);
+	    final Sprite flyAgainButton = new Sprite(345, 45, resourcesManager.fly_again_button_region, vbom){
+	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+	    		if (pSceneTouchEvent.isActionDown()) {
+	    			gameHud.dispose();
+					gameHud.setVisible(false);
+					detachChild(gameHud);
+					myGarbageCollection();
+					SceneManager.getInstance().loadGameScene(engine, GameScene.this);
+				}
+	    		return true;
+	    	};
+	    };
+	    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
+	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+	    		if (pSceneTouchEvent.isActionDown()) {
+	    			gameHud.dispose();
+					gameHud.setVisible(false);
+					detachChild(gameHud);
+					myGarbageCollection();
+					SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
+	    		}
+	    		return true;
+	    	};
+	    };
+	    Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY() + 50, resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfreefliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
+		Text maxSpeed = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.maxSpeedFont, "Yourmaxspeedwas: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		levelCompleted.setText("You landed safely!! You flied " + freeFliedMeters + " meters");
 		maxSpeed.setText("Your max speed was: " + GameScene.this.maxSpeed);
-		GameScene.this.attachChild(levelCompleted);	
-		GameScene.this.attachChild(maxSpeed);
+		GameScene.this.registerTouchArea(flyAgainButton);
+	    GameScene.this.registerTouchArea(quitButton);	
+	    levelCompleteWindow.attachChild(quitButton);
+	    levelCompleteWindow.attachChild(flyAgainButton);
+	    GameScene.this.attachChild(levelCompleted);
+	    GameScene.this.attachChild(maxSpeed);
 	}
 	
 	private void displayAchievements() {
