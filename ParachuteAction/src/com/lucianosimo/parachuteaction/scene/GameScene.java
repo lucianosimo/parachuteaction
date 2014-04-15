@@ -123,6 +123,8 @@ public class GameScene extends BaseScene{
 	
 	//HUD Buttons
 	private Sprite openButton;
+	private Sprite greenArrow;
+	private Sprite redArrow;
 	
 	//Shield Halo
 	private Sprite shieldHalo; 
@@ -188,6 +190,9 @@ public class GameScene extends BaseScene{
 			}
 		};
 		
+		greenArrow = new Sprite(1000, 0, resourcesManager.green_arrow_region, vbom);
+		redArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region, vbom);
+		
 		meterCounterText.setAnchorCenter(0, 0);
 		altimeterText.setAnchorCenter(0, 0);
 		
@@ -197,6 +202,8 @@ public class GameScene extends BaseScene{
 		gameHud.attachChild(meterCounterText);
 		gameHud.attachChild(altimeterText);
 		gameHud.attachChild(openButton);
+		gameHud.attachChild(greenArrow);
+		gameHud.attachChild(redArrow);
 		
 		gameHud.registerTouchArea(openButton);
 		
@@ -376,8 +383,8 @@ public class GameScene extends BaseScene{
 						levelObject = new Sprite(x + randX, y + randY, resourcesManager.cloud_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
-								if (this.getX() < LEFT_MARGIN) {
-									this.setPosition(RIGHT_MARGIN, y);
+								if (this.getX() < LEFT_MARGIN - 166) {
+									this.setPosition(RIGHT_MARGIN + 166, y);
 								}
 							};
 						};
@@ -388,15 +395,19 @@ public class GameScene extends BaseScene{
 						Random rand = new Random();
 						int randX = rand.nextInt(441) - 220;
 						int randY = rand.nextInt(5001) - 2500;
-						final Sprite sign = new Sprite(x + randX, y + randY + 1500, resourcesManager.shieldSign_region, vbom);
-						GameScene.this.attachChild(sign);
+						//final Sprite sign = new Sprite(x + randX, y + randY + 1500, resourcesManager.shieldSign_region, vbom);
+						//GameScene.this.attachChild(sign);
 						levelObject = new Sprite(x + randX, y + randY, resourcesManager.shield_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
+								if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
+									greenArrow.setPosition(this.getX(), 75);
+								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+									greenArrow.setPosition(1000, 0);
+								}
 								if (player.collidesWith(this)) {
 									shieldCounter++;
-									//saveShieldCounter("shieldCounter");
-									destroySprite(sign);
+									//destroySprite(sign);
 									destroySprite(this);
 									player.registerEntityModifier(new DelayModifier(SHIELD_DURATION, new IEntityModifierListener() {
 										
@@ -419,15 +430,20 @@ public class GameScene extends BaseScene{
 						Random rand = new Random();
 						int randX = rand.nextInt(441) - 220;
 						int randY = rand.nextInt(5001) - 2500;
-						final Sprite sign = new Sprite(x + randX, y + randY + 1500, resourcesManager.upperImpulseSign_region, vbom);
-						GameScene.this.attachChild(sign);
+						//final Sprite sign = new Sprite(x + randX, y + randY + 1500, resourcesManager.upperImpulseSign_region, vbom);
+						//GameScene.this.attachChild(sign);
 						levelObject = new Sprite(x + randX, y + randY, resourcesManager.upperImpulse_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
+								if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
+									greenArrow.setPosition(this.getX(), 75);
+								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+									greenArrow.setPosition(1000, 0);
+								}
 								if (player.collidesWith(this)) {
 									upperImpulseCounter++;
 									player.upperImpulse();
-									destroySprite(sign);
+									//destroySprite(sign);
 									destroySprite(this);
 								}
 							};
@@ -436,15 +452,19 @@ public class GameScene extends BaseScene{
 						Random rand = new Random();
 						int randX = rand.nextInt(441) - 220;
 						int randY = rand.nextInt(5001) - 2500;
-						final Sprite sign = new Sprite(x + randX, y + randY + 1000, resourcesManager.antigravitySign_region, vbom);
-						GameScene.this.attachChild(sign);
+						//final Sprite sign = new Sprite(x + randX, y + randY + 1000, resourcesManager.antigravitySign_region, vbom);
+						//GameScene.this.attachChild(sign);
 						levelObject = new Sprite(x + randX, y + randY, resourcesManager.antiGravity_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
+								if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
+									greenArrow.setPosition(this.getX(), 75);
+								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+									greenArrow.setPosition(1000, 0);
+								}
 								if (player.collidesWith(this)) {
 									antigravityCounter++;
-									//saveAntigravityCounter("antigravityCounter");
-									destroySprite(sign);
+									//destroySprite(sign);
 									destroySprite(this);
 									player.registerEntityModifier(new DelayModifier(ANTIGRAVITY_DURATION, new IEntityModifierListener() {
 										
@@ -469,9 +489,13 @@ public class GameScene extends BaseScene{
 						levelObject = new Sprite(x + randX, y + randY, resourcesManager.slow_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
+								if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
+									greenArrow.setPosition(this.getX(), 75);
+								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+									greenArrow.setPosition(1000, 0);
+								}
 								if (player.collidesWith(this)) {
 									slowCounter++;
-									//saveSlowCounter("slowCounter");
 									destroySprite(this);
 									player.slowDownPlayer();
 								}
@@ -484,7 +508,12 @@ public class GameScene extends BaseScene{
 							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
-								if ((player.getY() - this.getY()) < 400) {
+								if ((player.getY() - this.getY()) < 2000 && (player.getY() - this.getY()) > 427) {
+									redArrow.setPosition(this.getX(), 75);
+								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+									redArrow.setPosition(1000, 0);
+								}
+								if ((player.getY() - this.getY()) < 500) {
 									this.startMoving();
 								}
 								if (player.collidesWith(this)) {
@@ -514,6 +543,11 @@ public class GameScene extends BaseScene{
 							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
+								if ((player.getY() - this.getY()) < 2000 && (player.getY() - this.getY()) > 427) {
+									redArrow.setPosition(this.getX(), 75);
+								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+									redArrow.setPosition(1000, 0);
+								}
 								if ((player.getY() - this.getY()) < 400) {
 									this.startMoving();
 								}
@@ -545,6 +579,11 @@ public class GameScene extends BaseScene{
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								this.startMoving();
+								if ((player.getY() - this.getY()) < 2000 && (player.getY() - this.getY()) > 427) {
+									redArrow.setPosition(this.getX(), 75);
+								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+									redArrow.setPosition(1000, 0);
+								}
 								if (player.collidesWith(this)) {
 									if (shield) {
 										final Sprite balloonRef = this; 

@@ -136,6 +136,8 @@ public class ResourcesManager {
 	public ITextureRegion upperImpulseSign_region;
 	public ITextureRegion antigravitySign_region;
 	public ITextureRegion shieldSign_region;
+	public ITextureRegion green_arrow_region;
+	public ITextureRegion red_arrow_region;
 
 	//Objects
 	public ITextureRegion cloud_region;
@@ -255,7 +257,7 @@ public class ResourcesManager {
 		
 		animatedTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1500, 1500, TextureOptions.BILINEAR);
 		backgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
-		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1000, 1000, TextureOptions.BILINEAR);
+		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1500, 1500, TextureOptions.BILINEAR);
 		windowsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1000, 1000, TextureOptions.BILINEAR);
 		
 		//Background texture objects
@@ -273,6 +275,8 @@ public class ResourcesManager {
 		antigravitySign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "antigravitySign.png");
 		shieldSign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shieldSign.png");
 		upperImpulseSign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperImpulseSign.png");
+		red_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "redArrow.png");
+		green_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "greenArrow.png");
 		
 		//Windows texture objects
 		level_complete_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "level_complete_window.png");
