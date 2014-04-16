@@ -31,7 +31,6 @@ import org.xml.sax.Attributes;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -84,6 +83,7 @@ public class GameScene extends BaseScene{
 	//Texts variables
 	private Text meterCounterText;
 	private Text altimeterText;
+	private Text levelStartText;
 	
 	//Instances
 	private Player player;
@@ -183,6 +183,8 @@ public class GameScene extends BaseScene{
 		
 		altimeterText = new Text(20, 820, resourcesManager.altimeterFont, "Meters to go: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		meterCounterText = new Text(20, 770, resourcesManager.meterCounterFont, "Meter Counter: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		levelStartText = new Text(240, 550, resourcesManager.meterCounterFont, "Forest - 15:00Hs", new TextOptions(HorizontalAlign.LEFT), vbom);
+		
 		
 		openButton = new Sprite(400, 780, resourcesManager.openButton, vbom){
 			@Override
@@ -199,12 +201,15 @@ public class GameScene extends BaseScene{
 		
 		meterCounterText.setAnchorCenter(0, 0);
 		altimeterText.setAnchorCenter(0, 0);
+		levelStartText.setAnchorCenter(0, 0);
 		
 		meterCounterText.setText("Flied Meters: " + fliedMeters);
 		altimeterText.setText("Meters to go: ");
+		levelStartText.setText("Forest - 15:00 hs");
 		
 		gameHud.attachChild(meterCounterText);
 		gameHud.attachChild(altimeterText);
+		gameHud.attachChild(levelStartText);
 		gameHud.attachChild(openButton);
 		gameHud.attachChild(greenArrow);
 		gameHud.attachChild(redArrow);
@@ -403,7 +408,7 @@ public class GameScene extends BaseScene{
 									if (!startMoving) {
 										startMoving = true;
 										player.setVisible(true);
-										Log.e("parachute","moving");
+										gameHud.detachChild(levelStartText);
 									}									
 								}
 							};
