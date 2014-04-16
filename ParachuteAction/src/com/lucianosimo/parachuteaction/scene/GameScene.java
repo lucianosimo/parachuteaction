@@ -31,6 +31,7 @@ import org.xml.sax.Attributes;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -78,6 +79,7 @@ public class GameScene extends BaseScene{
 	private boolean openParachuteDistanceSaved = false;
 	private boolean loadedCountersBefore = false;
 	private boolean availablePause = true;
+	private boolean startMoving = false;
 	
 	//Texts variables
 	private Text meterCounterText;
@@ -135,6 +137,7 @@ public class GameScene extends BaseScene{
 	private static final int LEFT_MARGIN = 0;
 	private static final int RIGHT_MARGIN = 480;
 	private static final int CLOUD_SPEED = -50;
+	private static final int PLANE_SPEED = -50;
 	private static final int SHIELD_DURATION = 5;
 	private static final int ANTIGRAVITY_DURATION = 7;
 	
@@ -151,6 +154,7 @@ public class GameScene extends BaseScene{
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SLOW = "slow";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE = "upperImpulse";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITY = "antigravity";
+	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLANE = "plane";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM = "landingPlatform";
 
 	@Override
@@ -391,6 +395,22 @@ public class GameScene extends BaseScene{
 						PhysicsHandler handler = new PhysicsHandler(levelObject);
 						levelObject.registerUpdateHandler(handler);
 						handler.setVelocity(CLOUD_SPEED,0);
+					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLANE)) {
+						levelObject = new Sprite(x, y, resourcesManager.plane_region, vbom) {
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								if (this.getX() < 240) {
+									if (!startMoving) {
+										startMoving = true;
+										player.setVisible(true);
+										Log.e("parachute","moving");
+									}									
+								}
+							};
+						};
+						PhysicsHandler handler = new PhysicsHandler(levelObject);
+						levelObject.registerUpdateHandler(handler);
+						handler.setVelocity(PLANE_SPEED,0);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
 						Random rand = new Random();
 						int randX = rand.nextInt(441) - 220;
@@ -616,6 +636,10 @@ public class GameScene extends BaseScene{
 									
 									@Override
 									public void run() {
+										if (!startMoving) {
+											player.stopPlayer();
+											player.setVisible(false);
+										}
 										if (shield) {
 											shieldHalo.setVisible(true);
 										} else {

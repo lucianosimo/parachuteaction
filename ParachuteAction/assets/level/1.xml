@@ -73,6 +73,7 @@
     <entity x="240" y="10000" type="balloon"/>
     
     <entity x="240" y="60000" type="player"/>
+    <entity x="480" y="59950" type="plane"/>
 
     <entity x="240" y="20" type="landingPlatform"/>
     

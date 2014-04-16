@@ -67,6 +67,10 @@ public abstract class Player extends AnimatedSprite{
 		openParachute = true;
 	}
 	
+	public void stopPlayer() {
+		body.setLinearVelocity(new Vector2(0, 0));
+	}
+	
 	public int getParachuteSpeed() {
 		return parachuteSpeed;
 	}
