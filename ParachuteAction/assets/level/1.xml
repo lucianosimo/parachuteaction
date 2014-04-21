@@ -63,6 +63,17 @@
     <entity x="240" y="5000" type="cloud"/>
     <entity x="240" y="4000" type="cloud"/>
     
+    <entity x="240" y="59000" type="coin"/>
+    <entity x="240" y="58500" type="coin"/>
+    <entity x="240" y="58000" type="coin"/>
+    <entity x="240" y="57500" type="coin"/>
+    <entity x="240" y="57000" type="coin"/>
+    <entity x="240" y="56500" type="coin"/>
+    <entity x="240" y="56000" type="coin"/>
+    <entity x="240" y="55500" type="coin"/>
+    <entity x="240" y="55000" type="coin"/>
+    <entity x="240" y="54500" type="coin"/>
+    
     <entity x="240" y="10000" type="shield"/>
     
     <entity x="240" y="35000" type="antigravity"/>

@@ -70,6 +70,8 @@ public class GameScene extends BaseScene{
 	private int helicopterCounter = 0;
 	private int balloonCounter = 0;
 	private int birdCounter = 0;
+	
+	private int coins = 0;
 
 	//Booleans
 	private boolean firstFall = true;
@@ -84,6 +86,7 @@ public class GameScene extends BaseScene{
 	private Text meterCounterText;
 	private Text altimeterText;
 	private Text levelStartText;
+	private Text coinsText;
 	
 	//Instances
 	private Player player;
@@ -140,12 +143,14 @@ public class GameScene extends BaseScene{
 	private static final int PLANE_SPEED = -50;
 	private static final int SHIELD_DURATION = 5;
 	private static final int ANTIGRAVITY_DURATION = 7;
+	private static final int COINS_VALUE = 100;
 	
 	private static final String TAG_ENTITY = "entity";
 	private static final String TAG_ENTITY_ATTRIBUTE_X = "x";
 	private static final String TAG_ENTITY_ATTRIBUTE_Y = "y";
 	private static final String TAG_ENTITY_ATTRIBUTE_TYPE = "type";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER = "player";
+	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_COIN = "coin";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER = "helicopter";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD = "bird";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON = "balloon";
@@ -161,6 +166,7 @@ public class GameScene extends BaseScene{
 	public void createScene() {
 		createBackground();
 		createWindows();
+		loadCoins();
 		createHud();
 		createPhysics();
 		loadLevel(1);
@@ -183,7 +189,8 @@ public class GameScene extends BaseScene{
 		
 		altimeterText = new Text(20, 820, resourcesManager.altimeterFont, "Meters to go: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		meterCounterText = new Text(20, 770, resourcesManager.meterCounterFont, "Meter Counter: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-		levelStartText = new Text(240, 550, resourcesManager.meterCounterFont, "Forest - 15:00Hs", new TextOptions(HorizontalAlign.LEFT), vbom);
+		coinsText = new Text(20, 720, resourcesManager.coinsFont, "Coins: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		levelStartText = new Text(100, 420, resourcesManager.levelStartFont, "Forest - 15:00Hs", new TextOptions(HorizontalAlign.LEFT), vbom);
 		
 		
 		openButton = new Sprite(400, 780, resourcesManager.openButton, vbom){
@@ -202,14 +209,17 @@ public class GameScene extends BaseScene{
 		meterCounterText.setAnchorCenter(0, 0);
 		altimeterText.setAnchorCenter(0, 0);
 		levelStartText.setAnchorCenter(0, 0);
+		coinsText.setAnchorCenter(0, 0);
 		
 		meterCounterText.setText("Flied Meters: " + fliedMeters);
 		altimeterText.setText("Meters to go: ");
 		levelStartText.setText("Forest - 15:00 hs");
+		coinsText.setText("Coins: " + coins);
 		
 		gameHud.attachChild(meterCounterText);
 		gameHud.attachChild(altimeterText);
 		gameHud.attachChild(levelStartText);
+		gameHud.attachChild(coinsText);
 		gameHud.attachChild(openButton);
 		gameHud.attachChild(greenArrow);
 		gameHud.attachChild(redArrow);
@@ -360,6 +370,13 @@ public class GameScene extends BaseScene{
 		editor.commit();
 	}
 	
+	private void saveCoins(String key, int coins) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		editor.putInt("coins", coins);
+		editor.commit();
+	}
+	
 	//Parse level from XML file
 		private void loadLevel (int level) {
 			final SimpleLevelLoader levelLoader = new SimpleLevelLoader(vbom);
@@ -416,6 +433,16 @@ public class GameScene extends BaseScene{
 						PhysicsHandler handler = new PhysicsHandler(levelObject);
 						levelObject.registerUpdateHandler(handler);
 						handler.setVelocity(PLANE_SPEED,0);
+					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_COIN)) {
+						levelObject = new Sprite(x, y, resourcesManager.coin_region, vbom) {
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								if (player.collidesWith(this)) {
+									destroySprite(this);
+									addCoins(COINS_VALUE);
+								}
+							};
+						};
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
 						Random rand = new Random();
 						int randX = rand.nextInt(441) - 220;
@@ -954,6 +981,15 @@ public class GameScene extends BaseScene{
         System.gc();
 	}
 	
+	private void loadCoins() {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		coins = sharedPreferences.getInt("coins", 0);
+	}
+	
+	private void addCoins(int coins) {
+		this.coins += coins;
+		coinsText.setText("Coins: " + this.coins);
+	}
 	
 	private void loadCounters() {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
@@ -1209,5 +1245,6 @@ public class GameScene extends BaseScene{
 		saveMaxFreeFliedMeters("freeFliedMeters", freeFliedMeters);
 		saveMaxParachuteFliedMeters("parachuteFliedMeters", parachuteFliedMeters);
 		saveMaxSpeed("maxSpeed", maxSpeed);
+		saveCoins("coins", coins);
 	}
 }
