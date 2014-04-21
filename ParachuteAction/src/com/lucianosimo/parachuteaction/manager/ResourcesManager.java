@@ -39,12 +39,22 @@ public class ResourcesManager {
 	public ITextureRegion menu_background_region;
 	public ITextureRegion play_region;
 	public ITextureRegion statistics_region;
+	public ITextureRegion shop_region;
 	
 	private BuildableBitmapTextureAtlas menuTextureAtlas;
 	private BuildableBitmapTextureAtlas backgroundMenuTextureAtlas;
 
 	//Menu y loading fonts 
 	public Font loadingFont;
+	
+	//Shop items
+	public ITextureRegion shop_background_region;
+	public ITextureRegion shop_menu_region;
+	private BuildableBitmapTextureAtlas shopTextureAtlas;
+	private BuildableBitmapTextureAtlas shopBackgroundTextureAtlas;
+	
+	//Shop fonts
+	public Font shopCoinsFont;
 	
 	//Statistics items
 	public ITextureRegion statistics_background_region;
@@ -209,6 +219,7 @@ public class ResourcesManager {
 		menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundMenuTextureAtlas, activity, "menu_background.png");
 		play_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "play.png");
 		statistics_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "statistics.png");
+		shop_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "shop_button.png");
 		
 		try {
 			this.menuTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
@@ -537,6 +548,52 @@ public class ResourcesManager {
 	}
 	
 	private void unloadAchievementsFonts() {
+		
+	}
+	
+	//Shop methods
+	public void loadShopResources() {
+		loadShopGraphics();
+		loadShopAudio();
+		loadShopFonts();
+	}
+	
+	public void unloadShopResources() {
+		unloadShopTextures();
+		unloadShopFonts();		
+	}
+	
+	private void loadShopGraphics() {
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/shop/");
+		shopTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
+		shopBackgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		
+		shop_menu_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "menu_button.png");
+		shop_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBackgroundTextureAtlas, activity, "shop_background.png");
+		try {
+			this.shopTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.shopBackgroundTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.shopTextureAtlas.load();
+			this.shopBackgroundTextureAtlas.load();
+		} catch (final TextureAtlasBuilderException e) {
+			org.andengine.util.debug.Debug.e(e);
+		}
+	}
+	
+	private void loadShopAudio() {
+		
+	}
+	
+	private void loadShopFonts() {
+		
+	}
+	
+	private void unloadShopTextures() {
+		this.shopTextureAtlas.unload();
+		this.shopBackgroundTextureAtlas.unload();
+	}
+	
+	private void unloadShopFonts() {
 		
 	}
 	

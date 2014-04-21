@@ -10,6 +10,7 @@ import com.lucianosimo.parachuteaction.scene.AchivementsScene;
 import com.lucianosimo.parachuteaction.scene.GameScene;
 import com.lucianosimo.parachuteaction.scene.LoadingScene;
 import com.lucianosimo.parachuteaction.scene.MainMenuScene;
+import com.lucianosimo.parachuteaction.scene.ShopScene;
 import com.lucianosimo.parachuteaction.scene.SplashScene;
 import com.lucianosimo.parachuteaction.scene.StatisticsScene;
 
@@ -21,6 +22,7 @@ public class SceneManager {
 	private BaseScene achivementsScene;
 	private BaseScene loadingScene;
 	private BaseScene gameScene;
+	private BaseScene shopScene;
 	
 	private static final SceneManager INSTANCE = new SceneManager();
 	private SceneType currentSceneType = SceneType.SCENE_SPLASH;
@@ -34,6 +36,7 @@ public class SceneManager {
 		SCENE_ACHIVEMENTS,
 		SCENE_LOADING,
 		SCENE_GAME,
+		SCENE_SHOP,
 	}
 	
 	public void setScene(BaseScene scene) {
@@ -61,6 +64,9 @@ public class SceneManager {
 				break;
 			case SCENE_LOADING:
 				setScene(loadingScene);
+				break;
+			case SCENE_SHOP:
+				setScene(shopScene);
 				break;
 			default:
 				break;
@@ -115,6 +121,22 @@ public class SceneManager {
 		}));
 	}
 	
+	public void loadShopScene(final Engine mEngine, final BaseScene scene) {
+		loadingScene = new LoadingScene();
+		setScene(loadingScene);
+		scene.disposeScene();
+		ResourcesManager.getInstance().unloadMenuResources();
+		mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+			@Override
+			public void onTimePassed(final TimerHandler pTimerHandler) {
+				mEngine.unregisterUpdateHandler(pTimerHandler);
+				ResourcesManager.getInstance().loadShopResources();
+				shopScene = new ShopScene();
+				setScene(shopScene);
+			}
+		}));
+	}
+	
 	public void loadMenuScene(final Engine mEngine, final BaseScene scene) {
 		loadingScene = new LoadingScene();
 		setScene(loadingScene);
@@ -125,6 +147,9 @@ public class SceneManager {
 				break;
 			case SCENE_ACHIVEMENTS:
 				ResourcesManager.getInstance().unloadAchievementsResources();
+				break;
+			case SCENE_SHOP:
+				ResourcesManager.getInstance().unloadShopResources();
 				break;
 			case SCENE_GAME:
 				ResourcesManager.getInstance().unloadGameResources();

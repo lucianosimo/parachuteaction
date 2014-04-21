@@ -13,13 +13,11 @@ import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
 
-public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener{
+public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 	
 	private MenuScene menuChildScene;
-	private final int MENU_PLAY = 0;
-	private final int MENU_STATISTICS = 1;
-	private final int MENU_SHOP = 2;
-
+	private final int SHOP_MENU = 0;
+	
 	@Override
 	public void createScene() {
 		createBackground();
@@ -28,12 +26,12 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 
 	@Override
 	public void onBackKeyPressed() {
-		System.exit(0);
+		SceneManager.getInstance().loadStatisticsScene(engine, this);
 	}
 
 	@Override
 	public SceneType getSceneType() {
-		return SceneType.SCENE_MENU;
+		return SceneType.SCENE_SHOP;
 	}
 
 	@Override
@@ -42,7 +40,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	
 	public void createBackground() {
 		AutoParallaxBackground background = new AutoParallaxBackground(0, 0, 0, 12);
-		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.menu_background_region, vbom)));
+		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.shop_background_region, vbom)));
 		this.setBackground(background);
 	}
 	
@@ -52,41 +50,29 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		
 		menuChildScene = new MenuScene(camera);
 		menuChildScene.setPosition(screenWidth/2, screenHeight/2);
-		
-		final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourcesManager.play_region, vbom), 1.2f, 1);
-		final IMenuItem statisticsMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_STATISTICS, resourcesManager.statistics_region, vbom), 1.2f, 1);
-		final IMenuItem shopMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_SHOP, resourcesManager.shop_region, vbom), 1.2f, 1);
-		
-		menuChildScene.addMenuItem(playMenuItem);
-		menuChildScene.addMenuItem(statisticsMenuItem);
-		menuChildScene.addMenuItem(shopMenuItem);
+
+		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(SHOP_MENU, resourcesManager.shop_menu_region, vbom), 1.2f, 1);				
+				
+		menuChildScene.addMenuItem(menuButtonItem);
+
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
 		
-		playMenuItem.setPosition(0, 100);
-		statisticsMenuItem.setPosition(0, 0);
-		shopMenuItem.setPosition(0, -100);
+		menuButtonItem.setPosition(-180, -350);
 		
 		menuChildScene.setOnMenuItemClickListener(this);
 		setChildScene(menuChildScene);
-	}
+	}	
 	
-
 	@Override
 	public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem,	float pMenuItemLocalX, float pMenuItemLocalY) {
 		switch (pMenuItem.getID()) {
-			case MENU_PLAY:
-				SceneManager.getInstance().loadGameScene(engine, this);
-				return true;
-			case MENU_STATISTICS:
-				SceneManager.getInstance().loadStatisticsScene(engine, this);
-				return true;
-			case MENU_SHOP:
-				SceneManager.getInstance().loadShopScene(engine, this);
+			case SHOP_MENU:
+				SceneManager.getInstance().loadMenuScene(engine, this);
 				return true;
 			default:
 				return false;
 		}
 	}
-
+	
 }
