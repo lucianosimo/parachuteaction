@@ -95,7 +95,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
 		
-		menuButtonItem.setPosition(-180, -350);
+		menuButtonItem.setPosition(-150, -350);
 		coinsText.setPosition(150, 400);
 		
 		menuChildScene.setOnMenuItemClickListener(this);
@@ -120,6 +120,8 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		Editor editor = sharedPreferences.edit();
 		editor.putBoolean("desert", true);
 		editor.commit();
+		coins = coins - DESERT_UNLOCK_VALUE;
+		saveCoins("coins", coins);
 	}
 	
 	private void unlockMountain() {
@@ -127,6 +129,8 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		Editor editor = sharedPreferences.edit();
 		editor.putBoolean("mountain", true);
 		editor.commit();
+		coins = coins - MOUNTAIN_UNLOCK_VALUE;
+		saveCoins("coins", coins);
 	}
 	
 	private void unlockShip() {
@@ -134,6 +138,8 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		Editor editor = sharedPreferences.edit();
 		editor.putBoolean("ship", true);
 		editor.commit();
+		coins = coins - SHIP_UNLOCK_VALUE;
+		saveCoins("coins", coins);
 	}
 	
 	private void loadLocations() {
@@ -162,7 +168,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 							}							
 						} else {
 							int coinsToUnlock = DESERT_UNLOCK_VALUE - coins;
-							noEnoughCoins(coinsToUnlock);
+							noEnoughCoins("desert", coinsToUnlock);
 						}
 					}
 					return true;
@@ -184,7 +190,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 							}							
 						} else {
 							int coinsToUnlock = MOUNTAIN_UNLOCK_VALUE - coins;
-							noEnoughCoins(coinsToUnlock);
+							noEnoughCoins("mountain", coinsToUnlock);
 						}
 					}
 					return true;
@@ -206,7 +212,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 							}							
 						} else {
 							int coinsToUnlock = SHIP_UNLOCK_VALUE - coins;
-							noEnoughCoins(coinsToUnlock);
+							noEnoughCoins("ship", coinsToUnlock);
 						}
 					}
 					return true;
@@ -242,14 +248,21 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		});
 	}
 	
-	private void noEnoughCoins(final int coins) {
+	private void noEnoughCoins(final String location, final int coins) {
 		ShopScene.this.activity.runOnUiThread(new Runnable() {
 			
 			@Override
 			public void run() {
-				Toast.makeText(activity, "No enough coins. Collect " + coins + " more to unlock", Toast.LENGTH_LONG).show();	
+				Toast.makeText(activity, "No enough coins. Collect " + coins + " more to unlock " + location, Toast.LENGTH_LONG).show();	
 			}
 		});
+	}
+	
+	private void saveCoins(String key, int coins) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		editor.putInt("coins", coins);
+		editor.commit();
 	}
 	
 	@Override
