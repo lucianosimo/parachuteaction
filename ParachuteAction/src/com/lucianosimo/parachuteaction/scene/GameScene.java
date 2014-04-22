@@ -166,10 +166,10 @@ public class GameScene extends BaseScene{
 	public void createScene() {
 		createBackground();
 		createWindows();
-		loadCoins();
 		createHud();
 		createPhysics();
 		loadLevel(1);
+		loadCoins();
 	}
 	
 	private void createBackground() {
@@ -198,6 +198,7 @@ public class GameScene extends BaseScene{
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 				if (pSceneTouchEvent.isActionDown()) {
 					openParachute = true;
+					destroySprite(openButton);
 				}
 				return true;
 			}
@@ -983,12 +984,14 @@ public class GameScene extends BaseScene{
 	
 	private void loadCoins() {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-		coins = sharedPreferences.getInt("coins", 0);
+		this.coins = sharedPreferences.getInt("coins", 0);
+		coinsText.setText("Coins: " + this.coins);
+		player.addPlayerCoins(this.coins);
 	}
 	
 	private void addCoins(int coins) {
-		this.coins += coins;
-		coinsText.setText("Coins: " + this.coins);
+		player.addPlayerCoins(coins);
+		coinsText.setText("Coins: " + player.getPlayerCoins());
 	}
 	
 	private void loadCounters() {
@@ -1245,6 +1248,6 @@ public class GameScene extends BaseScene{
 		saveMaxFreeFliedMeters("freeFliedMeters", freeFliedMeters);
 		saveMaxParachuteFliedMeters("parachuteFliedMeters", parachuteFliedMeters);
 		saveMaxSpeed("maxSpeed", maxSpeed);
-		saveCoins("coins", coins);
+		saveCoins("coins", player.getPlayerCoins());
 	}
 }

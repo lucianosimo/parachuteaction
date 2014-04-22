@@ -18,6 +18,7 @@ public abstract class Player extends AnimatedSprite{
 	private Body body;
 	private Boolean openParachute = false;
 	private int parachuteSpeed = -20;
+	private int playerCoins = 0;
 	
 	private static final int MAX_FREEFALL_SPEED = -40;
 	
@@ -61,6 +62,14 @@ public abstract class Player extends AnimatedSprite{
 				}				
 			}
 		});
+	}
+	
+	public void addPlayerCoins(int coins) {
+		playerCoins += coins;
+	}
+	
+	public int getPlayerCoins() {
+		return playerCoins;
 	}
 	
 	public void openParachute() {

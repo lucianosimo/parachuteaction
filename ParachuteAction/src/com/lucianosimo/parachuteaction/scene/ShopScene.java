@@ -8,6 +8,12 @@ import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
+import org.andengine.entity.text.TextOptions;
+import org.andengine.util.adt.align.HorizontalAlign;
+
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
@@ -17,6 +23,8 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 	
 	private MenuScene menuChildScene;
 	private final int SHOP_MENU = 0;
+	private Text coinsText;
+	private int coins;
 	
 	@Override
 	public void createScene() {
@@ -26,7 +34,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 
 	@Override
 	public void onBackKeyPressed() {
-		SceneManager.getInstance().loadStatisticsScene(engine, this);
+		SceneManager.getInstance().loadMenuScene(engine, this);
 	}
 
 	@Override
@@ -51,18 +59,29 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		menuChildScene = new MenuScene(camera);
 		menuChildScene.setPosition(screenWidth/2, screenHeight/2);
 
+		coinsText = new Text(20, 720, resourcesManager.shopCoinsFont, "Coins: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		loadCoins();
+		
 		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(SHOP_MENU, resourcesManager.shop_menu_region, vbom), 1.2f, 1);				
 				
 		menuChildScene.addMenuItem(menuButtonItem);
-
+		menuChildScene.attachChild(coinsText);
+		
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
 		
 		menuButtonItem.setPosition(-180, -350);
+		coinsText.setPosition(0, 0);
 		
 		menuChildScene.setOnMenuItemClickListener(this);
 		setChildScene(menuChildScene);
 	}	
+	
+	private void loadCoins() {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		coins = sharedPreferences.getInt("coins", 0);
+		coinsText.setText("Coins: " + coins);
+	}
 	
 	@Override
 	public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem,	float pMenuItemLocalX, float pMenuItemLocalY) {

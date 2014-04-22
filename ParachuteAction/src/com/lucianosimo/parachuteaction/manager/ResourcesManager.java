@@ -585,7 +585,10 @@ public class ResourcesManager {
 	}
 	
 	private void loadShopFonts() {
-		
+		FontFactory.setAssetBasePath("font/shop/");
+		final ITexture coinsTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		shopCoinsFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), coinsTexture, activity.getAssets(), "inky.ttf", 35, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		shopCoinsFont.load();
 	}
 	
 	private void unloadShopTextures() {
@@ -594,7 +597,7 @@ public class ResourcesManager {
 	}
 	
 	private void unloadShopFonts() {
-		
+		shopCoinsFont.unload();
 	}
 	
 	//Manager Methods
