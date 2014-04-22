@@ -50,6 +50,13 @@ public class ResourcesManager {
 	//Shop items
 	public ITextureRegion shop_background_region;
 	public ITextureRegion shop_menu_region;
+	public ITextureRegion shop_beach_region;
+	public ITextureRegion shop_city_region;
+	public ITextureRegion shop_desert_region;
+	public ITextureRegion shop_forest_region;
+	public ITextureRegion shop_mountain_region;
+	public ITextureRegion shop_ship_region;
+	public ITextureRegion shop_locked_location_region;
 	private BuildableBitmapTextureAtlas shopTextureAtlas;
 	private BuildableBitmapTextureAtlas shopBackgroundTextureAtlas;
 	
@@ -569,6 +576,13 @@ public class ResourcesManager {
 		shopBackgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
 		
 		shop_menu_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "menu_button.png");
+		shop_beach_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "beach.png");
+		shop_city_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "city.png");
+		shop_desert_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "desert.png");
+		shop_forest_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "forest.png");
+		shop_mountain_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "mountain.png");
+		shop_ship_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "ship.png");
+		shop_locked_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "lockedLocation.png");
 		shop_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBackgroundTextureAtlas, activity, "shop_background.png");
 		try {
 			this.shopTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
@@ -587,7 +601,7 @@ public class ResourcesManager {
 	private void loadShopFonts() {
 		FontFactory.setAssetBasePath("font/shop/");
 		final ITexture coinsTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		shopCoinsFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), coinsTexture, activity.getAssets(), "inky.ttf", 35, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		shopCoinsFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), coinsTexture, activity.getAssets(), "inky.ttf", 25, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
 		shopCoinsFont.load();
 	}
 	
