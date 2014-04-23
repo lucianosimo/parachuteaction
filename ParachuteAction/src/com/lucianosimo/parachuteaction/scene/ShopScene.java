@@ -48,6 +48,10 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 	private Sprite mountain;
 	private Sprite ship;
 	
+	private Sprite lockedDesert;
+	private Sprite lockedMountain;
+	private Sprite lockedShip;
+	
 	@Override
 	public void createScene() {
 		createBackground();
@@ -121,6 +125,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		editor.putBoolean("desert", true);
 		editor.commit();
 		coins = coins - DESERT_UNLOCK_VALUE;
+		coinsText.setText("Coins: " + coins);
 		saveCoins("coins", coins);
 	}
 	
@@ -130,6 +135,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		editor.putBoolean("mountain", true);
 		editor.commit();
 		coins = coins - MOUNTAIN_UNLOCK_VALUE;
+		coinsText.setText("Coins: " + coins);
 		saveCoins("coins", coins);
 	}
 	
@@ -139,6 +145,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		editor.putBoolean("ship", true);
 		editor.commit();
 		coins = coins - SHIP_UNLOCK_VALUE;
+		coinsText.setText("Coins: " + coins);
 		saveCoins("coins", coins);
 	}
 	
@@ -156,16 +163,12 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		menuChildScene.attachChild(mountain);
 		menuChildScene.attachChild(ship);
 		if (!unlockedDesert) {
-			Sprite lockedLocation = new Sprite(62, 87, resourcesManager.shop_locked_location_region, vbom) {
+			lockedDesert = new Sprite(62, 87, resourcesManager.shop_locked_location_region, vbom) {
 				@Override
 				public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 					if (pSceneTouchEvent.isActionDown()) {
 						if (coins >= DESERT_UNLOCK_VALUE) {
-							confirmMessage("Desert", DESERT_UNLOCK_VALUE);
-							if (unlockedDesert) {
-								desert.detachChild(this);
-								menuChildScene.unregisterTouchArea(this);
-							}							
+							confirmMessage("Desert", DESERT_UNLOCK_VALUE);						
 						} else {
 							int coinsToUnlock = DESERT_UNLOCK_VALUE - coins;
 							noEnoughCoins("desert", coinsToUnlock);
@@ -174,20 +177,16 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 					return true;
 				}
 			};
-			desert.attachChild(lockedLocation);
-			menuChildScene.registerTouchArea(lockedLocation);
+			desert.attachChild(lockedDesert);
+			menuChildScene.registerTouchArea(lockedDesert);
 		}
 		if (!unlockedMountain) {
-			Sprite lockedLocation = new Sprite(62, 87, resourcesManager.shop_locked_location_region, vbom) {
+			lockedMountain = new Sprite(62, 87, resourcesManager.shop_locked_location_region, vbom) {
 				@Override
 				public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 					if (pSceneTouchEvent.isActionDown()) {
 						if (coins >= MOUNTAIN_UNLOCK_VALUE) {
-							confirmMessage("Mountain", MOUNTAIN_UNLOCK_VALUE);
-							if (unlockedMountain) {
-								mountain.detachChild(this);
-								menuChildScene.unregisterTouchArea(this);
-							}							
+							confirmMessage("Mountain", MOUNTAIN_UNLOCK_VALUE);						
 						} else {
 							int coinsToUnlock = MOUNTAIN_UNLOCK_VALUE - coins;
 							noEnoughCoins("mountain", coinsToUnlock);
@@ -196,20 +195,16 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 					return true;
 				}
 			};
-			mountain.attachChild(lockedLocation);
-			menuChildScene.registerTouchArea(lockedLocation);
+			mountain.attachChild(lockedMountain);
+			menuChildScene.registerTouchArea(lockedMountain);
 		}
 		if (!unlockedShip) {
-			Sprite lockedLocation = new Sprite(62, 87, resourcesManager.shop_locked_location_region, vbom) {
+			lockedShip = new Sprite(62, 87, resourcesManager.shop_locked_location_region, vbom) {
 				@Override
 				public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 					if (pSceneTouchEvent.isActionDown()) {
 						if (coins >= SHIP_UNLOCK_VALUE) {
-							confirmMessage("Ship", SHIP_UNLOCK_VALUE);
-							if (unlockedShip) {
-								ship.detachChild(this);
-								menuChildScene.unregisterTouchArea(this);
-							}							
+							confirmMessage("Ship", SHIP_UNLOCK_VALUE);						
 						} else {
 							int coinsToUnlock = SHIP_UNLOCK_VALUE - coins;
 							noEnoughCoins("ship", coinsToUnlock);
@@ -218,8 +213,8 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 					return true;
 				}
 			};
-			ship.attachChild(lockedLocation);
-			menuChildScene.registerTouchArea(lockedLocation);
+			ship.attachChild(lockedShip);
+			menuChildScene.registerTouchArea(lockedShip);
 		}
 	}
 	
@@ -235,10 +230,16 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 				    public void onClick(DialogInterface dialog, int whichButton) {
 				    	if (location.equals("Desert")) {
 				    		unlockDesert();
+				    		desert.detachChild(lockedDesert);
+							menuChildScene.unregisterTouchArea(lockedDesert);
 				    	} else if (location.equals("Mountain")) {
 				    		unlockMountain();
+				    		mountain.detachChild(lockedMountain);
+							menuChildScene.unregisterTouchArea(lockedMountain);
 				    	} else if (location.equals("Ship")) {
 				    		unlockShip();
+				    		ship.detachChild(lockedShip);
+							menuChildScene.unregisterTouchArea(lockedShip);
 				    	}
 				        Toast.makeText(activity, location + " unlocked", Toast.LENGTH_LONG).show();
 				        loadUnlockedLocations();
