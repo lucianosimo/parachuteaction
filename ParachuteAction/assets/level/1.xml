@@ -74,7 +74,9 @@
     <entity x="240" y="55000" type="coin"/>
     <entity x="240" y="54500" type="coin"/>
     
-    <entity x="240" y="10000" type="shield"/>
+    <entity x="240" y="55000" type="shield"/>
+    
+    <entity x="240" y="50000" type="slow"/>
     
     <entity x="240" y="35000" type="antigravity"/>
     

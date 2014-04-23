@@ -658,7 +658,7 @@ public class GameScene extends BaseScene{
 						levelObject = balloon;
 						GameScene.this.registerTouchArea(levelObject);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
-						shieldHalo = new Sprite(23, 46, resourcesManager.shieldHalo_region, vbom);
+						shieldHalo = new Sprite(23, 46, resourcesManager.shield_region, vbom);
 						shieldHalo.setVisible(false);
 						player = new Player(x, y, vbom, camera, physicsWorld) {
 							
