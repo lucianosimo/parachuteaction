@@ -76,7 +76,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem,	float pMenuItemLocalX, float pMenuItemLocalY) {
 		switch (pMenuItem.getID()) {
 			case MENU_PLAY:
-				SceneManager.getInstance().loadGameScene(engine, this);
+				SceneManager.getInstance().loadMapScene(engine, this);
 				return true;
 			case MENU_STATISTICS:
 				SceneManager.getInstance().loadStatisticsScene(engine, this);

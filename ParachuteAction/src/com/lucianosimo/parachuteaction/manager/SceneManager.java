@@ -10,6 +10,7 @@ import com.lucianosimo.parachuteaction.scene.AchivementsScene;
 import com.lucianosimo.parachuteaction.scene.GameScene;
 import com.lucianosimo.parachuteaction.scene.LoadingScene;
 import com.lucianosimo.parachuteaction.scene.MainMenuScene;
+import com.lucianosimo.parachuteaction.scene.MapScene;
 import com.lucianosimo.parachuteaction.scene.ShopScene;
 import com.lucianosimo.parachuteaction.scene.SplashScene;
 import com.lucianosimo.parachuteaction.scene.StatisticsScene;
@@ -23,6 +24,7 @@ public class SceneManager {
 	private BaseScene loadingScene;
 	private BaseScene gameScene;
 	private BaseScene shopScene;
+	private BaseScene mapScene;
 	
 	private static final SceneManager INSTANCE = new SceneManager();
 	private SceneType currentSceneType = SceneType.SCENE_SPLASH;
@@ -37,6 +39,7 @@ public class SceneManager {
 		SCENE_LOADING,
 		SCENE_GAME,
 		SCENE_SHOP,
+		SCENE_MAP,
 	}
 	
 	public void setScene(BaseScene scene) {
@@ -67,6 +70,9 @@ public class SceneManager {
 				break;
 			case SCENE_SHOP:
 				setScene(shopScene);
+				break;
+			case SCENE_MAP:
+				setScene(mapScene);
 				break;
 			default:
 				break;
@@ -109,7 +115,7 @@ public class SceneManager {
 		loadingScene = new LoadingScene();
 		setScene(loadingScene);
 		scene.disposeScene();
-		ResourcesManager.getInstance().unloadMenuResources();
+		ResourcesManager.getInstance().unloadMapResources();
 		mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 			@Override
 			public void onTimePassed(final TimerHandler pTimerHandler) {
@@ -117,6 +123,32 @@ public class SceneManager {
 				ResourcesManager.getInstance().loadGameResources();
 				gameScene = new GameScene();
 				setScene(gameScene);
+			}
+		}));
+	}
+	
+	public void loadMapScene(final Engine mEngine, final BaseScene scene) {
+		loadingScene = new LoadingScene();
+		setScene(loadingScene);
+		scene.disposeScene();
+		switch (scene.getSceneType()) {
+			case SCENE_MENU:
+				ResourcesManager.getInstance().unloadMenuResources();
+				break;
+			case SCENE_GAME:
+				ResourcesManager.getInstance().unloadGameResources();
+				break;
+			default:
+				break;
+		}
+		mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+			
+			@Override
+			public void onTimePassed(final TimerHandler pTimerHandler) {
+				mEngine.unregisterUpdateHandler(pTimerHandler);
+				ResourcesManager.getInstance().loadMapResources();
+				mapScene = new MapScene();
+				setScene(mapScene);
 			}
 		}));
 	}
@@ -153,6 +185,9 @@ public class SceneManager {
 				break;
 			case SCENE_GAME:
 				ResourcesManager.getInstance().unloadGameResources();
+				break;
+			case SCENE_MAP:
+				ResourcesManager.getInstance().unloadMapResources();
 				break;
 			default:
 				break;

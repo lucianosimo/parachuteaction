@@ -41,10 +41,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 	private boolean unlockedMountain = false;
 	private boolean unlockedShip = false;
 	
-	private Sprite beach;
-	private Sprite city;
 	private Sprite desert;
-	private Sprite forest;
 	private Sprite mountain;
 	private Sprite ship;
 	
@@ -150,15 +147,9 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 	}
 	
 	private void loadLocations() {
-		beach = new Sprite(-140, 120, resourcesManager.shop_beach_region, vbom);
-		city = new Sprite(0, 120, resourcesManager.shop_city_region, vbom);
-		forest = new Sprite(140, 120, resourcesManager.shop_forest_region, vbom);
-		desert = new Sprite(-140, -120, resourcesManager.shop_desert_region, vbom);		
-		mountain = new Sprite(0, -120, resourcesManager.shop_mountain_region, vbom);
-		ship = new Sprite(140, -120, resourcesManager.shop_ship_region, vbom);
-		menuChildScene.attachChild(beach);
-		menuChildScene.attachChild(city);
-		menuChildScene.attachChild(forest);
+		desert = new Sprite(-140, 0, resourcesManager.shop_desert_region, vbom);		
+		mountain = new Sprite(0, 0, resourcesManager.shop_mountain_region, vbom);
+		ship = new Sprite(140, 0, resourcesManager.shop_ship_region, vbom);
 		menuChildScene.attachChild(desert);
 		menuChildScene.attachChild(mountain);
 		menuChildScene.attachChild(ship);

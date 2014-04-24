@@ -21,6 +21,7 @@ import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
 
 import com.lucianosimo.parachuteaction.GameActivity;
+import com.lucianosimo.parachuteaction.scene.MapScene;
 
 public class ResourcesManager {
 
@@ -62,6 +63,18 @@ public class ResourcesManager {
 	
 	//Shop fonts
 	public Font shopCoinsFont;
+	
+	//Map items
+	public ITextureRegion map_background_region;
+	public ITextureRegion map_menu_region;
+	public ITextureRegion map_beach_region;
+	public ITextureRegion map_city_region;
+	public ITextureRegion map_desert_region;
+	public ITextureRegion map_forest_region;
+	public ITextureRegion map_mountain_region;
+	public ITextureRegion map_ship_region;
+	private BuildableBitmapTextureAtlas mapTextureAtlas;
+	private BuildableBitmapTextureAtlas mapBackgroundTextureAtlas;
 	
 	//Statistics items
 	public ITextureRegion statistics_background_region;
@@ -150,6 +163,7 @@ public class ResourcesManager {
 
 	//Backgrounds
 	public ITextureRegion background_region;
+	public ITextureRegion back_location_region;
 	
 	//Signs
 	public ITextureRegion upperImpulseSign_region;
@@ -188,6 +202,7 @@ public class ResourcesManager {
 	//Game Textures
 	private BuildableBitmapTextureAtlas animatedTextureAtlas;
 	private BuildableBitmapTextureAtlas backgroundTextureAtlas;
+	private BuildableBitmapTextureAtlas backgroundLocationTextureAtlas;
 	private BuildableBitmapTextureAtlas objectsTextureAtlas;
 	private BuildableBitmapTextureAtlas windowsTextureAtlas;
 	
@@ -278,11 +293,33 @@ public class ResourcesManager {
 		
 		animatedTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1500, 1500, TextureOptions.BILINEAR);
 		backgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		backgroundLocationTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 1000, TextureOptions.BILINEAR);
 		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1500, 1500, TextureOptions.BILINEAR);
 		windowsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1000, 1000, TextureOptions.BILINEAR);
 		
 		//Background texture objects
 		background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundTextureAtlas, activity, "background.png");
+		
+		if (MapScene.getLevel() == 1) {
+			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_beach.png");
+			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_beach.png");
+		} else if (MapScene.getLevel() == 2) {
+			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_city.png");
+			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_city.png");
+		} else if (MapScene.getLevel() == 3) {
+			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_forest.png");
+			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_forest.png");
+		} else if (MapScene.getLevel() == 4) {
+			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_desert.png");
+			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_desert.png");
+		} else if (MapScene.getLevel() == 5) {
+			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_mountain.png");
+			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_mountain.png");
+		} else if (MapScene.getLevel() == 6) {
+			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_ship.png");
+			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_ship.png");
+		}
+		
 		
 		//Objects texture objects
 		cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "cloud.png");
@@ -299,7 +336,6 @@ public class ResourcesManager {
 		green_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "greenArrow.png");
 		coin_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "coin.png");
 		
-		landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_forest.png");
 		
 		//Windows texture objects
 		level_complete_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "level_complete_window.png");
@@ -319,10 +355,12 @@ public class ResourcesManager {
 		try {
 			this.animatedTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			this.backgroundTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.backgroundLocationTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			this.objectsTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			this.windowsTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			this.animatedTextureAtlas.load();
 			this.backgroundTextureAtlas.load();
+			this.backgroundLocationTextureAtlas.load();
 			this.objectsTextureAtlas.load();
 			this.windowsTextureAtlas.load();
 		} catch (final TextureAtlasBuilderException e) {
@@ -370,6 +408,7 @@ public class ResourcesManager {
 	private void unloadGameTextures() {
 		this.animatedTextureAtlas.unload();
 		this.backgroundTextureAtlas.unload();
+		this.backgroundLocationTextureAtlas.unload();
 		this.objectsTextureAtlas.unload();
 		this.windowsTextureAtlas.unload();
 	}
@@ -610,6 +649,59 @@ public class ResourcesManager {
 	
 	private void unloadShopFonts() {
 		shopCoinsFont.unload();
+	}
+	
+	//Map methods
+	public void loadMapResources() {
+		loadMapGraphics();
+		loadMapAudio();
+		loadMapFonts();
+	}
+	
+	public void unloadMapResources() {
+		unloadMapTextures();
+		unloadMapFonts();		
+	}
+	
+	private void loadMapGraphics() {
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/map/");
+		mapTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
+		mapBackgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		
+		map_menu_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "menu_button.png");
+		map_beach_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "beach.png");
+		map_city_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "city.png");
+		map_desert_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "desert.png");
+		map_forest_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "forest.png");
+		map_mountain_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "mountain.png");
+		map_ship_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "ship.png");
+		map_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapBackgroundTextureAtlas, activity, "map_background.png");
+		
+		try {
+			this.mapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.mapBackgroundTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.mapTextureAtlas.load();
+			this.mapBackgroundTextureAtlas.load();
+		} catch (final TextureAtlasBuilderException e) {
+			org.andengine.util.debug.Debug.e(e);
+		}
+	}
+	
+	private void loadMapAudio() {
+		
+	}
+	
+	private void loadMapFonts() {
+		FontFactory.setAssetBasePath("font/map/");
+	}
+	
+	private void unloadMapTextures() {
+		this.mapTextureAtlas.unload();
+		this.mapBackgroundTextureAtlas.unload();
+	}
+	
+	private void unloadMapFonts() {
+		
 	}
 	
 	//Manager Methods

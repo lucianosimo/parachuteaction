@@ -18,6 +18,7 @@ import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.util.SAXUtils;
 import org.andengine.util.adt.align.HorizontalAlign;
 import org.andengine.util.debug.Debug;
@@ -160,6 +161,7 @@ public class GameScene extends BaseScene{
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE = "upperImpulse";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITY = "antigravity";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLANE = "plane";
+	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BACK_LOCATION = "backLocation";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM = "landingPlatform";
 
 	@Override
@@ -214,8 +216,21 @@ public class GameScene extends BaseScene{
 		
 		meterCounterText.setText("Flied Meters: " + fliedMeters);
 		altimeterText.setText("Meters to go: ");
-		levelStartText.setText("Forest - 15:00 hs");
 		coinsText.setText("Coins: " + coins);
+		
+		if (MapScene.getLevel() == 1) {
+			levelStartText.setText("Beach - 15:00 hs");
+		} else if (MapScene.getLevel() == 2) {
+			levelStartText.setText("City - 15:00 hs");
+		} else if (MapScene.getLevel() == 3) {
+			levelStartText.setText("Forest - 15:00 hs");
+		} else if (MapScene.getLevel() == 4) {
+			levelStartText.setText("Desert - 15:00 hs");
+		} else if (MapScene.getLevel() == 5) {
+			levelStartText.setText("Mountain - 15:00 hs");
+		} else if (MapScene.getLevel() == 6) {
+			levelStartText.setText("Ship - 15:00 hs");
+		}
 		
 		gameHud.attachChild(meterCounterText);
 		gameHud.attachChild(altimeterText);
@@ -434,6 +449,8 @@ public class GameScene extends BaseScene{
 						PhysicsHandler handler = new PhysicsHandler(levelObject);
 						levelObject.registerUpdateHandler(handler);
 						handler.setVelocity(PLANE_SPEED,0);
+					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BACK_LOCATION)) {
+						levelObject = new Sprite(x, y, resourcesManager.back_location_region, vbom);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_COIN)) {
 						levelObject = new Sprite(x, y, resourcesManager.coin_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
@@ -448,8 +465,6 @@ public class GameScene extends BaseScene{
 						Random rand = new Random();
 						int randX = rand.nextInt(441) - 220;
 						int randY = rand.nextInt(5001) - 2500;
-						//final Sprite sign = new Sprite(x + randX, y + randY + 1500, resourcesManager.shieldSign_region, vbom);
-						//GameScene.this.attachChild(sign);
 						levelObject = new Sprite(x + randX, y + randY, resourcesManager.shield_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
@@ -483,8 +498,6 @@ public class GameScene extends BaseScene{
 						Random rand = new Random();
 						int randX = rand.nextInt(441) - 220;
 						int randY = rand.nextInt(5001) - 2500;
-						//final Sprite sign = new Sprite(x + randX, y + randY + 1500, resourcesManager.upperImpulseSign_region, vbom);
-						//GameScene.this.attachChild(sign);
 						levelObject = new Sprite(x + randX, y + randY, resourcesManager.upperImpulse_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
@@ -505,8 +518,6 @@ public class GameScene extends BaseScene{
 						Random rand = new Random();
 						int randX = rand.nextInt(441) - 220;
 						int randY = rand.nextInt(5001) - 2500;
-						//final Sprite sign = new Sprite(x + randX, y + randY + 1000, resourcesManager.antigravitySign_region, vbom);
-						//GameScene.this.attachChild(sign);
 						levelObject = new Sprite(x + randX, y + randY, resourcesManager.antiGravity_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
