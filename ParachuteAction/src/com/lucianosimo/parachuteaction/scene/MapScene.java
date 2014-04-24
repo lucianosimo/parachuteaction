@@ -47,7 +47,7 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 
 	@Override
 	public SceneType getSceneType() {
-		return SceneType.SCENE_SHOP;
+		return SceneType.SCENE_MAP;
 	}
 
 	@Override
@@ -83,15 +83,12 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 		menuChildScene.addMenuItem(forestButtonItem);
 		if (unlockedDesert) {
 			menuChildScene.addMenuItem(desertButtonItem);
-			desertButtonItem.setPosition(-140, -120);
 		}
 		if (unlockedMountain) {
 			menuChildScene.addMenuItem(mountainButtonItem);
-			mountainButtonItem.setPosition(0, -120);
 		}
 		if (unlockedShip) {
 			menuChildScene.addMenuItem(shipButtonItem);
-			shipButtonItem.setPosition(140, -120);
 		}
 		
 		menuChildScene.buildAnimations();
@@ -101,6 +98,15 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 		beachButtonItem.setPosition(-140, 120);
 		cityButtonItem.setPosition(0, 120);
 		forestButtonItem.setPosition(140, 120);
+		if (unlockedDesert) {
+			desertButtonItem.setPosition(-140, -120);
+		}
+		if (unlockedMountain) {
+			mountainButtonItem.setPosition(0, -120);
+		}
+		if (unlockedShip) {
+			shipButtonItem.setPosition(140, -120);
+		}
 		
 		menuChildScene.setOnMenuItemClickListener(this);
 		setChildScene(menuChildScene);

@@ -874,56 +874,6 @@ public class GameScene extends BaseScene{
 	}
 
 	@Override
-	public void onBackKeyPressed() {
-		engine.runOnUpdateThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				if (availablePause) {
-					availablePause = false;
-					GameScene.this.setIgnoreUpdate(true);
-					camera.setChaseEntity(null);
-					pauseWindow.setPosition(camera.getCenterX(), camera.getCenterY());
-					GameScene.this.attachChild(pauseWindow);
-					final Sprite resumeButton = new Sprite(345, 45, resourcesManager.resume_button_region, vbom){
-				    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-				    		if (pSceneTouchEvent.isActionDown()) {
-				    			availablePause = true;
-				    			GameScene.this.detachChild(pauseWindow);
-				    			GameScene.this.setIgnoreUpdate(false);
-				    			camera.setChaseEntity(player);
-				    		}
-				    		return true;
-				    	};
-				    };
-				    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
-				    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-				    		if (pSceneTouchEvent.isActionDown()) {
-				    			gameHud.dispose();
-								gameHud.setVisible(false);
-								detachChild(gameHud);
-								myGarbageCollection();
-								SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
-				    		}
-				    		return true;
-				    	};
-				    };
-				    GameScene.this.registerTouchArea(resumeButton);
-				    GameScene.this.registerTouchArea(quitButton);
-				    pauseWindow.attachChild(quitButton);
-				    pauseWindow.attachChild(resumeButton);
-				} else {
-					availablePause = true;
-					GameScene.this.detachChild(pauseWindow);
-	    			GameScene.this.setIgnoreUpdate(false);
-	    			camera.setChaseEntity(player);
-				}				
-			}
-		});
-		
-	}
-
-	@Override
 	public SceneType getSceneType() {
 		return SceneType.SCENE_GAME;
 	}
@@ -1044,6 +994,58 @@ public class GameScene extends BaseScene{
 		}			
 	}
 	
+	@Override
+	public void onBackKeyPressed() {
+		engine.runOnUpdateThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				if (availablePause) {
+					availablePause = false;
+					GameScene.this.setIgnoreUpdate(true);
+					camera.setChaseEntity(null);
+					pauseWindow.setPosition(camera.getCenterX(), camera.getCenterY());
+					GameScene.this.attachChild(pauseWindow);
+					gameHud.setVisible(false);
+					final Sprite resumeButton = new Sprite(345, 45, resourcesManager.resume_button_region, vbom){
+				    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				    		if (pSceneTouchEvent.isActionDown()) {
+				    			gameHud.setVisible(true);
+				    			availablePause = true;
+				    			GameScene.this.detachChild(pauseWindow);
+				    			GameScene.this.setIgnoreUpdate(false);
+				    			camera.setChaseEntity(player);
+				    		}
+				    		return true;
+				    	};
+				    };
+				    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
+				    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				    		if (pSceneTouchEvent.isActionDown()) {
+				    			gameHud.dispose();
+								gameHud.setVisible(false);
+								detachChild(gameHud);
+								myGarbageCollection();
+								SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
+				    		}
+				    		return true;
+				    	};
+				    };
+				    GameScene.this.registerTouchArea(resumeButton);
+				    GameScene.this.registerTouchArea(quitButton);
+				    pauseWindow.attachChild(quitButton);
+				    pauseWindow.attachChild(resumeButton);
+				} else {
+					availablePause = true;
+					GameScene.this.detachChild(pauseWindow);
+	    			GameScene.this.setIgnoreUpdate(false);
+	    			camera.setChaseEntity(player);
+				}				
+			}
+		});
+		
+	}
+	
 	private void displayLevelCompleted() {
 		GameScene.this.setIgnoreUpdate(true);
         camera.setChaseEntity(null);
@@ -1092,148 +1094,76 @@ public class GameScene extends BaseScene{
 		
 		if (AchievementsHelper.firstJumpAchievementUnlockedInLevel(jumpsCounterBefore, jumpsCounterAfter)) {
 			newAchievement = true;
-			//Sprite firstJumpAchievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.firstJumpAward, vbom);
-			//GameScene.this.attachChild(firstJumpAchievement);
 		} else if (AchievementsHelper.jumps10AchievementUnlockedInLevel(jumpsCounterBefore, jumpsCounterAfter)) {
 			newAchievement = true;
-			//Sprite jumps10Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.jumps10award, vbom);
-			//GameScene.this.attachChild(jumps10Achievement);
 		} else if (AchievementsHelper.jumps50AchievementUnlockedInLevel(jumpsCounterBefore, jumpsCounterAfter)) {
 			newAchievement = true;
-			//Sprite jumps50Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.jumps50award, vbom);
-			//GameScene.this.attachChild(jumps50Achievement);
 		} else if (AchievementsHelper.jumps100AchievementUnlockedInLevel(jumpsCounterBefore, jumpsCounterAfter)) {
 			newAchievement = true;
-			//Sprite jumps100Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.jumps100award, vbom);
-			//GameScene.this.attachChild(jumps100Achievement);
 		} else if (AchievementsHelper.jumps500AchievementUnlockedInLevel(jumpsCounterBefore, jumpsCounterAfter)) {
 			newAchievement = true;
-			//Sprite jumps500Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.jumps500award, vbom);
-			//GameScene.this.attachChild(jumps500Achievement);
 		} else if (AchievementsHelper.freeFly5000AchievementUnlockedInLevel(freeFlyCounterBefore, freeFlyCounterAfter)) {
 			newAchievement = true;
-			//Sprite freeFly5000Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.freeFly5000award, vbom);
-			//GameScene.this.attachChild(freeFly5000Achievement);
 		} else if (AchievementsHelper.freeFly15000AchievementUnlockedInLevel(freeFlyCounterBefore, freeFlyCounterAfter)) {
 			newAchievement = true;
-			//Sprite freeFly15000Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.freeFly15000award, vbom);
-			//GameScene.this.attachChild(freeFly15000Achievement);
 		} else if (AchievementsHelper.freeFly50000AchievementUnlockedInLevel(freeFlyCounterBefore, freeFlyCounterAfter)) {
 			newAchievement = true;
-			//Sprite freeFly50000Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.freeFly50000award, vbom);
-			//GameScene.this.attachChild(freeFly50000Achievement);
 		} else if (AchievementsHelper.freeFly100000AchievementUnlockedInLevel(freeFlyCounterBefore, freeFlyCounterAfter)) {
 			newAchievement = true;
-			//Sprite freeFly100000Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.freeFly100000award, vbom);
-			//GameScene.this.attachChild(freeFly100000Achievement);
 		} else if (AchievementsHelper.parachuteFly2500AchievementUnlockedInLevel(parachuteFlyCounterBefore, parachuteFlyCounterAfter)) {
 			newAchievement = true;
-			//Sprite parachuteFly2500Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.parachuteFly2500award, vbom);
-			//GameScene.this.attachChild(parachuteFly2500Achievement);
 		} else if (AchievementsHelper.parachuteFly15000AchievementUnlockedInLevel(parachuteFlyCounterBefore, parachuteFlyCounterAfter)) {
 			newAchievement = true;
-			//Sprite parachuteFly15000Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.parachuteFly15000award, vbom);
-			//GameScene.this.attachChild(parachuteFly15000Achievement);
 		} else if (AchievementsHelper.parachuteFly50000AchievementUnlockedInLevel(parachuteFlyCounterBefore, parachuteFlyCounterAfter)) {
 			newAchievement = true;
-			//Sprite parachuteFly50000Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.parachuteFly50000award, vbom);
-			//GameScene.this.attachChild(parachuteFly50000Achievement);
 		} else if (AchievementsHelper.failJumps5AchievementUnlockedInLevel(failedJumpsCounterBefore, failedJumpsCounterAfter)) {
 			newAchievement = true;
-			//Sprite failedJumps5Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.failJumps5award, vbom);
-			//GameScene.this.attachChild(failedJumps5Achievement);
 		} else if (AchievementsHelper.failJumps10AchievementUnlockedInLevel(failedJumpsCounterBefore, failedJumpsCounterAfter)) {
 			newAchievement = true;
-			//Sprite failedJumps10Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.failJumps10award, vbom);
-			//GameScene.this.attachChild(failedJumps10Achievement);
 		} else if (AchievementsHelper.failJumps25AchievementUnlockedInLevel(failedJumpsCounterBefore, failedJumpsCounterAfter)) {
 			newAchievement = true;
-			//Sprite failedJumps25Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.failJumps25award, vbom);
-			//GameScene.this.attachChild(failedJumps25Achievement);
 		} else if (AchievementsHelper.upper10AchievementUnlockedInLevel(upperImpulseCounterBefore, upperImpulseCounterAfter)) {
 			newAchievement = true;
-			//Sprite upperImpulse10Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.ui10award, vbom);
-			//GameScene.this.attachChild(upperImpulse10Achievement);
 		} else if (AchievementsHelper.upper50AchievementUnlockedInLevel(upperImpulseCounterBefore, upperImpulseCounterAfter)) {
 			newAchievement = true;
-			//Sprite upperImpulse50Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.ui50award, vbom);
-			//GameScene.this.attachChild(upperImpulse50Achievement);
 		} else if (AchievementsHelper.upper100AchievementUnlockedInLevel(upperImpulseCounterBefore, upperImpulseCounterAfter)) {
 			newAchievement = true;
-			//Sprite upperImpulse100Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.ui100award, vbom);
-			//GameScene.this.attachChild(upperImpulse100Achievement);
 		} else if (AchievementsHelper.antigravity10AchievementUnlockedInLevel(antigravityCounterBefore, antigravityCounterAfter)) {
 			newAchievement = true;
-			//Sprite antigravity10Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.antigravity10award, vbom);
-			//GameScene.this.attachChild(antigravity10Achievement);
 		} else if (AchievementsHelper.antigravity50AchievementUnlockedInLevel(antigravityCounterBefore, antigravityCounterAfter)) {
 			newAchievement = true;
-			//Sprite antigravity50Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.antigravity50award, vbom);
-			//GameScene.this.attachChild(antigravity50Achievement);
 		} else if (AchievementsHelper.antigravity100AchievementUnlockedInLevel(antigravityCounterBefore, antigravityCounterAfter)) {
 			newAchievement = true;
-			//Sprite antigravity100Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.antigravity100award, vbom);
-			//GameScene.this.attachChild(antigravity100Achievement);
 		} else if (AchievementsHelper.shield10AchievementUnlockedInLevel(shieldCounterBefore, shieldCounterAfter)) {
 			newAchievement = true;
-			//Sprite shield10Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.shield10award, vbom);
-			//GameScene.this.attachChild(shield10Achievement);
 		} else if (AchievementsHelper.shield50AchievementUnlockedInLevel(shieldCounterBefore, shieldCounterAfter)) {
 			newAchievement = true;
-			//Sprite shield50Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.shield50award, vbom);
-			//GameScene.this.attachChild(shield50Achievement);
 		} else if (AchievementsHelper.shield100AchievementUnlockedInLevel(shieldCounterBefore, shieldCounterAfter)) {
 			newAchievement = true;
-			//Sprite shield100Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.shield100award, vbom);
-			//GameScene.this.attachChild(shield100Achievement);
 		} else if (AchievementsHelper.slow10AchievementUnlockedInLevel(slowCounterBefore, slowCounterAfter)) {
 			newAchievement = true;
-			//Sprite slow10Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.slow10award, vbom);
-			//GameScene.this.attachChild(slow10Achievement);
 		} else if (AchievementsHelper.slow50AchievementUnlockedInLevel(slowCounterBefore, slowCounterAfter)) {
 			newAchievement = true;
-			//Sprite slow50Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.slow50award, vbom);
-			//GameScene.this.attachChild(slow50Achievement);
 		} else if (AchievementsHelper.slow100AchievementUnlockedInLevel(slowCounterBefore, slowCounterAfter)) {
 			newAchievement = true;
-			//Sprite slow100Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.slow100award, vbom);
-			//GameScene.this.attachChild(slow100Achievement);
 		} else if (AchievementsHelper.destroy5helicoptersAchievementUnlockedInLevel(helicoptersCounterBefore, helicoptersCounterAfter)) {
 			newAchievement = true;
-			//Sprite helicopter5Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.destroy5helicoptersAward, vbom);
-			//GameScene.this.attachChild(helicopter5Achievement);
 		} else if (AchievementsHelper.destroy25helicoptersAchievementUnlockedInLevel(helicoptersCounterBefore, helicoptersCounterAfter)) {
 			newAchievement = true;
-			//Sprite helicopter25Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.destroy25helicoptersAward, vbom);
-			//GameScene.this.attachChild(helicopter25Achievement);
 		} else if (AchievementsHelper.destroy100helicoptersAchievementUnlockedInLevel(helicoptersCounterBefore, helicoptersCounterAfter)) {
 			newAchievement = true;
-			//Sprite helicopter100Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.destroy100helicoptersAward, vbom);
-			//GameScene.this.attachChild(helicopter100Achievement);
 		} else if (AchievementsHelper.destroy5balloonsAchievementUnlockedInLevel(balloonsCounterBefore, balloonsCounterAfter)) {
 			newAchievement = true;
-			//Sprite balloons5Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.destroy5balloonsAward, vbom);
-			//GameScene.this.attachChild(balloons5Achievement);
 		} else if (AchievementsHelper.destroy25balloonsAchievementUnlockedInLevel(balloonsCounterBefore, balloonsCounterAfter)) {
 			newAchievement = true;
-			//Sprite balloons25Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.destroy25balloonsAward, vbom);
-			//GameScene.this.attachChild(balloons25Achievement);
 		} else if (AchievementsHelper.destroy100balloonsAchievementUnlockedInLevel(balloonsCounterBefore, balloonsCounterAfter)) {
 			newAchievement = true;
-			//Sprite balloons100Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.destroy100balloonsAward, vbom);
-			//GameScene.this.attachChild(balloons100Achievement);
 		} else if (AchievementsHelper.destroy5birdsAchievementUnlockedInLevel(birdsCounterBefore, birdsCounterAfter)) {
 			newAchievement = true;
-			//Sprite birds5Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.destroy5birdsAward, vbom);
-			//GameScene.this.attachChild(birds5Achievement);
 		} else if (AchievementsHelper.destroy25birdsAchievementUnlockedInLevel(birdsCounterBefore, birdsCounterAfter)) {
 			newAchievement = true;
-			//Sprite birds25Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.destroy25birdsAward, vbom);
-			//GameScene.this.attachChild(birds25Achievement);
 		} else if (AchievementsHelper.destroy100birdsAchievementUnlockedInLevel(birdsCounterBefore, birdsCounterAfter)) {
 			newAchievement = true;
-			//Sprite birds100Achievement = new Sprite(camera.getCenterX(), camera.getCenterY() - 150, resourcesManager.destroy100birdsAward, vbom);
-			//GameScene.this.attachChild(birds100Achievement);
 		}
 		
 		if (newAchievement) {
