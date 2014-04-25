@@ -198,8 +198,10 @@ public class GameScene extends BaseScene{
 			@Override
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 				if (pSceneTouchEvent.isActionDown()) {
-					openParachute = true;
-					destroySprite(openButton);
+					if (startMoving) {
+						openParachute = true;
+						destroySprite(openButton);
+					}					
 				}
 				return true;
 			}

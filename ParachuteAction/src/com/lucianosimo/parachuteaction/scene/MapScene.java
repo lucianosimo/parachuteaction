@@ -13,6 +13,7 @@ import org.andengine.entity.sprite.Sprite;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
@@ -29,6 +30,7 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 	private final int MAP_DESERT = 4;
 	private final int MAP_MOUNTAIN = 5;
 	private final int MAP_SHIP = 6;
+	private final int MAP_RANDOM = 7;
 	
 	private static int level;
 	private static boolean day = true;
@@ -88,11 +90,13 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 		final IMenuItem desertButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_DESERT, resourcesManager.map_desert_region, vbom), 1.2f, 1);
 		final IMenuItem mountainButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_MOUNTAIN, resourcesManager.map_mountain_region, vbom), 1.2f, 1);
 		final IMenuItem shipButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_SHIP, resourcesManager.map_ship_region, vbom), 1.2f, 1);
+		final IMenuItem randomButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_RANDOM, resourcesManager.map_random_button_region, vbom), 1.2f, 1);
 				
 		menuChildScene.addMenuItem(menuButtonItem);
 		menuChildScene.addMenuItem(beachButtonItem);
 		menuChildScene.addMenuItem(cityButtonItem);
 		menuChildScene.addMenuItem(forestButtonItem);
+		menuChildScene.addMenuItem(randomButtonItem);
 		if (unlockedDesert) {
 			menuChildScene.addMenuItem(desertButtonItem);
 		}
@@ -110,6 +114,7 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 		beachButtonItem.setPosition(-140, 120);
 		cityButtonItem.setPosition(0, 120);
 		forestButtonItem.setPosition(140, 120);
+		randomButtonItem.setPosition(140, 350);
 		if (unlockedDesert) {
 			desertButtonItem.setPosition(-140, -120);
 		}
@@ -168,6 +173,23 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 				return true;
 			case MAP_SHIP:
 				level = MAP_SHIP;
+				SceneManager.getInstance().loadGameScene(engine, this);
+				return true;
+			case MAP_RANDOM:
+				Log.e("parachute", "random");
+				//n = rand.nextInt(max - min + 1) + min;
+				Random caseRand = new Random();
+				int caseRandom = caseRand.nextInt(3) + 1;
+				if (unlockedDesert) {
+					caseRandom = caseRand.nextInt(4) + 1;
+				}
+				if (unlockedMountain) {
+					caseRandom = caseRand.nextInt(5) + 1;
+				}
+				if (unlockedShip) {
+					caseRandom = caseRand.nextInt(6) + 1;
+				}
+				level = caseRandom;
 				SceneManager.getInstance().loadGameScene(engine, this);
 				return true;
 			default:

@@ -66,6 +66,7 @@ public class ResourcesManager {
 	
 	//Map items
 	public ITextureRegion map_background_region;
+	public ITextureRegion map_random_button_region;
 	public ITextureRegion map_menu_region;
 	public ITextureRegion map_beach_region;
 	public ITextureRegion map_city_region;
@@ -676,6 +677,7 @@ public class ResourcesManager {
 		mapTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
 		mapBackgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
 		
+		map_random_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "random.png");
 		map_menu_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "menu_button.png");
 		map_beach_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "beach.png");
 		map_city_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "city.png");
