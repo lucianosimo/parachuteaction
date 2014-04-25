@@ -218,17 +218,41 @@ public class GameScene extends BaseScene{
 		coinsText.setText("Coins: " + coins);
 		
 		if (MapScene.getLevel() == 1) {
-			levelStartText.setText("Beach - 15:00 hs");
+			if (MapScene.getDayOrNight()) {
+				levelStartText.setText("Beach - 15:00 hs");
+			} else {
+				levelStartText.setText("Beach - 22:00 hs");
+			}			
 		} else if (MapScene.getLevel() == 2) {
-			levelStartText.setText("City - 15:00 hs");
+			if (MapScene.getDayOrNight()) {
+				levelStartText.setText("City - 15:00 hs");
+			} else {
+				levelStartText.setText("City - 22:00 hs");
+			}
 		} else if (MapScene.getLevel() == 3) {
-			levelStartText.setText("Forest - 15:00 hs");
+			if (MapScene.getDayOrNight()) {
+				levelStartText.setText("Forest - 15:00 hs");
+			} else {
+				levelStartText.setText("Forest - 22:00 hs");
+			}
 		} else if (MapScene.getLevel() == 4) {
-			levelStartText.setText("Desert - 15:00 hs");
+			if (MapScene.getDayOrNight()) {
+				levelStartText.setText("Desert - 15:00 hs");
+			} else {
+				levelStartText.setText("Desert - 22:00 hs");
+			}
 		} else if (MapScene.getLevel() == 5) {
-			levelStartText.setText("Mountain - 15:00 hs");
+			if (MapScene.getDayOrNight()) {
+				levelStartText.setText("Mountain - 15:00 hs");
+			} else {
+				levelStartText.setText("Mountain - 22:00 hs");
+			}
 		} else if (MapScene.getLevel() == 6) {
-			levelStartText.setText("Ship - 15:00 hs");
+			if (MapScene.getDayOrNight()) {
+				levelStartText.setText("Ship - 15:00 hs");
+			} else {
+				levelStartText.setText("Ship - 22:00 hs");
+			}
 		}
 		
 		gameHud.attachChild(meterCounterText);
@@ -436,7 +460,7 @@ public class GameScene extends BaseScene{
 						levelObject = new Sprite(x, y, resourcesManager.plane_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
-								if (this.getX() < 240) {
+								if (this.getX() < 200) {
 									if (!startMoving) {
 										startMoving = true;
 										player.setVisible(true);
@@ -527,7 +551,6 @@ public class GameScene extends BaseScene{
 								}
 								if (player.collidesWith(this)) {
 									antigravityCounter++;
-									//destroySprite(sign);
 									destroySprite(this);
 									player.registerEntityModifier(new DelayModifier(ANTIGRAVITY_DURATION, new IEntityModifierListener() {
 										
@@ -745,6 +768,18 @@ public class GameScene extends BaseScene{
 									    		return true;
 									    	};
 									    };
+									    final Sprite mapButton = new Sprite(220, 45, resourcesManager.map_button_region, vbom){
+									    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+									    		if (pSceneTouchEvent.isActionDown()) {
+									    			gameHud.dispose();
+													gameHud.setVisible(false);
+													detachChild(gameHud);
+													myGarbageCollection();
+													SceneManager.getInstance().loadMapScene(engine, GameScene.this);
+												}
+									    		return true;
+									    	};
+									    };
 									    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
 									    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 									    		if (pSceneTouchEvent.isActionDown()) {
@@ -759,8 +794,10 @@ public class GameScene extends BaseScene{
 									    };
 									    GameScene.this.registerTouchArea(retryButton);
 									    GameScene.this.registerTouchArea(quitButton);
+									    GameScene.this.registerTouchArea(mapButton);
 									    gameOverWindow.attachChild(quitButton);
-									    gameOverWindow.attachChild(retryButton);								        
+									    gameOverWindow.attachChild(retryButton);
+									    gameOverWindow.attachChild(mapButton);
 									}
 								});
 								
@@ -1019,6 +1056,18 @@ public class GameScene extends BaseScene{
 				    		return true;
 				    	};
 				    };
+				    final Sprite mapButton = new Sprite(220, 45, resourcesManager.map_button_region, vbom){
+				    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				    		if (pSceneTouchEvent.isActionDown()) {
+				    			gameHud.dispose();
+								gameHud.setVisible(false);
+								detachChild(gameHud);
+								myGarbageCollection();
+								SceneManager.getInstance().loadMapScene(engine, GameScene.this);
+							}
+				    		return true;
+				    	};
+				    };
 				    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
 				    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 				    		if (pSceneTouchEvent.isActionDown()) {
@@ -1033,8 +1082,10 @@ public class GameScene extends BaseScene{
 				    };
 				    GameScene.this.registerTouchArea(resumeButton);
 				    GameScene.this.registerTouchArea(quitButton);
+				    GameScene.this.registerTouchArea(mapButton);
 				    pauseWindow.attachChild(quitButton);
 				    pauseWindow.attachChild(resumeButton);
+				    pauseWindow.attachChild(mapButton);
 				} else {
 					availablePause = true;
 					GameScene.this.detachChild(pauseWindow);
@@ -1064,6 +1115,18 @@ public class GameScene extends BaseScene{
 	    		return true;
 	    	};
 	    };
+	    final Sprite mapButton = new Sprite(220, 45, resourcesManager.map_button_region, vbom){
+	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+	    		if (pSceneTouchEvent.isActionDown()) {
+	    			gameHud.dispose();
+					gameHud.setVisible(false);
+					detachChild(gameHud);
+					myGarbageCollection();
+					SceneManager.getInstance().loadMapScene(engine, GameScene.this);
+				}
+	    		return true;
+	    	};
+	    };
 	    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
 	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 	    		if (pSceneTouchEvent.isActionDown()) {
@@ -1081,9 +1144,11 @@ public class GameScene extends BaseScene{
 		levelCompleted.setText("You landed safely!! You flied " + freeFliedMeters + " meters");
 		maxSpeed.setText("Your max speed was: " + GameScene.this.maxSpeed);
 		GameScene.this.registerTouchArea(flyAgainButton);
-	    GameScene.this.registerTouchArea(quitButton);	
+	    GameScene.this.registerTouchArea(quitButton);
+	    GameScene.this.registerTouchArea(mapButton);
 	    levelCompleteWindow.attachChild(quitButton);
 	    levelCompleteWindow.attachChild(flyAgainButton);
+	    levelCompleteWindow.attachChild(mapButton);
 	    GameScene.this.attachChild(levelCompleted);
 	    GameScene.this.attachChild(maxSpeed);
 	    displayAchievements();

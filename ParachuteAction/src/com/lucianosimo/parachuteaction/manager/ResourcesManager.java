@@ -163,6 +163,7 @@ public class ResourcesManager {
 
 	//Backgrounds
 	public ITextureRegion background_region;
+	public ITextureRegion darkBackground_region;
 	public ITextureRegion back_location_region;
 	
 	//Signs
@@ -179,6 +180,7 @@ public class ResourcesManager {
 	public ITextureRegion slow_region;
 	public ITextureRegion plane_region;
 	public ITextureRegion coin_region;
+	public ITextureRegion light_halo_region;
 	
 	//Shield
 	public ITextureRegion shield_region;
@@ -194,6 +196,7 @@ public class ResourcesManager {
 	public ITextureRegion pause_window_region;
 	public ITextureRegion game_over_window_region;
 	
+	public ITextureRegion map_button_region;
 	public ITextureRegion quit_button_region;
 	public ITextureRegion fly_again_button_region;
 	public ITextureRegion resume_button_region;
@@ -294,11 +297,15 @@ public class ResourcesManager {
 		animatedTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1500, 1500, TextureOptions.BILINEAR);
 		backgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
 		backgroundLocationTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 1000, TextureOptions.BILINEAR);
-		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1500, 1500, TextureOptions.BILINEAR);
+		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 2048, 2048, TextureOptions.BILINEAR);
 		windowsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1000, 1000, TextureOptions.BILINEAR);
 		
 		//Background texture objects
-		background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundTextureAtlas, activity, "background.png");
+		if (MapScene.getDayOrNight()) {
+			background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundTextureAtlas, activity, "background.png");
+		} else {
+			background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundTextureAtlas, activity, "nightBackground.png");
+		}
 		
 		if (MapScene.getLevel() == 1) {
 			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_beach.png");
@@ -341,6 +348,7 @@ public class ResourcesManager {
 		level_complete_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "level_complete_window.png");
 		pause_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "pause_window.png");
 		game_over_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_over_window.png");
+		map_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "map_button.png");
 		quit_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "quit_button.png");
 		fly_again_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "fly_again_button.png");
 		resume_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "resume_button.png");

@@ -1,5 +1,7 @@
 package com.lucianosimo.parachuteaction.scene;
 
+import java.util.Random;
+
 import org.andengine.entity.scene.background.AutoParallaxBackground;
 import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.andengine.entity.scene.menu.MenuScene;
@@ -29,6 +31,7 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 	private final int MAP_SHIP = 6;
 	
 	private static int level;
+	private static boolean day = true;
 	
 	private boolean unlockedDesert = false;
 	private boolean unlockedMountain = false;
@@ -66,6 +69,15 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 		
 		menuChildScene = new MenuScene(camera);
 		menuChildScene.setPosition(screenWidth/2, screenHeight/2);
+		
+		//n = rand.nextInt(max - min + 1) + min;
+		Random rand = new Random();
+		int random = rand.nextInt(2) + 1;
+		if (random == 1) {
+			day = true;
+		} else {
+			day = false;
+		}
 
 		loadUnlockedLocations();	
 		
@@ -122,6 +134,10 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 	
 	public static int getLevel() {
 		return level;
+	}
+	
+	public static boolean getDayOrNight() {
+		return day;
 	}
 	
 	@Override
