@@ -3,6 +3,29 @@
     
     <entity x="240" y="600" type="backLocation"/>
     
+    <entity x="240" y="64000" type="farCloud"/>
+    <entity x="240" y="63000" type="farCloud"/>
+    <entity x="240" y="62000" type="farCloud"/>
+    <entity x="240" y="61000" type="farCloud"/>
+    <entity x="240" y="60000" type="farCloud"/>
+    <entity x="240" y="59000" type="farCloud"/>
+    <entity x="240" y="58000" type="farCloud"/>
+    <entity x="240" y="57000" type="farCloud"/>
+    <entity x="240" y="56000" type="farCloud"/>
+    <entity x="240" y="55000" type="farCloud"/>
+    <entity x="240" y="54000" type="farCloud"/>
+    <entity x="240" y="53000" type="farCloud"/>
+    <entity x="240" y="52000" type="farCloud"/>
+    <entity x="240" y="51000" type="farCloud"/>    
+    <entity x="240" y="50000" type="farCloud"/>
+    <entity x="240" y="49000" type="farCloud"/>
+    <entity x="240" y="48000" type="farCloud"/>
+    <entity x="240" y="47000" type="farCloud"/>
+    <entity x="240" y="46000" type="farCloud"/>
+    <entity x="240" y="45000" type="farCloud"/>
+    <entity x="240" y="44000" type="farCloud"/>
+    <entity x="240" y="43000" type="farCloud"/>
+    
     <entity x="240" y="64000" type="cloud"/>
     <entity x="240" y="63000" type="cloud"/>
     <entity x="240" y="62000" type="cloud"/>
@@ -89,6 +112,14 @@
     
     <entity x="240" y="60000" type="player"/>
     <entity x="1000" y="59700" type="plane"/>
+    
+    <entity x="240" y="64000" type="closerCloud"/>
+    <entity x="240" y="60000" type="closerCloud"/>
+    <entity x="240" y="56000" type="closerCloud"/>
+    <entity x="240" y="52000" type="closerCloud"/>
+    <entity x="240" y="48000" type="closerCloud"/>
+    <entity x="240" y="44000" type="closerCloud"/>
+
 
     <entity x="240" y="50" type="landingPlatform"/>
     

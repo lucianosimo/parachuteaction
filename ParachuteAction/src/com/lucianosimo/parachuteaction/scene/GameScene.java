@@ -139,6 +139,8 @@ public class GameScene extends BaseScene{
 	private static final int PIXEL_METER_RATE = 16;
 	private static final int LEFT_MARGIN = 0;
 	private static final int RIGHT_MARGIN = 480;
+	private static final int CLOSER_CLOUD_SPEED = -65;
+	private static final int FAR_CLOUD_SPEED = -25;
 	private static final int CLOUD_SPEED = -50;
 	private static final int PLANE_SPEED = -50;
 	private static final int SHIELD_DURATION = 5;
@@ -154,6 +156,8 @@ public class GameScene extends BaseScene{
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER = "helicopter";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD = "bird";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON = "balloon";
+	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOSER_CLOUD = "closerCloud";
+	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FAR_CLOUD = "farCloud";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD = "cloud";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD = "shield";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SLOW = "slow";
@@ -458,6 +462,37 @@ public class GameScene extends BaseScene{
 						PhysicsHandler handler = new PhysicsHandler(levelObject);
 						levelObject.registerUpdateHandler(handler);
 						handler.setVelocity(CLOUD_SPEED,0);
+					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOSER_CLOUD)) {
+						Random rand = new Random();
+						int randX = rand.nextInt(441) - 220;
+						int randY = rand.nextInt(201) - 100;
+						levelObject = new Sprite(x + randX, y + randY, resourcesManager.closerCloud_region, vbom) {
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								if (this.getX() < LEFT_MARGIN - 166) {
+									this.setPosition(RIGHT_MARGIN + 166, y);
+								}
+							};
+						};
+						PhysicsHandler handler = new PhysicsHandler(levelObject);
+						levelObject.registerUpdateHandler(handler);
+						handler.setVelocity(CLOSER_CLOUD_SPEED,0);
+					} 
+					else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FAR_CLOUD)) {
+						Random rand = new Random();
+						int randX = rand.nextInt(441) - 220;
+						int randY = rand.nextInt(201) - 100;
+						levelObject = new Sprite(x + randX, y + randY, resourcesManager.farCloud_region, vbom) {
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								if (this.getX() < LEFT_MARGIN - 166) {
+									this.setPosition(RIGHT_MARGIN + 166, y);
+								}
+							};
+						};
+						PhysicsHandler handler = new PhysicsHandler(levelObject);
+						levelObject.registerUpdateHandler(handler);
+						handler.setVelocity(FAR_CLOUD_SPEED,0);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLANE)) {
 						levelObject = new Sprite(x, y, resourcesManager.plane_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {

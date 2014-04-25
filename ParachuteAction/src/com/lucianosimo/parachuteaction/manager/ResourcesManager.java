@@ -176,6 +176,8 @@ public class ResourcesManager {
 
 	//Objects
 	public ITextureRegion cloud_region;
+	public ITextureRegion closerCloud_region;
+	public ITextureRegion farCloud_region;
 	public ITextureRegion upperImpulse_region;
 	public ITextureRegion antiGravity_region;
 	public ITextureRegion slow_region;
@@ -330,6 +332,8 @@ public class ResourcesManager {
 		
 		
 		//Objects texture objects
+		closerCloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "closerCloud.png");
+		farCloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "farCloud.png");
 		cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "cloud.png");
 		upperImpulse_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperImpulse.png");
 		antiGravity_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "antigravity.png");
