@@ -82,7 +82,7 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		loadSavedPreferences();
 		
 		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(STATISTICS_MENU, resourcesManager.menu_from_statistics_region, vbom), 1.2f, 1);
-		final IMenuItem achivementsButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(STATISTICS_ACHIVEMENTS, resourcesManager.achivements_region, vbom), 1.2f, 1);
+		final IMenuItem achivementsButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(STATISTICS_ACHIVEMENTS, resourcesManager.achievements_region, vbom), 1.2f, 1);
 		final IMenuItem resetStatisticsItem = new ScaleMenuItemDecorator(new SpriteMenuItem(RESET_STATISTICS, resourcesManager.resetStatistics_region, vbom), 1.2f, 1);
 
 		statisticsChildScene = new MenuScene(camera);
@@ -105,9 +105,9 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		statisticsChildScene.attachChild(shieldText);
 		statisticsChildScene.attachChild(slowText);
 		
-		menuButtonItem.setPosition(-180, -350);
-		achivementsButtonItem.setPosition(180, -350);
-		resetStatisticsItem.setPosition(0, -200);
+		menuButtonItem.setPosition(-170, -350);
+		achivementsButtonItem.setPosition(170, -350);
+		resetStatisticsItem.setPosition(0, -210);
 		numberOfSuccessfulJumpsText.setPosition(0, 220);
 		numberOfUnsuccessfulJumpsText.setPosition(0, 180);
 		maxFliedMetersText.setPosition(0, 140);

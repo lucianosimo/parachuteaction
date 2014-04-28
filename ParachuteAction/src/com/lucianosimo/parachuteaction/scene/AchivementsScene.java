@@ -127,8 +127,8 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
 		
-		statisticsButtonItem.setPosition(-180, -350);
-		menuButtonItem.setPosition(180, -350);
+		statisticsButtonItem.setPosition(-160, -350);
+		menuButtonItem.setPosition(160, -350);
 		oneButtonItem.setPosition(-100, -250);
 		twoButtonItem.setPosition(0, -250);
 		threeButtonItem.setPosition(100, -250);
