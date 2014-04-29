@@ -81,9 +81,9 @@ public class GameScene extends BaseScene{
 	private boolean loadedCountersBefore = false;
 	private boolean availablePause = true;
 	private boolean startMoving = false;
+	private boolean dead = false;
 	
 	//Texts variables
-	private Text meterCounterText;
 	private Text altimeterText;
 	private Text levelStartText;
 	private Text coinsText;
@@ -139,10 +139,10 @@ public class GameScene extends BaseScene{
 	private static final int PIXEL_METER_RATE = 16;
 	private static final int LEFT_MARGIN = 0;
 	private static final int RIGHT_MARGIN = 480;
-	private static final int CLOSER_CLOUD_SPEED = -65;
-	private static final int FAR_CLOUD_SPEED = -25;
-	private static final int CLOUD_SPEED = -50;
-	private static final int PLANE_SPEED = -50;
+	private static final int CLOSER_CLOUD_SPEED = -70;
+	private static final int FAR_CLOUD_SPEED = -15;
+	private static final int CLOUD_SPEED = -40;
+	private static final int PLANE_SPEED = -65;
 	private static final int SHIELD_DURATION = 5;
 	private static final int ANTIGRAVITY_DURATION = 7;
 	private static final int COINS_VALUE = 100;
@@ -193,8 +193,7 @@ public class GameScene extends BaseScene{
 		gameHud = new HUD();
 		
 		altimeterText = new Text(20, 820, resourcesManager.altimeterFont, "Meters to go: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-		meterCounterText = new Text(20, 770, resourcesManager.meterCounterFont, "Meter Counter: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-		coinsText = new Text(20, 720, resourcesManager.coinsFont, "Coins: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		coinsText = new Text(20, 770, resourcesManager.coinsFont, "Coins: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		levelStartText = new Text(100, 420, resourcesManager.levelStartFont, "Forest - 15:00Hs", new TextOptions(HorizontalAlign.LEFT), vbom);
 		
 		
@@ -213,13 +212,11 @@ public class GameScene extends BaseScene{
 		
 		greenArrow = new Sprite(1000, 0, resourcesManager.green_arrow_region, vbom);
 		redArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region, vbom);
-		
-		meterCounterText.setAnchorCenter(0, 0);
+
 		altimeterText.setAnchorCenter(0, 0);
 		levelStartText.setAnchorCenter(0, 0);
 		coinsText.setAnchorCenter(0, 0);
-		
-		meterCounterText.setText("Flied Meters: " + fliedMeters);
+
 		altimeterText.setText("Meters to go: ");
 		coinsText.setText("Coins: " + coins);
 		
@@ -260,8 +257,7 @@ public class GameScene extends BaseScene{
 				levelStartText.setText("Ship - 22:00 hs");
 			}
 		}
-		
-		gameHud.attachChild(meterCounterText);
+
 		gameHud.attachChild(altimeterText);
 		gameHud.attachChild(levelStartText);
 		gameHud.attachChild(coinsText);
@@ -535,7 +531,6 @@ public class GameScene extends BaseScene{
 								}
 								if (player.collidesWith(this)) {
 									shieldCounter++;
-									//destroySprite(sign);
 									destroySprite(this);
 									player.registerEntityModifier(new DelayModifier(SHIELD_DURATION, new IEntityModifierListener() {
 										
@@ -569,7 +564,6 @@ public class GameScene extends BaseScene{
 								if (player.collidesWith(this)) {
 									upperImpulseCounter++;
 									player.upperImpulse();
-									//destroySprite(sign);
 									destroySprite(this);
 								}
 							};
@@ -593,7 +587,7 @@ public class GameScene extends BaseScene{
 										
 										@Override
 										public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
-											physicsWorld.setGravity(new Vector2(0, 5));										
+											physicsWorld.setGravity(new Vector2(0, 7));										
 										}
 										
 										@Override
@@ -759,7 +753,6 @@ public class GameScene extends BaseScene{
 										altimeterText.setText("Meters to go: " + distanceToFloor);
 										if (player.getFallVelocity() < 0) {
 											fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
-											meterCounterText.setText("Flied Meters: " + fliedMeters);
 										}
 										if (openParachute) {
 											player.openParachute();
@@ -791,6 +784,7 @@ public class GameScene extends BaseScene{
 										GameScene.this.setIgnoreUpdate(true);
 								        camera.setChaseEntity(null);
 								        availablePause = false;
+								        dead = true;
 								        gameOverWindow.setPosition(camera.getCenterX(), camera.getCenterY());
 										GameScene.this.attachChild(gameOverWindow);
 									    final Sprite retryButton = new Sprite(345, 45, resourcesManager.retry_button_region, vbom){
@@ -1124,15 +1118,19 @@ public class GameScene extends BaseScene{
 				    pauseWindow.attachChild(resumeButton);
 				    pauseWindow.attachChild(mapButton);
 				} else {
-					availablePause = true;
-					GameScene.this.detachChild(pauseWindow);
-	    			GameScene.this.setIgnoreUpdate(false);
-	    			camera.setChaseEntity(player);
+					if (!dead) {
+						availablePause = true;
+						gameHud.setVisible(true);
+						GameScene.this.detachChild(pauseWindow);
+		    			GameScene.this.setIgnoreUpdate(false);
+		    			camera.setChaseEntity(player);
+					}					
 				}				
 			}
 		});
 		
 	}
+	
 	
 	private void displayLevelCompleted() {
 		GameScene.this.setIgnoreUpdate(true);
