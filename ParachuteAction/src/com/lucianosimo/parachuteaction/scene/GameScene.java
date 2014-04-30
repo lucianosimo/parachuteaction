@@ -587,7 +587,7 @@ public class GameScene extends BaseScene{
 										
 										@Override
 										public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
-											physicsWorld.setGravity(new Vector2(0, 7));										
+											physicsWorld.setGravity(new Vector2(0, 10));										
 										}
 										
 										@Override
@@ -1130,7 +1130,6 @@ public class GameScene extends BaseScene{
 		});
 		
 	}
-	
 	
 	private void displayLevelCompleted() {
 		GameScene.this.setIgnoreUpdate(true);
