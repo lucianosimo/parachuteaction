@@ -497,6 +497,7 @@ public class GameScene extends BaseScene{
 									if (!startMoving) {
 										startMoving = true;
 										player.setVisible(true);
+										player.setPosition(240, 60000);
 										gameHud.detachChild(levelStartText);
 									}									
 								}
