@@ -107,12 +107,12 @@ public class SceneManager {
 	public void createMenuScene() {
 		ResourcesManager.getInstance().loadMenuResources();
 		menuScene = new MainMenuScene();
+		loadingScene = new LoadingScene();
 		setScene(menuScene);
 		disposeSplashScene();
 	}
 	
 	public void loadGameScene(final Engine mEngine, final BaseScene scene) {
-		loadingScene = new LoadingScene();
 		setScene(loadingScene);
 		scene.disposeScene();
 		ResourcesManager.getInstance().unloadMapResources();
@@ -128,7 +128,6 @@ public class SceneManager {
 	}
 	
 	public void loadMapScene(final Engine mEngine, final BaseScene scene) {
-		loadingScene = new LoadingScene();
 		setScene(loadingScene);
 		scene.disposeScene();
 		switch (scene.getSceneType()) {
@@ -154,7 +153,6 @@ public class SceneManager {
 	}
 	
 	public void loadShopScene(final Engine mEngine, final BaseScene scene) {
-		loadingScene = new LoadingScene();
 		setScene(loadingScene);
 		scene.disposeScene();
 		ResourcesManager.getInstance().unloadMenuResources();
@@ -170,7 +168,6 @@ public class SceneManager {
 	}
 	
 	public void loadMenuScene(final Engine mEngine, final BaseScene scene) {
-		loadingScene = new LoadingScene();
 		setScene(loadingScene);
 		scene.disposeScene();
 		switch (scene.getSceneType()) {
@@ -205,7 +202,6 @@ public class SceneManager {
 	}
 	
 	public void loadStatisticsScene(final Engine mEngine, final BaseScene scene) {
-		loadingScene = new LoadingScene();
 		setScene(loadingScene);
 		scene.disposeScene();
 		switch (scene.getSceneType()) {
@@ -231,7 +227,6 @@ public class SceneManager {
 	}
 	
 	public void loadAchivementsScene(final Engine mEngine, final BaseScene scene) {
-		loadingScene = new LoadingScene();
 		setScene(loadingScene);
 		scene.disposeScene();
 		ResourcesManager.getInstance().unloadStatisticsResources();

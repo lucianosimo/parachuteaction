@@ -20,6 +20,7 @@ import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.SAXUtils;
 import org.andengine.util.adt.align.HorizontalAlign;
+import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
 import org.andengine.util.level.EntityLoader;
 import org.andengine.util.level.constants.LevelConstants;
@@ -194,7 +195,7 @@ public class GameScene extends BaseScene{
 		
 		altimeterText = new Text(20, 820, resourcesManager.altimeterFont, "Meters to go: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		coinsText = new Text(20, 770, resourcesManager.coinsFont, "Coins: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-		levelStartText = new Text(100, 420, resourcesManager.levelStartFont, "Forest - 15:00Hs", new TextOptions(HorizontalAlign.LEFT), vbom);
+		levelStartText = new Text(100, 420, resourcesManager.levelStartFont, "ForestBeachCityDesertMountainShip - 15:00Hs", new TextOptions(HorizontalAlign.LEFT), vbom);
 		
 		
 		openButton = new Sprite(400, 780, resourcesManager.openButton, vbom){
@@ -222,36 +223,48 @@ public class GameScene extends BaseScene{
 		
 		if (MapScene.getLevel() == 1) {
 			if (MapScene.getDayOrNight()) {
+				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
 				levelStartText.setText("Beach - 15:00 hs");
 			} else {
 				levelStartText.setText("Beach - 22:00 hs");
 			}			
 		} else if (MapScene.getLevel() == 2) {
 			if (MapScene.getDayOrNight()) {
+				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
 				levelStartText.setText("City - 15:00 hs");
 			} else {
 				levelStartText.setText("City - 22:00 hs");
 			}
 		} else if (MapScene.getLevel() == 3) {
 			if (MapScene.getDayOrNight()) {
+				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
 				levelStartText.setText("Forest - 15:00 hs");
 			} else {
 				levelStartText.setText("Forest - 22:00 hs");
 			}
 		} else if (MapScene.getLevel() == 4) {
 			if (MapScene.getDayOrNight()) {
+				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
 				levelStartText.setText("Desert - 15:00 hs");
 			} else {
 				levelStartText.setText("Desert - 22:00 hs");
 			}
 		} else if (MapScene.getLevel() == 5) {
 			if (MapScene.getDayOrNight()) {
+				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
 				levelStartText.setText("Mountain - 15:00 hs");
 			} else {
 				levelStartText.setText("Mountain - 22:00 hs");
 			}
 		} else if (MapScene.getLevel() == 6) {
-			if (MapScene.getDayOrNight()) {
+			if (MapScene.getDayOrNight()) {;
+				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
 				levelStartText.setText("Ship - 15:00 hs");
 			} else {
 				levelStartText.setText("Ship - 22:00 hs");

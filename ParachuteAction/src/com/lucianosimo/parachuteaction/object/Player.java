@@ -17,10 +17,10 @@ public abstract class Player extends AnimatedSprite{
 
 	private Body body;
 	private Boolean openParachute = false;
-	private int parachuteSpeed = -20;
+	private int parachuteSpeed = -17;
 	private int playerCoins = 0;
 	
-	private static final int MAX_FREEFALL_SPEED = -30;
+	private static final int MAX_FREEFALL_SPEED = -25;
 	
 	private static final int LEFT_MARGIN = 0;
 	private static final int RIGHT_MARGIN = 480;
