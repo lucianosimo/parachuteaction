@@ -47,6 +47,7 @@ import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
 import com.lucianosimo.parachuteaction.object.Balloon;
 import com.lucianosimo.parachuteaction.object.Bird;
 import com.lucianosimo.parachuteaction.object.Helicopter;
+import com.lucianosimo.parachuteaction.object.LeftHelicopter;
 import com.lucianosimo.parachuteaction.object.Player;
 
 public class GameScene extends BaseScene{
@@ -92,6 +93,7 @@ public class GameScene extends BaseScene{
 	//Instances
 	private Player player;
 	private Helicopter helicopter;
+	private LeftHelicopter leftHelicopter;
 	private Balloon balloon;
 	private Bird bird;
 	
@@ -145,7 +147,7 @@ public class GameScene extends BaseScene{
 	private static final int CLOUD_SPEED = -40;
 	private static final int PLANE_SPEED = -65;
 	private static final int SHIELD_DURATION = 5;
-	private static final int ANTIGRAVITY_DURATION = 7;
+	private static final int ANTIGRAVITY_DURATION = 5;
 	private static final int COINS_VALUE = 100;
 	
 	private static final String TAG_ENTITY = "entity";
@@ -155,6 +157,7 @@ public class GameScene extends BaseScene{
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER = "player";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_COIN = "coin";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER = "helicopter";
+	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER = "leftHelicopter";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD = "bird";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON = "balloon";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOSER_CLOUD = "closerCloud";
@@ -170,11 +173,14 @@ public class GameScene extends BaseScene{
 
 	@Override
 	public void createScene() {
+		//n = rand.nextInt(max - min + 1) + min;
+		Random rand = new Random();
+		int level = rand.nextInt(2) + 1;
 		createBackground();
 		createWindows();
 		createHud();
 		createPhysics();
-		loadLevel(1);
+		loadLevel(level);
 		loadCoins();
 	}
 	
@@ -667,6 +673,41 @@ public class GameScene extends BaseScene{
 						};
 						levelObject = helicopter;
 						GameScene.this.registerTouchArea(levelObject);
+					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER)) {
+						Random rand = new Random();
+						int randY = rand.nextInt(2501) - 1250;
+						leftHelicopter = new LeftHelicopter(x, y + randY, vbom, camera, physicsWorld, resourcesManager.leftHelicopter_region.deepCopy()) {
+							
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								if ((player.getY() - this.getY()) < 2000 && (player.getY() - this.getY()) > 427) {
+									redArrow.setPosition(this.getX(), 75);
+								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+									redArrow.setPosition(1000, 0);
+								}
+								if ((player.getY() - this.getY()) < 500) {
+									this.startMoving();
+								}
+								if (player.collidesWith(this)) {
+									if (shield) {
+										final Sprite helicopterRef = this; 
+										this.setVisible(false);
+										destroyBodyWithSprite(helicopterRef);
+									}									
+								}
+							};
+							public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+								if (pSceneTouchEvent.isActionDown()) {
+									final Sprite helicopterRef = this; 
+									this.setVisible(false);
+									destroyBodyWithSprite(helicopterRef);	
+									helicopterCounter++;
+								}
+								return true;
+							};
+						};
+						levelObject = leftHelicopter;
+						GameScene.this.registerTouchArea(levelObject);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
 						Random rand = new Random();
 						int randY = rand.nextInt(2501) - 1250;
@@ -865,7 +906,7 @@ public class GameScene extends BaseScene{
 											saveScoreData();
 											loadCounters();
 											displayLevelCompleted();
-										} else {
+										} else if (distanceToFloorAtOpenParachute < 1000 || !openParachute){
 											GameScene.this.setIgnoreUpdate(true);
 											camera.setChaseEntity(null);
 											player.killPlayer();

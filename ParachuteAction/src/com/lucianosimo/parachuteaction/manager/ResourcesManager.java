@@ -191,6 +191,7 @@ public class ResourcesManager {
 	//Animated
 	public ITiledTextureRegion player_region;
 	public ITiledTextureRegion helicopter_region;
+	public ITiledTextureRegion leftHelicopter_region;
 	public ITiledTextureRegion balloon_region;
 	public ITiledTextureRegion bird_region;
 	
@@ -362,6 +363,7 @@ public class ResourcesManager {
 		//Animated texture objects
 		player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "player.png", 2, 1);
 		helicopter_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "helicopter.png", 2, 1);
+		leftHelicopter_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "helicopter.png", 2, 1);
 		balloon_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "balloon.png", 2, 1);
 		bird_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "bird.png", 2, 1);
 		
