@@ -660,18 +660,8 @@ public class GameScene extends BaseScene{
 									}									
 								}
 							};
-							public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-								if (pSceneTouchEvent.isActionDown()) {
-									final Sprite helicopterRef = this; 
-									this.setVisible(false);
-									destroyBodyWithSprite(helicopterRef);	
-									helicopterCounter++;
-								}
-								return true;
-							};
 						};
 						levelObject = helicopter;
-						GameScene.this.registerTouchArea(levelObject);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER)) {
 						Random rand = new Random();
 						int randY = rand.nextInt(2501) - 1250;
@@ -695,18 +685,8 @@ public class GameScene extends BaseScene{
 									}									
 								}
 							};
-							public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-								if (pSceneTouchEvent.isActionDown()) {
-									final Sprite helicopterRef = this; 
-									this.setVisible(false);
-									destroyBodyWithSprite(helicopterRef);	
-									helicopterCounter++;
-								}
-								return true;
-							};
 						};
 						levelObject = leftHelicopter;
-						GameScene.this.registerTouchArea(levelObject);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
 						Random rand = new Random();
 						int randY = rand.nextInt(2501) - 1250;
@@ -730,18 +710,8 @@ public class GameScene extends BaseScene{
 									}									
 								}
 							};
-							public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-								if (pSceneTouchEvent.isActionDown()) {
-									final Sprite birdRef = this; 
-									this.setVisible(false);
-									destroyBodyWithSprite(birdRef);
-									birdCounter++;
-								}
-								return true;
-							};
 						};
 						levelObject = bird;
-						GameScene.this.registerTouchArea(levelObject);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON)) {
 						Random rand = new Random();
 						int randX = rand.nextInt(441) - 220;
@@ -763,18 +733,8 @@ public class GameScene extends BaseScene{
 									}									
 								}
 							};
-							public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-								if (pSceneTouchEvent.isActionDown()) {
-									final Sprite balloonRef = this; 
-									this.setVisible(false);
-									destroyBodyWithSprite(balloonRef);
-									balloonCounter++;
-								}
-								return true;
-							};
 						};
 						levelObject = balloon;
-						GameScene.this.registerTouchArea(levelObject);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
 						shieldHalo = new Sprite(23, 46, resourcesManager.shield_region, vbom);
 						shieldHalo.setVisible(false);
