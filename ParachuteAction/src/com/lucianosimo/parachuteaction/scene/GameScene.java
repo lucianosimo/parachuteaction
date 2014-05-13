@@ -180,7 +180,7 @@ public class GameScene extends BaseScene{
 		createWindows();
 		createHud();
 		createPhysics();
-		loadLevel(level);
+		loadLevel(1);
 		loadCoins();
 	}
 	
@@ -516,7 +516,7 @@ public class GameScene extends BaseScene{
 									if (!startMoving) {
 										startMoving = true;
 										player.setVisible(true);
-										player.setPosition(240, 60000);
+										player.setPosition(240, 64000);
 										gameHud.detachChild(levelStartText);
 									}									
 								}
@@ -963,6 +963,21 @@ public class GameScene extends BaseScene{
 				}
 				
 				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player")) {
+					if (shield) {
+						engine.runOnUpdateThread(new Runnable() {
+							@Override
+							public void run() {
+								physicsWorld.destroyBody(x1.getBody());	
+							}
+						});
+					} else {
+						player.killPlayer();
+						setInactiveBody(x1.getBody());
+					}
+					
+				}
+				
+				if (x1.getBody().getUserData().equals("leftHelicopter") && x2.getBody().getUserData().equals("player")) {
 					if (shield) {
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
