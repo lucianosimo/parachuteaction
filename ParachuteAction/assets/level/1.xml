@@ -162,7 +162,7 @@
     
     <entity x="240" y="32000" type="balloon"/>
     
-    <entity x="0" y="28900" type="helicopter"/>
+    <entity x="480" y="28900" type="helicopter"/>
     
     <entity x="400" y="28000" type="coin"/>
     <entity x="400" y="27850" type="coin"/>
@@ -178,7 +178,7 @@
     <entity x="380" y="22550" type="coin"/>
     <entity x="380" y="22400" type="coin"/>
 
-    <entity x="0" y="19400" type="helicopter"/>
+    <entity x="480" y="19400" type="helicopter"/>
     
     <entity x="240" y="18000" type="coin"/>
     <entity x="240" y="17850" type="coin"/>

@@ -822,6 +822,7 @@ public class GameScene extends BaseScene{
 												player.reduceParachuteSpeed();
 											}
 										} else {
+											distanceToFloorAtOpenParachute = 0;
 											freeFliedMeters = fliedMeters;
 										}
 										oldDistanceToFloor = distanceToFloor;
