@@ -1,5 +1,8 @@
 package com.lucianosimo.parachuteaction.scene;
 
+import java.util.Random;
+
+import org.andengine.engine.handler.physics.PhysicsHandler;
 import org.andengine.entity.scene.background.AutoParallaxBackground;
 import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.andengine.entity.scene.menu.MenuScene;
@@ -19,6 +22,11 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	private final int MENU_PLAY = 0;
 	private final int MENU_STATISTICS = 1;
 	private final int MENU_SHOP = 2;
+	
+	private static final int LEFT_MARGIN = -240;
+	private static final int RIGHT_MARGIN = 240;
+	private static final int CLOUD_SPEED = -40;
+	private static final int FAR_CLOUD_SPEED = -15;
 
 	@Override
 	public void createScene() {
@@ -50,22 +58,73 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		float screenWidth = resourcesManager.camera.getWidth();
 		float screenHeight = resourcesManager.camera.getHeight();
 		
+		Sprite cloud = new Sprite(-240, 0, resourcesManager.menu_cloud_region.deepCopy(), vbom) {
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+				if (this.getX() < LEFT_MARGIN - 166) {
+					Random rand = new Random();
+					int randY = rand.nextInt(855) - 427;
+					this.setPosition(RIGHT_MARGIN + 166, randY);
+				}
+			};
+		};
+		PhysicsHandler handler = new PhysicsHandler(cloud);
+		cloud.registerUpdateHandler(handler);
+		handler.setVelocity(CLOUD_SPEED,0);
+		
+		Sprite cloud2 = new Sprite(-240, 0, resourcesManager.menu_cloud_region.deepCopy(), vbom) {
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+				if (this.getX() < LEFT_MARGIN - 166) {
+					Random rand = new Random();
+					int randY = rand.nextInt(855) - 427;
+					this.setPosition(RIGHT_MARGIN + 166, randY);
+				}
+			};
+		};
+		PhysicsHandler handler2 = new PhysicsHandler(cloud2);
+		cloud2.registerUpdateHandler(handler2);
+		handler2.setVelocity(CLOUD_SPEED,0);
+		
+		Sprite farCloud = new Sprite(-240, 0, resourcesManager.menu_far_cloud_region.deepCopy(), vbom) {
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+				if (this.getX() < LEFT_MARGIN - 166) {
+					Random rand = new Random();
+					int randY = rand.nextInt(855) - 427;
+					this.setPosition(RIGHT_MARGIN + 166, randY);
+				}
+			};
+		};
+		PhysicsHandler handler3 = new PhysicsHandler(farCloud);
+		farCloud.registerUpdateHandler(handler3);
+		handler3.setVelocity(FAR_CLOUD_SPEED,0);
+		
 		menuChildScene = new MenuScene(camera);
 		menuChildScene.setPosition(screenWidth/2, screenHeight/2);
 		
 		final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourcesManager.play_region, vbom), 1.2f, 1);
 		final IMenuItem statisticsMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_STATISTICS, resourcesManager.statistics_region, vbom), 1.2f, 1);
 		final IMenuItem shopMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_SHOP, resourcesManager.shop_region, vbom), 1.2f, 1);
+
+		menuChildScene.attachChild(cloud);
+		menuChildScene.attachChild(cloud2);
+		menuChildScene.attachChild(farCloud);
 		
 		menuChildScene.addMenuItem(playMenuItem);
 		menuChildScene.addMenuItem(statisticsMenuItem);
 		menuChildScene.addMenuItem(shopMenuItem);
+
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
 		
 		playMenuItem.setPosition(0, 100);
 		statisticsMenuItem.setPosition(-120, -120);
 		shopMenuItem.setPosition(120, -120);
+		
+		cloud.setPosition(100, 150);
+		cloud2.setPosition(-100, -100);
+		farCloud.setPosition(-100, -150);
 		
 		menuChildScene.setOnMenuItemClickListener(this);
 		setChildScene(menuChildScene);
