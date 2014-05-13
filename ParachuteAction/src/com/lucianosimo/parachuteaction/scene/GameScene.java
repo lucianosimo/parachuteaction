@@ -516,7 +516,6 @@ public class GameScene extends BaseScene{
 									if (!startMoving) {
 										startMoving = true;
 										player.setVisible(true);
-										player.setPosition(240, 64000);
 										gameHud.detachChild(levelStartText);
 									}									
 								}
@@ -907,9 +906,11 @@ public class GameScene extends BaseScene{
 											saveScoreData();
 											loadCounters();
 											displayLevelCompleted();
-										} else if (distanceToFloorAtOpenParachute < 1000 || !openParachute){
-											GameScene.this.setIgnoreUpdate(true);
-											camera.setChaseEntity(null);
+										}
+										if (distanceToFloorAtOpenParachute < 1000){
+											player.killPlayer();
+										}
+										if (!openParachute) {
 											player.killPlayer();
 										}
 									}

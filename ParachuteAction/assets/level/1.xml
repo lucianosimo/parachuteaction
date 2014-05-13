@@ -205,7 +205,7 @@
     <entity x="250" y="6400" type="coin"/>
 
     <entity x="240" y="64000" type="player"/>
-    <entity x="1000" y="64000" type="plane"/>
+    <entity x="1000" y="63500" type="plane"/>
     
     <entity x="240" y="64000" type="closerCloud"/>
     <entity x="240" y="60000" type="closerCloud"/>
