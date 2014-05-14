@@ -132,7 +132,10 @@ public class GameScene extends BaseScene{
 	//HUD Buttons
 	private Sprite openButton;
 	private Sprite greenArrow;
-	private Sprite redArrow;
+	private Sprite leftHelicopterRedArrow;
+	private Sprite helicopterRedArrow;
+	private Sprite balloonRedArrow;
+	private Sprite birdRedArrow;
 	
 	//Shield Halo
 	private Sprite shieldHalo; 
@@ -146,7 +149,7 @@ public class GameScene extends BaseScene{
 	private static final int FAR_CLOUD_SPEED = -15;
 	private static final int CLOUD_SPEED = -40;
 	private static final int PLANE_SPEED = -65;
-	private static final int SHIELD_DURATION = 5;
+	private static final int SHIELD_DURATION = 10;
 	private static final int ANTIGRAVITY_DURATION = 5;
 	private static final int COINS_VALUE = 100;
 	
@@ -218,7 +221,10 @@ public class GameScene extends BaseScene{
 		};
 		
 		greenArrow = new Sprite(1000, 0, resourcesManager.green_arrow_region, vbom);
-		redArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region, vbom);
+		leftHelicopterRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
+		helicopterRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
+		balloonRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
+		birdRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
 
 		altimeterText.setAnchorCenter(0, 0);
 		levelStartText.setAnchorCenter(0, 0);
@@ -282,7 +288,10 @@ public class GameScene extends BaseScene{
 		gameHud.attachChild(coinsText);
 		gameHud.attachChild(openButton);
 		gameHud.attachChild(greenArrow);
-		gameHud.attachChild(redArrow);
+		gameHud.attachChild(leftHelicopterRedArrow);
+		gameHud.attachChild(helicopterRedArrow);
+		gameHud.attachChild(balloonRedArrow);
+		gameHud.attachChild(birdRedArrow);
 		
 		gameHud.registerTouchArea(openButton);
 		
@@ -540,7 +549,7 @@ public class GameScene extends BaseScene{
 						Random rand = new Random();
 						int randX = rand.nextInt(441) - 220;
 						int randY = rand.nextInt(5001) - 2500;
-						levelObject = new Sprite(x + randX, y + randY, resourcesManager.shield_region, vbom) {
+						levelObject = new Sprite(x + randX, y, resourcesManager.shield_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
@@ -638,16 +647,17 @@ public class GameScene extends BaseScene{
 							};
 						};
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
+						//n = rand.nextInt(max - min + 1) + min;
 						Random rand = new Random();
-						int randY = rand.nextInt(2501) - 1250;
-						helicopter = new Helicopter(x, y + randY, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
+						int randY = rand.nextInt(1001) - 500;
+						helicopter = new Helicopter(x, y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
 							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
-								if ((player.getY() - this.getY()) < 2000 && (player.getY() - this.getY()) > 427) {
-									redArrow.setPosition(this.getX(), 75);
+								if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+									helicopterRedArrow.setPosition(this.getX(), 75);
 								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-									redArrow.setPosition(1000, 0);
+									helicopterRedArrow.setPosition(1000, 0);
 								}
 								if ((player.getY() - this.getY()) < 500) {
 									this.startMoving();
@@ -664,15 +674,15 @@ public class GameScene extends BaseScene{
 						levelObject = helicopter;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER)) {
 						Random rand = new Random();
-						int randY = rand.nextInt(2501) - 1250;
-						leftHelicopter = new LeftHelicopter(x, y + randY, vbom, camera, physicsWorld, resourcesManager.leftHelicopter_region.deepCopy()) {
+						int randY = rand.nextInt(1001) - 500;
+						leftHelicopter = new LeftHelicopter(x, y, vbom, camera, physicsWorld, resourcesManager.leftHelicopter_region.deepCopy()) {
 							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
-								if ((player.getY() - this.getY()) < 2000 && (player.getY() - this.getY()) > 427) {
-									redArrow.setPosition(this.getX(), 75);
+								if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+									leftHelicopterRedArrow.setPosition(this.getX(), 75);
 								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-									redArrow.setPosition(1000, 0);
+									leftHelicopterRedArrow.setPosition(1000, 0);
 								}
 								if ((player.getY() - this.getY()) < 500) {
 									this.startMoving();
@@ -689,15 +699,15 @@ public class GameScene extends BaseScene{
 						levelObject = leftHelicopter;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
 						Random rand = new Random();
-						int randY = rand.nextInt(2501) - 1250;
-						bird = new Bird(x, y + randY, vbom, camera, physicsWorld, resourcesManager.bird_region.deepCopy()) {
+						int randY = rand.nextInt(1001) - 500;
+						bird = new Bird(x, y, vbom, camera, physicsWorld, resourcesManager.bird_region.deepCopy()) {
 							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
-								if ((player.getY() - this.getY()) < 2000 && (player.getY() - this.getY()) > 427) {
-									redArrow.setPosition(this.getX(), 75);
+								if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+									birdRedArrow.setPosition(this.getX(), 75);
 								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-									redArrow.setPosition(1000, 0);
+									birdRedArrow.setPosition(1000, 0);
 								}
 								if ((player.getY() - this.getY()) < 400) {
 									this.startMoving();
@@ -719,11 +729,13 @@ public class GameScene extends BaseScene{
 							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
-								this.startMoving();
-								if ((player.getY() - this.getY()) < 2000 && (player.getY() - this.getY()) > 427) {
-									redArrow.setPosition(this.getX(), 75);
+								if ((player.getY() - this.getY()) < 1500) {
+									this.startMoving();
+								}
+								if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+									balloonRedArrow.setPosition(this.getX(), 75);
 								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-									redArrow.setPosition(1000, 0);
+									balloonRedArrow.setPosition(1000, 0);
 								}
 								if (player.collidesWith(this)) {
 									if (shield) {

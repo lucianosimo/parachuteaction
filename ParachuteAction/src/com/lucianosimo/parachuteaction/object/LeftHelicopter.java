@@ -35,7 +35,7 @@ public class LeftHelicopter extends AnimatedSprite{
 	}
 	
 	public void startMoving() {
-		body.setLinearVelocity(new Vector2(2, body.getLinearVelocity().y));
+		body.setLinearVelocity(new Vector2(2.5f, body.getLinearVelocity().y));
 	}
 	
 }
