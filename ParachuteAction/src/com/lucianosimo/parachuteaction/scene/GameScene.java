@@ -549,7 +549,7 @@ public class GameScene extends BaseScene{
 						Random rand = new Random();
 						int randX = rand.nextInt(441) - 220;
 						int randY = rand.nextInt(5001) - 2500;
-						levelObject = new Sprite(x + randX, y, resourcesManager.shield_region, vbom) {
+						levelObject = new Sprite(x + randX, y + randY, resourcesManager.shield_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
@@ -648,10 +648,7 @@ public class GameScene extends BaseScene{
 						};
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
 						//n = rand.nextInt(max - min + 1) + min;
-						Random rand = new Random();
-						int randY = rand.nextInt(1001) - 500;
 						helicopter = new Helicopter(x, y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
-							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
@@ -673,10 +670,7 @@ public class GameScene extends BaseScene{
 						};
 						levelObject = helicopter;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER)) {
-						Random rand = new Random();
-						int randY = rand.nextInt(1001) - 500;
 						leftHelicopter = new LeftHelicopter(x, y, vbom, camera, physicsWorld, resourcesManager.leftHelicopter_region.deepCopy()) {
-							
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
@@ -698,8 +692,6 @@ public class GameScene extends BaseScene{
 						};
 						levelObject = leftHelicopter;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
-						Random rand = new Random();
-						int randY = rand.nextInt(1001) - 500;
 						bird = new Bird(x, y, vbom, camera, physicsWorld, resourcesManager.bird_region.deepCopy()) {
 							
 							protected void onManagedUpdate(float pSecondsElapsed) {
@@ -748,7 +740,7 @@ public class GameScene extends BaseScene{
 						};
 						levelObject = balloon;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
-						shieldHalo = new Sprite(23, 46, resourcesManager.shield_region, vbom);
+						shieldHalo = new Sprite(25, 50, resourcesManager.shield_region, vbom);
 						shieldHalo.setVisible(false);
 						player = new Player(x, y, vbom, camera, physicsWorld) {
 							
@@ -765,6 +757,9 @@ public class GameScene extends BaseScene{
 										}
 										if (shield) {
 											shieldHalo.setVisible(true);
+											if (openParachute) {
+												shieldHalo.setPosition(46, 77);
+											}
 										} else {
 											shieldHalo.setVisible(false);
 										}

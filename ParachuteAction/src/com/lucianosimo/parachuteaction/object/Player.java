@@ -27,6 +27,7 @@ public abstract class Player extends AnimatedSprite{
 	
 	public Player(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld) {
 		super(pX, pY, ResourcesManager.getInstance().player_region, vbom);
+		startAnimation();
 		createPhysics(camera, physicsWorld);
 		camera.setChaseEntity(this);
 	}
@@ -68,12 +69,19 @@ public abstract class Player extends AnimatedSprite{
 		playerCoins += coins;
 	}
 	
+	public void startAnimation(){
+		final long[] PLAYER_ANIMATE = new long[] {100, 100};
+		animate(PLAYER_ANIMATE, 0, 1, true);
+	}
+	
 	public int getPlayerCoins() {
 		return playerCoins;
 	}
 	
 	public void openParachute() {
 		openParachute = true;
+		final long[] PLAYER_ANIMATE = new long[] {100, 100};
+		animate(PLAYER_ANIMATE, 2, 3, true);
 		if (body.getLinearVelocity().y > parachuteSpeed) {
 			parachuteSpeed = (int) body.getLinearVelocity().y;
 		}
