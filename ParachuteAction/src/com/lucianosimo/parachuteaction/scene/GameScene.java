@@ -187,7 +187,7 @@ public class GameScene extends BaseScene{
 		createWindows();
 		createHud();
 		createPhysics();
-		loadLevel(2);
+		loadLevel(level);
 		loadCoins();
 	}
 	
