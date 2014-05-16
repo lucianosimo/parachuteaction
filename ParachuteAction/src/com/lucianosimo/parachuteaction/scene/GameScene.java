@@ -42,6 +42,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.helper.AchievementsHelper;
+import com.lucianosimo.parachuteaction.manager.ResourcesManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
 import com.lucianosimo.parachuteaction.object.Balloon;
@@ -138,7 +139,10 @@ public class GameScene extends BaseScene{
 	private Sprite birdRedArrow;
 	
 	//Shield Halo
-	private Sprite shieldHalo; 
+	private Sprite shieldHalo;
+	
+	//Parachute
+	private Sprite parachute;
 	
 	//Constants	
 	//16 pixels == 1 meter
@@ -183,7 +187,7 @@ public class GameScene extends BaseScene{
 		createWindows();
 		createHud();
 		createPhysics();
-		loadLevel(1);
+		loadLevel(2);
 		loadCoins();
 	}
 	
@@ -740,7 +744,9 @@ public class GameScene extends BaseScene{
 						};
 						levelObject = balloon;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
-						shieldHalo = new Sprite(25, 50, resourcesManager.shield_region, vbom);
+						parachute = new Sprite(18, 110, ResourcesManager.getInstance().parachute_region, vbom);
+						shieldHalo = new Sprite(20, 50, resourcesManager.shield_region, vbom);
+						parachute.setVisible(false);
 						shieldHalo.setVisible(false);
 						player = new Player(x, y, vbom, camera, physicsWorld) {
 							
@@ -758,7 +764,7 @@ public class GameScene extends BaseScene{
 										if (shield) {
 											shieldHalo.setVisible(true);
 											if (openParachute) {
-												shieldHalo.setPosition(46, 77);
+												shieldHalo.setPosition(20, 77);
 											}
 										} else {
 											shieldHalo.setVisible(false);
@@ -776,6 +782,7 @@ public class GameScene extends BaseScene{
 											fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
 										}
 										if (openParachute) {
+											parachute.setVisible(true);
 											player.openParachute();
 											parachuteFliedMeters = fliedMeters - freeFliedMeters;
 											if (!openParachuteDistanceSaved) {
@@ -857,6 +864,7 @@ public class GameScene extends BaseScene{
 							}
 							
 						};
+						player.attachChild(parachute);
 						player.attachChild(shieldHalo);
 						levelObject = player;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM)) {
