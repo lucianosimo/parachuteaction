@@ -182,7 +182,7 @@ public class GameScene extends BaseScene{
 	public void createScene() {
 		//n = rand.nextInt(max - min + 1) + min;
 		Random rand = new Random();
-		int level = rand.nextInt(2) + 1;
+		int level = rand.nextInt(3) + 1;
 		createBackground();
 		createWindows();
 		createHud();
