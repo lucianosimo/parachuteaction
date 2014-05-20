@@ -114,7 +114,7 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 		beachButtonItem.setPosition(-140, 120);
 		cityButtonItem.setPosition(0, 120);
 		forestButtonItem.setPosition(140, 120);
-		randomButtonItem.setPosition(140, 350);
+		randomButtonItem.setPosition(150, -350);
 		if (unlockedDesert) {
 			desertButtonItem.setPosition(-140, -120);
 		}
