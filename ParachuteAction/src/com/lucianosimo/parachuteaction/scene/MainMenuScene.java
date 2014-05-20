@@ -58,6 +58,8 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		float screenWidth = resourcesManager.camera.getWidth();
 		float screenHeight = resourcesManager.camera.getHeight();
 		
+		Sprite title = new Sprite(-240, 0, resourcesManager.menu_title_region, vbom);
+		
 		Sprite cloud = new Sprite(-240, 0, resourcesManager.menu_cloud_region.deepCopy(), vbom) {
 			protected void onManagedUpdate(float pSecondsElapsed) {
 				super.onManagedUpdate(pSecondsElapsed);
@@ -71,20 +73,6 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		PhysicsHandler handler = new PhysicsHandler(cloud);
 		cloud.registerUpdateHandler(handler);
 		handler.setVelocity(CLOUD_SPEED,0);
-		
-		Sprite cloud2 = new Sprite(-240, 0, resourcesManager.menu_cloud_region.deepCopy(), vbom) {
-			protected void onManagedUpdate(float pSecondsElapsed) {
-				super.onManagedUpdate(pSecondsElapsed);
-				if (this.getX() < LEFT_MARGIN - 166) {
-					Random rand = new Random();
-					int randY = rand.nextInt(855) - 427;
-					this.setPosition(RIGHT_MARGIN + 166, randY);
-				}
-			};
-		};
-		PhysicsHandler handler2 = new PhysicsHandler(cloud2);
-		cloud2.registerUpdateHandler(handler2);
-		handler2.setVelocity(CLOUD_SPEED,0);
 		
 		Sprite farCloud = new Sprite(-240, 0, resourcesManager.menu_far_cloud_region.deepCopy(), vbom) {
 			protected void onManagedUpdate(float pSecondsElapsed) {
@@ -108,7 +96,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		final IMenuItem shopMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_SHOP, resourcesManager.shop_region, vbom), 1.2f, 1);
 
 		menuChildScene.attachChild(cloud);
-		menuChildScene.attachChild(cloud2);
+		menuChildScene.attachChild(title);
 		menuChildScene.attachChild(farCloud);
 		
 		menuChildScene.addMenuItem(playMenuItem);
@@ -118,13 +106,13 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
 		
-		playMenuItem.setPosition(0, 100);
-		statisticsMenuItem.setPosition(-120, -120);
-		shopMenuItem.setPosition(120, -120);
+		playMenuItem.setPosition(0, 25);
+		statisticsMenuItem.setPosition(-120, -200);
+		shopMenuItem.setPosition(120, -200);
 		
 		cloud.setPosition(100, 150);
-		cloud2.setPosition(-100, -100);
 		farCloud.setPosition(-100, -150);
+		title.setPosition(0, 300);
 		
 		menuChildScene.setOnMenuItemClickListener(this);
 		setChildScene(menuChildScene);

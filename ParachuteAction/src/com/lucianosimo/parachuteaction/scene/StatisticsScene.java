@@ -105,8 +105,8 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		statisticsChildScene.attachChild(shieldText);
 		statisticsChildScene.attachChild(slowText);
 		
-		menuButtonItem.setPosition(-170, -350);
-		achivementsButtonItem.setPosition(170, -350);
+		menuButtonItem.setPosition(-150, -350);
+		achivementsButtonItem.setPosition(150, -350);
 		resetStatisticsItem.setPosition(0, -210);
 		numberOfSuccessfulJumpsText.setPosition(0, 220);
 		numberOfUnsuccessfulJumpsText.setPosition(0, 180);
