@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <level width="480" height="65000">
     
-    <entity x="240" y="600" type="backLocation"/>
+    <entity x="240" y="280" type="backLocation"/>
     
     <entity x="240" y="63500" type="farCloud"/>
     <entity x="240" y="62500" type="farCloud"/>
@@ -248,6 +248,6 @@
     <entity x="240" y="12000" type="closerCloud"/>
     <entity x="240" y="8000" type="closerCloud"/>
 
-    <entity x="240" y="50" type="landingPlatform"/>
+    <entity x="240" y="30" type="landingPlatform"/>
     
 </level>
