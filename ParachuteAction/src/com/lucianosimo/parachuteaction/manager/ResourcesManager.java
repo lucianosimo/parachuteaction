@@ -186,7 +186,6 @@ public class ResourcesManager {
 	public ITextureRegion slow_region;
 	public ITextureRegion plane_region;
 	public ITextureRegion parachute_region;
-	public ITextureRegion coin_region;
 	public ITextureRegion light_halo_region;
 	
 	//Shield
@@ -194,10 +193,12 @@ public class ResourcesManager {
 
 	//Animated
 	public ITiledTextureRegion player_region;
+	public ITiledTextureRegion explosion_region;
 	public ITiledTextureRegion helicopter_region;
 	public ITiledTextureRegion leftHelicopter_region;
 	public ITiledTextureRegion balloon_region;
 	public ITiledTextureRegion bird_region;
+	public ITiledTextureRegion coin_region;
 	
 	//Windows
 	public ITextureRegion level_complete_window_region;
@@ -355,7 +356,6 @@ public class ResourcesManager {
 		upperImpulseSign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperImpulseSign.png");
 		red_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "redArrow.png");
 		green_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "greenArrow.png");
-		coin_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "coin.png");
 		
 		
 		//Windows texture objects
@@ -370,10 +370,12 @@ public class ResourcesManager {
 		
 		//Animated texture objects
 		player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "player.png", 4, 1);
+		explosion_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "explosion.png", 5, 1);
 		helicopter_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "helicopter.png", 2, 1);
 		leftHelicopter_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "leftHelicopter.png", 2, 1);
 		balloon_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "balloon.png", 2, 1);
 		bird_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "bird.png", 2, 1);
+		coin_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "coin.png", 4, 1);
 		
 		try {
 			this.animatedTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));

@@ -11,6 +11,7 @@ import org.andengine.entity.modifier.DelayModifier;
 import org.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.andengine.entity.scene.background.ParallaxBackground;
 import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
@@ -143,6 +144,12 @@ public class GameScene extends BaseScene{
 	
 	//Parachute
 	private Sprite parachute;
+	
+	//Explosions
+	private AnimatedSprite explosion;
+	
+	//Coins
+	private AnimatedSprite coin;
 	
 	//Constants	
 	//16 pixels == 1 meter
@@ -540,7 +547,7 @@ public class GameScene extends BaseScene{
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BACK_LOCATION)) {
 						levelObject = new Sprite(x, y, resourcesManager.back_location_region, vbom);
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_COIN)) {
-						levelObject = new Sprite(x, y, resourcesManager.coin_region, vbom) {
+						coin = new AnimatedSprite(x, y, resourcesManager.coin_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if (player.collidesWith(this)) {
@@ -549,11 +556,13 @@ public class GameScene extends BaseScene{
 								}
 							};
 						};
+						final long[] COIN_ANIMATE = new long[] {100, 100, 100, 100};
+						coin.animate(COIN_ANIMATE, 0, 3, true);
+						levelObject = coin;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
 						Random rand = new Random();
 						int randX = rand.nextInt(441) - 220;
-						int randY = rand.nextInt(5001) - 2500;
-						levelObject = new Sprite(x + randX, y + randY, resourcesManager.shield_region, vbom) {
+						levelObject = new Sprite(x + randX, y, resourcesManager.shield_region, vbom) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
 								if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
@@ -652,6 +661,8 @@ public class GameScene extends BaseScene{
 						};
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
 						//n = rand.nextInt(max - min + 1) + min;
+						explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
+						explosion.setVisible(false);
 						helicopter = new Helicopter(x, y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
@@ -667,13 +678,21 @@ public class GameScene extends BaseScene{
 									if (shield) {
 										final Sprite helicopterRef = this; 
 										this.setVisible(false);
-										destroyBodyWithSprite(helicopterRef);
+										explosion.setPosition(helicopterRef.getX(),helicopterRef.getY());
+										explosion.setVisible(true);
+										final long[] EXPLOSION_ANIMATE = new long[] {120, 120, 120, 120, 120};
+										explosion.animate(EXPLOSION_ANIMATE, 0, 4, false);
+										explosion.setVisible(false);
+										destroyBodyWithSprite(helicopterRef);										
 									}									
 								}
 							};
 						};
+						GameScene.this.attachChild(explosion);
 						levelObject = helicopter;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER)) {
+						explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
+						explosion.setVisible(false);
 						leftHelicopter = new LeftHelicopter(x, y, vbom, camera, physicsWorld, resourcesManager.leftHelicopter_region.deepCopy()) {
 							protected void onManagedUpdate(float pSecondsElapsed) {
 								super.onManagedUpdate(pSecondsElapsed);
@@ -689,11 +708,17 @@ public class GameScene extends BaseScene{
 									if (shield) {
 										final Sprite helicopterRef = this; 
 										this.setVisible(false);
+										explosion.setPosition(helicopterRef.getX(),helicopterRef.getY());
+										explosion.setVisible(true);
+										final long[] EXPLOSION_ANIMATE = new long[] {120, 120, 120, 120, 120};
+										explosion.animate(EXPLOSION_ANIMATE, 0, 4, false);
+										explosion.setVisible(false);
 										destroyBodyWithSprite(helicopterRef);
 									}									
 								}
 							};
 						};
+						GameScene.this.attachChild(explosion);
 						levelObject = leftHelicopter;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
 						bird = new Bird(x, y, vbom, camera, physicsWorld, resourcesManager.bird_region.deepCopy()) {
@@ -719,6 +744,8 @@ public class GameScene extends BaseScene{
 						};
 						levelObject = bird;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON)) {
+						explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
+						explosion.setVisible(false);
 						Random rand = new Random();
 						int randX = rand.nextInt(441) - 220;
 						balloon = new Balloon(x + randX, y, vbom, camera, physicsWorld, resourcesManager.balloon_region.deepCopy()) {
@@ -737,11 +764,17 @@ public class GameScene extends BaseScene{
 									if (shield) {
 										final Sprite balloonRef = this; 
 										this.setVisible(false);
+										explosion.setPosition(balloonRef.getX(),balloonRef.getY());
+										explosion.setVisible(true);
+										final long[] EXPLOSION_ANIMATE = new long[] {120, 120, 120, 120, 120};
+										explosion.animate(EXPLOSION_ANIMATE, 0, 4, false);
+										explosion.setVisible(false);
 										destroyBodyWithSprite(balloonRef);
 									}									
 								}
 							};
 						};
+						GameScene.this.attachChild(explosion);
 						levelObject = balloon;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
 						parachute = new Sprite(18, 110, ResourcesManager.getInstance().parachute_region, vbom);
@@ -880,6 +913,7 @@ public class GameScene extends BaseScene{
 											loadedCountersBefore = true;
 											saveScoreData();
 											loadCounters();
+											availablePause = false;
 											displayLevelCompleted();
 										}
 										if (distanceToFloorAtOpenParachute < 1000){
