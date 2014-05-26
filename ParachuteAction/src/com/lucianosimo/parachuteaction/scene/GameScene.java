@@ -682,7 +682,6 @@ public class GameScene extends BaseScene{
 										explosion.setVisible(true);
 										final long[] EXPLOSION_ANIMATE = new long[] {120, 120, 120, 120, 120};
 										explosion.animate(EXPLOSION_ANIMATE, 0, 4, false);
-										explosion.setVisible(false);
 										destroyBodyWithSprite(helicopterRef);										
 									}									
 								}
@@ -712,7 +711,6 @@ public class GameScene extends BaseScene{
 										explosion.setVisible(true);
 										final long[] EXPLOSION_ANIMATE = new long[] {120, 120, 120, 120, 120};
 										explosion.animate(EXPLOSION_ANIMATE, 0, 4, false);
-										explosion.setVisible(false);
 										destroyBodyWithSprite(helicopterRef);
 									}									
 								}
@@ -768,7 +766,6 @@ public class GameScene extends BaseScene{
 										explosion.setVisible(true);
 										final long[] EXPLOSION_ANIMATE = new long[] {120, 120, 120, 120, 120};
 										explosion.animate(EXPLOSION_ANIMATE, 0, 4, false);
-										explosion.setVisible(false);
 										destroyBodyWithSprite(balloonRef);
 									}									
 								}
