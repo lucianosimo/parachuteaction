@@ -680,8 +680,8 @@ public class GameScene extends BaseScene{
 										this.setVisible(false);
 										explosion.setPosition(helicopterRef.getX(),helicopterRef.getY());
 										explosion.setVisible(true);
-										final long[] EXPLOSION_ANIMATE = new long[] {120, 120, 120, 120, 120};
-										explosion.animate(EXPLOSION_ANIMATE, 0, 4, false);
+										final long[] EXPLOSION_ANIMATE = new long[] {100, 100, 100, 100, 100, 100};
+										explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
 										destroyBodyWithSprite(helicopterRef);										
 									}									
 								}
@@ -709,8 +709,8 @@ public class GameScene extends BaseScene{
 										this.setVisible(false);
 										explosion.setPosition(helicopterRef.getX(),helicopterRef.getY());
 										explosion.setVisible(true);
-										final long[] EXPLOSION_ANIMATE = new long[] {120, 120, 120, 120, 120};
-										explosion.animate(EXPLOSION_ANIMATE, 0, 4, false);
+										final long[] EXPLOSION_ANIMATE = new long[] {100, 100, 100, 100, 100, 100};
+										explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
 										destroyBodyWithSprite(helicopterRef);
 									}									
 								}
@@ -764,8 +764,8 @@ public class GameScene extends BaseScene{
 										this.setVisible(false);
 										explosion.setPosition(balloonRef.getX(),balloonRef.getY());
 										explosion.setVisible(true);
-										final long[] EXPLOSION_ANIMATE = new long[] {120, 120, 120, 120, 120};
-										explosion.animate(EXPLOSION_ANIMATE, 0, 4, false);
+										final long[] EXPLOSION_ANIMATE = new long[] {100, 100, 100, 100, 100, 100};
+										explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
 										destroyBodyWithSprite(balloonRef);
 									}									
 								}
@@ -810,6 +810,11 @@ public class GameScene extends BaseScene{
 										altimeterText.setText("Meters to go: " + distanceToFloor);
 										if (player.getFallVelocity() < 0) {
 											fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
+										}
+										if (distanceToFloor < 1500 && distanceToFloor > 1000 && !openParachute) {
+											openButton.setVisible(true);
+										} else {
+											openButton.setVisible(false);
 										}
 										if (openParachute) {
 											parachute.setVisible(true);

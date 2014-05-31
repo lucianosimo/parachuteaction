@@ -19,11 +19,13 @@ public class Balloon extends AnimatedSprite{
 	public Balloon(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld, ITiledTextureRegion region) {
 		super(pX, pY, region, vbom);
 		//startAnimation();
-		createPhysics(camera, physicsWorld);
+		createPhysics(camera, physicsWorld, region, vbom);
 	}
 	
-	private void createPhysics(final Camera camera, PhysicsWorld physicsWorld) {
+	private void createPhysics(final Camera camera, PhysicsWorld physicsWorld, ITiledTextureRegion region, VertexBufferObjectManager vbom) {
 		body = PhysicsFactory.createBoxBody(physicsWorld, this, BodyType.DynamicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
+		//final Sprite myCircleSprite = new Sprite(0, 0, region, vbom);
+		//body = PhysicsFactory.createCircleBody(physicsWorld, myCircleSprite, BodyType.DynamicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
 		body.setFixedRotation(true);
 		body.setUserData("balloon");
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
