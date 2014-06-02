@@ -15,6 +15,7 @@ import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
+import org.andengine.extension.debugdraw.DebugRenderer;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
@@ -196,6 +197,8 @@ public class GameScene extends BaseScene{
 		createPhysics();
 		loadLevel(level);
 		loadCoins();
+		DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
+        GameScene.this.attachChild(debug);
 	}
 	
 	private void createBackground() {
