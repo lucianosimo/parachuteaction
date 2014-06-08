@@ -184,7 +184,7 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 						editor.putInt("slowCounter", 0);
 						editor.putBoolean("desert", false);
 						editor.putBoolean("mountain", false);
-						editor.putBoolean("ship", false);
+						editor.putBoolean("western", false);
 						editor.commit();
 				        Toast.makeText(activity, "Statistics restarted", Toast.LENGTH_LONG).show();
 				        numberOfSuccessfulJumpsText.setText("Successful jumps: " + 0);

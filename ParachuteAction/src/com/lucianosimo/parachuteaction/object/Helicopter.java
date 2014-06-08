@@ -23,14 +23,14 @@ public class Helicopter extends AnimatedSprite{
 	}
 	
 	private void createPhysics(final Camera camera, PhysicsWorld physicsWorld) {
-		final float height = 201;
+		/*final float height = 201;
 		final float width = 324;
 		final Vector2[] v = {
 			new Vector2(-0.51852f*width, -0.10448f*height),
 			new Vector2(-0.28086f*width, -0.23383f*height)
-		};
-		//body = PhysicsFactory.createBoxBody(physicsWorld, this, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
-		body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
+		};*/
+		body = PhysicsFactory.createBoxBody(physicsWorld, this, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
+		//body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
 		body.setFixedRotation(true);
 		body.setUserData("helicopter");
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));

@@ -152,6 +152,9 @@ public class GameScene extends BaseScene{
 	//Coins
 	private AnimatedSprite coin;
 	
+	//Balloon Basket
+	private Sprite basket;
+	
 	//Constants	
 	//16 pixels == 1 meter
 	private static final int PIXEL_METER_RATE = 16;
@@ -196,9 +199,8 @@ public class GameScene extends BaseScene{
 		createHud();
 		createPhysics();
 		loadLevel(level);
-		loadCoins();
-		DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
-        GameScene.this.attachChild(debug);
+		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
+        //GameScene.this.attachChild(debug);
 	}
 	
 	private void createBackground() {
@@ -218,7 +220,7 @@ public class GameScene extends BaseScene{
 		
 		altimeterText = new Text(20, 820, resourcesManager.altimeterFont, "Meters to go: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		coinsText = new Text(20, 770, resourcesManager.coinsFont, "Coins: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-		levelStartText = new Text(100, 420, resourcesManager.levelStartFont, "ForestBeachCityDesertMountainShip - 15:00Hs", new TextOptions(HorizontalAlign.LEFT), vbom);
+		levelStartText = new Text(100, 420, resourcesManager.levelStartFont, "ForestBeachCityDesertMountainwestern - 15:00Hs", new TextOptions(HorizontalAlign.LEFT), vbom);
 		
 		
 		openButton = new Sprite(400, 780, resourcesManager.openButton, vbom){
@@ -291,9 +293,9 @@ public class GameScene extends BaseScene{
 			if (MapScene.getDayOrNight()) {;
 				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
 				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				levelStartText.setText("Ship - 15:00 hs");
+				levelStartText.setText("western - 15:00 hs");
 			} else {
-				levelStartText.setText("Ship - 22:00 hs");
+				levelStartText.setText("western - 22:00 hs");
 			}
 		}
 
@@ -745,6 +747,7 @@ public class GameScene extends BaseScene{
 						};
 						levelObject = bird;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON)) {
+						basket = new Sprite(97, -30, resourcesManager.balloon_basket_region, vbom);
 						explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
 						explosion.setVisible(false);
 						Random rand = new Random();
@@ -775,6 +778,7 @@ public class GameScene extends BaseScene{
 							};
 						};
 						GameScene.this.attachChild(explosion);
+						balloon.attachChild(basket);
 						levelObject = balloon;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
 						parachute = new Sprite(18, 110, ResourcesManager.getInstance().parachute_region, vbom);
@@ -1094,13 +1098,6 @@ public class GameScene extends BaseScene{
         physicsWorld.reset();
  
         System.gc();
-	}
-	
-	private void loadCoins() {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-		this.coins = sharedPreferences.getInt("coins", 0);
-		coinsText.setText("Coins: " + this.coins);
-		player.addPlayerCoins(this.coins);
 	}
 	
 	private void addCoins(int coins) {

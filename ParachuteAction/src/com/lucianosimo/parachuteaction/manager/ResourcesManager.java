@@ -59,7 +59,7 @@ public class ResourcesManager {
 	public ITextureRegion shop_desert_region;
 	public ITextureRegion shop_forest_region;
 	public ITextureRegion shop_mountain_region;
-	public ITextureRegion shop_ship_region;
+	public ITextureRegion shop_western_region;
 	public ITextureRegion shop_locked_location_region;
 	private BuildableBitmapTextureAtlas shopTextureAtlas;
 	private BuildableBitmapTextureAtlas shopBackgroundTextureAtlas;
@@ -76,7 +76,7 @@ public class ResourcesManager {
 	public ITextureRegion map_desert_region;
 	public ITextureRegion map_forest_region;
 	public ITextureRegion map_mountain_region;
-	public ITextureRegion map_ship_region;
+	public ITextureRegion map_western_region;
 	private BuildableBitmapTextureAtlas mapTextureAtlas;
 	private BuildableBitmapTextureAtlas mapBackgroundTextureAtlas;
 	
@@ -187,6 +187,8 @@ public class ResourcesManager {
 	public ITextureRegion plane_region;
 	public ITextureRegion parachute_region;
 	public ITextureRegion light_halo_region;
+	public ITextureRegion balloon_region;
+	public ITextureRegion balloon_basket_region;
 	
 	//Shield
 	public ITextureRegion shield_region;
@@ -196,7 +198,6 @@ public class ResourcesManager {
 	public ITiledTextureRegion explosion_region;
 	public ITiledTextureRegion helicopter_region;
 	public ITiledTextureRegion leftHelicopter_region;
-	public ITiledTextureRegion balloon_region;
 	public ITiledTextureRegion bird_region;
 	public ITiledTextureRegion coin_region;
 	
@@ -335,8 +336,8 @@ public class ResourcesManager {
 			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_mountain.png");
 			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_mountain.png");
 		} else if (MapScene.getLevel() == 6) {
-			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_ship.png");
-			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_ship.png");
+			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_western.png");
+			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_western.png");
 		}
 		
 		
@@ -356,6 +357,8 @@ public class ResourcesManager {
 		upperImpulseSign_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperImpulseSign.png");
 		red_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "redArrow.png");
 		green_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "greenArrow.png");
+		balloon_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "balloon.png");
+		balloon_basket_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "balloonBasket.png");
 		
 		
 		//Windows texture objects
@@ -373,7 +376,6 @@ public class ResourcesManager {
 		explosion_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "explosion.png", 6, 1);
 		helicopter_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "helicopter.png", 2, 1);
 		leftHelicopter_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "leftHelicopter.png", 2, 1);
-		balloon_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "balloon.png", 2, 1);
 		bird_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "bird.png", 2, 1);
 		coin_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "coin.png", 4, 1);
 		
@@ -643,7 +645,7 @@ public class ResourcesManager {
 		shop_desert_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "desert.png");
 		shop_forest_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "forest.png");
 		shop_mountain_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "mountain.png");
-		shop_ship_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "ship.png");
+		shop_western_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "western.png");
 		shop_locked_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "lockedLocation.png");
 		shop_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBackgroundTextureAtlas, activity, "shop_background.png");
 		try {
@@ -700,7 +702,7 @@ public class ResourcesManager {
 		map_desert_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "desert.png");
 		map_forest_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "forest.png");
 		map_mountain_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "mountain.png");
-		map_ship_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "ship.png");
+		map_western_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "western.png");
 		map_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapBackgroundTextureAtlas, activity, "map_background.png");
 		
 		try {
