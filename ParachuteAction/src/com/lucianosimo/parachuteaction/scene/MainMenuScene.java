@@ -95,9 +95,10 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		final IMenuItem statisticsMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_STATISTICS, resourcesManager.statistics_region, vbom), 1.2f, 1);
 		final IMenuItem shopMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_SHOP, resourcesManager.shop_region, vbom), 1.2f, 1);
 
-		menuChildScene.attachChild(cloud);
-		menuChildScene.attachChild(title);
 		menuChildScene.attachChild(farCloud);
+		menuChildScene.attachChild(cloud);		
+		menuChildScene.attachChild(title);
+		
 		
 		menuChildScene.addMenuItem(playMenuItem);
 		menuChildScene.addMenuItem(statisticsMenuItem);
