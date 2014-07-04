@@ -28,7 +28,6 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 	private MenuScene statisticsChildScene;	
 	private Text numberOfSuccessfulJumpsText;
 	private Text numberOfUnsuccessfulJumpsText;
-	private Text maxFliedMetersText;
 	private Text freeFliedMetersText;
 	private Text parachuteFliedMetersText;
 	private Text upperImpulseText;
@@ -72,7 +71,6 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		
 		numberOfSuccessfulJumpsText = new Text(20, 430, resourcesManager.numberOfSuccessfulJumpsFont, "Successfuljumps :0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		numberOfUnsuccessfulJumpsText = new Text(20, 430, resourcesManager.numberOfUnsuccessfulJumpsFont, "Unsuccessfuljumps :0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-		maxFliedMetersText = new Text(20, 430, resourcesManager.maxFliedMetersFont, "Longest fly:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		freeFliedMetersText = new Text(20, 430, resourcesManager.freeFliedMetersFont, "Free flied meters:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		parachuteFliedMetersText = new Text(20, 430, resourcesManager.parachuteFliedMetersFont, "Parachute flied meters:0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		upperImpulseText = new Text(20, 430, resourcesManager.upperImpulseCounterFont, "Upperimpulsescollected: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
@@ -97,7 +95,6 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		
 		statisticsChildScene.attachChild(numberOfSuccessfulJumpsText);
 		statisticsChildScene.attachChild(numberOfUnsuccessfulJumpsText);
-		statisticsChildScene.attachChild(maxFliedMetersText);
 		statisticsChildScene.attachChild(freeFliedMetersText);
 		statisticsChildScene.attachChild(parachuteFliedMetersText);
 		statisticsChildScene.attachChild(upperImpulseText);
@@ -110,13 +107,12 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		resetStatisticsItem.setPosition(0, -210);
 		numberOfSuccessfulJumpsText.setPosition(0, 220);
 		numberOfUnsuccessfulJumpsText.setPosition(0, 180);
-		maxFliedMetersText.setPosition(0, 140);
-		freeFliedMetersText.setPosition(0, 100);
-		parachuteFliedMetersText.setPosition(0, 60);
-		upperImpulseText.setPosition(0, 20);
-		antigravityText.setPosition(0, -20);
-		shieldText.setPosition(0, -60);
-		slowText.setPosition(0, -100);		
+		freeFliedMetersText.setPosition(0, 140);
+		parachuteFliedMetersText.setPosition(0, 100);
+		upperImpulseText.setPosition(0, 60);
+		antigravityText.setPosition(0, 20);
+		shieldText.setPosition(0, -20);
+		slowText.setPosition(0, -60);		
 		
 		statisticsChildScene.setOnMenuItemClickListener(this);
 		setChildScene(statisticsChildScene);
@@ -124,7 +120,6 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 	
 	private void loadSavedPreferences() {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-		int maxFliedMeters = sharedPreferences.getInt("fliedMeters", 0);
 		int numberOfSuccessfulJumps = sharedPreferences.getInt("successfulJumps", 0);
 		int numberOfUnsuccessfulJumps = sharedPreferences.getInt("unsuccessfulJumps", 0);
 		int freeFliedMeters = sharedPreferences.getInt("freeFliedMeters", 0);
@@ -135,7 +130,6 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		int slowCounter = sharedPreferences.getInt("slowCounter", 0);
 		numberOfSuccessfulJumpsText.setText("Successful jumps: " + numberOfSuccessfulJumps);
 		numberOfUnsuccessfulJumpsText.setText("Unsuccessful jumps: " + numberOfUnsuccessfulJumps);
-		maxFliedMetersText.setText("Longest fly: " + maxFliedMeters);
 		freeFliedMetersText.setText("Free flied meters: " + freeFliedMeters);
 		parachuteFliedMetersText.setText("Parachute flied meters: " + parachuteFliedMeters);
 		upperImpulseText.setText("Upper impulses collected: " + upperImpulseCounter);
@@ -173,7 +167,6 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 				    public void onClick(DialogInterface dialog, int whichButton) {
 				    	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 						Editor editor = sharedPreferences.edit();
-						editor.putInt("fliedMeters", 0);
 						editor.putInt("successfulJumps", 0);
 						editor.putInt("unsuccessfulJumps", 0);
 						editor.putInt("freeFliedMeters", 0);
@@ -189,7 +182,6 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 				        Toast.makeText(activity, "Statistics restarted", Toast.LENGTH_LONG).show();
 				        numberOfSuccessfulJumpsText.setText("Successful jumps: " + 0);
 						numberOfUnsuccessfulJumpsText.setText("Unsuccessful jumps: " + 0);
-						maxFliedMetersText.setText("Longest fly: " + 0);
 						freeFliedMetersText.setText("Free flied meters: " + 0);
 						parachuteFliedMetersText.setText("Parachute flied meters: " + 0);
 						upperImpulseText.setText("Upper impulses collected: " + 0);

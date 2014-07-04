@@ -18,7 +18,7 @@ public class Bird extends AnimatedSprite{
 	
 	public Bird(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld, ITiledTextureRegion region) {
 		super(pX, pY, region, vbom);
-		//startAnimation();
+		startAnimation();
 		createPhysics(camera, physicsWorld);
 	}
 	
@@ -29,10 +29,10 @@ public class Bird extends AnimatedSprite{
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
 	}
 	
-	/*public void startAnimation() {
-		final long[] HELICOPTER_ANIMATE = new long[] {100, 100};
-		animate(HELICOPTER_ANIMATE, 0, 1, true);
-	}*/
+	public void startAnimation() {
+		final long[] BIRD_ANIMATE = new long[] {100, 100};
+		animate(BIRD_ANIMATE, 0, 1, true);
+	}
 	
 	public void startMoving() {
 		body.setLinearVelocity(new Vector2(-6, 4));

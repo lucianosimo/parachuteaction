@@ -197,7 +197,7 @@ public class GameScene extends BaseScene{
 		createWindows();
 		createHud();
 		createPhysics();
-		loadLevel(level);
+		loadLevel(2);
 		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
         //GameScene.this.attachChild(debug);
 	}
@@ -322,116 +322,107 @@ public class GameScene extends BaseScene{
 	private void saveUpperImpulseCounter(String key, int upperImpulseCounter) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		int uiCounter = sharedPreferences.getInt("upperImpulseCounter", 0);
+		int uiCounter = sharedPreferences.getInt(key, 0);
 		uiCounter += upperImpulseCounter;
-		editor.putInt("upperImpulseCounter", uiCounter);
+		editor.putInt(key, uiCounter);
 		editor.commit();
 	}
 	
 	private void saveAntigravityCounter(String key, int antigravityCounter) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		int agCounter = sharedPreferences.getInt("antigravityCounter", 0);
+		int agCounter = sharedPreferences.getInt(key, 0);
 		agCounter += antigravityCounter;
-		editor.putInt("antigravityCounter", agCounter);
+		editor.putInt(key, agCounter);
 		editor.commit();
 	}
 	
 	private void saveShieldCounter(String key, int shieldCounter) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		int shCounter = sharedPreferences.getInt("shieldCounter", 0);
+		int shCounter = sharedPreferences.getInt(key, 0);
 		shCounter += shieldCounter;
-		editor.putInt("shieldCounter", shCounter);
+		editor.putInt(key, shCounter);
 		editor.commit();
 	}
 	
 	private void saveSlowCounter(String key, int slowCounter) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		int sCounter = sharedPreferences.getInt("slowCounter", 0);
+		int sCounter = sharedPreferences.getInt(key, 0);
 		sCounter += slowCounter;
-		editor.putInt("slowCounter", sCounter);
+		editor.putInt(key, sCounter);
 		editor.commit();
 	}
 	
 	private void saveHelicopterCounter(String key, int helicopterCounter) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		int heliCounter = sharedPreferences.getInt("helicopterCounter", 0);
+		int heliCounter = sharedPreferences.getInt(key, 0);
 		heliCounter += helicopterCounter;
-		editor.putInt("helicopterCounter", heliCounter);
+		editor.putInt(key, heliCounter);
 		editor.commit();
 	}
 	
 	private void saveBalloonCounter(String key, int balloonCounter) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		int ballCounter = sharedPreferences.getInt("balloonCounter", 0);
+		int ballCounter = sharedPreferences.getInt(key, 0);
 		ballCounter += balloonCounter;
-		editor.putInt("slowCounter", ballCounter);
+		editor.putInt(key, ballCounter);
 		editor.commit();
 	}
 	
 	private void saveBirdCounter(String key, int birdCounter) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		int bCounter = sharedPreferences.getInt("birdCounter", 0);
+		int bCounter = sharedPreferences.getInt(key, 0);
 		bCounter += birdCounter;
-		editor.putInt("slowCounter", bCounter);
+		editor.putInt(key, bCounter);
 		editor.commit();
 	}
 	
 	private void saveFreeFliedMeters(String key, int freeFliedCounter) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		int ffCounter = sharedPreferences.getInt("freeFliedMetersCounter", 0);
+		int ffCounter = sharedPreferences.getInt(key, 0);
 		ffCounter += freeFliedCounter;
-		editor.putInt("freeFliedMetersCounter", ffCounter);
+		editor.putInt(key, ffCounter);
 		editor.commit();
 	}
 	
 	private void saveParachuteFliedMeters(String key, int parachuteFliedCounter) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		int pfCounter = sharedPreferences.getInt("parachuteFliedMetersCounter", 0);
+		int pfCounter = sharedPreferences.getInt(key, 0);
 		pfCounter += parachuteFliedCounter;
-		editor.putInt("parachuteFliedMetersCounter", pfCounter);
+		editor.putInt(key, pfCounter);
 		editor.commit();
 	}
 	
 	private void saveUnsuccessfulJumps(String key) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		int numberOfUnsuccessfulJumps = sharedPreferences.getInt("unsuccessfulJumps", 0);
+		int numberOfUnsuccessfulJumps = sharedPreferences.getInt(key, 0);
 		numberOfUnsuccessfulJumps++;
-		editor.putInt("unsuccessfulJumps", numberOfUnsuccessfulJumps);
+		editor.putInt(key, numberOfUnsuccessfulJumps);
 		editor.commit();
 	}
 	
 	private void saveSuccessfulJumps(String key) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		int numberOfSuccessfulJumps = sharedPreferences.getInt("successfulJumps", 0);
+		int numberOfSuccessfulJumps = sharedPreferences.getInt(key, 0);
 		numberOfSuccessfulJumps++;
-		editor.putInt("successfulJumps", numberOfSuccessfulJumps);
+		editor.putInt(key, numberOfSuccessfulJumps);
 		editor.commit();
 	}
 	
 	private void saveMaxFliedMeters(String key, int fliedMeters) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		if (sharedPreferences.getInt("fliedMeters", 0) < fliedMeters) {
-			editor.putInt("fliedMeters", fliedMeters);
-		}		
-		editor.commit();
-	}
-	
-	private void saveMaxSpeed(String key, int maxSpeed) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-		Editor editor = sharedPreferences.edit();
-		if (sharedPreferences.getInt("maxSpeed", 0) < maxSpeed) {
-			editor.putInt("maxSpeed", maxSpeed);
+		if (sharedPreferences.getInt(key, 0) < fliedMeters) {
+			editor.putInt(key, fliedMeters);
 		}		
 		editor.commit();
 	}
@@ -439,8 +430,8 @@ public class GameScene extends BaseScene{
 	private void saveMaxFreeFliedMeters(String key, int freeFliedMeters) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		if (sharedPreferences.getInt("freeFliedMeters", 0) < freeFliedMeters) {
-			editor.putInt("freeFliedMeters", freeFliedMeters);
+		if (sharedPreferences.getInt(key, 0) < freeFliedMeters) {
+			editor.putInt(key, freeFliedMeters);
 		}		
 		editor.commit();
 	}
@@ -448,8 +439,8 @@ public class GameScene extends BaseScene{
 	private void saveMaxParachuteFliedMeters(String key, int parachuteFliedMeters) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		if (sharedPreferences.getInt("parachuteFliedMeters", 0) < parachuteFliedMeters) {
-			editor.putInt("parachuteFliedMeters", parachuteFliedMeters);
+		if (sharedPreferences.getInt(key, 0) < parachuteFliedMeters) {
+			editor.putInt(key, parachuteFliedMeters);
 		}		
 		editor.commit();
 	}
@@ -457,7 +448,7 @@ public class GameScene extends BaseScene{
 	private void saveCoins(String key, int coins) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		editor.putInt("coins", coins);
+		editor.putInt(key, coins);
 		editor.commit();
 	}
 	
@@ -772,7 +763,9 @@ public class GameScene extends BaseScene{
 										final long[] EXPLOSION_ANIMATE = new long[] {100, 100, 100, 100, 100, 100};
 										explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
 										destroyBodyWithSprite(balloonRef);
-									}									
+									} else {
+										player.killPlayer();
+									}
 								}
 							};
 						};
@@ -819,8 +812,10 @@ public class GameScene extends BaseScene{
 										}
 										if (distanceToFloor < 1500 && distanceToFloor > 1000 && !openParachute) {
 											openButton.setVisible(true);
+											gameHud.registerTouchArea(openButton);
 										} else {
 											openButton.setVisible(false);
+											gameHud.unregisterTouchArea(openButton);
 										}
 										if (openParachute) {
 											parachute.setVisible(true);
@@ -850,7 +845,7 @@ public class GameScene extends BaseScene{
 									
 									@Override
 									public void run() {
-										saveUnsuccessfulJumps("unsuccessfulJumps");
+										saveScoreDataOnDie();
 										GameScene.this.setIgnoreUpdate(true);
 								        camera.setChaseEntity(null);
 								        availablePause = false;
@@ -1256,9 +1251,7 @@ public class GameScene extends BaseScene{
 	    	};
 	    };
 	    Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY() + 50, resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfreefliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
-		Text maxSpeed = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.maxSpeedFont, "Yourmaxspeedwas: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		levelCompleted.setText("You landed safely!! You flied " + freeFliedMeters + " meters");
-		maxSpeed.setText("Your max speed was: " + GameScene.this.maxSpeed);
 		GameScene.this.registerTouchArea(flyAgainButton);
 	    GameScene.this.registerTouchArea(quitButton);
 	    GameScene.this.registerTouchArea(mapButton);
@@ -1266,7 +1259,6 @@ public class GameScene extends BaseScene{
 	    levelCompleteWindow.attachChild(flyAgainButton);
 	    levelCompleteWindow.attachChild(mapButton);
 	    GameScene.this.attachChild(levelCompleted);
-	    GameScene.this.attachChild(maxSpeed);
 	    displayAchievements();
 	}
 	
@@ -1348,7 +1340,7 @@ public class GameScene extends BaseScene{
 		}
 		
 		if (newAchievement) {
-			Text achievementsUnlocked = new Text(camera.getCenterX(), camera.getCenterY() - 40, resourcesManager.achievementsUnlockedFont, "New achievement unlocked!!!", new TextOptions(HorizontalAlign.LEFT), vbom);
+			Text achievementsUnlocked = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.achievementsUnlockedFont, "New achievement unlocked!!!", new TextOptions(HorizontalAlign.LEFT), vbom);
 			achievementsUnlocked.setText("New achievement unlocked!!!");
 			GameScene.this.attachChild(achievementsUnlocked);
 		}
@@ -1368,7 +1360,23 @@ public class GameScene extends BaseScene{
 		saveMaxFliedMeters("fliedMeters", fliedMeters);
 		saveMaxFreeFliedMeters("freeFliedMeters", freeFliedMeters);
 		saveMaxParachuteFliedMeters("parachuteFliedMeters", parachuteFliedMeters);
-		saveMaxSpeed("maxSpeed", maxSpeed);
+		saveCoins("coins", player.getPlayerCoins());
+	}
+	
+	private void saveScoreDataOnDie() {
+		saveUpperImpulseCounter("upperImpulseCounter", upperImpulseCounter);
+		saveShieldCounter("shieldCounter", shieldCounter);
+		saveAntigravityCounter("antigravityCounter", antigravityCounter);
+		saveSlowCounter("slowCounter", slowCounter);
+		saveHelicopterCounter("helicopterCounter", helicopterCounter);
+		saveBalloonCounter("balloonCounter", balloonCounter);
+		saveBirdCounter("birdCounter", birdCounter);
+		saveUnsuccessfulJumps("unsuccessfulJumps");
+		saveFreeFliedMeters("freeFliedMetersCounter", freeFliedMeters);
+		saveParachuteFliedMeters("parachuteFliedMetersCounter", parachuteFliedMeters);
+		saveMaxFliedMeters("fliedMeters", fliedMeters);
+		saveMaxFreeFliedMeters("freeFliedMeters", freeFliedMeters);
+		saveMaxParachuteFliedMeters("parachuteFliedMeters", parachuteFliedMeters);
 		saveCoins("coins", player.getPlayerCoins());
 	}
 }

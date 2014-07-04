@@ -31,9 +31,9 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 	private int coins;
 	private final int SHOP_MENU = 0;
 	
-	private static final int DESERT_UNLOCK_VALUE = 1000;
-	private static final int MOUNTAIN_UNLOCK_VALUE = 1000;
-	private static final int western_UNLOCK_VALUE = 1000;
+	private static final int DESERT_UNLOCK_VALUE = 25000;
+	private static final int MOUNTAIN_UNLOCK_VALUE = 50000;
+	private static final int WESTERN_UNLOCK_VALUE = 100000;
 	
 	private Text coinsText;
 	
@@ -141,7 +141,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		Editor editor = sharedPreferences.edit();
 		editor.putBoolean("western", true);
 		editor.commit();
-		coins = coins - western_UNLOCK_VALUE;
+		coins = coins - WESTERN_UNLOCK_VALUE;
 		coinsText.setText("Coins: " + coins);
 		saveCoins("coins", coins);
 	}
@@ -194,10 +194,10 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 				@Override
 				public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 					if (pSceneTouchEvent.isActionDown()) {
-						if (coins >= western_UNLOCK_VALUE) {
-							confirmMessage("western", western_UNLOCK_VALUE);						
+						if (coins >= WESTERN_UNLOCK_VALUE) {
+							confirmMessage("western", WESTERN_UNLOCK_VALUE);						
 						} else {
-							int coinsToUnlock = western_UNLOCK_VALUE - coins;
+							int coinsToUnlock = WESTERN_UNLOCK_VALUE - coins;
 							noEnoughCoins("western", coinsToUnlock);
 						}
 					}

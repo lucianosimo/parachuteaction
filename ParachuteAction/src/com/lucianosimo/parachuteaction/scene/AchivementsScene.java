@@ -164,7 +164,7 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		jumpsCounter = sharedPreferences.getInt("successfulJumps", 0);
 		failedJumpsCounter = sharedPreferences.getInt("unsuccessfulJumps", 0);
-		freeFliedCounter = sharedPreferences.getInt("freeFliedMetersCounter", 0);
+		freeFliedCounter = sharedPreferences.getInt("freeFliedMeters", 0);
 		parachuteFliedCounter = sharedPreferences.getInt("parachuteFliedMetersCounter", 0);		
 		uiCounter = sharedPreferences.getInt("upperImpulseCounter", 0);
 		antigravityCounter = sharedPreferences.getInt("antigravityCounter", 0);
@@ -187,9 +187,9 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 		jumps100award = new Sprite (x2, y2, resourcesManager.jumps100award, vbom);
 		jumps500award = new Sprite (x1, y3, resourcesManager.jumps500award, vbom);
 		freeFly5000award = new Sprite (x2, y3, resourcesManager.freeFly5000award, vbom);
-		freeFly15000award = new Sprite (x1, y4, resourcesManager.freeFly5000award, vbom);
-		freeFly50000award = new Sprite (x2, y4, resourcesManager.freeFly5000award, vbom);
-		freeFly100000award = new Sprite (x1, y5, resourcesManager.freeFly5000award, vbom);
+		freeFly15000award = new Sprite (x1, y4, resourcesManager.freeFly15000award, vbom);
+		freeFly50000award = new Sprite (x2, y4, resourcesManager.freeFly50000award, vbom);
+		freeFly100000award = new Sprite (x1, y5, resourcesManager.freeFly100000award, vbom);
 		parachuteFly2500award = new Sprite (x2, y5, resourcesManager.parachuteFly2500award, vbom);
 		parachuteFly15000award = new Sprite (x1, y6, resourcesManager.parachuteFly15000award, vbom);
 		parachuteFly50000award = new Sprite (x2, y6, resourcesManager.parachuteFly50000award, vbom);
@@ -231,51 +231,51 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 			menuChildScene.attachChild(parachuteFly15000award);
 			menuChildScene.attachChild(parachuteFly50000award);
 			if (!AchievementsHelper.firstJumpAchievement(jumpsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				firstJumpAward.attachChild(locked);
 			}
 			if (!AchievementsHelper.jumps10Achievement(jumpsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				jumps10award.attachChild(locked);
 			}
 			if (!AchievementsHelper.jumps50Achievement(jumpsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				jumps50award.attachChild(locked);
 			}
 			if (!AchievementsHelper.jumps100Achievement(jumpsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				jumps100award.attachChild(locked);
 			}
 			if (!AchievementsHelper.jumps500Achievement(jumpsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				jumps500award.attachChild(locked);
 			}
 			if (!AchievementsHelper.freeFly5000Achievement(freeFliedCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				freeFly5000award.attachChild(locked);
 			}
 			if (!AchievementsHelper.freeFly15000Achievement(freeFliedCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				freeFly15000award.attachChild(locked);
 			}
 			if (!AchievementsHelper.freeFly50000Achievement(freeFliedCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				freeFly50000award.attachChild(locked);
 			}
 			if (!AchievementsHelper.freeFly100000Achievement(freeFliedCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				freeFly100000award.attachChild(locked);
 			}
 			if (!AchievementsHelper.parachuteFly2500Achievement(parachuteFliedCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				parachuteFly2500award.attachChild(locked);
 			}
 			if (!AchievementsHelper.parachuteFly15000Achievement(parachuteFliedCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				parachuteFly15000award.attachChild(locked);
 			}
 			if (!AchievementsHelper.parachuteFly50000Achievement(parachuteFliedCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				parachuteFly50000award.attachChild(locked);
 			}
 		} else if (page == 2) {
@@ -292,51 +292,51 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 			menuChildScene.attachChild(shield50award);
 			menuChildScene.attachChild(shield100award);
 			if (!AchievementsHelper.failJumps5Achievement(failedJumpsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				failJumps5award.attachChild(locked);
 			}
 			if (!AchievementsHelper.failJumps10Achievement(failedJumpsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				failJumps10award.attachChild(locked);
 			}
 			if (!AchievementsHelper.failJumps25Achievement(failedJumpsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				failJumps25award.attachChild(locked);
 			}
 			if (!AchievementsHelper.upper10AchievementUnlocked(uiCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				ui10award.attachChild(locked);
 			}
 			if (!AchievementsHelper.upper50AchievementUnlocked(uiCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				ui50award.attachChild(locked);
 			}
 			if (!AchievementsHelper.upper100AchievementUnlocked(uiCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				ui100award.attachChild(locked);
 			}
 			if (!AchievementsHelper.antigravity10AchievementUnlocked(antigravityCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				antigravity10award.attachChild(locked);
 			}
 			if (!AchievementsHelper.antigravity50AchievementUnlocked(antigravityCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				antigravity50award.attachChild(locked);
 			}
 			if (!AchievementsHelper.antigravity100AchievementUnlocked(antigravityCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				antigravity100award.attachChild(locked);
 			}
 			if (!AchievementsHelper.shield10AchievementUnlocked(shieldCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				shield10award.attachChild(locked);
 			}
 			if (!AchievementsHelper.shield50AchievementUnlocked(shieldCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				shield50award.attachChild(locked);
 			}
 			if (!AchievementsHelper.shield100AchievementUnlocked(shieldCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				shield100award.attachChild(locked);
 			}
 		} else if (page == 3) {
@@ -353,51 +353,51 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 			menuChildScene.attachChild(destroy25birdsAward);
 			menuChildScene.attachChild(destroy100birdsAward);
 			if (!AchievementsHelper.slow10AchievementUnlocked(slowCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				slow10award.attachChild(locked);
 			}
 			if (!AchievementsHelper.slow50AchievementUnlocked(slowCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				slow50award.attachChild(locked);
 			}
 			if (!AchievementsHelper.slow100AchievementUnlocked(slowCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				slow100award.attachChild(locked);
 			}
 			if (!AchievementsHelper.destroy5helicoptersAchievementUnlocked(helicoptersCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				destroy5helicoptersAward.attachChild(locked);
 			}
 			if (!AchievementsHelper.destroy25helicoptersAchievementUnlocked(helicoptersCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				destroy25helicoptersAward.attachChild(locked);
 			}
 			if (!AchievementsHelper.destroy100helicoptersAchievementUnlocked(helicoptersCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				destroy100helicoptersAward.attachChild(locked);
 			}
 			if (!AchievementsHelper.destroy5balloonsAchievementUnlocked(balloonsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				destroy5balloonsAward.attachChild(locked);
 			}
 			if (!AchievementsHelper.destroy25balloonsAchievementUnlocked(balloonsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				destroy25balloonsAward.attachChild(locked);
 			}
 			if (!AchievementsHelper.destroy100balloonsAchievementUnlocked(balloonsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				destroy100balloonsAward.attachChild(locked);
 			}
 			if (!AchievementsHelper.destroy5birdsAchievementUnlocked(birdsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				destroy5birdsAward.attachChild(locked);
 			}
 			if (!AchievementsHelper.destroy25birdsAchievementUnlocked(birdsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				destroy25birdsAward.attachChild(locked);
 			}
 			if (!AchievementsHelper.destroy100birdsAchievementUnlocked(birdsCounter)) {
-				Sprite locked = new Sprite(95, 35, resourcesManager.lockedAward, vbom);
+				Sprite locked = new Sprite(95, 33, resourcesManager.lockedAward, vbom);
 				destroy100birdsAward.attachChild(locked);
 			}
 		}
