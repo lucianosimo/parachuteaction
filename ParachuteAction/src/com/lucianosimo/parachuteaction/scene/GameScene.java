@@ -49,6 +49,7 @@ import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
 import com.lucianosimo.parachuteaction.object.Balloon;
 import com.lucianosimo.parachuteaction.object.Bird;
 import com.lucianosimo.parachuteaction.object.Helicopter;
+import com.lucianosimo.parachuteaction.object.LeftBird;
 import com.lucianosimo.parachuteaction.object.LeftHelicopter;
 import com.lucianosimo.parachuteaction.object.Player;
 
@@ -74,7 +75,6 @@ public class GameScene extends BaseScene{
 	private int helicopterCounter = 0;
 	private int balloonCounter = 0;
 	private int birdCounter = 0;
-	
 	private int coins = 0;
 
 	//Booleans
@@ -98,6 +98,7 @@ public class GameScene extends BaseScene{
 	private LeftHelicopter leftHelicopter;
 	private Balloon balloon;
 	private Bird bird;
+	private LeftBird leftBird;
 	
 	//Windows
 	private Sprite gameOverWindow;
@@ -176,6 +177,7 @@ public class GameScene extends BaseScene{
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER = "helicopter";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER = "leftHelicopter";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD = "bird";
+	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_BIRD = "leftBird";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON = "balloon";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOSER_CLOUD = "closerCloud";
 	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FAR_CLOUD = "farCloud";
@@ -678,8 +680,10 @@ public class GameScene extends BaseScene{
 										final long[] EXPLOSION_ANIMATE = new long[] {100, 100, 100, 100, 100, 100};
 										explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
 										destroyBodyWithSprite(helicopterRef);										
+									} else {
+										player.killPlayer();
 									}									
-								}
+								} 
 							};
 						};
 						GameScene.this.attachChild(explosion);
@@ -707,7 +711,9 @@ public class GameScene extends BaseScene{
 										final long[] EXPLOSION_ANIMATE = new long[] {100, 100, 100, 100, 100, 100};
 										explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
 										destroyBodyWithSprite(helicopterRef);
-									}									
+									} else {
+										player.killPlayer();
+									}								
 								}
 							};
 						};
@@ -731,11 +737,38 @@ public class GameScene extends BaseScene{
 										final Sprite birdRef = this; 
 										this.setVisible(false);
 										destroyBodyWithSprite(birdRef);
-									}									
+									} else {
+										player.killPlayer();
+									}								
 								}
 							};
 						};
 						levelObject = bird;
+					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_BIRD)) {
+						leftBird = new LeftBird(x, y, vbom, camera, physicsWorld, resourcesManager.left_bird_region.deepCopy()) {
+							
+							protected void onManagedUpdate(float pSecondsElapsed) {
+								super.onManagedUpdate(pSecondsElapsed);
+								if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+									birdRedArrow.setPosition(this.getX(), 75);
+								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+									birdRedArrow.setPosition(1000, 0);
+								}
+								if ((player.getY() - this.getY()) < 400) {
+									this.startMoving();
+								}
+								if (player.collidesWith(this)) {
+									if (shield) {
+										final Sprite birdRef = this; 
+										this.setVisible(false);
+										destroyBodyWithSprite(birdRef);
+									} else {
+										player.killPlayer();
+									}									
+								}
+							};
+						};
+						levelObject = leftBird;
 					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON)) {
 						basket = new Sprite(97, -30, resourcesManager.balloon_basket_region, vbom);
 						explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
@@ -962,6 +995,21 @@ public class GameScene extends BaseScene{
 				final Fixture x2 = contact.getFixtureB();
 				
 				if (x1.getBody().getUserData().equals("bird") && x2.getBody().getUserData().equals("player")) {
+					if (shield) {
+						engine.runOnUpdateThread(new Runnable() {
+							@Override
+							public void run() {
+								physicsWorld.destroyBody(x1.getBody());	
+							}
+						});
+					} else {
+						player.killPlayer();
+						setInactiveBody(x1.getBody());
+					}
+					
+				}
+				
+				if (x1.getBody().getUserData().equals("leftBird") && x2.getBody().getUserData().equals("player")) {
 					if (shield) {
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
@@ -1251,7 +1299,7 @@ public class GameScene extends BaseScene{
 	    	};
 	    };
 	    Text levelCompleted = new Text(camera.getCenterX(), camera.getCenterY() + 50, resourcesManager.levelCompletedFont, "Youlandedsafely: 0123456789 Youfreefliedmeters", new TextOptions(HorizontalAlign.LEFT), vbom);
-		levelCompleted.setText("You landed safely!! You flied " + freeFliedMeters + " meters");
+		levelCompleted.setText("You landed safely!! You freeflied " + freeFliedMeters + " mts");
 		GameScene.this.registerTouchArea(flyAgainButton);
 	    GameScene.this.registerTouchArea(quitButton);
 	    GameScene.this.registerTouchArea(mapButton);

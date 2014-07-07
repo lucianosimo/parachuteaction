@@ -123,6 +123,7 @@
     <entity x="360" y="53700" type="coin"/>
     <entity x="360" y="53600" type="coin"/>
     
+    <entity x="400" y="52700" type="bird"/>
     <entity x="480" y="51000" type="helicopter"/>
     
     <entity x="180" y="51000" type="coin"/>
@@ -135,6 +136,7 @@
     <entity x="0" y="48000" type="leftHelicopter"/>
     
     <entity x="240" y="46600" type="shield"/>
+    <entity x="420" y="46300" type="bird"/>
     
     <entity x="400" y="46000" type="coin"/>
     <entity x="400" y="45900" type="coin"/>
@@ -144,6 +146,7 @@
     
     <entity x="480" y="44800" type="helicopter"/>
     <entity x="0" y="44800" type="leftHelicopter"/>
+    <entity x="100" y="43150" type="leftBird"/>
     <entity x="0" y="41600" type="leftHelicopter"/>
     <entity x="480" y="40000" type="helicopter"/>
     
@@ -172,6 +175,7 @@
     
     <entity x="240" y="33000" type="balloon"/>    
     <entity x="480" y="32000" type="helicopter"/>
+    <entity x="350" y="30900" type="bird"/>
     <entity x="240" y="30500" type="upperImpulse"/> 
     
     <entity x="200" y="28000" type="coin"/>
@@ -182,7 +186,8 @@
     
     <entity x="240" y="26500" type="balloon"/>
     <entity x="480" y="25700" type="helicopter"/>
- 	<entity x="0" y="23500" type="antigravity"/>    
+    <entity x="50" y="24700" type="leftBird"/>
+ 	<entity x="240" y="23500" type="antigravity"/>    
     
     <entity x="250" y="23000" type="coin"/>
     <entity x="250" y="22900" type="coin"/>
@@ -217,6 +222,7 @@
     <entity x="100" y="10600" type="coin"/>
     
     <entity x="0" y="9950" type="leftHelicopter"/>
+    <entity x="150" y="8500" type="leftBird"/>
     <entity x="480" y="6750" type="helicopter"/>
     
     <entity x="220" y="7000" type="coin"/>
@@ -225,6 +231,7 @@
     <entity x="220" y="6700" type="coin"/>
     <entity x="220" y="6600" type="coin"/>
     
+    <entity x="410" y="4800" type="bird"/>
     <entity x="240" y="3000" type="balloon"/>
 
     <entity x="240" y="64200" type="player"/>

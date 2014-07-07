@@ -12,11 +12,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
-public class Bird extends AnimatedSprite{
+public class LeftBird extends AnimatedSprite{
 
 	private Body body;
 	
-	public Bird(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld, ITiledTextureRegion region) {
+	public LeftBird(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld, ITiledTextureRegion region) {
 		super(pX, pY, region, vbom);
 		startAnimation();
 		createPhysics(camera, physicsWorld);
@@ -25,7 +25,7 @@ public class Bird extends AnimatedSprite{
 	private void createPhysics(final Camera camera, PhysicsWorld physicsWorld) {
 		body = PhysicsFactory.createBoxBody(physicsWorld, this, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
 		body.setFixedRotation(true);
-		body.setUserData("bird");
+		body.setUserData("leftBird");
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
 	}
 	
@@ -35,7 +35,7 @@ public class Bird extends AnimatedSprite{
 	}
 	
 	public void startMoving() {
-		body.setLinearVelocity(new Vector2(-6, 5));
+		body.setLinearVelocity(new Vector2(6, 5));
 	}
 	
 }
