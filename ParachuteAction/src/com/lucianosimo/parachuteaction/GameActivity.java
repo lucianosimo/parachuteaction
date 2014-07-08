@@ -24,8 +24,8 @@ import com.lucianosimo.parachuteaction.manager.SceneManager;
 public class GameActivity extends BaseGameActivity implements IAccelerationListener{
 
 	private BoundCamera camera;
-	//private ResourcesManager resourcesManager;	
 	public static float mGravityX = 0;
+	private final static float SPLASH_DURATION = 5f;
 	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -55,7 +55,6 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	@Override
 	public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback)	throws IOException {
 		ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager());
-		//resourcesManager = ResourcesManager.getInstance();
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
@@ -66,11 +65,10 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 
 	@Override
 	public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException {
-		mEngine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback() {
+		mEngine.registerUpdateHandler(new TimerHandler(SPLASH_DURATION, new ITimerCallback() {
 			
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-		        // Show an interstitial
 				mEngine.unregisterUpdateHandler(pTimerHandler);
 				SceneManager.getInstance().createMenuScene();
 			}

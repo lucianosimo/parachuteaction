@@ -1,6 +1,9 @@
 package com.lucianosimo.parachuteaction.scene;
 
 import org.andengine.engine.camera.Camera;
+import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.entity.modifier.AlphaModifier;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
@@ -26,7 +29,29 @@ public class SplashScene extends BaseScene{
 		float screenWidth = resourcesManager.camera.getWidth();
 		float screenHeight = resourcesManager.camera.getHeight();
 		splash.setPosition(screenWidth/2, screenHeight/2);
+		final Rectangle fade = new Rectangle(screenWidth/2, screenHeight/2, 480, 854, vbom);
+		fade.setColor(Color.BLACK);
+		fade.setAlpha(1.0f);
 		attachChild(splash);
+		attachChild(fade);
+		fade.registerEntityModifier(new AlphaModifier(1.5f, 1.0f, 0.0f));
+		fade.setAlpha(0.0f);
+		engine.registerUpdateHandler(new IUpdateHandler() {
+			private int updates = 0;
+			
+			@Override
+			public void reset() {
+
+			}
+			
+			@Override
+			public void onUpdate(float pSecondsElapsed) {
+				updates++;
+				if (updates > 150) {
+					fade.registerEntityModifier(new AlphaModifier(1.5f, 0.0f, 1.0f));
+				}
+			}
+		});
 	}
 
 	@Override
