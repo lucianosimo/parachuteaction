@@ -194,12 +194,12 @@ public class GameScene extends BaseScene{
 	public void createScene() {
 		//n = rand.nextInt(max - min + 1) + min;
 		Random rand = new Random();
-		int level = rand.nextInt(3) + 1;
+		int level = rand.nextInt(4) + 1;
 		createBackground();
 		createWindows();
 		createHud();
 		createPhysics();
-		loadLevel(4);
+		loadLevel(level);
 		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
         //GameScene.this.attachChild(debug);
 	}

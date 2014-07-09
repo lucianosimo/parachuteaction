@@ -245,7 +245,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 			
 			@Override
 			public void run() {
-				Toast.makeText(activity, "No enough coins. Collect " + coins + " more to unlock " + location, Toast.LENGTH_LONG).show();	
+				Toast.makeText(activity, "No enough coins. Collect " + coins + " more to unlock " + location, Toast.LENGTH_SHORT).show();	
 			}
 		});
 	}
