@@ -15,7 +15,6 @@ import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
-import org.andengine.extension.debugdraw.DebugRenderer;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
@@ -34,6 +33,7 @@ import org.xml.sax.Attributes;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -200,9 +200,9 @@ public class GameScene extends BaseScene{
 		createWindows();
 		createHud();
 		createPhysics();
-		loadLevel(level);
-		DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
-        GameScene.this.attachChild(debug);
+		loadLevel(1);
+		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
+        //GameScene.this.attachChild(debug);
 	}
 	
 	private void createBackground() {
@@ -681,8 +681,6 @@ public class GameScene extends BaseScene{
 										final long[] EXPLOSION_ANIMATE = new long[] {100, 100, 100, 100, 100, 100};
 										explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
 										destroyBodyWithSprite(helicopterRef);										
-									} else {
-										player.killPlayer();
 									}									
 								} 
 							};
@@ -712,8 +710,6 @@ public class GameScene extends BaseScene{
 										final long[] EXPLOSION_ANIMATE = new long[] {100, 100, 100, 100, 100, 100};
 										explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
 										destroyBodyWithSprite(helicopterRef);
-									} else {
-										player.killPlayer();
 									}								
 								}
 							};
@@ -738,8 +734,6 @@ public class GameScene extends BaseScene{
 										final Sprite birdRef = this; 
 										this.setVisible(false);
 										destroyBodyWithSprite(birdRef);
-									} else {
-										player.killPlayer();
 									}								
 								}
 							};
@@ -763,9 +757,7 @@ public class GameScene extends BaseScene{
 										final Sprite birdRef = this; 
 										this.setVisible(false);
 										destroyBodyWithSprite(birdRef);
-									} else {
-										player.killPlayer();
-									}									
+									}								
 								}
 							};
 						};
@@ -797,12 +789,14 @@ public class GameScene extends BaseScene{
 										final long[] EXPLOSION_ANIMATE = new long[] {100, 100, 100, 100, 100, 100};
 										explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
 										destroyBodyWithSprite(balloonRef);
-									} else {
-										player.killPlayer();
 									}
 								}
 							};
 						};
+						Log.e("parachute", "Random: " + randX);
+						Log.e("parachute", "Balloon x: " + balloon.getX());
+						Log.e("parachute", "Balloon y: " + balloon.getY());
+						Log.e("parachute", " ");
 						GameScene.this.attachChild(explosion);
 						balloon.attachChild(basket);
 						levelObject = balloon;

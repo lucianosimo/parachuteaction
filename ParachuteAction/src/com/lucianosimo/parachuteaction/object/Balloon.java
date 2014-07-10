@@ -42,7 +42,7 @@ public class Balloon extends Sprite{
 	}
 	
 	public void startMoving() {
-		body.setLinearVelocity(new Vector2(body.getLinearVelocity().x, 4));
+		body.setLinearVelocity(new Vector2(0, 4));
 	}
 	
 }
