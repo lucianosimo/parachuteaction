@@ -200,7 +200,7 @@ public class GameScene extends BaseScene{
 		createWindows();
 		createHud();
 		createPhysics();
-		loadLevel(1);
+		loadLevel(level);
 		DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
         GameScene.this.attachChild(debug);
 	}

@@ -5,6 +5,7 @@ import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
+import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
@@ -21,9 +22,20 @@ public class LeftHelicopter extends AnimatedSprite{
 		startAnimation();
 		createPhysics(camera, physicsWorld);
 	}
-	
+		
 	private void createPhysics(final Camera camera, PhysicsWorld physicsWorld) {
-		body = PhysicsFactory.createBoxBody(physicsWorld, this, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
+		final float height = 201 / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+		final float width = 324 / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+		final Vector2[] v = {
+			new Vector2(-0.17791f*width, -0.30348f*height),
+			new Vector2(+0.19018f*width, -0.50746f*height),
+			new Vector2(+0.40798f*width, -0.28358f*height),
+			new Vector2(+0.50920f*width, +0.11443f*height),
+			new Vector2(-0.44172f*width, +0.52736f*height),
+			new Vector2(-0.52147f*width, +0.40796f*height),
+		};
+		body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
+		//body = PhysicsFactory.createBoxBody(physicsWorld, this, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
 		body.setFixedRotation(true);
 		body.setUserData("leftHelicopter");
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
