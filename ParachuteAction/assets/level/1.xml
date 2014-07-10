@@ -234,7 +234,8 @@
     <entity x="410" y="4800" type="bird"/>
     <entity x="240" y="3000" type="balloon"/>
 
-    <entity x="240" y="64200" type="player"/>
+    <entity x="480" y="63550" type="helicopter"/>
+    <entity x="240" y="64000" type="player"/>
     <entity x="1000" y="64000" type="plane"/>
     
     <entity x="240" y="64000" type="closerCloud"/>

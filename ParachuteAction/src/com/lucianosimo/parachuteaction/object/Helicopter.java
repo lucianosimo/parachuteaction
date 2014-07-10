@@ -5,6 +5,7 @@ import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
+import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
@@ -23,14 +24,19 @@ public class Helicopter extends AnimatedSprite{
 	}
 	
 	private void createPhysics(final Camera camera, PhysicsWorld physicsWorld) {
-		/*final float height = 201;
-		final float width = 324;
+		//final float width = pShape.getWidthScaled() / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+		//final float height = pShape.getHeightScaled() / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+		final float height = 201 / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+		final float width = 324 / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
 		final Vector2[] v = {
-			new Vector2(-0.51852f*width, -0.10448f*height),
-			new Vector2(-0.28086f*width, -0.23383f*height)
-		};*/
-		body = PhysicsFactory.createBoxBody(physicsWorld, this, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
-		//body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
+			new Vector2(-0.41975f*width, -0.27363f*height),
+			new Vector2(-0.19753f*width, -0.51244f*height),
+			new Vector2(+0.17284f*width, -0.30846f*height),
+			new Vector2(+0.51235f*width, +0.40796f*height),
+			new Vector2(+0.44444f*width, +0.52239f*height),
+			new Vector2(-0.50926f*width, +0.12438f*height),
+		};
+		body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
 		body.setFixedRotation(true);
 		body.setUserData("helicopter");
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
