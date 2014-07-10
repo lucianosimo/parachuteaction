@@ -200,7 +200,7 @@ public class GameScene extends BaseScene{
 		createWindows();
 		createHud();
 		createPhysics();
-		loadLevel(1);
+		loadLevel(level);
 		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
         //GameScene.this.attachChild(debug);
 	}
@@ -793,10 +793,6 @@ public class GameScene extends BaseScene{
 								}
 							};
 						};
-						Log.e("parachute", "Random: " + randX);
-						Log.e("parachute", "Balloon x: " + balloon.getX());
-						Log.e("parachute", "Balloon y: " + balloon.getY());
-						Log.e("parachute", " ");
 						GameScene.this.attachChild(explosion);
 						balloon.attachChild(basket);
 						levelObject = balloon;
@@ -820,15 +816,13 @@ public class GameScene extends BaseScene{
 										}
 										if (shield) {
 											shieldHalo.setVisible(true);
-											if (openParachute) {
-												shieldHalo.setPosition(20, 77);
-											}
+											shieldHalo.setPosition(20, 77);
 										} else {
 											shieldHalo.setVisible(false);
 										}
-										if (player.getPlayerSpeed() > maxSpeed) {
+										/*if (player.getPlayerSpeed() > maxSpeed) {
 											maxSpeed = (int) player.getPlayerSpeed();
-										}
+										}*/
 										distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
 										if (firstFall) {
 											oldDistanceToFloor = distanceToFloor;
