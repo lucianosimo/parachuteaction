@@ -16,7 +16,6 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
-import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.SAXUtils;
@@ -33,7 +32,6 @@ import org.xml.sax.Attributes;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -67,7 +65,6 @@ public class GameScene extends BaseScene{
 	private int oldDistanceToFloor = 0;
 	private int distanceToFloorAtOpenParachute = 0;
 	private int meterCounterForReduceSpeed = 0;
-	private int maxSpeed = 0;
 	
 	private int upperImpulseCounter = 0;
 	private int antigravityCounter = 0;
@@ -164,7 +161,7 @@ public class GameScene extends BaseScene{
 	private static final int CLOSER_CLOUD_SPEED = -70;
 	private static final int FAR_CLOUD_SPEED = -15;
 	private static final int CLOUD_SPEED = -40;
-	private static final int PLANE_SPEED = -65;
+	private static final int PLANE_SPEED = -75;
 	private static final int SHIELD_DURATION = 10;
 	private static final int ANTIGRAVITY_DURATION = 5;
 	private static final int COINS_VALUE = 100;
@@ -451,516 +448,520 @@ public class GameScene extends BaseScene{
 	private void saveCoins(String key, int coins) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
-		editor.putInt(key, coins);
+		int coinsCounter = sharedPreferences.getInt(key, 0);
+		coinsCounter += coins;
+		editor.putInt(key, coinsCounter);
 		editor.commit();
 	}
 	
 	//Parse level from XML file
-		private void loadLevel (int level) {
-			final SimpleLevelLoader levelLoader = new SimpleLevelLoader(vbom);
-			//final FixtureDef FIXTURE_DEF= PhysicsFactory.createFixtureDef(0, 0f, 0.5f);
-			levelLoader.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(LevelConstants.TAG_LEVEL) {
-				
-				@Override
-				public IEntity onLoadEntity(String pEntityName, IEntity pParent, Attributes pAttributes, SimpleLevelEntityLoaderData pEntityLoaderData) throws IOException {
-					final int width = SAXUtils.getIntAttributeOrThrow(pAttributes, LevelConstants.TAG_LEVEL_ATTRIBUTE_WIDTH);
-					final int height = SAXUtils.getIntAttributeOrThrow(pAttributes, LevelConstants.TAG_LEVEL_ATTRIBUTE_HEIGHT);
-					camera.setBounds(0, 0, width, height);
-					camera.setBoundsEnabled(true);
-					return GameScene.this;
-				}
-			});
-			levelLoader.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(TAG_ENTITY) {
+	private void loadLevel (int level) {
+		final SimpleLevelLoader levelLoader = new SimpleLevelLoader(vbom);
+		//final FixtureDef FIXTURE_DEF= PhysicsFactory.createFixtureDef(0, 0f, 0.5f);
+		levelLoader.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(LevelConstants.TAG_LEVEL) {
+			
+			@Override
+			public IEntity onLoadEntity(String pEntityName, IEntity pParent, Attributes pAttributes, SimpleLevelEntityLoaderData pEntityLoaderData) throws IOException {
+				final int width = SAXUtils.getIntAttributeOrThrow(pAttributes, LevelConstants.TAG_LEVEL_ATTRIBUTE_WIDTH);
+				final int height = SAXUtils.getIntAttributeOrThrow(pAttributes, LevelConstants.TAG_LEVEL_ATTRIBUTE_HEIGHT);
+				camera.setBounds(0, 0, width, height);
+				camera.setBoundsEnabled(true);
+				return GameScene.this;
+			}
+		});
+		levelLoader.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(TAG_ENTITY) {
 
-				@Override
-				public IEntity onLoadEntity(String pEntityName, IEntity pParent, Attributes pAttributes, SimpleLevelEntityLoaderData pEntityLoaderData)	throws IOException {
-					final int x = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_X);
-					final int y = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_Y);
-					final String type = SAXUtils.getAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_TYPE);
-					
-					final Sprite levelObject;
-					
-					if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD)) {
-						Random rand = new Random();
-						int randX = rand.nextInt(441) - 220;
-						int randY = rand.nextInt(201) - 100;
-						levelObject = new Sprite(x + randX, y + randY, resourcesManager.cloud_region, vbom) {
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if (this.getX() < LEFT_MARGIN - 166) {
-									this.setPosition(RIGHT_MARGIN + 166, y);
-								}
-							};
+			@Override
+			public IEntity onLoadEntity(String pEntityName, IEntity pParent, Attributes pAttributes, SimpleLevelEntityLoaderData pEntityLoaderData)	throws IOException {
+				final int x = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_X);
+				final int y = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_Y);
+				final String type = SAXUtils.getAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_TYPE);
+				
+				final Sprite levelObject;
+				
+				if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD)) {
+					Random rand = new Random();
+					int randX = rand.nextInt(441) - 220;
+					int randY = rand.nextInt(201) - 100;
+					levelObject = new Sprite(x + randX, y + randY, resourcesManager.cloud_region, vbom) {
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if (this.getX() < LEFT_MARGIN - 166) {
+								this.setPosition(RIGHT_MARGIN + 166, y);
+							}
 						};
-						PhysicsHandler handler = new PhysicsHandler(levelObject);
-						levelObject.registerUpdateHandler(handler);
-						handler.setVelocity(CLOUD_SPEED,0);
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOSER_CLOUD)) {
-						Random rand = new Random();
-						int randX = rand.nextInt(441) - 220;
-						int randY = rand.nextInt(201) - 100;
-						levelObject = new Sprite(x + randX, y + randY, resourcesManager.closerCloud_region, vbom) {
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if (this.getX() < LEFT_MARGIN - 166) {
-									this.setPosition(RIGHT_MARGIN + 166, y);
-								}
-							};
+					};
+					PhysicsHandler handler = new PhysicsHandler(levelObject);
+					levelObject.registerUpdateHandler(handler);
+					handler.setVelocity(CLOUD_SPEED,0);
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOSER_CLOUD)) {
+					Random rand = new Random();
+					int randX = rand.nextInt(441) - 220;
+					int randY = rand.nextInt(201) - 100;
+					levelObject = new Sprite(x + randX, y + randY, resourcesManager.closerCloud_region, vbom) {
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if (this.getX() < LEFT_MARGIN - 166) {
+								this.setPosition(RIGHT_MARGIN + 166, y);
+							}
 						};
-						PhysicsHandler handler = new PhysicsHandler(levelObject);
-						levelObject.registerUpdateHandler(handler);
-						handler.setVelocity(CLOSER_CLOUD_SPEED,0);
-					} 
-					else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FAR_CLOUD)) {
-						Random rand = new Random();
-						int randX = rand.nextInt(441) - 220;
-						int randY = rand.nextInt(201) - 100;
-						levelObject = new Sprite(x + randX, y + randY, resourcesManager.farCloud_region, vbom) {
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if (this.getX() < LEFT_MARGIN - 166) {
-									this.setPosition(RIGHT_MARGIN + 166, y);
-								}
-							};
+					};
+					PhysicsHandler handler = new PhysicsHandler(levelObject);
+					levelObject.registerUpdateHandler(handler);
+					handler.setVelocity(CLOSER_CLOUD_SPEED,0);
+				} 
+				else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FAR_CLOUD)) {
+					Random rand = new Random();
+					int randX = rand.nextInt(441) - 220;
+					int randY = rand.nextInt(201) - 100;
+					levelObject = new Sprite(x + randX, y + randY, resourcesManager.farCloud_region, vbom) {
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if (this.getX() < LEFT_MARGIN - 166) {
+								this.setPosition(RIGHT_MARGIN + 166, y);
+							}
 						};
-						PhysicsHandler handler = new PhysicsHandler(levelObject);
-						levelObject.registerUpdateHandler(handler);
-						handler.setVelocity(FAR_CLOUD_SPEED,0);
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLANE)) {
-						levelObject = new Sprite(x, y, resourcesManager.plane_region, vbom) {
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if (this.getX() < 200) {
-									if (!startMoving) {
-										startMoving = true;
-										player.setVisible(true);
-										gameHud.detachChild(levelStartText);
-									}									
-								}
-							};
+					};
+					PhysicsHandler handler = new PhysicsHandler(levelObject);
+					levelObject.registerUpdateHandler(handler);
+					handler.setVelocity(FAR_CLOUD_SPEED,0);
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLANE)) {
+					levelObject = new Sprite(x, y, resourcesManager.plane_region, vbom) {
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if (this.getX() < 200) {
+								if (!startMoving) {
+									startMoving = true;
+									player.setVisible(true);
+									gameHud.detachChild(levelStartText);
+								}									
+							}
 						};
-						PhysicsHandler handler = new PhysicsHandler(levelObject);
-						levelObject.registerUpdateHandler(handler);
-						handler.setVelocity(PLANE_SPEED,0);
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BACK_LOCATION)) {
-						levelObject = new Sprite(x, y, resourcesManager.back_location_region, vbom);
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_COIN)) {
-						coin = new AnimatedSprite(x, y, resourcesManager.coin_region, vbom) {
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if (player.collidesWith(this)) {
-									destroySprite(this);
-									addCoins(COINS_VALUE);
-								}
-							};
+					};
+					PhysicsHandler handler = new PhysicsHandler(levelObject);
+					levelObject.registerUpdateHandler(handler);
+					handler.setVelocity(PLANE_SPEED,0);
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BACK_LOCATION)) {
+					levelObject = new Sprite(x, y, resourcesManager.back_location_region, vbom);
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_COIN)) {
+					coin = new AnimatedSprite(x, y, resourcesManager.coin_region, vbom) {
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if (player.collidesWith(this)) {
+								destroySprite(this);
+								addCoins(COINS_VALUE);
+							}
 						};
-						final long[] COIN_ANIMATE = new long[] {100, 100, 100, 100};
-						coin.animate(COIN_ANIMATE, 0, 3, true);
-						levelObject = coin;
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
-						Random rand = new Random();
-						int randX = rand.nextInt(441) - 220;
-						levelObject = new Sprite(x + randX, y, resourcesManager.shield_region, vbom) {
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
-									greenArrow.setPosition(this.getX(), 75);
-								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-									greenArrow.setPosition(1000, 0);
-								}
-								if (player.collidesWith(this)) {
-									shieldCounter++;
-									destroySprite(this);
-									player.registerEntityModifier(new DelayModifier(SHIELD_DURATION, new IEntityModifierListener() {
-										
-										@Override
-										public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
-											shield = true;											
-										}
-										
-										@Override
-										public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-											shield = false;
-											
-										}
-									}));
-								}
-							};
-						};
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE)) {
-						//n = rand.nextInt(max - min + 1) + min;
-						Random rand = new Random();
-						int randX = rand.nextInt(441) - 220;
-						int randY = rand.nextInt(5001) - 2500;
-						levelObject = new Sprite(x + randX, y + randY, resourcesManager.upperImpulse_region, vbom) {
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
-									greenArrow.setPosition(this.getX(), 75);
-								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-									greenArrow.setPosition(1000, 0);
-								}
-								if (player.collidesWith(this)) {
-									upperImpulseCounter++;
-									player.upperImpulse();
-									destroySprite(this);
-								}
-							};
-						};
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITY)) {
-						Random rand = new Random();
-						int randX = rand.nextInt(441) - 220;
-						int randY = rand.nextInt(5001) - 2500;
-						levelObject = new Sprite(x + randX, y + randY, resourcesManager.antiGravity_region, vbom) {
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
-									greenArrow.setPosition(this.getX(), 75);
-								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-									greenArrow.setPosition(1000, 0);
-								}
-								if (player.collidesWith(this)) {
-									antigravityCounter++;
-									destroySprite(this);
-									player.registerEntityModifier(new DelayModifier(ANTIGRAVITY_DURATION, new IEntityModifierListener() {
-										
-										@Override
-										public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
-											physicsWorld.setGravity(new Vector2(0, 10));										
-										}
-										
-										@Override
-										public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-											physicsWorld.setGravity(new Vector2(0, -3));											
-										}
-									}));
-																		
-								}
-							};
-						};
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SLOW)) {
-						Random rand = new Random();
-						int randX = rand.nextInt(441) - 220;
-						int randY = rand.nextInt(5001) - 2500;
-						levelObject = new Sprite(x + randX, y + randY, resourcesManager.slow_region, vbom) {
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
-									greenArrow.setPosition(this.getX(), 75);
-								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-									greenArrow.setPosition(1000, 0);
-								}
-								if (player.collidesWith(this)) {
-									slowCounter++;
-									destroySprite(this);
-									player.slowDownPlayer();
-								}
-							};
-						};
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
-						//n = rand.nextInt(max - min + 1) + min;
-						explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
-						explosion.setVisible(false);
-						helicopter = new Helicopter(x, y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
-									helicopterRedArrow.setPosition(this.getX(), 75);
-								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-									helicopterRedArrow.setPosition(1000, 0);
-								}
-								if ((player.getY() - this.getY()) < 500) {
-									this.startMoving();
-								}
-								if (player.collidesWith(this)) {
-									if (shield) {
-										final Sprite helicopterRef = this; 
-										this.setVisible(false);
-										explosion.setPosition(helicopterRef.getX(),helicopterRef.getY());
-										explosion.setVisible(true);
-										final long[] EXPLOSION_ANIMATE = new long[] {100, 100, 100, 100, 100, 100};
-										explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
-										destroyBodyWithSprite(helicopterRef);										
-									}									
-								} 
-							};
-						};
-						GameScene.this.attachChild(explosion);
-						levelObject = helicopter;
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER)) {
-						explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
-						explosion.setVisible(false);
-						leftHelicopter = new LeftHelicopter(x, y, vbom, camera, physicsWorld, resourcesManager.leftHelicopter_region.deepCopy()) {
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
-									leftHelicopterRedArrow.setPosition(this.getX(), 75);
-								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-									leftHelicopterRedArrow.setPosition(1000, 0);
-								}
-								if ((player.getY() - this.getY()) < 500) {
-									this.startMoving();
-								}
-								if (player.collidesWith(this)) {
-									if (shield) {
-										final Sprite helicopterRef = this; 
-										this.setVisible(false);
-										explosion.setPosition(helicopterRef.getX(),helicopterRef.getY());
-										explosion.setVisible(true);
-										final long[] EXPLOSION_ANIMATE = new long[] {100, 100, 100, 100, 100, 100};
-										explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
-										destroyBodyWithSprite(helicopterRef);
-									}								
-								}
-							};
-						};
-						GameScene.this.attachChild(explosion);
-						levelObject = leftHelicopter;
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
-						bird = new Bird(x, y, vbom, camera, physicsWorld, resourcesManager.bird_region.deepCopy()) {
-							
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
-									birdRedArrow.setPosition(this.getX(), 75);
-								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-									birdRedArrow.setPosition(1000, 0);
-								}
-								if ((player.getY() - this.getY()) < 400) {
-									this.startMoving();
-								}
-								if (player.collidesWith(this)) {
-									if (shield) {
-										final Sprite birdRef = this; 
-										this.setVisible(false);
-										destroyBodyWithSprite(birdRef);
-									}								
-								}
-							};
-						};
-						levelObject = bird;
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_BIRD)) {
-						leftBird = new LeftBird(x, y, vbom, camera, physicsWorld, resourcesManager.left_bird_region.deepCopy()) {
-							
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
-									birdRedArrow.setPosition(this.getX(), 75);
-								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-									birdRedArrow.setPosition(1000, 0);
-								}
-								if ((player.getY() - this.getY()) < 400) {
-									this.startMoving();
-								}
-								if (player.collidesWith(this)) {
-									if (shield) {
-										final Sprite birdRef = this; 
-										this.setVisible(false);
-										destroyBodyWithSprite(birdRef);
-									}								
-								}
-							};
-						};
-						levelObject = leftBird;
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON)) {
-						basket = new Sprite(97, -30, resourcesManager.balloon_basket_region, vbom);
-						explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
-						explosion.setVisible(false);
-						Random rand = new Random();
-						int randX = rand.nextInt(441) - 220;
-						balloon = new Balloon(x + randX, y, vbom, camera, physicsWorld, resourcesManager.balloon_region.deepCopy()) {
-							
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if ((player.getY() - this.getY()) < 1500) {
-									this.startMoving();
-								}
-								if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
-									balloonRedArrow.setPosition(this.getX(), 75);
-								} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-									balloonRedArrow.setPosition(1000, 0);
-								}
-								if (player.collidesWith(this)) {
-									if (shield) {
-										final Sprite balloonRef = this; 
-										this.setVisible(false);
-										explosion.setPosition(balloonRef.getX(),balloonRef.getY());
-										explosion.setVisible(true);
-										final long[] EXPLOSION_ANIMATE = new long[] {100, 100, 100, 100, 100, 100};
-										explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
-										destroyBodyWithSprite(balloonRef);
-									}
-								}
-							};
-						};
-						GameScene.this.attachChild(explosion);
-						balloon.attachChild(basket);
-						levelObject = balloon;
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
-						parachute = new Sprite(18, 110, ResourcesManager.getInstance().parachute_region, vbom);
-						shieldHalo = new Sprite(20, 50, resourcesManager.shield_region, vbom);
-						parachute.setVisible(false);
-						shieldHalo.setVisible(false);
-						player = new Player(x, y, vbom, camera, physicsWorld) {
-							
-							@Override
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								engine.runOnUpdateThread(new Runnable() {
+					};
+					final long[] COIN_ANIMATE = new long[] {100, 100, 100, 100};
+					coin.animate(COIN_ANIMATE, 0, 3, true);
+					levelObject = coin;
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
+					Random rand = new Random();
+					int randX = rand.nextInt(441) - 220;
+					levelObject = new Sprite(x + randX, y, resourcesManager.shield_region, vbom) {
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
+								greenArrow.setPosition(this.getX(), 75);
+							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+								greenArrow.setPosition(1000, 0);
+							}
+							if (player.collidesWith(this)) {
+								shieldCounter++;
+								destroySprite(this);
+								player.registerEntityModifier(new DelayModifier(SHIELD_DURATION, new IEntityModifierListener() {
 									
 									@Override
-									public void run() {
-										if (!startMoving) {
-											player.stopPlayer();
-											player.setVisible(false);
-										}
-										if (shield) {
-											shieldHalo.setVisible(true);
-											shieldHalo.setPosition(20, 77);
-										} else {
-											shieldHalo.setVisible(false);
-										}
-										/*if (player.getPlayerSpeed() > maxSpeed) {
-											maxSpeed = (int) player.getPlayerSpeed();
-										}*/
-										distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
-										if (firstFall) {
-											oldDistanceToFloor = distanceToFloor;
-										}
-										firstFall = false;
-										altimeterText.setText("Meters to go: " + distanceToFloor);
-										if (player.getFallVelocity() < 0) {
-											fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
-										}
-										if (distanceToFloor < 1500 && distanceToFloor > 1000 && !openParachute) {
-											openButton.setVisible(true);
-											gameHud.registerTouchArea(openButton);
-										} else {
-											openButton.setVisible(false);
-											gameHud.unregisterTouchArea(openButton);
-										}
-										if (openParachute) {
-											parachute.setVisible(true);
-											player.openParachute();
-											parachuteFliedMeters = fliedMeters - freeFliedMeters;
-											if (!openParachuteDistanceSaved) {
-												openParachuteDistanceSaved = true;
-												distanceToFloorAtOpenParachute = distanceToFloor;
-												meterCounterForReduceSpeed = distanceToFloor;
-											}
-											if (distanceToFloor == meterCounterForReduceSpeed - 100) {
-												meterCounterForReduceSpeed -= 100;
-												player.reduceParachuteSpeed();
-											}
-										} else {
-											distanceToFloorAtOpenParachute = 0;
-											freeFliedMeters = fliedMeters;
-										}
+									public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+										shield = true;											
+									}
+									
+									@Override
+									public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
+										shield = false;
+										
+									}
+								}));
+							}
+						};
+					};
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE)) {
+					//n = rand.nextInt(max - min + 1) + min;
+					Random rand = new Random();
+					int randX = rand.nextInt(441) - 220;
+					int randY = rand.nextInt(5001) - 2500;
+					levelObject = new Sprite(x + randX, y + randY, resourcesManager.upperImpulse_region, vbom) {
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
+								greenArrow.setPosition(this.getX(), 75);
+							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+								greenArrow.setPosition(1000, 0);
+							}
+							if (player.collidesWith(this)) {
+								upperImpulseCounter++;
+								player.upperImpulse();
+								destroySprite(this);
+							}
+						};
+					};
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITY)) {
+					Random rand = new Random();
+					int randX = rand.nextInt(441) - 220;
+					int randY = rand.nextInt(5001) - 2500;
+					levelObject = new Sprite(x + randX, y + randY, resourcesManager.antiGravity_region, vbom) {
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
+								greenArrow.setPosition(this.getX(), 75);
+							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+								greenArrow.setPosition(1000, 0);
+							}
+							if (player.collidesWith(this)) {
+								antigravityCounter++;
+								destroySprite(this);
+								player.registerEntityModifier(new DelayModifier(ANTIGRAVITY_DURATION, new IEntityModifierListener() {
+									
+									@Override
+									public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+										physicsWorld.setGravity(new Vector2(0, 10));										
+									}
+									
+									@Override
+									public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
+										physicsWorld.setGravity(new Vector2(0, -3));											
+									}
+								}));
+																	
+							}
+						};
+					};
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SLOW)) {
+					Random rand = new Random();
+					int randX = rand.nextInt(441) - 220;
+					int randY = rand.nextInt(5001) - 2500;
+					levelObject = new Sprite(x + randX, y + randY, resourcesManager.slow_region, vbom) {
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
+								greenArrow.setPosition(this.getX(), 75);
+							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+								greenArrow.setPosition(1000, 0);
+							}
+							if (player.collidesWith(this)) {
+								slowCounter++;
+								destroySprite(this);
+								player.slowDownPlayer();
+							}
+						};
+					};
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
+					//n = rand.nextInt(max - min + 1) + min;
+					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
+					explosion.setVisible(false);
+					helicopter = new Helicopter(x, y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+								helicopterRedArrow.setPosition(this.getX(), 75);
+							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+								helicopterRedArrow.setPosition(1000, 0);
+							}
+							if ((player.getY() - this.getY()) < 500) {
+								this.startMoving();
+							}
+							if (player.collidesWith(this)) {
+								if (shield) {
+									this.setVisible(false);
+									explosion.setPosition(this.getX(),this.getY());
+									explosion.setVisible(true);
+									final long[] EXPLOSION_ANIMATE = new long[] {75, 75, 75, 75, 75, 100};
+									explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
+									this.setIgnoreUpdate(true);
+									physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
+								}									
+							} 
+						};
+					};
+					GameScene.this.attachChild(explosion);
+					levelObject = helicopter;
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER)) {
+					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
+					explosion.setVisible(false);
+					leftHelicopter = new LeftHelicopter(x, y, vbom, camera, physicsWorld, resourcesManager.leftHelicopter_region.deepCopy()) {
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+								leftHelicopterRedArrow.setPosition(this.getX(), 75);
+							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+								leftHelicopterRedArrow.setPosition(1000, 0);
+							}
+							if ((player.getY() - this.getY()) < 500) {
+								this.startMoving();
+							}
+							if (player.collidesWith(this)) {
+								if (shield) {
+									this.setVisible(false);
+									explosion.setPosition(this.getX(),this.getY());
+									explosion.setVisible(true);
+									final long[] EXPLOSION_ANIMATE = new long[] {75, 75, 75, 75, 75, 100};
+									explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
+									this.setIgnoreUpdate(true);
+									physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
+								}								
+							}
+						};
+					};
+					GameScene.this.attachChild(explosion);
+					levelObject = leftHelicopter;
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
+					bird = new Bird(x, y, vbom, camera, physicsWorld, resourcesManager.bird_region.deepCopy()) {
+						
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+								birdRedArrow.setPosition(this.getX(), 75);
+							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+								birdRedArrow.setPosition(1000, 0);
+							}
+							if ((player.getY() - this.getY()) < 400) {
+								this.startMoving();
+							}
+							if (player.collidesWith(this)) {
+								if (shield) {
+									this.setVisible(false);
+									this.setIgnoreUpdate(true);
+									physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
+								}								
+							}
+						};
+					};
+					levelObject = bird;
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_BIRD)) {
+					leftBird = new LeftBird(x, y, vbom, camera, physicsWorld, resourcesManager.left_bird_region.deepCopy()) {
+						
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+								birdRedArrow.setPosition(this.getX(), 75);
+							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+								birdRedArrow.setPosition(1000, 0);
+							}
+							if ((player.getY() - this.getY()) < 400) {
+								this.startMoving();
+							}
+							if (player.collidesWith(this)) {
+								if (shield) {
+									this.setVisible(false);
+									this.setIgnoreUpdate(true);
+									physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
+								}								
+							}
+						};
+					};
+					levelObject = leftBird;
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON)) {
+					basket = new Sprite(97, -30, resourcesManager.balloon_basket_region, vbom);
+					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
+					explosion.setVisible(false);
+					Random rand = new Random();
+					int randX = rand.nextInt(441) - 220;
+					balloon = new Balloon(x + randX, y, vbom, camera, physicsWorld, resourcesManager.balloon_region.deepCopy()) {
+						
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if ((player.getY() - this.getY()) < 1500) {
+								this.startMoving();
+							}
+							if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+								balloonRedArrow.setPosition(this.getX(), 75);
+							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
+								balloonRedArrow.setPosition(1000, 0);
+							}
+							if (player.collidesWith(this)) {
+								if (shield) {
+									this.setVisible(false);
+									explosion.setPosition(this.getX(),this.getY());
+									explosion.setVisible(true);
+									final long[] EXPLOSION_ANIMATE = new long[] {75, 75, 75, 75, 75, 100};
+									explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
+									this.setIgnoreUpdate(true);
+									physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
+								}
+							}
+						};
+					};
+					GameScene.this.attachChild(explosion);
+					balloon.attachChild(basket);
+					levelObject = balloon;
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
+					parachute = new Sprite(18, 110, ResourcesManager.getInstance().parachute_region, vbom);
+					shieldHalo = new Sprite(20, 50, resourcesManager.shield_region, vbom);
+					parachute.setVisible(false);
+					shieldHalo.setVisible(false);
+					player = new Player(x, y, vbom, camera, physicsWorld) {
+						
+						@Override
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							engine.runOnUpdateThread(new Runnable() {
+								
+								@Override
+								public void run() {
+									if (!startMoving) {
+										player.stopPlayer();
+										player.setVisible(false);
+									}
+									if (shield) {
+										shieldHalo.setVisible(true);
+										shieldHalo.setPosition(20, 75);
+									} else {
+										shieldHalo.setVisible(false);
+									}
+									/*if (player.getPlayerSpeed() > maxSpeed) {
+										maxSpeed = (int) player.getPlayerSpeed();
+									}*/
+									distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
+									if (firstFall) {
 										oldDistanceToFloor = distanceToFloor;
 									}
-								});
-							};
-							
-							@Override
-							public void onDie() {
-								engine.runOnUpdateThread(new Runnable() {
-									
-									@Override
-									public void run() {
-										saveScoreDataOnDie();
-										GameScene.this.setIgnoreUpdate(true);
-								        camera.setChaseEntity(null);
-								        availablePause = false;
-								        dead = true;
-								        gameOverWindow.setPosition(camera.getCenterX(), camera.getCenterY());
-										GameScene.this.attachChild(gameOverWindow);
-									    final Sprite retryButton = new Sprite(345, 45, resourcesManager.retry_button_region, vbom){
-									    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-									    		if (pSceneTouchEvent.isActionDown()) {
-									    			gameHud.dispose();
-													gameHud.setVisible(false);
-													detachChild(gameHud);
-													myGarbageCollection();
-													SceneManager.getInstance().loadGameScene(engine, GameScene.this);
-												}
-									    		return true;
-									    	};
-									    };
-									    final Sprite mapButton = new Sprite(220, 45, resourcesManager.map_button_region, vbom){
-									    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-									    		if (pSceneTouchEvent.isActionDown()) {
-									    			gameHud.dispose();
-													gameHud.setVisible(false);
-													detachChild(gameHud);
-													myGarbageCollection();
-													SceneManager.getInstance().loadMapScene(engine, GameScene.this);
-												}
-									    		return true;
-									    	};
-									    };
-									    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
-									    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-									    		if (pSceneTouchEvent.isActionDown()) {
-									    			gameHud.dispose();
-													gameHud.setVisible(false);
-													detachChild(gameHud);
-													myGarbageCollection();
-													SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
-									    		}
-									    		return true;
-									    	};
-									    };
-									    GameScene.this.registerTouchArea(retryButton);
-									    GameScene.this.registerTouchArea(quitButton);
-									    GameScene.this.registerTouchArea(mapButton);
-									    gameOverWindow.attachChild(quitButton);
-									    gameOverWindow.attachChild(retryButton);
-									    gameOverWindow.attachChild(mapButton);
+									firstFall = false;
+									altimeterText.setText("Meters to go: " + distanceToFloor);
+									if (player.getFallVelocity() < 0) {
+										fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
 									}
-								});
-								
-							}
-							
-						};
-						player.attachChild(parachute);
-						player.attachChild(shieldHalo);
-						levelObject = player;
-					} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM)) {
-						levelObject = new Sprite(x, y, resourcesManager.landing_platfom_region, vbom) {
-							protected void onManagedUpdate(float pSecondsElapsed) {
-								super.onManagedUpdate(pSecondsElapsed);
-								if (player.collidesWith(this)) {
-								engine.runOnUpdateThread(new Runnable() {
-									@Override
-									public void run() {
-										if (distanceToFloorAtOpenParachute >= 1000) {
-											loadCounters();
-											loadedCountersBefore = true;
-											saveScoreData();
-											loadCounters();
-											availablePause = false;
-											displayLevelCompleted();
-										}
-										if (distanceToFloorAtOpenParachute < 1000){
-											player.killPlayer();
-										}
-										if (!openParachute) {
-											player.killPlayer();
-										}
+									if (distanceToFloor < 1500 && distanceToFloor > 1000 && !openParachute) {
+										openButton.setVisible(true);
+										gameHud.registerTouchArea(openButton);
+									} else {
+										openButton.setVisible(false);
+										gameHud.unregisterTouchArea(openButton);
 									}
-								});
+									if (openParachute) {
+										parachute.setVisible(true);
+										player.openParachute();
+										parachuteFliedMeters = fliedMeters - freeFliedMeters;
+										if (!openParachuteDistanceSaved) {
+											openParachuteDistanceSaved = true;
+											distanceToFloorAtOpenParachute = distanceToFloor;
+											meterCounterForReduceSpeed = distanceToFloor;
+										}
+										if (distanceToFloor == meterCounterForReduceSpeed - 100) {
+											meterCounterForReduceSpeed -= 100;
+											player.reduceParachuteSpeed();
+										}
+									} else {
+										distanceToFloorAtOpenParachute = 0;
+										freeFliedMeters = fliedMeters;
+									}
+									oldDistanceToFloor = distanceToFloor;
 								}
-							};
+							});
 						};
-					} else {
-						throw new IllegalArgumentException();
-					}
-					levelObject.setCullingEnabled(true);				
-					return levelObject;
+						
+						@Override
+						public void onDie() {
+							engine.runOnUpdateThread(new Runnable() {
+								
+								@Override
+								public void run() {
+									saveScoreDataOnDie();
+									GameScene.this.setIgnoreUpdate(true);
+							        camera.setChaseEntity(null);
+							        availablePause = false;
+							        dead = true;
+							        gameOverWindow.setPosition(camera.getCenterX(), camera.getCenterY());
+									GameScene.this.attachChild(gameOverWindow);
+								    final Sprite retryButton = new Sprite(345, 45, resourcesManager.retry_button_region, vbom){
+								    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+								    		if (pSceneTouchEvent.isActionDown()) {
+								    			gameHud.dispose();
+												gameHud.setVisible(false);
+												detachChild(gameHud);
+												myGarbageCollection();
+												SceneManager.getInstance().loadGameScene(engine, GameScene.this);
+											}
+								    		return true;
+								    	};
+								    };
+								    final Sprite mapButton = new Sprite(220, 45, resourcesManager.map_button_region, vbom){
+								    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+								    		if (pSceneTouchEvent.isActionDown()) {
+								    			gameHud.dispose();
+												gameHud.setVisible(false);
+												detachChild(gameHud);
+												myGarbageCollection();
+												SceneManager.getInstance().loadMapScene(engine, GameScene.this);
+											}
+								    		return true;
+								    	};
+								    };
+								    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
+								    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+								    		if (pSceneTouchEvent.isActionDown()) {
+								    			gameHud.dispose();
+												gameHud.setVisible(false);
+												detachChild(gameHud);
+												myGarbageCollection();
+												SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
+								    		}
+								    		return true;
+								    	};
+								    };
+								    GameScene.this.registerTouchArea(retryButton);
+								    GameScene.this.registerTouchArea(quitButton);
+								    GameScene.this.registerTouchArea(mapButton);
+								    gameOverWindow.attachChild(quitButton);
+								    gameOverWindow.attachChild(retryButton);
+								    gameOverWindow.attachChild(mapButton);
+								}
+							});
+							
+						}
+						
+					};
+					player.attachChild(parachute);
+					player.attachChild(shieldHalo);
+					levelObject = player;
+				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM)) {
+					levelObject = new Sprite(x, y, resourcesManager.landing_platfom_region, vbom) {
+						protected void onManagedUpdate(float pSecondsElapsed) {
+							super.onManagedUpdate(pSecondsElapsed);
+							if (player.collidesWith(this)) {
+							engine.runOnUpdateThread(new Runnable() {
+								@Override
+								public void run() {
+									if (distanceToFloorAtOpenParachute >= 1000) {
+										loadCounters();
+										loadedCountersBefore = true;
+										saveScoreData();
+										loadCounters();
+										availablePause = false;
+										displayLevelCompleted();
+									}
+									
+									//Cambiar esto sino el personaje traspasa la base
+									if (distanceToFloorAtOpenParachute < 1000){
+										player.killPlayer();
+									}
+									if (!openParachute) {
+										player.killPlayer();
+									}
+								}
+							});
+							}
+						};
+					};
+				} else {
+					throw new IllegalArgumentException();
 				}
-			});
-			levelLoader.loadLevelFromAsset(activity.getAssets(), "level/" + level + ".xml");
-		}
+				levelObject.setCullingEnabled(true);				
+				return levelObject;
+			}
+		});
+		levelLoader.loadLevelFromAsset(activity.getAssets(), "level/" + level + ".xml");
+	}
 	
 	private ContactListener contactListener() {
 		ContactListener contactListener = new ContactListener() {
@@ -988,14 +989,27 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
-								physicsWorld.destroyBody(x1.getBody());	
+								x1.getBody().setActive(false);
 							}
 						});
 					} else {
 						player.killPlayer();
 						setInactiveBody(x1.getBody());
 					}
-					
+				}
+				
+				if (x1.getBody().getUserData().equals("player") && x2.getBody().getUserData().equals("bird")) {
+					if (shield) {
+						engine.runOnUpdateThread(new Runnable() {
+							@Override
+							public void run() {
+								x2.getBody().setActive(false);
+							}
+						});
+					} else {
+						player.killPlayer();
+						setInactiveBody(x2.getBody());
+					}
 				}
 				
 				if (x1.getBody().getUserData().equals("leftBird") && x2.getBody().getUserData().equals("player")) {
@@ -1003,14 +1017,27 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
-								physicsWorld.destroyBody(x1.getBody());	
+								x1.getBody().setActive(false);
 							}
 						});
 					} else {
 						player.killPlayer();
 						setInactiveBody(x1.getBody());
 					}
-					
+				}
+				
+				if (x1.getBody().getUserData().equals("player") && x2.getBody().getUserData().equals("leftBird")) {
+					if (shield) {
+						engine.runOnUpdateThread(new Runnable() {
+							@Override
+							public void run() {
+								x2.getBody().setActive(false);
+							}
+						});
+					} else {
+						player.killPlayer();
+						setInactiveBody(x2.getBody());
+					}
 				}
 				
 				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player")) {
@@ -1018,14 +1045,27 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
-								physicsWorld.destroyBody(x1.getBody());	
+								x1.getBody().setActive(false);
 							}
 						});
 					} else {
 						player.killPlayer();
 						setInactiveBody(x1.getBody());
 					}
-					
+				}
+				
+				if (x1.getBody().getUserData().equals("player") && x2.getBody().getUserData().equals("helicopter")) {
+					if (shield) {
+						engine.runOnUpdateThread(new Runnable() {
+							@Override
+							public void run() {
+								x2.getBody().setActive(false);
+							}
+						});
+					} else {
+						player.killPlayer();
+						setInactiveBody(x2.getBody());
+					}
 				}
 				
 				if (x1.getBody().getUserData().equals("leftHelicopter") && x2.getBody().getUserData().equals("player")) {
@@ -1033,14 +1073,27 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
-								physicsWorld.destroyBody(x1.getBody());	
+								x1.getBody().setActive(false);
 							}
 						});
 					} else {
 						player.killPlayer();
 						setInactiveBody(x1.getBody());
 					}
-					
+				}
+				
+				if (x1.getBody().getUserData().equals("player") && x2.getBody().getUserData().equals("leftHelicopter")) {
+					if (shield) {
+						engine.runOnUpdateThread(new Runnable() {
+							@Override
+							public void run() {
+								x2.getBody().setActive(false);
+							}
+						});
+					} else {
+						player.killPlayer();
+						setInactiveBody(x2.getBody());
+					}
 				}
 				
 				if (x1.getBody().getUserData().equals("balloon") && x2.getBody().getUserData().equals("player")) {
@@ -1048,12 +1101,26 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
-								physicsWorld.destroyBody(x1.getBody());															
+								x1.getBody().setActive(false);
 							}
 						});
 					} else {
 						player.killPlayer();
 						setInactiveBody(x1.getBody());
+					}
+				}
+				
+				if (x1.getBody().getUserData().equals("player") && x2.getBody().getUserData().equals("balloon")) {
+					if (shield) {
+						engine.runOnUpdateThread(new Runnable() {
+							@Override
+							public void run() {
+								x2.getBody().setActive(false);
+							}
+						});
+					} else {
+						player.killPlayer();
+						setInactiveBody(x2.getBody());
 					}
 				}
 				
@@ -1082,7 +1149,7 @@ public class GameScene extends BaseScene{
 		});
 	}
 	
-	private void destroyBodyWithSprite(final Sprite sp) {
+	/*private void destroyBodyWithSprite(final Sprite sp) {
 		engine.runOnUpdateThread(new Runnable() {
 			
 			@Override
@@ -1096,7 +1163,7 @@ public class GameScene extends BaseScene{
 				GameScene.this.detachChild(sp);
 			}
 		});
-	}
+	}*/
 	
 	private void destroySprite(final Sprite sp) {
 		engine.runOnUpdateThread(new Runnable() {
@@ -1242,6 +1309,7 @@ public class GameScene extends BaseScene{
 				}				
 			}
 		});
+		
 		
 	}
 	

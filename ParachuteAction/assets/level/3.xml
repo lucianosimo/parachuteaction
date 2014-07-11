@@ -133,8 +133,9 @@
     <entity x="250" y="50900" type="coin"/>
     <entity x="250" y="50800" type="coin"/>
     <entity x="250" y="50700" type="coin"/>
-    <entity x="250" y="50600" type="coin"/>    
+    <entity x="250" y="50600" type="coin"/>
     
+    <entity x="480" y="48000" type="helicopter"/>    
     <entity x="0" y="46000" type="leftHelicopter"/>
     <entity x="480" y="46000" type="helicopter"/>
     
