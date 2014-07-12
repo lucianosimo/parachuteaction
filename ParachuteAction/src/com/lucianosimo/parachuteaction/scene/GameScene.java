@@ -101,6 +101,7 @@ public class GameScene extends BaseScene{
 	//Windows
 	private Sprite gameOverWindow;
 	private Sprite levelCompleteWindow;
+	private Sprite helpWindow;
 	private Sprite pauseWindow;
 	
 	//Achievements
@@ -198,6 +199,15 @@ public class GameScene extends BaseScene{
 		createHud();
 		createPhysics();
 		loadLevel(level);
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		int games = sharedPreferences.getInt("games", 0);
+		if (games == 0) {
+			Editor editor = sharedPreferences.edit();
+			games++;
+			editor.putInt("games", games);
+			editor.commit();
+			displayHelpWindow();			
+		}		
 		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
         //GameScene.this.attachChild(debug);
 	}
@@ -212,6 +222,19 @@ public class GameScene extends BaseScene{
 		gameOverWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.game_over_window_region, vbom);
 		levelCompleteWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.level_complete_window_region, vbom);
 		pauseWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.pause_window_region, vbom);
+		helpWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.help_window_region, vbom) {
+        	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+        		if (pSceneTouchEvent.isActionDown()) {
+        			gameHud.setVisible(true);
+	    			availablePause = true;
+	    			GameScene.this.detachChild(this);
+	    			GameScene.this.setIgnoreUpdate(false);
+	    			GameScene.this.unregisterTouchArea(this);
+	    			camera.setChaseEntity(player);
+        		}
+        		return true;
+        	};
+        };
 	}
 	
 	private void createHud() {
@@ -819,9 +842,6 @@ public class GameScene extends BaseScene{
 									} else {
 										shieldHalo.setVisible(false);
 									}
-									/*if (player.getPlayerSpeed() > maxSpeed) {
-										maxSpeed = (int) player.getPlayerSpeed();
-									}*/
 									distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
 									if (firstFall) {
 										oldDistanceToFloor = distanceToFloor;
@@ -942,10 +962,7 @@ public class GameScene extends BaseScene{
 									}
 									
 									//Cambiar esto sino el personaje traspasa la base
-									if (distanceToFloorAtOpenParachute < 1000){
-										player.killPlayer();
-									}
-									if (!openParachute) {
+									if (distanceToFloorAtOpenParachute < 1000 || !openParachute){
 										player.killPlayer();
 									}
 								}
@@ -1311,6 +1328,18 @@ public class GameScene extends BaseScene{
 		});
 		
 		
+	}
+	
+	private void displayHelpWindow() {
+		GameScene.this.setIgnoreUpdate(true);
+		camera.setChaseEntity(null);
+        availablePause = false;
+		gameHud.setVisible(false);
+		helpWindow.setPosition(camera.getCenterX(), camera.getCenterY());
+		GameScene.this.attachChild(helpWindow);
+        GameScene.this.registerTouchArea(helpWindow);
+        //GameScene.this.attachChild(helpWindow);
+        //helpWindow.setPosition(camera.getCenterX(), camera.getCenterY());
 	}
 	
 	private void displayLevelCompleted() {
