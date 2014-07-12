@@ -44,6 +44,7 @@ public class ResourcesManager {
 	public ITextureRegion menu_cloud_region;
 	public ITextureRegion menu_far_cloud_region;
 	public ITextureRegion menu_title_region;
+	public ITextureRegion rate_us_region;
 	
 	private BuildableBitmapTextureAtlas menuTextureAtlas;
 	private BuildableBitmapTextureAtlas backgroundMenuTextureAtlas;
@@ -256,6 +257,7 @@ public class ResourcesManager {
 		menu_cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "cloud.png");
 		menu_far_cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "farCloud.png");
 		menu_title_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "title.png");
+		rate_us_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "rateus.png");
 		
 		try {
 			this.menuTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));

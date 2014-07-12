@@ -200,11 +200,11 @@ public class GameScene extends BaseScene{
 		createPhysics();
 		loadLevel(level);
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-		int games = sharedPreferences.getInt("games", 0);
-		if (games == 0) {
+		int firstGame = sharedPreferences.getInt("firstGame", 0);
+		if (firstGame == 0) {
 			Editor editor = sharedPreferences.edit();
-			games++;
-			editor.putInt("games", games);
+			firstGame++;
+			editor.putInt("firstGame", firstGame);
 			editor.commit();
 			displayHelpWindow();			
 		}		

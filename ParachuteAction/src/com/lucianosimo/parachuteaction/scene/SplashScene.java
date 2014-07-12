@@ -9,6 +9,10 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.adt.color.Color;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
+
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
 
@@ -18,6 +22,13 @@ public class SplashScene extends BaseScene{
 	
 	@Override
 	public void createScene() {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		int played = sharedPreferences.getInt("played", 0);
+		Editor editor = sharedPreferences.edit();
+		played++;
+		editor.putInt("played", played);
+		editor.commit();		
+		
 		setBackground(new Background(Color.WHITE));
 		splash = new Sprite(0, 0, resourcesManager.splash_region, vbom) {
 			@Override

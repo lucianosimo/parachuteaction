@@ -12,6 +12,14 @@ import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.net.Uri;
+import android.preference.PreferenceManager;
+
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
@@ -22,6 +30,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	private final int MENU_PLAY = 0;
 	private final int MENU_STATISTICS = 1;
 	private final int MENU_SHOP = 2;
+	private final int MENU_RATE_US = 3;
 	
 	private static final int LEFT_MARGIN = -240;
 	private static final int RIGHT_MARGIN = 240;
@@ -30,6 +39,15 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 
 	@Override
 	public void createScene() {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		int played = sharedPreferences.getInt("played", 0);
+		//Rated: 0 = no, 1 = yes
+		int rated = sharedPreferences.getInt("rated", 0);		
+		if (rated == 0) {
+			if (played == 2 || played == 5) {
+				displayRateUsWindow();
+			}
+		}
 		createBackground();
 		createMenuChildScene();
 	}
@@ -94,6 +112,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourcesManager.play_region, vbom), 1.2f, 1);
 		final IMenuItem statisticsMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_STATISTICS, resourcesManager.statistics_region, vbom), 1.2f, 1);
 		final IMenuItem shopMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_SHOP, resourcesManager.shop_region, vbom), 1.2f, 1);
+		final IMenuItem rateUsItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_RATE_US, resourcesManager.rate_us_region, vbom), 1.2f, 1);
 
 		menuChildScene.attachChild(farCloud);
 		menuChildScene.attachChild(cloud);		
@@ -103,6 +122,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		menuChildScene.addMenuItem(playMenuItem);
 		menuChildScene.addMenuItem(statisticsMenuItem);
 		menuChildScene.addMenuItem(shopMenuItem);
+		menuChildScene.addMenuItem(rateUsItem);
 
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
@@ -110,6 +130,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		playMenuItem.setPosition(0, 25);
 		statisticsMenuItem.setPosition(-120, -200);
 		shopMenuItem.setPosition(120, -200);
+		rateUsItem.setPosition(0, -325);
 		
 		cloud.setPosition(100, 150);
 		farCloud.setPosition(-100, -150);
@@ -117,6 +138,48 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		
 		menuChildScene.setOnMenuItemClickListener(this);
 		setChildScene(menuChildScene);
+	}
+	
+	private void displayRateUsWindow() {
+		MainMenuScene.this.activity.runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				new AlertDialog.Builder(MainMenuScene.this.activity)
+				.setMessage("Do you want to rate us")
+				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+				    public void onClick(DialogInterface dialog, int whichButton) {
+				    	activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.lucianosimo.parachuteaction")));
+				    	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+						int rated = sharedPreferences.getInt("rated", 0);
+						Editor editor = sharedPreferences.edit();
+						rated = 1;
+						editor.putInt("rated", rated);
+						editor.commit();
+				    }})
+				.setNegativeButton("Never", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+						int rated = sharedPreferences.getInt("rated", 0);
+						Editor editor = sharedPreferences.edit();
+						rated = 1;
+						editor.putInt("rated", rated);
+						editor.commit();						
+					}
+				})
+				.setNeutralButton("Maybe later", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						
+					}
+				})
+				.show();
+			}
+		});
 	}
 	
 
@@ -131,6 +194,9 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 				return true;
 			case MENU_SHOP:
 				SceneManager.getInstance().loadShopScene(engine, this);
+				return true;
+			case MENU_RATE_US:
+				activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.lucianosimo.parachuteaction")));
 				return true;
 			default:
 				return false;
