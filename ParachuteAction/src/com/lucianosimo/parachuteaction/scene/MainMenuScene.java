@@ -44,7 +44,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		//Rated: 0 = no, 1 = yes
 		int rated = sharedPreferences.getInt("rated", 0);		
 		if (rated == 0) {
-			if (played == 2 || played == 5) {
+			if (played == 5 || played == 20 || played == 50) {
 				displayRateUsWindow();
 			}
 		}

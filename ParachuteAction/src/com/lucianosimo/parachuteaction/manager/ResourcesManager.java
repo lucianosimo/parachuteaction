@@ -38,6 +38,7 @@ public class ResourcesManager {
 	
 	//Menu items
 	public ITextureRegion menu_background_region;
+	public ITextureRegion loading_background_region;
 	public ITextureRegion play_region;
 	public ITextureRegion statistics_region;
 	public ITextureRegion shop_region;
@@ -48,7 +49,7 @@ public class ResourcesManager {
 	
 	private BuildableBitmapTextureAtlas menuTextureAtlas;
 	private BuildableBitmapTextureAtlas backgroundMenuTextureAtlas;
-
+	private BuildableBitmapTextureAtlas backgroundLoadingTextureAtlas;
 	//Menu y loading fonts 
 	public Font loadingFont;
 	
@@ -234,6 +235,7 @@ public class ResourcesManager {
 	
 	//Menu methods
 	public void loadMenuResources() {
+		loadLoadingGraphics();
 		loadMenuGraphics();
 		loadMenuAudio();
 		loadMenuFonts();
@@ -243,6 +245,20 @@ public class ResourcesManager {
 		unloadMenuTextures();
 		unloadMenuFonts();
 		unloadMenuAudio();
+	}
+	
+	private void loadLoadingGraphics() {
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/menu/");
+		backgroundLoadingTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		
+		loading_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLoadingTextureAtlas, activity, "loading_background.png");
+		
+		try {
+			this.backgroundLoadingTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.backgroundLoadingTextureAtlas.load();
+		} catch (final TextureAtlasBuilderException e) {
+			org.andengine.util.debug.Debug.e(e);
+		}
 	}
 
 	private void loadMenuGraphics() {

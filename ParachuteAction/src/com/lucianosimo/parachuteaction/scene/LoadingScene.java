@@ -1,8 +1,8 @@
 package com.lucianosimo.parachuteaction.scene;
 
-import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.text.Text;
-import org.andengine.util.adt.color.Color;
+import org.andengine.entity.scene.background.AutoParallaxBackground;
+import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
+import org.andengine.entity.sprite.Sprite;
 
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
@@ -11,10 +11,9 @@ public class LoadingScene extends BaseScene{
 
 	@Override
 	public void createScene() {
-		setBackground(new Background(Color.WHITE));
-		float screenWidth = resourcesManager.camera.getWidth();
-		float screenHeight = resourcesManager.camera.getHeight();
-		attachChild(new Text(screenWidth/2, screenHeight/2, resourcesManager.loadingFont, "Drawing.....", vbom));
+		AutoParallaxBackground background = new AutoParallaxBackground(0, 0, 0, 12);
+		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.loading_background_region, vbom)));
+		setBackground(background);
 	}
 
 	@Override
