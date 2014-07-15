@@ -29,7 +29,7 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 	private final int MAP_FOREST = 3;
 	private final int MAP_DESERT = 4;
 	private final int MAP_MOUNTAIN = 5;
-	private final int MAP_western = 6;
+	private final int MAP_WESTERN = 6;
 	private final int MAP_RANDOM = 7;
 	
 	private static int level;
@@ -41,6 +41,7 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 	
 	@Override
 	public void createScene() {
+		activity.showAd();
 		createBackground();
 		createMenuChildScene();
 	}
@@ -89,7 +90,7 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 		final IMenuItem forestButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_FOREST, resourcesManager.map_forest_region, vbom), 1.2f, 1);
 		final IMenuItem desertButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_DESERT, resourcesManager.map_desert_region, vbom), 1.2f, 1);
 		final IMenuItem mountainButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_MOUNTAIN, resourcesManager.map_mountain_region, vbom), 1.2f, 1);
-		final IMenuItem westernButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_western, resourcesManager.map_western_region, vbom), 1.2f, 1);
+		final IMenuItem westernButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_WESTERN, resourcesManager.map_western_region, vbom), 1.2f, 1);
 		final IMenuItem randomButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_RANDOM, resourcesManager.map_random_button_region, vbom), 1.2f, 1);
 				
 		menuChildScene.addMenuItem(menuButtonItem);
@@ -171,8 +172,8 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 				level = MAP_MOUNTAIN;
 				SceneManager.getInstance().loadGameScene(engine, this);
 				return true;
-			case MAP_western:
-				level = MAP_western;
+			case MAP_WESTERN:
+				level = MAP_WESTERN;
 				SceneManager.getInstance().loadGameScene(engine, this);
 				return true;
 			case MAP_RANDOM:

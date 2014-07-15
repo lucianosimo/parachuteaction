@@ -18,6 +18,7 @@ import org.andengine.ui.activity.BaseGameActivity;
 
 import android.view.KeyEvent;
 
+import com.chartboost.sdk.Chartboost;
 import com.lucianosimo.parachuteaction.manager.ResourcesManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
 
@@ -26,9 +27,16 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	private BoundCamera camera;
 	public static float mGravityX = 0;
 	private final static float SPLASH_DURATION = 5f;
+	private Chartboost cb;
 	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
+		
+		// Configure Chartboost
+		this.cb = Chartboost.sharedChartboost();
+		String appId = "53c57c8289b0bb3697c25124";
+		String appSignature = "3f0a28521b32648044a33f149570570df81c89c6";
+		this.cb.onCreate(this, appId, appSignature, null);
 		
 		camera = new BoundCamera(0, 0, 480, 854);
 		EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new FillResolutionPolicy(), this.camera);
@@ -83,6 +91,7 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	
 	@Override
 	protected void onDestroy() {
+		this.cb.onDestroy(this); 
 		super.onDestroy();
 		System.exit(0);
 	}
@@ -100,7 +109,41 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {
 		
 	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+        this.cb.onStart(this);
+        //this.cb.startSession();
+        //this.cb.showInterstitial();
+        this.cb.cacheInterstitial();
+	}
+	
+	@Override
+	public void onBackPressed() {
+	    if (this.cb.onBackPressed())
+	    	return;
+	    else
+	    	super.onBackPressed();
+	}
+	
+	public void showAd() {
+		/*if (this.cb.hasCachedInterstitial("map")) {
+			Log.e("parachute", "hasCached: " + this.cb.hasCachedInterstitial());
+			this.cb.showInterstitial();
+		} else {
+			Log.e("parachute", "no cached");
+			this.cb.cacheInterstitial("map");
+			this.cb.showInterstitial("map");
+		}*/
+		this.cb.showInterstitial();
+	}
 
+	@Override
+	protected void onStop() { 
+	    super.onStop();
+	    this.cb.onStop(this); 
+	}
 
 	@Override
 	public void onAccelerationChanged(AccelerationData pAccelerationData) {
