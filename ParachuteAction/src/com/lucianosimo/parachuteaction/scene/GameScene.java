@@ -819,7 +819,7 @@ public class GameScene extends BaseScene{
 					balloon.attachChild(basket);
 					levelObject = balloon;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
-					parachute = new Sprite(18, 110, ResourcesManager.getInstance().parachute_region, vbom);
+					parachute = new Sprite(27, 140, ResourcesManager.getInstance().parachute_region, vbom);
 					shieldHalo = new Sprite(20, 50, resourcesManager.shield_region, vbom);
 					parachute.setVisible(false);
 					shieldHalo.setVisible(false);
@@ -838,7 +838,7 @@ public class GameScene extends BaseScene{
 									}
 									if (shield) {
 										shieldHalo.setVisible(true);
-										shieldHalo.setPosition(20, 75);
+										shieldHalo.setPosition(20, 50);
 									} else {
 										shieldHalo.setVisible(false);
 									}
