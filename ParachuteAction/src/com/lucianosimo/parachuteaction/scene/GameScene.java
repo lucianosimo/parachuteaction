@@ -162,7 +162,7 @@ public class GameScene extends BaseScene{
 	private static final int CLOSER_CLOUD_SPEED = -70;
 	private static final int FAR_CLOUD_SPEED = -15;
 	private static final int CLOUD_SPEED = -40;
-	private static final int PLANE_SPEED = -75;
+	private static final int PLANE_SPEED = -85;
 	private static final int SHIELD_DURATION = 10;
 	private static final int ANTIGRAVITY_DURATION = 5;
 	private static final int COINS_VALUE = 100;
@@ -556,6 +556,7 @@ public class GameScene extends BaseScene{
 								if (!startMoving) {
 									startMoving = true;
 									player.setVisible(true);
+									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, -5));
 									gameHud.detachChild(levelStartText);
 								}									
 							}
@@ -835,6 +836,7 @@ public class GameScene extends BaseScene{
 									if (!startMoving) {
 										player.stopPlayer();
 										player.setVisible(false);
+										player.setPosition(x,y);
 									}
 									if (shield) {
 										shieldHalo.setVisible(true);
@@ -983,12 +985,15 @@ public class GameScene extends BaseScene{
 	private ContactListener contactListener() {
 		ContactListener contactListener = new ContactListener() {
 			
+			float playerSpeed;
+			
 			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {
 			}
 			
 			@Override
 			public void postSolve(Contact contact, ContactImpulse impulse) {
+				player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, playerSpeed));
 			}
 			
 			@Override
@@ -1006,6 +1011,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								playerSpeed = x2.getBody().getLinearVelocity().y;
 								x1.getBody().setActive(false);
 							}
 						});
@@ -1020,6 +1026,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								playerSpeed = x1.getBody().getLinearVelocity().y;
 								x2.getBody().setActive(false);
 							}
 						});
@@ -1034,6 +1041,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								playerSpeed = x2.getBody().getLinearVelocity().y;
 								x1.getBody().setActive(false);
 							}
 						});
@@ -1048,6 +1056,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								playerSpeed = x1.getBody().getLinearVelocity().y;
 								x2.getBody().setActive(false);
 							}
 						});
@@ -1062,6 +1071,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								playerSpeed = x2.getBody().getLinearVelocity().y;
 								x1.getBody().setActive(false);
 							}
 						});
@@ -1076,6 +1086,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								playerSpeed = x1.getBody().getLinearVelocity().y;
 								x2.getBody().setActive(false);
 							}
 						});
@@ -1090,6 +1101,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								playerSpeed = x2.getBody().getLinearVelocity().y;
 								x1.getBody().setActive(false);
 							}
 						});
@@ -1104,6 +1116,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								playerSpeed = x1.getBody().getLinearVelocity().y;
 								x2.getBody().setActive(false);
 							}
 						});
@@ -1118,6 +1131,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								playerSpeed = x2.getBody().getLinearVelocity().y;
 								x1.getBody().setActive(false);
 							}
 						});
@@ -1132,6 +1146,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								playerSpeed = x1.getBody().getLinearVelocity().y;
 								x2.getBody().setActive(false);
 							}
 						});

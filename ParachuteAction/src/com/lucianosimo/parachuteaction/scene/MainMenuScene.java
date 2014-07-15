@@ -197,6 +197,12 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 				return true;
 			case MENU_RATE_US:
 				activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.lucianosimo.parachuteaction")));
+				SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+				int rated = sharedPreferences.getInt("rated", 0);
+				Editor editor = sharedPreferences.edit();
+				rated = 1;
+				editor.putInt("rated", rated);
+				editor.commit();
 				return true;
 			default:
 				return false;
