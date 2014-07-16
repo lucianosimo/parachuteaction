@@ -250,7 +250,7 @@
 
 	<entity x="240" y="1625" type="balloon"/>
 	
-    <entity x="240" y="64100" type="player"/>
+    <entity x="240" y="64050" type="player"/>
     <entity x="1000" y="64000" type="plane"/>
     
     <entity x="240" y="64000" type="closerCloud"/>
