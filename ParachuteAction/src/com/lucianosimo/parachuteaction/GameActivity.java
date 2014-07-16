@@ -16,8 +16,12 @@ import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.ui.activity.BaseGameActivity;
 
+import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 
+import com.dscxxijmtxalts.AdController;
+import com.dscxxijmtxalts.AdListener;
 import com.lucianosimo.parachuteaction.manager.ResourcesManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
 
@@ -25,8 +29,41 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 
 	private BoundCamera camera;
 	public static float mGravityX = 0;
-	private final static float SPLASH_DURATION = 5f;
+	private final static float SPLASH_DURATION = 7f;
 
+	private AdController ad;
+	private boolean toCache = false;
+	
+	@Override
+	protected void onCreate(Bundle pSavedInstanceState) {
+		super.onCreate(pSavedInstanceState);
+		toCache = true;
+		ad = new AdController(this, "102600234", new AdListener() {
+			
+			public void onAdLoaded() {}
+			
+			public void onAdFailed() {
+				if(!toCache) {
+					finish();
+				}
+			}
+			
+			public void onAdClosed() {}
+			
+			public void onAdClicked() {}
+			
+			public void onAdCached() {}
+		});
+		ad.loadAdToCache();
+	}
+	
+	public void showAd() {
+		if(ad != null) {			
+			Log.e("parachute", "displayed");
+			toCache = false;
+			ad.loadAd();
+		}
+	}
 	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -83,6 +120,7 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	
 	@Override
 	protected void onDestroy() {
+		ad.destroyAd();
 		super.onDestroy();
 		System.exit(0);
 	}

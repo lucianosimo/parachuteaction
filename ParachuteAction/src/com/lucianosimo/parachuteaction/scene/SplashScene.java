@@ -45,7 +45,7 @@ public class SplashScene extends BaseScene{
 		fade.setAlpha(1.0f);
 		attachChild(splash);
 		attachChild(fade);
-		fade.registerEntityModifier(new AlphaModifier(1.5f, 1.0f, 0.0f));
+		fade.registerEntityModifier(new AlphaModifier(2f, 1.0f, 0.0f));
 		fade.setAlpha(0.0f);
 		engine.registerUpdateHandler(new IUpdateHandler() {
 			private int updates = 0;
@@ -58,8 +58,8 @@ public class SplashScene extends BaseScene{
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
 				updates++;
-				if (updates > 150) {
-					fade.registerEntityModifier(new AlphaModifier(1.5f, 0.0f, 1.0f));
+				if (updates > 225) {
+					fade.registerEntityModifier(new AlphaModifier(2f, 0.0f, 1.0f));
 				}
 			}
 		});

@@ -13,7 +13,6 @@ import org.andengine.entity.sprite.Sprite;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.lucianosimo.parachuteaction.base.BaseScene;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
@@ -41,6 +40,13 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 	
 	@Override
 	public void createScene() {
+		activity.runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				activity.showAd();
+			}
+		});		
 		createBackground();
 		createMenuChildScene();
 	}
@@ -176,7 +182,6 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 				SceneManager.getInstance().loadGameScene(engine, this);
 				return true;
 			case MAP_RANDOM:
-				Log.e("parachute", "random");
 				//n = rand.nextInt(max - min + 1) + min;
 				Random caseRand = new Random();
 				int caseRandom = caseRand.nextInt(3) + 1;

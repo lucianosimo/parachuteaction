@@ -174,7 +174,12 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						
+						SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+						int played = sharedPreferences.getInt("played", 0);
+						Editor editor = sharedPreferences.edit();
+						played++;
+						editor.putInt("played", played);
+						editor.commit();						
 					}
 				})
 				.show();
