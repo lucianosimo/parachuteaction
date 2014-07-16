@@ -32,6 +32,7 @@ import org.xml.sax.Attributes;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -74,6 +75,9 @@ public class GameScene extends BaseScene{
 	private int balloonCounter = 0;
 	private int birdCounter = 0;
 	private int coins = 0;
+	
+	private int coinsCounter = 0;
+	private int randCoinsX = 0;
 
 	//Booleans
 	private boolean firstFall = true;
@@ -84,6 +88,7 @@ public class GameScene extends BaseScene{
 	private boolean availablePause = true;
 	private boolean startMoving = false;
 	private boolean dead = false;
+	private boolean levelCompleteBoolean = false;
 	
 	//Texts variables
 	private Text altimeterText;
@@ -568,7 +573,16 @@ public class GameScene extends BaseScene{
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BACK_LOCATION)) {
 					levelObject = new Sprite(x, y, resourcesManager.back_location_region, vbom);
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_COIN)) {
-					coin = new AnimatedSprite(x, y, resourcesManager.coin_region, vbom) {
+					//n = rand.nextInt(max - min + 1) + min;
+					Random rand = new Random();
+					if (coinsCounter == 0) {
+						randCoinsX = rand.nextInt(441) - 220;
+					}
+					coinsCounter++;
+					if (coinsCounter == 5) {
+						coinsCounter = 0;
+					}
+					coin = new AnimatedSprite(x + randCoinsX, y, resourcesManager.coin_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
 							if (player.collidesWith(this)) {
@@ -577,6 +591,7 @@ public class GameScene extends BaseScene{
 							}
 						};
 					};
+					Log.e("parachute", "coinsCounter " + coinsCounter + " X: " + (x + randCoinsX));
 					final long[] COIN_ANIMATE = new long[] {100, 100, 100, 100};
 					coin.animate(COIN_ANIMATE, 0, 3, true);
 					levelObject = coin;
@@ -1331,7 +1346,7 @@ public class GameScene extends BaseScene{
 				    pauseWindow.attachChild(resumeButton);
 				    pauseWindow.attachChild(mapButton);
 				} else {
-					if (!dead) {
+					if (!dead && !levelCompleteBoolean) {
 						availablePause = true;
 						gameHud.setVisible(true);
 						GameScene.this.detachChild(pauseWindow);
@@ -1359,6 +1374,7 @@ public class GameScene extends BaseScene{
 	
 	private void displayLevelCompleted() {
 		GameScene.this.setIgnoreUpdate(true);
+		levelCompleteBoolean = true;
         camera.setChaseEntity(null);
         availablePause = false;
         levelCompleteWindow.setPosition(camera.getCenterX(), camera.getCenterY());

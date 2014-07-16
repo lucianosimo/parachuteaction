@@ -17,7 +17,6 @@ import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.ui.activity.BaseGameActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 
 import com.dscxxijmtxalts.AdController;
@@ -59,7 +58,6 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	
 	public void showAd() {
 		if(ad != null) {			
-			Log.e("parachute", "displayed");
 			toCache = false;
 			ad.loadAd();
 		}
