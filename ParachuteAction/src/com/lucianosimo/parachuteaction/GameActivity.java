@@ -27,6 +27,7 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	public static float mGravityX = 0;
 	private final static float SPLASH_DURATION = 5f;
 
+	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
 		camera = new BoundCamera(0, 0, 480, 854);
