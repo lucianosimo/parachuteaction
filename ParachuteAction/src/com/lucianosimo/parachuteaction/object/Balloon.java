@@ -35,7 +35,6 @@ public class Balloon extends Sprite{
 			new Vector2(-0.43000f*width, +0.41262f*height),
 		};
 		body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
-		//body = PhysicsFactory.createCircleBody(physicsWorld, this, BodyType.DynamicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
 		body.setFixedRotation(true);
 		body.setUserData("balloon");
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));

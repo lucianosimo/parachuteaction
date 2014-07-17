@@ -80,8 +80,8 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 		
 		//n = rand.nextInt(max - min + 1) + min;
 		Random rand = new Random();
-		int random = rand.nextInt(2) + 1;
-		if (random == 1) {
+		int random = rand.nextInt(6) + 1;
+		if (random < 6) {
 			day = true;
 		} else {
 			day = false;

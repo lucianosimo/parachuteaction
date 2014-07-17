@@ -36,7 +36,6 @@ public class Bird extends AnimatedSprite{
 			new Vector2(-0.52727f*width, +0.02326f*height),
 		};
 		body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
-		//body = PhysicsFactory.createBoxBody(physicsWorld, this, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
 		body.setFixedRotation(true);
 		body.setUserData("bird");
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));

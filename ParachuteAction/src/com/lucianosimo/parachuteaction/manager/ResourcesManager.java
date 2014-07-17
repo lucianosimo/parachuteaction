@@ -273,7 +273,7 @@ public class ResourcesManager {
 
 	private void loadMenuGraphics() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/menu/");
-		menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 500, 500, TextureOptions.BILINEAR);
+		menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 512, 512, TextureOptions.BILINEAR);
 		backgroundMenuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
 		
 		menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundMenuTextureAtlas, activity, "menu_background.png");
@@ -300,9 +300,9 @@ public class ResourcesManager {
 	
 	private void loadMenuFonts() {
 		FontFactory.setAssetBasePath("font/menu/");
-		final ITexture loadingTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		/*final ITexture loadingTexture = new BitmapTextureAtlas(activity.getTextureManager(), 64, 64, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		loadingFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), loadingTexture, activity.getAssets(), "simple.ttf", 35, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		loadingFont.load();
+		loadingFont.load();*/
 	}
 	
 	private void unloadMenuTextures() {
@@ -334,11 +334,11 @@ public class ResourcesManager {
 	private void loadGameGraphics() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/game/");
 		
-		animatedTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1500, 1500, TextureOptions.BILINEAR);
+		animatedTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1150, 1150, TextureOptions.BILINEAR);
 		backgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
-		backgroundLocationTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 1000, TextureOptions.BILINEAR);
-		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 2048, 2048, TextureOptions.BILINEAR);
-		windowsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1500, 1500, TextureOptions.BILINEAR);
+		backgroundLocationTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 500, TextureOptions.BILINEAR);
+		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1200, 1200, TextureOptions.BILINEAR);
+		windowsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1000, 1000, TextureOptions.BILINEAR);
 		
 		//Background texture objects
 		if (MapScene.getDayOrNight()) {
@@ -425,8 +425,8 @@ public class ResourcesManager {
 		MusicFactory.setAssetBasePath("music/");
 		SoundFactory.setAssetBasePath("sound/");
 		try {
-			wind = MusicFactory.createMusicFromAsset(activity.getMusicManager(), activity, "wind.mp3");
-			wind.setLooping(true);
+			//wind = MusicFactory.createMusicFromAsset(activity.getMusicManager(), activity, "wind.mp3");
+			//wind.setLooping(true);
 			plane = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "plane.mp3");
 			bird = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "bird.mp3");
 			chopper = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "chopper.mp3");
@@ -438,7 +438,7 @@ public class ResourcesManager {
 	}
 	
 	public void unloadGameAudio() {
-		wind.stop();
+		//wind.stop();
 		plane.stop();
 		bird.stop();
 		chopper.stop();

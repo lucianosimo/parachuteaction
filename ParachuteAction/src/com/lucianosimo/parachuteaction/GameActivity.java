@@ -29,6 +29,7 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	private BoundCamera camera;
 	public static float mGravityX = 0;
 	private final static float SPLASH_DURATION = 7f;
+	private final static String INTERESTITIAL_ID = "102600234";
 
 	private AdController ad;
 	private boolean toCache = false;
@@ -37,7 +38,7 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	protected void onCreate(Bundle pSavedInstanceState) {
 		super.onCreate(pSavedInstanceState);
 		toCache = true;
-		ad = new AdController(this, "102600234", new AdListener() {
+		ad = new AdController(this, INTERESTITIAL_ID, new AdListener() {
 			
 			public void onAdLoaded() {}
 			
@@ -59,7 +60,7 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	public void showAd() {
 		if(ad != null) {			
 			toCache = false;
-			ad.loadAd();
+			//ad.loadAd();
 		}
 	}
 	

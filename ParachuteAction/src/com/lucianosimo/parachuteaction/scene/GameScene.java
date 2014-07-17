@@ -9,6 +9,7 @@ import org.andengine.engine.handler.physics.PhysicsHandler;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.DelayModifier;
 import org.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.background.ParallaxBackground;
 import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.andengine.entity.sprite.AnimatedSprite;
@@ -57,6 +58,12 @@ public class GameScene extends BaseScene{
 	
 	//Scene indicators
 	private HUD gameHud;
+	
+	//Shared Preferences
+	private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+	
+	//Random
+	//private Random rand = new Random();
 	
 	//Counters
 	private int fliedMeters = 0;
@@ -199,13 +206,18 @@ public class GameScene extends BaseScene{
 		//n = rand.nextInt(max - min + 1) + min;
 		Random rand = new Random();
 		int level = rand.nextInt(4) + 1;
-		resourcesManager.wind.play();
+		//resourcesManager.wind.play();
 		createBackground();
 		createWindows();
 		createHud();
 		createPhysics();
 		loadLevel(level);
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		resourcesManager.plane.play();
+		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
+        //GameScene.this.attachChild(debug);
+	}
+	
+	public void firstGame() {
 		int firstGame = sharedPreferences.getInt("firstGame", 0);
 		if (firstGame == 0) {
 			Editor editor = sharedPreferences.edit();
@@ -214,9 +226,6 @@ public class GameScene extends BaseScene{
 			editor.commit();
 			displayHelpWindow();			
 		}
-		resourcesManager.plane.play();
-		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
-        //GameScene.this.attachChild(debug);
 	}
 	
 	private void createBackground() {
@@ -246,6 +255,7 @@ public class GameScene extends BaseScene{
 	
 	private void createHud() {
 		gameHud = new HUD();
+		Random rand = new Random();
 		
 		altimeterText = new Text(20, 820, resourcesManager.altimeterFont, "Meters to go: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		coinsText = new Text(20, 770, resourcesManager.coinsFont, "Coins: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
@@ -278,53 +288,57 @@ public class GameScene extends BaseScene{
 		altimeterText.setText("Meters to go: ");
 		coinsText.setText("Coins: " + coins);
 		
+		coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+		altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
+		
 		if (MapScene.getLevel() == 1) {
 			if (MapScene.getDayOrNight()) {
-				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				levelStartText.setText("Beach - 15:00 hs");
+				//n = rand.nextInt(max - min + 1) + min;
+				int hour = rand.nextInt(12) + 8;
+				levelStartText.setText("Beach - " + hour + ":00 hs");
 			} else {
-				levelStartText.setText("Beach - 22:00 hs");
+				int hour = rand.nextInt(5) + 20;
+				levelStartText.setText("Beach - " + hour + ":00 hs");
 			}			
 		} else if (MapScene.getLevel() == 2) {
 			if (MapScene.getDayOrNight()) {
-				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				levelStartText.setText("City - 15:00 hs");
+				int hour = rand.nextInt(12) + 8;
+				levelStartText.setText("City - " + hour + ":00 hs");
 			} else {
-				levelStartText.setText("City - 22:00 hs");
+				int hour = rand.nextInt(5) + 20;
+				levelStartText.setText("City - " + hour + ":00 hs");
 			}
 		} else if (MapScene.getLevel() == 3) {
 			if (MapScene.getDayOrNight()) {
-				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				levelStartText.setText("Forest - 15:00 hs");
+				int hour = rand.nextInt(12) + 8;
+				levelStartText.setText("Forest - " + hour + ":00 hs");
 			} else {
-				levelStartText.setText("Forest - 22:00 hs");
+				int hour = rand.nextInt(5) + 20;
+				levelStartText.setText("Forest - " + hour + ":00 hs");
 			}
 		} else if (MapScene.getLevel() == 4) {
 			if (MapScene.getDayOrNight()) {
-				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				levelStartText.setText("Desert - 15:00 hs");
+				int hour = rand.nextInt(12) + 8;
+				levelStartText.setText("Desert - " + hour + ":00 hs");
 			} else {
-				levelStartText.setText("Desert - 22:00 hs");
+				int hour = rand.nextInt(5) + 20;
+				levelStartText.setText("Desert - " + hour + ":00 hs");
 			}
 		} else if (MapScene.getLevel() == 5) {
 			if (MapScene.getDayOrNight()) {
-				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				levelStartText.setText("Mountain - 15:00 hs");
+				int hour = rand.nextInt(12) + 8;
+				levelStartText.setText("Mountain - " + hour + ":00 hs");
 			} else {
-				levelStartText.setText("Mountain - 22:00 hs");
+				int hour = rand.nextInt(5) + 20;
+				levelStartText.setText("Mountain - " + hour + ":00 hs");
 			}
 		} else if (MapScene.getLevel() == 6) {
-			if (MapScene.getDayOrNight()) {;
-				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				levelStartText.setText("western - 15:00 hs");
+			if (MapScene.getDayOrNight()) {
+				int hour = rand.nextInt(12) + 8;
+				levelStartText.setText("western - " + hour + ":00 hs");
 			} else {
-				levelStartText.setText("western - 22:00 hs");
+				int hour = rand.nextInt(5) + 20;
+				levelStartText.setText("western - " + hour + ":00 hs");
 			}
 		}
 
@@ -350,7 +364,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveUpperImpulseCounter(String key, int upperImpulseCounter) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int uiCounter = sharedPreferences.getInt(key, 0);
 		uiCounter += upperImpulseCounter;
@@ -359,7 +373,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveAntigravityCounter(String key, int antigravityCounter) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int agCounter = sharedPreferences.getInt(key, 0);
 		agCounter += antigravityCounter;
@@ -368,7 +382,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveShieldCounter(String key, int shieldCounter) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int shCounter = sharedPreferences.getInt(key, 0);
 		shCounter += shieldCounter;
@@ -377,7 +391,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveSlowCounter(String key, int slowCounter) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int sCounter = sharedPreferences.getInt(key, 0);
 		sCounter += slowCounter;
@@ -386,7 +400,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveHelicopterCounter(String key, int helicopterCounter) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int heliCounter = sharedPreferences.getInt(key, 0);
 		heliCounter += helicopterCounter;
@@ -395,7 +409,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveBalloonCounter(String key, int balloonCounter) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int ballCounter = sharedPreferences.getInt(key, 0);
 		ballCounter += balloonCounter;
@@ -404,7 +418,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveBirdCounter(String key, int birdCounter) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int bCounter = sharedPreferences.getInt(key, 0);
 		bCounter += birdCounter;
@@ -413,7 +427,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveFreeFliedMeters(String key, int freeFliedCounter) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int ffCounter = sharedPreferences.getInt(key, 0);
 		ffCounter += freeFliedCounter;
@@ -422,7 +436,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveParachuteFliedMeters(String key, int parachuteFliedCounter) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int pfCounter = sharedPreferences.getInt(key, 0);
 		pfCounter += parachuteFliedCounter;
@@ -431,7 +445,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveUnsuccessfulJumps(String key) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int numberOfUnsuccessfulJumps = sharedPreferences.getInt(key, 0);
 		numberOfUnsuccessfulJumps++;
@@ -440,7 +454,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveSuccessfulJumps(String key) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int numberOfSuccessfulJumps = sharedPreferences.getInt(key, 0);
 		numberOfSuccessfulJumps++;
@@ -449,7 +463,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveMaxFliedMeters(String key, int fliedMeters) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		if (sharedPreferences.getInt(key, 0) < fliedMeters) {
 			editor.putInt(key, fliedMeters);
@@ -458,7 +472,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveMaxFreeFliedMeters(String key, int freeFliedMeters) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		if (sharedPreferences.getInt(key, 0) < freeFliedMeters) {
 			editor.putInt(key, freeFliedMeters);
@@ -467,7 +481,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveMaxParachuteFliedMeters(String key, int parachuteFliedMeters) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		if (sharedPreferences.getInt(key, 0) < parachuteFliedMeters) {
 			editor.putInt(key, parachuteFliedMeters);
@@ -476,7 +490,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveCoins(String key, int coins) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int coinsCounter = sharedPreferences.getInt(key, 0);
 		coinsCounter += coins;
@@ -487,7 +501,6 @@ public class GameScene extends BaseScene{
 	//Parse level from XML file
 	private void loadLevel (int level) {
 		final SimpleLevelLoader levelLoader = new SimpleLevelLoader(vbom);
-		//final FixtureDef FIXTURE_DEF= PhysicsFactory.createFixtureDef(0, 0f, 0.5f);
 		levelLoader.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(LevelConstants.TAG_LEVEL) {
 			
 			@Override
@@ -593,7 +606,6 @@ public class GameScene extends BaseScene{
 							}
 						};
 					};
-					Log.e("parachute", "coinsCounter " + coinsCounter + " X: " + (x + randCoinsX));
 					final long[] COIN_ANIMATE = new long[] {100, 100, 100, 100};
 					coin.animate(COIN_ANIMATE, 0, 3, true);
 					levelObject = coin;
@@ -698,9 +710,10 @@ public class GameScene extends BaseScene{
 						};
 					};
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
-					//n = rand.nextInt(max - min + 1) + min;
+					final Rectangle moveSensor = new Rectangle(240, y + 500, 480, 0.1f, vbom);
 					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
 					explosion.setVisible(false);
+					final Rectangle soundSensor = new Rectangle(240, y + 200, 480, 0.1f, vbom);  
 					helicopter = new Helicopter(x, y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
@@ -709,11 +722,17 @@ public class GameScene extends BaseScene{
 							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
 								helicopterRedArrow.setPosition(1000, 0);
 							}
-							if ((player.getY() - this.getY()) < 500) {
+							/*if ((player.getY() - this.getY()) < 500) {
+							this.startMoving();
+							}*/
+							if (player.collidesWith(moveSensor)) {
 								this.startMoving();
+								moveSensor.setPosition(1000, 1000);
 							}
-							if ((player.getY() - this.getY()) == 200) {
+							if (player.collidesWith(soundSensor)) {
+								Log.e("parachute", "chopper");
 								resourcesManager.chopper.play();
+								soundSensor.setPosition(1000, 1000);
 							}
 							if (player.collidesWith(this)) {
 								if (shield) {
@@ -731,8 +750,10 @@ public class GameScene extends BaseScene{
 					GameScene.this.attachChild(explosion);
 					levelObject = helicopter;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER)) {
+					final Rectangle moveSensor = new Rectangle(240, y + 500, 480, 0.1f, vbom);
 					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
 					explosion.setVisible(false);
+					final Rectangle soundSensor = new Rectangle(240, y + 200, 480, 0.1f, vbom);
 					leftHelicopter = new LeftHelicopter(x, y, vbom, camera, physicsWorld, resourcesManager.leftHelicopter_region.deepCopy()) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
@@ -741,11 +762,17 @@ public class GameScene extends BaseScene{
 							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
 								leftHelicopterRedArrow.setPosition(1000, 0);
 							}
-							if ((player.getY() - this.getY()) < 500) {
+							/*if ((player.getY() - this.getY()) < 500) {
 								this.startMoving();
+							}*/
+							if (player.collidesWith(moveSensor)) {
+								this.startMoving();
+								moveSensor.setPosition(1000, 1000);
 							}
-							if ((player.getY() - this.getY()) == 200) {
+							if (player.collidesWith(soundSensor)) {
+								Log.e("parachute", "Leftchopper");
 								resourcesManager.chopper.play();
+								soundSensor.setPosition(1000, 1000);
 							}
 							if (player.collidesWith(this)) {
 								if (shield) {
@@ -763,6 +790,8 @@ public class GameScene extends BaseScene{
 					GameScene.this.attachChild(explosion);
 					levelObject = leftHelicopter;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
+					final Rectangle moveSensor = new Rectangle(240, y + 400, 480, 0.1f, vbom);
+					final Rectangle soundSensor = new Rectangle(240, y + 200, 480, 0.1f, vbom);
 					bird = new Bird(x, y, vbom, camera, physicsWorld, resourcesManager.bird_region.deepCopy()) {
 						
 						protected void onManagedUpdate(float pSecondsElapsed) {
@@ -772,11 +801,17 @@ public class GameScene extends BaseScene{
 							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
 								birdRedArrow.setPosition(1000, 0);
 							}
-							if ((player.getY() - this.getY()) < 400) {
+							/*if ((player.getY() - this.getY()) < 400) {
 								this.startMoving();
+							}*/
+							if (player.collidesWith(moveSensor)) {
+								this.startMoving();
+								moveSensor.setPosition(1000, 1000);
 							}
-							if ((player.getY() - this.getY()) == 400) {
+							if (player.collidesWith(soundSensor)) {
+								Log.e("parachute", "bird");
 								resourcesManager.bird.play();
+								soundSensor.setPosition(1000, 1000);
 							}							
 							if (player.collidesWith(this)) {
 								if (shield) {
@@ -789,6 +824,8 @@ public class GameScene extends BaseScene{
 					};
 					levelObject = bird;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_BIRD)) {
+					final Rectangle moveSensor = new Rectangle(240, y + 400, 480, 0.1f, vbom);
+					final Rectangle soundSensor = new Rectangle(240, y + 200, 480, 0.1f, vbom);
 					leftBird = new LeftBird(x, y, vbom, camera, physicsWorld, resourcesManager.left_bird_region.deepCopy()) {
 						
 						protected void onManagedUpdate(float pSecondsElapsed) {
@@ -798,8 +835,17 @@ public class GameScene extends BaseScene{
 							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
 								birdRedArrow.setPosition(1000, 0);
 							}
-							if ((player.getY() - this.getY()) < 400) {
+							/*if ((player.getY() - this.getY()) < 400) {
 								this.startMoving();
+							}*/
+							if (player.collidesWith(moveSensor)) {
+								this.startMoving();
+								moveSensor.setPosition(1000, 1000);
+							}
+							if (player.collidesWith(soundSensor)) {
+								Log.e("parachute", "Leftbird");
+								resourcesManager.bird.play();
+								soundSensor.setPosition(1000, 1000);
 							}
 							if (player.collidesWith(this)) {
 								if (shield) {
@@ -812,6 +858,7 @@ public class GameScene extends BaseScene{
 					};
 					levelObject = leftBird;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON)) {
+					final Rectangle moveSensor = new Rectangle(240, y + 1500, 480, 0.1f, vbom);
 					basket = new Sprite(97, -30, resourcesManager.balloon_basket_region, vbom);
 					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
 					explosion.setVisible(false);
@@ -821,8 +868,12 @@ public class GameScene extends BaseScene{
 						
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 1500) {
+							/*if ((player.getY() - this.getY()) < 1500) {
 								this.startMoving();
+							}*/
+							if (player.collidesWith(moveSensor)) {
+								this.startMoving();
+								moveSensor.setPosition(1000, 1000);
 							}
 							if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
 								balloonRedArrow.setPosition(this.getX(), 75);
@@ -1213,22 +1264,6 @@ public class GameScene extends BaseScene{
 		});
 	}
 	
-	/*private void destroyBodyWithSprite(final Sprite sp) {
-		engine.runOnUpdateThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				final PhysicsConnector pc = physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(sp);
-				physicsWorld.unregisterPhysicsConnector(pc);
-				Body body = pc.getBody();
-				body.setActive(false);
-				physicsWorld.destroyBody(body);
-				GameScene.this.unregisterTouchArea(sp);
-				GameScene.this.detachChild(sp);
-			}
-		});
-	}*/
-	
 	private void destroySprite(final Sprite sp) {
 		engine.runOnUpdateThread(new Runnable() {
 			
@@ -1268,7 +1303,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void loadCounters() {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		int antigravityCounter = sharedPreferences.getInt("antigravityCounter", 0);
 		int shieldCounter = sharedPreferences.getInt("shieldCounter", 0);
 		int slowCounter = sharedPreferences.getInt("slowCounter", 0);
@@ -1385,8 +1420,6 @@ public class GameScene extends BaseScene{
 		helpWindow.setPosition(camera.getCenterX(), camera.getCenterY());
 		GameScene.this.attachChild(helpWindow);
         GameScene.this.registerTouchArea(helpWindow);
-        //GameScene.this.attachChild(helpWindow);
-        //helpWindow.setPosition(camera.getCenterX(), camera.getCenterY());
 	}
 	
 	private void displayLevelCompleted() {
