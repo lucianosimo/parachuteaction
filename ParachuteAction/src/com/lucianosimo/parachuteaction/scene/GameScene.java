@@ -199,6 +199,7 @@ public class GameScene extends BaseScene{
 		//n = rand.nextInt(max - min + 1) + min;
 		Random rand = new Random();
 		int level = rand.nextInt(4) + 1;
+		resourcesManager.wind.play();
 		createBackground();
 		createWindows();
 		createHud();
@@ -212,7 +213,8 @@ public class GameScene extends BaseScene{
 			editor.putInt("firstGame", firstGame);
 			editor.commit();
 			displayHelpWindow();			
-		}		
+		}
+		resourcesManager.plane.play();
 		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
         //GameScene.this.attachChild(debug);
 	}
@@ -710,6 +712,9 @@ public class GameScene extends BaseScene{
 							if ((player.getY() - this.getY()) < 500) {
 								this.startMoving();
 							}
+							if ((player.getY() - this.getY()) == 200) {
+								resourcesManager.chopper.play();
+							}
 							if (player.collidesWith(this)) {
 								if (shield) {
 									this.setVisible(false);
@@ -739,6 +744,9 @@ public class GameScene extends BaseScene{
 							if ((player.getY() - this.getY()) < 500) {
 								this.startMoving();
 							}
+							if ((player.getY() - this.getY()) == 200) {
+								resourcesManager.chopper.play();
+							}
 							if (player.collidesWith(this)) {
 								if (shield) {
 									this.setVisible(false);
@@ -767,6 +775,9 @@ public class GameScene extends BaseScene{
 							if ((player.getY() - this.getY()) < 400) {
 								this.startMoving();
 							}
+							if ((player.getY() - this.getY()) == 400) {
+								resourcesManager.bird.play();
+							}							
 							if (player.collidesWith(this)) {
 								if (shield) {
 									this.setVisible(false);
@@ -1086,6 +1097,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								resourcesManager.explosion.play();
 								playerSpeed = x2.getBody().getLinearVelocity().y;
 								x1.getBody().setActive(false);
 							}
@@ -1101,6 +1113,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								resourcesManager.explosion.play();
 								playerSpeed = x1.getBody().getLinearVelocity().y;
 								x2.getBody().setActive(false);
 							}
@@ -1116,6 +1129,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								resourcesManager.explosion.play();
 								playerSpeed = x2.getBody().getLinearVelocity().y;
 								x1.getBody().setActive(false);
 							}
@@ -1131,6 +1145,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								resourcesManager.explosion.play();
 								playerSpeed = x1.getBody().getLinearVelocity().y;
 								x2.getBody().setActive(false);
 							}
@@ -1146,6 +1161,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								resourcesManager.explosion.play();
 								playerSpeed = x2.getBody().getLinearVelocity().y;
 								x1.getBody().setActive(false);
 							}
@@ -1161,6 +1177,7 @@ public class GameScene extends BaseScene{
 						engine.runOnUpdateThread(new Runnable() {
 							@Override
 							public void run() {
+								resourcesManager.explosion.play();
 								playerSpeed = x1.getBody().getLinearVelocity().y;
 								x2.getBody().setActive(false);
 							}

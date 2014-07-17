@@ -1,6 +1,10 @@
 package com.lucianosimo.parachuteaction.manager;
 
+import java.io.IOException;
+
+import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
+import org.andengine.audio.sound.Sound;
 import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.BoundCamera;
@@ -159,7 +163,13 @@ public class ResourcesManager {
 	public Font levelStartFont;
 	public Font coinsFont;
 	
-	//Game items
+	//Game audio
+	public Music wind;
+	public Sound plane;
+	public Sound explosion;
+	public Sound chopper;
+	public Sound bird;
+	//public Sound coinSound;
 	
 	//Game HUD
 	public ITextureRegion openButton;
@@ -412,12 +422,35 @@ public class ResourcesManager {
 	}
 
 	private void loadGameAudio() {
-		MusicFactory.setAssetBasePath("music/game/");
-		SoundFactory.setAssetBasePath("sound/game/");
+		MusicFactory.setAssetBasePath("music/");
+		SoundFactory.setAssetBasePath("sound/");
+		try {
+			wind = MusicFactory.createMusicFromAsset(activity.getMusicManager(), activity, "wind.mp3");
+			wind.setLooping(true);
+			plane = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "plane.mp3");
+			bird = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "bird.mp3");
+			chopper = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "chopper.mp3");
+			explosion = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "explosion.mp3");
+			//coinSound = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "coin.mp3");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	private void unloadGameAudio() {
-		
+	public void unloadGameAudio() {
+		wind.stop();
+		plane.stop();
+		bird.stop();
+		chopper.stop();
+		explosion.stop();
+		//coinSound.stop();
+		activity.getMusicManager().remove(wind);
+		activity.getSoundManager().remove(plane);
+		activity.getSoundManager().remove(bird);
+		activity.getSoundManager().remove(chopper);
+		activity.getSoundManager().remove(explosion);
+		//activity.getSoundManager().remove(coinSound);
+		System.gc();
 	}
 	
 	private void loadGameFonts() {
