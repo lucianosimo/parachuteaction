@@ -77,6 +77,7 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	@Override
 	protected void onPause() {
 		super.onPause();
+		SceneManager.getInstance().getCurrentScene().handleOnPause();
 		mEngine.getSoundManager().setMasterVolume(0);
 		mEngine.getMusicManager().setMasterVolume(0);
 	}

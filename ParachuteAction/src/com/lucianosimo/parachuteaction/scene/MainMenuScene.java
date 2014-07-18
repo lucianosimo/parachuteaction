@@ -214,4 +214,10 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		}
 	}
 
+	@Override
+	public void handleOnPause() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

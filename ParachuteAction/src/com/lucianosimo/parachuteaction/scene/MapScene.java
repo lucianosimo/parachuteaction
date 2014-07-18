@@ -201,5 +201,11 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 				return false;
 		}
 	}
+
+	@Override
+	public void handleOnPause() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

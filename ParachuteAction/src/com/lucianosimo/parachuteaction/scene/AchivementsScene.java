@@ -402,6 +402,12 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 			}
 		}
 		
+	}
+
+	@Override
+	public void handleOnPause() {
+		// TODO Auto-generated method stub
+		
 	}	
 	
 

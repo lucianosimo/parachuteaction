@@ -33,7 +33,6 @@ import org.xml.sax.Attributes;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -61,9 +60,6 @@ public class GameScene extends BaseScene{
 	
 	//Shared Preferences
 	private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-	
-	//Random
-	//private Random rand = new Random();
 	
 	//Counters
 	private int fliedMeters = 0;
@@ -179,6 +175,12 @@ public class GameScene extends BaseScene{
 	private static final int ANTIGRAVITY_DURATION = 5;
 	private static final int COINS_VALUE = 100;
 	
+	private static final int HELICOPTER_MOVE_SENSOR = 500;
+	private static final int HELICOPTER_SOUND_SENSOR = 200;
+	private static final int BIRD_MOVE_SENSOR = 400;
+	private static final int BIRD_SOUND_SENSOR = 200;
+	private static final int BALLOON_MOVE_SENSOR = 1500;
+	
 	private static final String TAG_ENTITY = "entity";
 	private static final String TAG_ENTITY_ATTRIBUTE_X = "x";
 	private static final String TAG_ENTITY_ATTRIBUTE_Y = "y";
@@ -212,7 +214,6 @@ public class GameScene extends BaseScene{
 		createHud();
 		createPhysics();
 		loadLevel(level);
-		resourcesManager.plane.play();
 		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
         //GameScene.this.attachChild(debug);
 	}
@@ -569,16 +570,24 @@ public class GameScene extends BaseScene{
 					levelObject.registerUpdateHandler(handler);
 					handler.setVelocity(FAR_CLOUD_SPEED,0);
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLANE)) {
+					final Rectangle launchSensor = new Rectangle(-100, y, 0.1f, 1f, vbom);
+					final Rectangle soundSensor = new Rectangle(240, y, 0.1f, 1f, vbom);
 					levelObject = new Sprite(x, y, resourcesManager.plane_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							if (this.getX() < 200) {
+							//if (this.getX() < 200) {
+							if (this.collidesWith(launchSensor)) {
 								if (!startMoving) {
 									startMoving = true;
 									player.setVisible(true);
 									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, -5));
 									gameHud.detachChild(levelStartText);
+									launchSensor.setPosition(280, 70000);
 								}									
+							}
+							if (this.collidesWith(soundSensor)) {
+								resourcesManager.plane.play();
+								soundSensor.setPosition(240, 70000);
 							}
 						};
 					};
@@ -710,10 +719,10 @@ public class GameScene extends BaseScene{
 						};
 					};
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
-					final Rectangle moveSensor = new Rectangle(240, y + 500, 480, 0.1f, vbom);
+					final Rectangle moveSensor = new Rectangle(240, y + HELICOPTER_MOVE_SENSOR, 480, 0.1f, vbom);
+					final Rectangle soundSensor = new Rectangle(240, y + HELICOPTER_SOUND_SENSOR, 480, 0.1f, vbom);
 					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
-					explosion.setVisible(false);
-					final Rectangle soundSensor = new Rectangle(240, y + 200, 480, 0.1f, vbom);  
+					explosion.setVisible(false);					  
 					helicopter = new Helicopter(x, y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
@@ -730,7 +739,6 @@ public class GameScene extends BaseScene{
 								moveSensor.setPosition(1000, 1000);
 							}
 							if (player.collidesWith(soundSensor)) {
-								Log.e("parachute", "chopper");
 								resourcesManager.chopper.play();
 								soundSensor.setPosition(1000, 1000);
 							}
@@ -750,10 +758,10 @@ public class GameScene extends BaseScene{
 					GameScene.this.attachChild(explosion);
 					levelObject = helicopter;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER)) {
-					final Rectangle moveSensor = new Rectangle(240, y + 500, 480, 0.1f, vbom);
+					final Rectangle moveSensor = new Rectangle(240, y + HELICOPTER_MOVE_SENSOR, 480, 0.1f, vbom);
+					final Rectangle soundSensor = new Rectangle(240, y + HELICOPTER_SOUND_SENSOR, 480, 0.1f, vbom);
 					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
-					explosion.setVisible(false);
-					final Rectangle soundSensor = new Rectangle(240, y + 200, 480, 0.1f, vbom);
+					explosion.setVisible(false);					
 					leftHelicopter = new LeftHelicopter(x, y, vbom, camera, physicsWorld, resourcesManager.leftHelicopter_region.deepCopy()) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
@@ -770,7 +778,6 @@ public class GameScene extends BaseScene{
 								moveSensor.setPosition(1000, 1000);
 							}
 							if (player.collidesWith(soundSensor)) {
-								Log.e("parachute", "Leftchopper");
 								resourcesManager.chopper.play();
 								soundSensor.setPosition(1000, 1000);
 							}
@@ -790,10 +797,9 @@ public class GameScene extends BaseScene{
 					GameScene.this.attachChild(explosion);
 					levelObject = leftHelicopter;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
-					final Rectangle moveSensor = new Rectangle(240, y + 400, 480, 0.1f, vbom);
-					final Rectangle soundSensor = new Rectangle(240, y + 200, 480, 0.1f, vbom);
+					final Rectangle moveSensor = new Rectangle(240, y + BIRD_MOVE_SENSOR, 480, 0.1f, vbom);
+					final Rectangle soundSensor = new Rectangle(240, y + BIRD_SOUND_SENSOR, 480, 0.1f, vbom);
 					bird = new Bird(x, y, vbom, camera, physicsWorld, resourcesManager.bird_region.deepCopy()) {
-						
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
 							if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
@@ -809,7 +815,6 @@ public class GameScene extends BaseScene{
 								moveSensor.setPosition(1000, 1000);
 							}
 							if (player.collidesWith(soundSensor)) {
-								Log.e("parachute", "bird");
 								resourcesManager.bird.play();
 								soundSensor.setPosition(1000, 1000);
 							}							
@@ -824,10 +829,9 @@ public class GameScene extends BaseScene{
 					};
 					levelObject = bird;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_BIRD)) {
-					final Rectangle moveSensor = new Rectangle(240, y + 400, 480, 0.1f, vbom);
-					final Rectangle soundSensor = new Rectangle(240, y + 200, 480, 0.1f, vbom);
+					final Rectangle moveSensor = new Rectangle(240, y + BIRD_MOVE_SENSOR, 480, 0.1f, vbom);
+					final Rectangle soundSensor = new Rectangle(240, y + BIRD_SOUND_SENSOR, 480, 0.1f, vbom);
 					leftBird = new LeftBird(x, y, vbom, camera, physicsWorld, resourcesManager.left_bird_region.deepCopy()) {
-						
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
 							if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
@@ -843,7 +847,6 @@ public class GameScene extends BaseScene{
 								moveSensor.setPosition(1000, 1000);
 							}
 							if (player.collidesWith(soundSensor)) {
-								Log.e("parachute", "Leftbird");
 								resourcesManager.bird.play();
 								soundSensor.setPosition(1000, 1000);
 							}
@@ -858,7 +861,7 @@ public class GameScene extends BaseScene{
 					};
 					levelObject = leftBird;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON)) {
-					final Rectangle moveSensor = new Rectangle(240, y + 1500, 480, 0.1f, vbom);
+					final Rectangle moveSensor = new Rectangle(240, y + BALLOON_MOVE_SENSOR, 480, 0.1f, vbom);
 					basket = new Sprite(97, -30, resourcesManager.balloon_basket_region, vbom);
 					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
 					explosion.setVisible(false);
@@ -910,6 +913,7 @@ public class GameScene extends BaseScene{
 								
 								@Override
 								public void run() {
+									distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
 									if (!startMoving) {
 										player.stopPlayer();
 										player.setVisible(false);
@@ -920,8 +924,7 @@ public class GameScene extends BaseScene{
 										shieldHalo.setPosition(20, 50);
 									} else {
 										shieldHalo.setVisible(false);
-									}
-									distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
+									}									
 									if (firstFall) {
 										oldDistanceToFloor = distanceToFloor;
 									}
@@ -1343,60 +1346,18 @@ public class GameScene extends BaseScene{
 	}
 	
 	@Override
+	public void handleOnPause() {
+		displayPauseWindow();
+	}
+	
+	@Override
 	public void onBackKeyPressed() {
 		engine.runOnUpdateThread(new Runnable() {
 			
 			@Override
 			public void run() {
 				if (availablePause) {
-					availablePause = false;
-					GameScene.this.setIgnoreUpdate(true);
-					camera.setChaseEntity(null);
-					pauseWindow.setPosition(camera.getCenterX(), camera.getCenterY());
-					GameScene.this.attachChild(pauseWindow);
-					gameHud.setVisible(false);
-					final Sprite resumeButton = new Sprite(345, 45, resourcesManager.resume_button_region, vbom){
-				    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-				    		if (pSceneTouchEvent.isActionDown()) {
-				    			gameHud.setVisible(true);
-				    			availablePause = true;
-				    			GameScene.this.detachChild(pauseWindow);
-				    			GameScene.this.setIgnoreUpdate(false);
-				    			camera.setChaseEntity(player);
-				    		}
-				    		return true;
-				    	};
-				    };
-				    final Sprite mapButton = new Sprite(220, 45, resourcesManager.map_button_region, vbom){
-				    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-				    		if (pSceneTouchEvent.isActionDown()) {
-				    			gameHud.dispose();
-								gameHud.setVisible(false);
-								detachChild(gameHud);
-								myGarbageCollection();
-								SceneManager.getInstance().loadMapScene(engine, GameScene.this);
-							}
-				    		return true;
-				    	};
-				    };
-				    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
-				    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-				    		if (pSceneTouchEvent.isActionDown()) {
-				    			gameHud.dispose();
-								gameHud.setVisible(false);
-								detachChild(gameHud);
-								myGarbageCollection();
-								SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
-				    		}
-				    		return true;
-				    	};
-				    };
-				    GameScene.this.registerTouchArea(resumeButton);
-				    GameScene.this.registerTouchArea(quitButton);
-				    GameScene.this.registerTouchArea(mapButton);
-				    pauseWindow.attachChild(quitButton);
-				    pauseWindow.attachChild(resumeButton);
-				    pauseWindow.attachChild(mapButton);
+					displayPauseWindow();
 				} else {
 					if (!dead && !levelCompleteBoolean) {
 						availablePause = true;
@@ -1408,8 +1369,57 @@ public class GameScene extends BaseScene{
 				}				
 			}
 		});
-		
-		
+	}
+	
+	public void displayPauseWindow() {
+		availablePause = false;
+		GameScene.this.setIgnoreUpdate(true);
+		camera.setChaseEntity(null);
+		pauseWindow.setPosition(camera.getCenterX(), camera.getCenterY());
+		GameScene.this.attachChild(pauseWindow);
+		gameHud.setVisible(false);
+		final Sprite resumeButton = new Sprite(345, 45, resourcesManager.resume_button_region, vbom){
+	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+	    		if (pSceneTouchEvent.isActionDown()) {
+	    			gameHud.setVisible(true);
+	    			availablePause = true;
+	    			GameScene.this.detachChild(pauseWindow);
+	    			GameScene.this.setIgnoreUpdate(false);
+	    			camera.setChaseEntity(player);
+	    		}
+	    		return true;
+	    	};
+	    };
+	    final Sprite mapButton = new Sprite(220, 45, resourcesManager.map_button_region, vbom){
+	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+	    		if (pSceneTouchEvent.isActionDown()) {
+	    			gameHud.dispose();
+					gameHud.setVisible(false);
+					detachChild(gameHud);
+					myGarbageCollection();
+					SceneManager.getInstance().loadMapScene(engine, GameScene.this);
+				}
+	    		return true;
+	    	};
+	    };
+	    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
+	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+	    		if (pSceneTouchEvent.isActionDown()) {
+	    			gameHud.dispose();
+					gameHud.setVisible(false);
+					detachChild(gameHud);
+					myGarbageCollection();
+					SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
+	    		}
+	    		return true;
+	    	};
+	    };
+	    GameScene.this.registerTouchArea(resumeButton);
+	    GameScene.this.registerTouchArea(quitButton);
+	    GameScene.this.registerTouchArea(mapButton);
+	    pauseWindow.attachChild(quitButton);
+	    pauseWindow.attachChild(resumeButton);
+	    pauseWindow.attachChild(mapButton);
 	}
 	
 	private void displayHelpWindow() {

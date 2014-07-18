@@ -29,4 +29,10 @@ public class LoadingScene extends BaseScene{
 	public void disposeScene() {
 	}
 
+	@Override
+	public void handleOnPause() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

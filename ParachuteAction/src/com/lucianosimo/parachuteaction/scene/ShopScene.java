@@ -267,5 +267,11 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 				return false;
 		}
 	}
+
+	@Override
+	public void handleOnPause() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

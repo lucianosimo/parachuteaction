@@ -195,4 +195,10 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		});
 	}
 
+	@Override
+	public void handleOnPause() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
