@@ -1350,7 +1350,9 @@ public class GameScene extends BaseScene{
 	
 	@Override
 	public void handleOnPause() {
-		displayPauseWindow();
+		if (availablePause) {
+			displayPauseWindow();
+		}		
 	}
 	
 	@Override
