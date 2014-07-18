@@ -15,8 +15,10 @@ import org.andengine.util.adt.align.HorizontalAlign;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
@@ -33,7 +35,6 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 	
 	private static final int DESERT_UNLOCK_VALUE = 25000;
 	private static final int MOUNTAIN_UNLOCK_VALUE = 50000;
-	private static final int WESTERN_UNLOCK_VALUE = 100000;
 	
 	private Text coinsText;
 	
@@ -141,9 +142,6 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		Editor editor = sharedPreferences.edit();
 		editor.putBoolean("western", true);
 		editor.commit();
-		coins = coins - WESTERN_UNLOCK_VALUE;
-		coinsText.setText("Coins: " + coins);
-		saveCoins("coins", coins);
 	}
 	
 	private void loadLocations() {
@@ -194,12 +192,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 				@Override
 				public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 					if (pSceneTouchEvent.isActionDown()) {
-						if (coins >= WESTERN_UNLOCK_VALUE) {
-							confirmMessage("western", WESTERN_UNLOCK_VALUE);						
-						} else {
-							int coinsToUnlock = WESTERN_UNLOCK_VALUE - coins;
-							noEnoughCoins("western", coinsToUnlock);
-						}
+						unlockWithRate("Western");
 					}
 					return true;
 				}
@@ -207,6 +200,35 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 			western.attachChild(lockedwestern);
 			menuChildScene.registerTouchArea(lockedwestern);
 		}
+	}
+	
+	private void unlockWithRate(final String location) {
+		ShopScene.this.activity.runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				new AlertDialog.Builder(ShopScene.this.activity)
+				.setMessage("Please rate the game to unlock " + location + ". Rate now?")
+				.setPositiveButton("Of course!!!", new DialogInterface.OnClickListener() {
+
+				    public void onClick(DialogInterface dialog, int whichButton) {
+				    	if (location.equals("Western")) {
+				    		unlockwestern();
+				    		western.detachChild(lockedwestern);
+							menuChildScene.unregisterTouchArea(lockedwestern);
+							activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.lucianosimo.parachuteaction")));
+					    	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+							int rated = sharedPreferences.getInt("rated", 0);
+							Editor editor = sharedPreferences.edit();
+							rated = 1;
+							editor.putInt("rated", rated);
+							editor.commit();
+				    	}
+				        loadUnlockedLocations();
+				    }})
+				 .setNegativeButton("No, thanks", null).show();	
+			}
+		});
 	}
 	
 	private void confirmMessage(final String location, final int coins) {
@@ -227,10 +249,6 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 				    		unlockMountain();
 				    		mountain.detachChild(lockedMountain);
 							menuChildScene.unregisterTouchArea(lockedMountain);
-				    	} else if (location.equals("western")) {
-				    		unlockwestern();
-				    		western.detachChild(lockedwestern);
-							menuChildScene.unregisterTouchArea(lockedwestern);
 				    	}
 				        Toast.makeText(activity, location + " unlocked", Toast.LENGTH_LONG).show();
 				        loadUnlockedLocations();

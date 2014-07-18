@@ -41,10 +41,10 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	public void createScene() {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		int played = sharedPreferences.getInt("played", 0);
-		//Rated: 0 = no, 1 = yes
+		//Rated: 0 = no, 1 = yes, 2 = no and don't want to rate
 		int rated = sharedPreferences.getInt("rated", 0);		
 		if (rated == 0) {
-			if (played == 5 || played == 20 || played == 50) {
+			if (played == 5 || played == 15 || played == 30) {
 				displayRateUsWindow();
 			}
 		}
@@ -156,6 +156,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 						Editor editor = sharedPreferences.edit();
 						rated = 1;
 						editor.putInt("rated", rated);
+						editor.putBoolean("western", true);
 						editor.commit();
 				    }})
 				.setNegativeButton("Never", new DialogInterface.OnClickListener() {
@@ -165,7 +166,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 						SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 						int rated = sharedPreferences.getInt("rated", 0);
 						Editor editor = sharedPreferences.edit();
-						rated = 1;
+						rated = 2;
 						editor.putInt("rated", rated);
 						editor.commit();						
 					}
@@ -207,6 +208,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 				Editor editor = sharedPreferences.edit();
 				rated = 1;
 				editor.putInt("rated", rated);
+				editor.putBoolean("western", true);
 				editor.commit();
 				return true;
 			default:
