@@ -79,6 +79,7 @@ public class GameScene extends BaseScene{
 	private int birdCounter = 0;
 	private int coins = 0;
 	
+	private int firstGame = 0;
 	private int coinsCounter = 0;
 	private int randCoinsX = 0;
 
@@ -214,12 +215,14 @@ public class GameScene extends BaseScene{
 		createHud();
 		createPhysics();
 		loadLevel(level);
+		firstGame();
 		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
         //GameScene.this.attachChild(debug);
 	}
 	
 	public void firstGame() {
-		int firstGame = sharedPreferences.getInt("firstGame", 0);
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		firstGame = sharedPreferences.getInt("firstGame", 0);
 		if (firstGame == 0) {
 			Editor editor = sharedPreferences.edit();
 			firstGame++;
