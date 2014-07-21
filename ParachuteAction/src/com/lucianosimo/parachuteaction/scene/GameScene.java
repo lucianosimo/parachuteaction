@@ -575,7 +575,7 @@ public class GameScene extends BaseScene{
 					levelObject.registerUpdateHandler(handler);
 					handler.setVelocity(FAR_CLOUD_SPEED,0);
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLANE)) {
-					final Rectangle launchSensor = new Rectangle(-100, y, 0.1f, 1f, vbom);
+					final Rectangle launchSensor = new Rectangle(-175, y, 0.1f, 1f, vbom);
 					final Rectangle soundSensor = new Rectangle(240, y, 0.1f, 1f, vbom);
 					levelObject = new Sprite(x, y, resourcesManager.plane_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
@@ -948,12 +948,15 @@ public class GameScene extends BaseScene{
 									if (player.getFallVelocity() < 0) {
 										fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
 									}
-									if (distanceToFloor < 1500 && distanceToFloor > 1000 && !openParachute) {
+									if (distanceToFloor < 4500 && distanceToFloor > 1000 && !openParachute) {
 										openButton.setVisible(true);
 										gameHud.registerTouchArea(openButton);
 									} else {
 										openButton.setVisible(false);
 										gameHud.unregisterTouchArea(openButton);
+									}
+									if (openParachute && player.getFallVelocity() > 0) {
+										player.slowDownPlayer();
 									}
 									if (openParachute) {
 										parachute.setVisible(true);
