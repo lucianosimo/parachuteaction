@@ -749,6 +749,7 @@ public class GameScene extends BaseScene{
 							}
 							if (player.collidesWith(this)) {
 								if (shield) {
+									resourcesManager.chopper.stop();
 									playerSpeed = player.getFallVelocity();
 									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, playerSpeed));
 									this.setVisible(false);
@@ -790,6 +791,7 @@ public class GameScene extends BaseScene{
 							}
 							if (player.collidesWith(this)) {
 								if (shield) {
+									resourcesManager.chopper.stop();
 									playerSpeed = player.getFallVelocity();
 									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, playerSpeed));
 									this.setVisible(false);
@@ -948,7 +950,7 @@ public class GameScene extends BaseScene{
 									if (player.getFallVelocity() < 0) {
 										fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
 									}
-									if (distanceToFloor < 4500 && distanceToFloor > 1000 && !openParachute) {
+									if (distanceToFloor < 1500 && distanceToFloor > 1000 && !openParachute) {
 										openButton.setVisible(true);
 										gameHud.registerTouchArea(openButton);
 									} else {
