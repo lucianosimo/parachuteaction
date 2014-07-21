@@ -55,6 +55,8 @@ import com.lucianosimo.parachuteaction.object.Player;
 
 public class GameScene extends BaseScene{
 	
+	private float playerSpeed;
+	
 	//Scene indicators
 	private HUD gameHud;
 	
@@ -177,7 +179,7 @@ public class GameScene extends BaseScene{
 	private static final int COINS_VALUE = 100;
 	
 	private static final int HELICOPTER_MOVE_SENSOR = 500;
-	private static final int HELICOPTER_SOUND_SENSOR = 200;
+	private static final int HELICOPTER_SOUND_SENSOR = 300;
 	private static final int BIRD_MOVE_SENSOR = 400;
 	private static final int BIRD_SOUND_SENSOR = 200;
 	private static final int BALLOON_MOVE_SENSOR = 1500;
@@ -747,6 +749,8 @@ public class GameScene extends BaseScene{
 							}
 							if (player.collidesWith(this)) {
 								if (shield) {
+									playerSpeed = player.getFallVelocity();
+									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, playerSpeed));
 									this.setVisible(false);
 									explosion.setPosition(this.getX(),this.getY());
 									explosion.setVisible(true);
@@ -786,6 +790,8 @@ public class GameScene extends BaseScene{
 							}
 							if (player.collidesWith(this)) {
 								if (shield) {
+									playerSpeed = player.getFallVelocity();
+									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, playerSpeed));
 									this.setVisible(false);
 									explosion.setPosition(this.getX(),this.getY());
 									explosion.setVisible(true);
@@ -823,6 +829,8 @@ public class GameScene extends BaseScene{
 							}							
 							if (player.collidesWith(this)) {
 								if (shield) {
+									playerSpeed = player.getFallVelocity();
+									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, playerSpeed));
 									this.setVisible(false);
 									this.setIgnoreUpdate(true);
 									physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
@@ -855,6 +863,8 @@ public class GameScene extends BaseScene{
 							}
 							if (player.collidesWith(this)) {
 								if (shield) {
+									playerSpeed = player.getFallVelocity();
+									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, playerSpeed));
 									this.setVisible(false);
 									this.setIgnoreUpdate(true);
 									physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
@@ -888,6 +898,8 @@ public class GameScene extends BaseScene{
 							}
 							if (player.collidesWith(this)) {
 								if (shield) {
+									playerSpeed = player.getFallVelocity();
+									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, playerSpeed));
 									this.setVisible(false);
 									explosion.setPosition(this.getX(),this.getY());
 									explosion.setVisible(true);
@@ -1067,8 +1079,6 @@ public class GameScene extends BaseScene{
 	
 	private ContactListener contactListener() {
 		ContactListener contactListener = new ContactListener() {
-			
-			float playerSpeed;
 			
 			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {

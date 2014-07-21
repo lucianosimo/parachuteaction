@@ -115,7 +115,17 @@ public class SceneManager {
 	public void loadGameScene(final Engine mEngine, final BaseScene scene) {
 		setScene(loadingScene);
 		scene.disposeScene();
-		ResourcesManager.getInstance().unloadMapResources();
+		switch (scene.getSceneType()) {
+			case SCENE_GAME:
+				ResourcesManager.getInstance().unloadGameResources();
+				break;
+			case SCENE_MAP:
+				ResourcesManager.getInstance().unloadMapResources();
+				break;
+			default:
+				break;
+		}
+		//ResourcesManager.getInstance().unloadMapResources();
 		mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 			@Override
 			public void onTimePassed(final TimerHandler pTimerHandler) {
