@@ -211,7 +211,7 @@ public class GameScene extends BaseScene{
 		//n = rand.nextInt(max - min + 1) + min;
 		Random rand = new Random();
 		int level = rand.nextInt(4) + 1;
-		//resourcesManager.wind.play();
+		resourcesManager.wind.play();
 		createBackground();
 		createWindows();
 		createHud();

@@ -425,8 +425,8 @@ public class ResourcesManager {
 		MusicFactory.setAssetBasePath("music/");
 		SoundFactory.setAssetBasePath("sound/");
 		try {
-			//wind = MusicFactory.createMusicFromAsset(activity.getMusicManager(), activity, "wind.mp3");
-			//wind.setLooping(true);
+			wind = MusicFactory.createMusicFromAsset(activity.getMusicManager(), activity, "wind.mp3");
+			wind.setLooping(true);
 			plane = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "plane.mp3");
 			bird = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "bird.mp3");
 			chopper = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "chopper.mp3");
@@ -438,7 +438,7 @@ public class ResourcesManager {
 	}
 	
 	public void unloadGameAudio() {
-		//wind.stop();
+		wind.stop();
 		plane.stop();
 		bird.stop();
 		chopper.stop();
