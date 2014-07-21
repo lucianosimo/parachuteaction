@@ -209,6 +209,7 @@ public class GameScene extends BaseScene{
 	@Override
 	public void createScene() {
 		//n = rand.nextInt(max - min + 1) + min;
+		activity.cacheAd();
 		Random rand = new Random();
 		int level = rand.nextInt(4) + 1;
 		resourcesManager.wind.play();
@@ -615,6 +616,7 @@ public class GameScene extends BaseScene{
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
 							if (player.collidesWith(this)) {
+								resourcesManager.coinSound.play();
 								destroySprite(this);
 								addCoins(COINS_VALUE);
 							}

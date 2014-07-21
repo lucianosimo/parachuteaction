@@ -60,8 +60,12 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	public void showAd() {
 		if(ad != null) {			
 			toCache = false;
-			//ad.loadAd();
+			ad.loadAd();
 		}
+	}
+	
+	public void cacheAd() {
+		ad.loadAdToCache();
 	}
 	
 	@Override

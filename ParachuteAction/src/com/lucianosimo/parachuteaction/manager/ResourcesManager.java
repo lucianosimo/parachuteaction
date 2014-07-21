@@ -169,7 +169,7 @@ public class ResourcesManager {
 	public Sound explosion;
 	public Sound chopper;
 	public Sound bird;
-	//public Sound coinSound;
+	public Sound coinSound;
 	
 	//Game HUD
 	public ITextureRegion openButton;
@@ -431,7 +431,7 @@ public class ResourcesManager {
 			bird = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "bird.mp3");
 			chopper = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "chopper.mp3");
 			explosion = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "explosion.mp3");
-			//coinSound = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "coin.mp3");
+			coinSound = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "coin.mp3");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -443,7 +443,7 @@ public class ResourcesManager {
 		bird.stop();
 		chopper.stop();
 		explosion.stop();
-		//coinSound.stop();
+		coinSound.stop();
 		activity.getMusicManager().remove(wind);
 		activity.getSoundManager().remove(plane);
 		activity.getSoundManager().remove(bird);
