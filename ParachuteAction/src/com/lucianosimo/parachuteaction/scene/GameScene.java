@@ -209,7 +209,7 @@ public class GameScene extends BaseScene{
 	@Override
 	public void createScene() {
 		//n = rand.nextInt(max - min + 1) + min;
-		activity.cacheAd();
+		//activity.cacheAd();
 		Random rand = new Random();
 		int level = rand.nextInt(4) + 1;
 		resourcesManager.wind.play();
