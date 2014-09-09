@@ -32,8 +32,8 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	private final int MENU_SHOP = 2;
 	private final int MENU_RATE_US = 3;
 	
-	private static final int LEFT_MARGIN = -240;
-	private static final int RIGHT_MARGIN = 240;
+	private static final int LEFT_MARGIN = -360;
+	private static final int RIGHT_MARGIN = 360;
 	private static final int CLOUD_SPEED = -40;
 	private static final int FAR_CLOUD_SPEED = -15;
 
@@ -68,7 +68,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	
 	public void createBackground() {
 		AutoParallaxBackground background = new AutoParallaxBackground(0, 0, 0, 12);
-		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.menu_background_region, vbom)));
+		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(resourcesManager.camera.getWidth() / 2, resourcesManager.camera.getHeight() / 2, resourcesManager.menu_background_region, vbom)));
 		this.setBackground(background);
 	}
 	

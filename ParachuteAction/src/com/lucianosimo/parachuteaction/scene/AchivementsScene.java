@@ -98,7 +98,7 @@ public class AchivementsScene extends BaseScene implements IOnMenuItemClickListe
 	
 	public void createBackground() {
 		AutoParallaxBackground background = new AutoParallaxBackground(0, 0, 0, 12);
-		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.achievements_background_region, vbom)));
+		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(resourcesManager.camera.getWidth() / 2, resourcesManager.camera.getHeight() / 2, resourcesManager.achievements_background_region, vbom)));
 		this.setBackground(background);
 	}
 	

@@ -40,7 +40,7 @@ public class SplashScene extends BaseScene{
 		float screenWidth = resourcesManager.camera.getWidth();
 		float screenHeight = resourcesManager.camera.getHeight();
 		splash.setPosition(screenWidth/2, screenHeight/2);
-		final Rectangle fade = new Rectangle(screenWidth/2, screenHeight/2, 480, 854, vbom);
+		final Rectangle fade = new Rectangle(screenWidth/2, screenHeight/2, screenWidth, screenHeight, vbom);
 		fade.setColor(Color.BLACK);
 		fade.setAlpha(1.0f);
 		attachChild(splash);
@@ -84,7 +84,6 @@ public class SplashScene extends BaseScene{
 
 	@Override
 	public void handleOnPause() {
-		// TODO Auto-generated method stub
 		
 	}
 

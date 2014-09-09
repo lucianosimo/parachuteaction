@@ -12,7 +12,7 @@ public class LoadingScene extends BaseScene{
 	@Override
 	public void createScene() {
 		AutoParallaxBackground background = new AutoParallaxBackground(0, 0, 0, 12);
-		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.loading_background_region, vbom)));
+		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(resourcesManager.camera.getWidth() / 2, resourcesManager.camera.getHeight() / 2, resourcesManager.loading_background_region, vbom)));
 		setBackground(background);
 	}
 
@@ -31,7 +31,6 @@ public class LoadingScene extends BaseScene{
 
 	@Override
 	public void handleOnPause() {
-		// TODO Auto-generated method stub
 		
 	}
 

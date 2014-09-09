@@ -178,7 +178,7 @@ public class ResourcesManager {
 	public ITextureRegion landing_platfom_region;
 
 	//Backgrounds
-	public ITextureRegion background_region;
+	public ITextureRegion game_background_region;
 	public ITextureRegion darkBackground_region;
 	public ITextureRegion back_location_region;
 	
@@ -233,7 +233,7 @@ public class ResourcesManager {
 	//Splash Methods
 	public void loadSplashScreen() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-		splashTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		splashTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		splash_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(splashTextureAtlas, activity, "splash.png", 0, 0);
 		splashTextureAtlas.load();
 	}
@@ -259,7 +259,7 @@ public class ResourcesManager {
 	
 	private void loadLoadingGraphics() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/menu/");
-		backgroundLoadingTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		backgroundLoadingTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		
 		loading_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLoadingTextureAtlas, activity, "loading_background.png");
 		
@@ -274,7 +274,7 @@ public class ResourcesManager {
 	private void loadMenuGraphics() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/menu/");
 		menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 512, 512, TextureOptions.BILINEAR);
-		backgroundMenuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		backgroundMenuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		
 		menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundMenuTextureAtlas, activity, "menu_background.png");
 		play_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "play.png");
@@ -335,16 +335,16 @@ public class ResourcesManager {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/game/");
 		
 		animatedTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1150, 1150, TextureOptions.BILINEAR);
-		backgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		backgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		backgroundLocationTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 500, TextureOptions.BILINEAR);
 		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1200, 1200, TextureOptions.BILINEAR);
 		windowsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1000, 1000, TextureOptions.BILINEAR);
 		
 		//Background texture objects
 		if (MapScene.getDayOrNight()) {
-			background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundTextureAtlas, activity, "background.png");
+			game_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundTextureAtlas, activity, "game_background_day.png");
 		} else {
-			background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundTextureAtlas, activity, "nightBackground.png");
+			game_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundTextureAtlas, activity, "game_background_night.png");
 		}
 		
 		if (MapScene.getLevel() == 1) {
@@ -514,7 +514,7 @@ public class ResourcesManager {
 	
 	private void loadStatisticsGraphics() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/statistics/");
-		backgroundStatisticsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		backgroundStatisticsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		statisticsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 500, 500, TextureOptions.BILINEAR);
 		
 		statistics_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundStatisticsTextureAtlas, activity, "statistics_background.png");
@@ -599,7 +599,7 @@ public class ResourcesManager {
 	private void loadAchievementsGraphics() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/achievements/");
 		achivementsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
-		achivementsBackgroundTextureAtlas  = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		achivementsBackgroundTextureAtlas  = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		
 		achievements_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsBackgroundTextureAtlas, activity, "achievements_background.png");
 		menu_from_achievements_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "menu_button.png");
@@ -686,7 +686,7 @@ public class ResourcesManager {
 	private void loadShopGraphics() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/shop/");
 		shopTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
-		shopBackgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		shopBackgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		
 		shop_menu_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "menu_button.png");
 		shop_beach_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "beach.png");
@@ -742,7 +742,7 @@ public class ResourcesManager {
 	private void loadMapGraphics() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/map/");
 		mapTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
-		mapBackgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 854, TextureOptions.BILINEAR);
+		mapBackgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		
 		map_random_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "random.png");
 		map_menu_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "menu_button.png");

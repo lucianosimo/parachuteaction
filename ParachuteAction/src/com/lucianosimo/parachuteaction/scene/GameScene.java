@@ -237,7 +237,7 @@ public class GameScene extends BaseScene{
 	
 	private void createBackground() {
 		ParallaxBackground background = new ParallaxBackground(0, 0, 0);
-		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(240, 427, resourcesManager.background_region, vbom)));
+		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(resourcesManager.camera.getWidth() / 2, resourcesManager.camera.getHeight() / 2, resourcesManager.game_background_region, vbom)));
 		this.setBackground(background);
 	}
 	

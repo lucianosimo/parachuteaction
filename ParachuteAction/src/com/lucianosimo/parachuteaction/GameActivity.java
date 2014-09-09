@@ -51,9 +51,11 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
-		camera = new BoundCamera(0, 0, 480, 854);
+		//camera = new BoundCamera(0, 0, 480, 854);
+		camera = new BoundCamera(0, 0, 720, 1280);
 		EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new FillResolutionPolicy(), this.camera);
 		engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
+		engineOptions.getRenderOptions().setDithering(true);
 		engineOptions.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
 		return engineOptions;
 	}
