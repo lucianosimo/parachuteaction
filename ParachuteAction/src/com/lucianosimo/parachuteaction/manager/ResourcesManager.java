@@ -463,14 +463,14 @@ public class ResourcesManager {
 		final ITexture achievementsUnlockedTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		final ITexture levelStartTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		final ITexture coinsTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		meterCounterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), meterCounterTexture, activity.getAssets(), "simple.ttf", 25, true, Color.WHITE_ARGB_PACKED_INT, 0.5f, Color.WHITE_ARGB_PACKED_INT);
-		altimeterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), altimeterTexture, activity.getAssets(), "simple.ttf", 25, true, Color.WHITE_ARGB_PACKED_INT, 0.5f, Color.WHITE_ARGB_PACKED_INT);
-		levelCompletedFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), levelCompletedTexture, activity.getAssets(), "simple.ttf", 25, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		maxSpeedFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), maxSpeedTexture, activity.getAssets(), "simple.ttf", 25, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		gameOverFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), gameOverTexture, activity.getAssets(), "simple.ttf", 35, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
-		achievementsUnlockedFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), achievementsUnlockedTexture, activity.getAssets(), "simple.ttf", 30, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT); 
-		levelStartFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), levelStartTexture, activity.getAssets(), "simple.ttf", 45, true, Color.BLACK_ARGB_PACKED_INT, 1f, Color.BLACK_ARGB_PACKED_INT);
-		coinsFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), coinsTexture, activity.getAssets(), "simple.ttf", 25, true, Color.WHITE_ARGB_PACKED_INT, 0.5f, Color.WHITE_ARGB_PACKED_INT);
+		meterCounterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), meterCounterTexture, activity.getAssets(), "simple.ttf", 35, true, Color.WHITE_ARGB_PACKED_INT, 0.5f, Color.WHITE_ARGB_PACKED_INT);
+		altimeterFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), altimeterTexture, activity.getAssets(), "simple.ttf", 35, true, Color.WHITE_ARGB_PACKED_INT, 0.5f, Color.WHITE_ARGB_PACKED_INT);
+		levelCompletedFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), levelCompletedTexture, activity.getAssets(), "simple.ttf", 35, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		maxSpeedFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), maxSpeedTexture, activity.getAssets(), "simple.ttf", 35, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		gameOverFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), gameOverTexture, activity.getAssets(), "simple.ttf", 45, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		achievementsUnlockedFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), achievementsUnlockedTexture, activity.getAssets(), "simple.ttf", 40, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT); 
+		levelStartFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), levelStartTexture, activity.getAssets(), "simple.ttf", 55, true, Color.BLACK_ARGB_PACKED_INT, 1f, Color.BLACK_ARGB_PACKED_INT);
+		coinsFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), coinsTexture, activity.getAssets(), "simple.ttf", 35, true, Color.WHITE_ARGB_PACKED_INT, 0.5f, Color.WHITE_ARGB_PACKED_INT);
 		maxSpeedFont.load();
 		meterCounterFont.load();
 		altimeterFont.load();
@@ -714,7 +714,7 @@ public class ResourcesManager {
 	private void loadShopFonts() {
 		FontFactory.setAssetBasePath("font/shop/");
 		final ITexture coinsTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		shopCoinsFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), coinsTexture, activity.getAssets(), "simple.ttf", 25, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
+		shopCoinsFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), coinsTexture, activity.getAssets(), "simple.ttf", 35, true, Color.BLACK_ARGB_PACKED_INT, 0.1f, Color.BLACK_ARGB_PACKED_INT);
 		shopCoinsFont.load();
 	}
 	

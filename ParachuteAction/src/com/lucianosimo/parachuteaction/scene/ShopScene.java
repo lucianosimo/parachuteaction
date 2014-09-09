@@ -98,7 +98,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		menuChildScene.setBackgroundEnabled(false);
 		
 		menuButtonItem.setPosition(-150, -350);
-		coinsText.setPosition(150, 400);
+		coinsText.setPosition(300, 650);
 		
 		menuChildScene.setOnMenuItemClickListener(this);
 		setChildScene(menuChildScene);

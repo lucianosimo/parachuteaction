@@ -264,12 +264,12 @@ public class GameScene extends BaseScene{
 		gameHud = new HUD();
 		Random rand = new Random();
 		
-		altimeterText = new Text(20, 820, resourcesManager.altimeterFont, "Meters to go: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-		coinsText = new Text(20, 770, resourcesManager.coinsFont, "Coins: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-		levelStartText = new Text(100, 420, resourcesManager.levelStartFont, "ForestBeachCityDesertMountainwestern - 15:00Hs", new TextOptions(HorizontalAlign.LEFT), vbom);
+		altimeterText = new Text(30, 1225, resourcesManager.altimeterFont, "Meters to go: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		coinsText = new Text(30, 1175, resourcesManager.coinsFont, "Coins: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+		levelStartText = new Text(200, 600, resourcesManager.levelStartFont, "ForestBeachCityDesertMountainwestern - 15:00Hs", new TextOptions(HorizontalAlign.LEFT), vbom);
 		
 		
-		openButton = new Sprite(400, 780, resourcesManager.openButton, vbom){
+		openButton = new Sprite(600, 1225, resourcesManager.openButton, vbom){
 			@Override
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 				if (pSceneTouchEvent.isActionDown()) {
@@ -295,56 +295,80 @@ public class GameScene extends BaseScene{
 		altimeterText.setText("Meters to go: ");
 		coinsText.setText("Coins: " + coins);
 		
-		coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
-		altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
+		/*coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+		altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);*/
 		
 		if (MapScene.getLevel() == 1) {
 			if (MapScene.getDayOrNight()) {
 				//n = rand.nextInt(max - min + 1) + min;
 				int hour = rand.nextInt(12) + 8;
 				levelStartText.setText("Beach - " + hour + ":00 hs");
+				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
 			} else {
 				int hour = rand.nextInt(5) + 20;
+				coinsText.setColor(Color.WHITE_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.WHITE_ARGB_PACKED_INT);
 				levelStartText.setText("Beach - " + hour + ":00 hs");
 			}			
 		} else if (MapScene.getLevel() == 2) {
 			if (MapScene.getDayOrNight()) {
 				int hour = rand.nextInt(12) + 8;
+				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
 				levelStartText.setText("City - " + hour + ":00 hs");
 			} else {
 				int hour = rand.nextInt(5) + 20;
+				coinsText.setColor(Color.WHITE_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.WHITE_ARGB_PACKED_INT);
 				levelStartText.setText("City - " + hour + ":00 hs");
 			}
 		} else if (MapScene.getLevel() == 3) {
 			if (MapScene.getDayOrNight()) {
 				int hour = rand.nextInt(12) + 8;
+				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
 				levelStartText.setText("Forest - " + hour + ":00 hs");
 			} else {
 				int hour = rand.nextInt(5) + 20;
+				coinsText.setColor(Color.WHITE_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.WHITE_ARGB_PACKED_INT);
 				levelStartText.setText("Forest - " + hour + ":00 hs");
 			}
 		} else if (MapScene.getLevel() == 4) {
 			if (MapScene.getDayOrNight()) {
 				int hour = rand.nextInt(12) + 8;
+				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
 				levelStartText.setText("Desert - " + hour + ":00 hs");
 			} else {
 				int hour = rand.nextInt(5) + 20;
+				coinsText.setColor(Color.WHITE_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.WHITE_ARGB_PACKED_INT);
 				levelStartText.setText("Desert - " + hour + ":00 hs");
 			}
 		} else if (MapScene.getLevel() == 5) {
 			if (MapScene.getDayOrNight()) {
 				int hour = rand.nextInt(12) + 8;
+				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
 				levelStartText.setText("Mountain - " + hour + ":00 hs");
 			} else {
 				int hour = rand.nextInt(5) + 20;
+				coinsText.setColor(Color.WHITE_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.WHITE_ARGB_PACKED_INT);
 				levelStartText.setText("Mountain - " + hour + ":00 hs");
 			}
 		} else if (MapScene.getLevel() == 6) {
 			if (MapScene.getDayOrNight()) {
 				int hour = rand.nextInt(12) + 8;
+				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
 				levelStartText.setText("western - " + hour + ":00 hs");
 			} else {
 				int hour = rand.nextInt(5) + 20;
+				coinsText.setColor(Color.WHITE_ARGB_PACKED_INT);
+				altimeterText.setColor(Color.WHITE_ARGB_PACKED_INT);
 				levelStartText.setText("western - " + hour + ":00 hs");
 			}
 		}
@@ -371,7 +395,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveUpperImpulseCounter(String key, int upperImpulseCounter) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int uiCounter = sharedPreferences.getInt(key, 0);
 		uiCounter += upperImpulseCounter;
@@ -380,7 +403,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveAntigravityCounter(String key, int antigravityCounter) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int agCounter = sharedPreferences.getInt(key, 0);
 		agCounter += antigravityCounter;
@@ -389,7 +411,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveShieldCounter(String key, int shieldCounter) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int shCounter = sharedPreferences.getInt(key, 0);
 		shCounter += shieldCounter;
@@ -398,7 +419,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveSlowCounter(String key, int slowCounter) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int sCounter = sharedPreferences.getInt(key, 0);
 		sCounter += slowCounter;
@@ -407,7 +427,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveHelicopterCounter(String key, int helicopterCounter) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int heliCounter = sharedPreferences.getInt(key, 0);
 		heliCounter += helicopterCounter;
@@ -416,7 +435,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveBalloonCounter(String key, int balloonCounter) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int ballCounter = sharedPreferences.getInt(key, 0);
 		ballCounter += balloonCounter;
@@ -425,7 +443,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveBirdCounter(String key, int birdCounter) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int bCounter = sharedPreferences.getInt(key, 0);
 		bCounter += birdCounter;
@@ -434,7 +451,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveFreeFliedMeters(String key, int freeFliedCounter) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int ffCounter = sharedPreferences.getInt(key, 0);
 		ffCounter += freeFliedCounter;
@@ -443,7 +459,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveParachuteFliedMeters(String key, int parachuteFliedCounter) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int pfCounter = sharedPreferences.getInt(key, 0);
 		pfCounter += parachuteFliedCounter;
@@ -452,7 +467,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveUnsuccessfulJumps(String key) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int numberOfUnsuccessfulJumps = sharedPreferences.getInt(key, 0);
 		numberOfUnsuccessfulJumps++;
@@ -461,7 +475,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveSuccessfulJumps(String key) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int numberOfSuccessfulJumps = sharedPreferences.getInt(key, 0);
 		numberOfSuccessfulJumps++;
@@ -470,7 +483,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveMaxFliedMeters(String key, int fliedMeters) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		if (sharedPreferences.getInt(key, 0) < fliedMeters) {
 			editor.putInt(key, fliedMeters);
@@ -479,7 +491,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveMaxFreeFliedMeters(String key, int freeFliedMeters) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		if (sharedPreferences.getInt(key, 0) < freeFliedMeters) {
 			editor.putInt(key, freeFliedMeters);
@@ -488,7 +499,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveMaxParachuteFliedMeters(String key, int parachuteFliedMeters) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		if (sharedPreferences.getInt(key, 0) < parachuteFliedMeters) {
 			editor.putInt(key, parachuteFliedMeters);
@@ -497,7 +507,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void saveCoins(String key, int coins) {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		Editor editor = sharedPreferences.edit();
 		int coinsCounter = sharedPreferences.getInt(key, 0);
 		coinsCounter += coins;
@@ -738,9 +747,6 @@ public class GameScene extends BaseScene{
 							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
 								helicopterRedArrow.setPosition(1000, 0);
 							}
-							/*if ((player.getY() - this.getY()) < 500) {
-							this.startMoving();
-							}*/
 							if (player.collidesWith(moveSensor)) {
 								this.startMoving();
 								moveSensor.setPosition(1000, 1000);
@@ -780,9 +786,6 @@ public class GameScene extends BaseScene{
 							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
 								leftHelicopterRedArrow.setPosition(1000, 0);
 							}
-							/*if ((player.getY() - this.getY()) < 500) {
-								this.startMoving();
-							}*/
 							if (player.collidesWith(moveSensor)) {
 								this.startMoving();
 								moveSensor.setPosition(1000, 1000);
@@ -820,9 +823,6 @@ public class GameScene extends BaseScene{
 							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
 								birdRedArrow.setPosition(1000, 0);
 							}
-							/*if ((player.getY() - this.getY()) < 400) {
-								this.startMoving();
-							}*/
 							if (player.collidesWith(moveSensor)) {
 								this.startMoving();
 								moveSensor.setPosition(1000, 1000);
@@ -854,9 +854,6 @@ public class GameScene extends BaseScene{
 							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
 								birdRedArrow.setPosition(1000, 0);
 							}
-							/*if ((player.getY() - this.getY()) < 400) {
-								this.startMoving();
-							}*/
 							if (player.collidesWith(moveSensor)) {
 								this.startMoving();
 								moveSensor.setPosition(1000, 1000);
@@ -888,9 +885,6 @@ public class GameScene extends BaseScene{
 						
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							/*if ((player.getY() - this.getY()) < 1500) {
-								this.startMoving();
-							}*/
 							if (player.collidesWith(moveSensor)) {
 								this.startMoving();
 								moveSensor.setPosition(1000, 1000);
@@ -1326,7 +1320,6 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void loadCounters() {
-		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		int antigravityCounter = sharedPreferences.getInt("antigravityCounter", 0);
 		int shieldCounter = sharedPreferences.getInt("shieldCounter", 0);
 		int slowCounter = sharedPreferences.getInt("slowCounter", 0);

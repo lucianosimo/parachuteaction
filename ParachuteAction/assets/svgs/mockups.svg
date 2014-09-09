@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="gamescene.svg">
+   sodipodi:docname="mockups.svg">
   <defs
      id="defs4">
     <linearGradient
@@ -401,6 +401,28 @@
        y1="-99.066406"
        x2="-565.71429"
        y2="1760.9336" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3773-3-6-8"
+       id="linearGradient4871-8"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(934.28562,-131.42856)"
+       x1="-571.42859"
+       y1="-99.066406"
+       x2="-565.71429"
+       y2="1760.9336" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3773-3-6-8">
+      <stop
+         style="stop-color:#87cefa;stop-opacity:1;"
+         offset="0"
+         id="stop3775-1-1-29" />
+      <stop
+         style="stop-color:#87cefa;stop-opacity:0;"
+         offset="1"
+         id="stop3777-9-8-1" />
+    </linearGradient>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -994,7 +1016,7 @@
        sodipodi:cy="342"
        sodipodi:rx="47"
        sodipodi:ry="44"
-       d="m 216,342 a 47,44 0 1 1 -94,0 47,44 0 1 1 94,0 z"
+       d="m 216,342 c 0,24.30053 -21.04262,44 -47,44 -25.95738,0 -47,-19.69947 -47,-44 0,-24.30053 21.04262,-44 47,-44 25.95738,0 47,19.69947 47,44 z"
        transform="matrix(0.70464747,0,0,0.75125006,1323.5946,-1210.5502)" />
     <path
        sodipodi:type="arc"
@@ -1004,7 +1026,7 @@
        sodipodi:cy="413.25"
        sodipodi:rx="43.5"
        sodipodi:ry="10.25"
-       d="m 208,413.25 a 43.5,10.25 0 1 1 -86.93632,-0.55441"
+       d="m 208,413.25 c 0,5.66092 -19.47561,10.25 -43.5,10.25 -24.02439,0 -43.5,-4.58908 -43.5,-10.25 0,-0.18491 0.0212,-0.36978 0.0637,-0.55441"
        transform="matrix(0.54350238,0,0,0.75586499,1352.9216,-1238.0081)"
        sodipodi:start="0"
        sodipodi:end="3.1957083"
@@ -1017,7 +1039,7 @@
        sodipodi:cy="413.25"
        sodipodi:rx="43.5"
        sodipodi:ry="10.25"
-       d="m 208,413.25 a 43.5,10.25 0 1 1 -86.93632,-0.55441"
+       d="m 208,413.25 c 0,5.66092 -19.47561,10.25 -43.5,10.25 -24.02439,0 -43.5,-4.58908 -43.5,-10.25 0,-0.18491 0.0212,-0.36978 0.0637,-0.55441"
        transform="matrix(0.55961261,0,0,0.75510465,1350.2716,-1241.0613)"
        sodipodi:start="0"
        sodipodi:end="3.1957083"
@@ -1044,7 +1066,7 @@
        sodipodi:cy="364.6821"
        sodipodi:rx="4.4194174"
        sodipodi:ry="2.5961943"
-       d="m 167.93787,364.6821 a 4.4194174,2.5961943 0 1 1 -8.83884,0 4.4194174,2.5961943 0 1 1 8.83884,0 z"
+       d="m 167.93787,364.6821 c 0,1.43384 -1.97865,2.59619 -4.41942,2.59619 -2.44078,0 -4.41942,-1.16235 -4.41942,-2.59619 0,-1.43384 1.97864,-2.5962 4.41942,-2.5962 2.44077,0 4.41942,1.16236 4.41942,2.5962 z"
        transform="matrix(0.70464747,0,0,0.75125006,1330.2007,-1211.1137)" />
     <g
        id="g4317"
@@ -1209,7 +1231,10 @@
     </g>
     <g
        id="g4729"
-       transform="translate(17.142857,-57.142857)">
+       transform="translate(-31.344464,-32.899197)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\loading_background.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
       <g
          transform="translate(2060.752,52.527929)"
          inkscape:export-ydpi="90"
@@ -1294,7 +1319,7 @@
            id="flowPara4590-6">Map</flowPara></flowRoot>    </g>
     <g
        id="g4862"
-       transform="translate(2084.9548,1309.1576)"
+       transform="translate(3571.8993,1301.0764)"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\Gamescene\shop_background.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -1422,5 +1447,26 @@
              id="rect4588-4-8-8" /></flowRegion><flowPara
            style="font-size:100px"
            id="flowPara4590-6-8-2">Achievements</flowPara></flowRoot>    </g>
+    <g
+       id="g3781-6-4-5"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\menu_background.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="translate(2759.351,1351.1474)">
+      <rect
+         y="-227.63782"
+         x="0"
+         height="1280"
+         width="720"
+         id="rect2985-5-9-9"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      <rect
+         y="-227.63782"
+         x="0"
+         height="1280"
+         width="720"
+         id="rect2985-1-0-6-8"
+         style="fill:url(#linearGradient4871-8);fill-opacity:1;stroke:none" />
+    </g>
   </g>
 </svg>
