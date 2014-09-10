@@ -41,15 +41,16 @@ public class ResourcesManager {
 	private BitmapTextureAtlas splashTextureAtlas;
 	
 	//Menu items
-	public ITextureRegion menu_background_region;
 	public ITextureRegion loading_background_region;
-	public ITextureRegion play_region;
-	public ITextureRegion statistics_region;
-	public ITextureRegion shop_region;
+	
+	public ITextureRegion menu_background_region;
+	public ITextureRegion menu_play_button_region;
+	public ITextureRegion menu_statistics_button_region;
+	public ITextureRegion menu_shop_button_region;
+	public ITextureRegion menu_rate_us_button_region;
 	public ITextureRegion menu_cloud_region;
 	public ITextureRegion menu_far_cloud_region;
 	public ITextureRegion menu_title_region;
-	public ITextureRegion rate_us_region;
 	
 	private BuildableBitmapTextureAtlas menuTextureAtlas;
 	private BuildableBitmapTextureAtlas backgroundMenuTextureAtlas;
@@ -59,11 +60,8 @@ public class ResourcesManager {
 	
 	//Shop items
 	public ITextureRegion shop_background_region;
-	public ITextureRegion shop_menu_region;
-	public ITextureRegion shop_beach_region;
-	public ITextureRegion shop_city_region;
+	public ITextureRegion shop_menu_button_region;
 	public ITextureRegion shop_desert_region;
-	public ITextureRegion shop_forest_region;
 	public ITextureRegion shop_mountain_region;
 	public ITextureRegion shop_western_region;
 	public ITextureRegion shop_locked_location_region;
@@ -273,17 +271,17 @@ public class ResourcesManager {
 
 	private void loadMenuGraphics() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/menu/");
-		menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 512, 512, TextureOptions.BILINEAR);
+		menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
 		backgroundMenuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		
 		menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundMenuTextureAtlas, activity, "menu_background.png");
-		play_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "play.png");
-		statistics_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "statistics.png");
-		shop_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "shop_button.png");
+		menu_play_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "menu_play_button.png");
+		menu_statistics_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "menu_statistics_button.png");
+		menu_shop_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "menu_shop_button.png");
+		menu_rate_us_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "menu_rateus_button.png");
 		menu_cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "cloud.png");
 		menu_far_cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "farCloud.png");
-		menu_title_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "title.png");
-		rate_us_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "rateus.png");
+		menu_title_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "menu_title.png");
 		
 		try {
 			this.menuTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
@@ -688,14 +686,11 @@ public class ResourcesManager {
 		shopTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
 		shopBackgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		
-		shop_menu_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "menu_button.png");
-		shop_beach_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "beach.png");
-		shop_city_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "city.png");
-		shop_desert_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "desert.png");
-		shop_forest_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "forest.png");
-		shop_mountain_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "mountain.png");
-		shop_western_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "western.png");
-		shop_locked_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "lockedLocation.png");
+		shop_menu_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "shop_menu_button.png");
+		shop_desert_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "shop_desert_button.png");
+		shop_mountain_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "shop_mountain_button.png");
+		shop_western_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "shop_western_button.png");
+		shop_locked_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopTextureAtlas, activity, "shop_locked_location.png");
 		shop_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBackgroundTextureAtlas, activity, "shop_background.png");
 		try {
 			this.shopTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));

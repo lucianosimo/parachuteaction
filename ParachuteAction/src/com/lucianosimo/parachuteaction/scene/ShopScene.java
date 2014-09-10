@@ -89,7 +89,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		loadUnlockedLocations();
 		loadLocations();		
 		
-		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(SHOP_MENU, resourcesManager.shop_menu_region, vbom), 1.2f, 1);				
+		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(SHOP_MENU, resourcesManager.shop_menu_button_region, vbom), 1.2f, 1);				
 				
 		menuChildScene.addMenuItem(menuButtonItem);
 		menuChildScene.attachChild(coinsText);
@@ -98,7 +98,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		menuChildScene.setBackgroundEnabled(false);
 		
 		menuButtonItem.setPosition(-150, -350);
-		coinsText.setPosition(300, 650);
+		coinsText.setPosition(300, 250);
 		
 		menuChildScene.setOnMenuItemClickListener(this);
 		setChildScene(menuChildScene);

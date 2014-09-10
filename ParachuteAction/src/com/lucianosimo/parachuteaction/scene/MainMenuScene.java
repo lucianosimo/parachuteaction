@@ -109,15 +109,14 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		menuChildScene = new MenuScene(camera);
 		menuChildScene.setPosition(screenWidth/2, screenHeight/2);
 		
-		final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourcesManager.play_region, vbom), 1.2f, 1);
-		final IMenuItem statisticsMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_STATISTICS, resourcesManager.statistics_region, vbom), 1.2f, 1);
-		final IMenuItem shopMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_SHOP, resourcesManager.shop_region, vbom), 1.2f, 1);
-		final IMenuItem rateUsItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_RATE_US, resourcesManager.rate_us_region, vbom), 1.2f, 1);
+		final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourcesManager.menu_play_button_region, vbom), 1.2f, 1);
+		final IMenuItem statisticsMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_STATISTICS, resourcesManager.menu_statistics_button_region, vbom), 1.2f, 1);
+		final IMenuItem shopMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_SHOP, resourcesManager.menu_shop_button_region, vbom), 1.2f, 1);
+		final IMenuItem rateUsItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_RATE_US, resourcesManager.menu_rate_us_button_region, vbom), 1.2f, 1);
 
 		menuChildScene.attachChild(farCloud);
 		menuChildScene.attachChild(cloud);		
 		menuChildScene.attachChild(title);
-		
 		
 		menuChildScene.addMenuItem(playMenuItem);
 		menuChildScene.addMenuItem(statisticsMenuItem);
@@ -127,14 +126,15 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
 		
-		playMenuItem.setPosition(0, 25);
-		statisticsMenuItem.setPosition(-120, -200);
-		shopMenuItem.setPosition(120, -200);
-		rateUsItem.setPosition(0, -325);
+		playMenuItem.setPosition(0, 125);
+		statisticsMenuItem.setPosition(-150, -225);
+		shopMenuItem.setPosition(150, -225);
+		rateUsItem.setPosition(0, -400);
 		
 		cloud.setPosition(100, 150);
 		farCloud.setPosition(-100, -150);
-		title.setPosition(0, 300);
+		
+		title.setPosition(0, 460);
 		
 		menuChildScene.setOnMenuItemClickListener(this);
 		setChildScene(menuChildScene);
