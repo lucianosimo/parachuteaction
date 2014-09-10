@@ -104,12 +104,14 @@ public class ResourcesManager {
 	public Font slowCounterFont;
 	
 	//Achievements items
-	public ITextureRegion statistics_from_achievements_region;
-	public ITextureRegion menu_from_achievements_button;
+	public ITextureRegion achievements_statistics_button_region;
+	public ITextureRegion achievements_menu_button_region;
 	public ITextureRegion achievements_background_region;	
-	public ITextureRegion one_button;
-	public ITextureRegion two_button;
-	public ITextureRegion three_button;
+	public ITextureRegion achievements_one_button_region;
+	public ITextureRegion achievements_two_button_region;
+	public ITextureRegion achievements_three_button_region;
+	public ITextureRegion achievements_locked_award;
+	
 	public ITextureRegion firstJumpAward;
 	public ITextureRegion jumps10award;
 	public ITextureRegion jumps50award;
@@ -146,7 +148,6 @@ public class ResourcesManager {
 	public ITextureRegion destroy5birdsAward;
 	public ITextureRegion destroy25birdsAward;
 	public ITextureRegion destroy100birdsAward;
-	public ITextureRegion lockedAward;
 	
 	private BuildableBitmapTextureAtlas achivementsTextureAtlas;
 	private BuildableBitmapTextureAtlas achivementsBackgroundTextureAtlas;
@@ -600,12 +601,13 @@ public class ResourcesManager {
 		achivementsBackgroundTextureAtlas  = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		
 		achievements_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsBackgroundTextureAtlas, activity, "achievements_background.png");
-		menu_from_achievements_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "menu_button.png");
-		statistics_from_achievements_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "statistics.png");		
-		one_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "1button.png");
-		two_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "2button.png");
-		three_button = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "3button.png");
-		lockedAward = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "lockedAward.png");		
+		achievements_menu_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "achievements_menu_button.png");
+		achievements_statistics_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "achievements_statistics_button.png");		
+		achievements_one_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "achievements_1_button.png");
+		achievements_two_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "achievements_2_button.png");
+		achievements_three_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "achievements_3_button.png");
+		achievements_locked_award = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "achievements_locked_award.png");
+		
 		firstJumpAward = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "firstJumpAward.png");
 		jumps10award = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "jumps10award.png");
 		jumps50award = BitmapTextureAtlasTextureRegionFactory.createFromAsset(achivementsTextureAtlas, activity, "jumps50award.png");
