@@ -2,7 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:i="&amp;#38;ns_ai;"
+   xmlns:i="&amp;#38;#38;ns_ai;"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -454,14 +454,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70000002"
-     inkscape:cx="421.94736"
-     inkscape:cy="-151.5557"
+     inkscape:zoom="0.35000001"
+     inkscape:cx="433.9716"
+     inkscape:cy="574.0205"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1018"
+     inkscape:window-width="1280"
+     inkscape:window-height="962"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1" />
@@ -682,7 +682,7 @@
     </g>
     <g
        id="Moon-51"
-       transform="translate(658.40038,-928.89308)">
+       transform="translate(709.82895,-1031.7502)">
       <g
          id="Planet_copy">
         <path
@@ -1039,7 +1039,7 @@
        sodipodi:cy="342"
        sodipodi:rx="47"
        sodipodi:ry="44"
-       d="m 216,342 a 47,44 0 1 1 -94,0 47,44 0 1 1 94,0 z"
+       d="m 216,342 c 0,24.30053 -21.04262,44 -47,44 -25.95738,0 -47,-19.69947 -47,-44 0,-24.30053 21.04262,-44 47,-44 25.95738,0 47,19.69947 47,44 z"
        transform="matrix(0.70464747,0,0,0.75125006,-584.97678,-96.264515)" />
     <path
        sodipodi:type="arc"
@@ -1049,7 +1049,7 @@
        sodipodi:cy="413.25"
        sodipodi:rx="43.5"
        sodipodi:ry="10.25"
-       d="m 208,413.25 a 43.5,10.25 0 1 1 -86.93632,-0.55441"
+       d="m 208,413.25 c 0,5.66092 -19.47561,10.25 -43.5,10.25 -24.02439,0 -43.5,-4.58908 -43.5,-10.25 0,-0.18491 0.0212,-0.36978 0.0637,-0.55441"
        transform="matrix(0.54350238,0,0,0.75586499,-555.64978,-123.72242)"
        sodipodi:start="0"
        sodipodi:end="3.1957083"
@@ -1062,7 +1062,7 @@
        sodipodi:cy="413.25"
        sodipodi:rx="43.5"
        sodipodi:ry="10.25"
-       d="m 208,413.25 a 43.5,10.25 0 1 1 -86.93632,-0.55441"
+       d="m 208,413.25 c 0,5.66092 -19.47561,10.25 -43.5,10.25 -24.02439,0 -43.5,-4.58908 -43.5,-10.25 0,-0.18491 0.0212,-0.36978 0.0637,-0.55441"
        transform="matrix(0.55961261,0,0,0.75510465,-558.29978,-126.77562)"
        sodipodi:start="0"
        sodipodi:end="3.1957083"
@@ -1089,7 +1089,7 @@
        sodipodi:cy="364.6821"
        sodipodi:rx="4.4194174"
        sodipodi:ry="2.5961943"
-       d="m 167.93787,364.6821 a 4.4194174,2.5961943 0 1 1 -8.83884,0 4.4194174,2.5961943 0 1 1 8.83884,0 z"
+       d="m 167.93787,364.6821 c 0,1.43384 -1.97865,2.59619 -4.41942,2.59619 -2.44078,0 -4.41942,-1.16235 -4.41942,-2.59619 0,-1.43384 1.97864,-2.5962 4.41942,-2.5962 2.44077,0 4.41942,1.16236 4.41942,2.5962 z"
        transform="matrix(0.70464747,0,0,0.75125006,-578.37068,-96.828015)" />
     <g
        id="g4317"
@@ -1386,9 +1386,10 @@
            id="flowPara4590-6-8">Shop</flowPara></flowRoot>    </g>
     <g
        id="g4792"
-       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\Gamescene\statistics_background.png"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\statistics_background.png"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90">
+       inkscape:export-ydpi="90"
+       transform="translate(-3575.5543,1315.6553)">
       <g
          transform="translate(3575.5543,-1315.6553)"
          inkscape:export-ydpi="90"
@@ -1475,7 +1476,7 @@
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\menu_background.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"
-       transform="translate(-339.41125,-1418.2541)">
+       transform="translate(2765.7142,1359.9999)">
       <rect
          y="-227.63782"
          x="0"
@@ -3503,7 +3504,7 @@
        sodipodi:cy="848.07648"
        sodipodi:rx="50"
        sodipodi:ry="50"
-       d="m 12.857143,848.07648 a 50,50 0 1 1 -100,0 50,50 0 1 1 100,0 z"
+       d="m 12.857143,848.07648 c 0,27.61423 -22.3857621,50 -50,50 -27.614237,0 -50,-22.38577 -50,-50 0,-27.61424 22.385763,-50 50,-50 27.6142379,0 50,22.38576 50,50 z"
        inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\openButton.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
@@ -3515,7 +3516,7 @@
        sodipodi:cy="848.07648"
        sodipodi:rx="50"
        sodipodi:ry="50"
-       d="m 12.857143,848.07648 a 50,50 0 1 1 -100,0 50,50 0 1 1 100,0 z"
+       d="m 12.857143,848.07648 c 0,27.61423 -22.3857621,50 -50,50 -27.614237,0 -50,-22.38577 -50,-50 0,-27.61424 22.385763,-50 50,-50 27.6142379,0 50,22.38576 50,50 z"
        transform="translate(-889.64282,938.57143)"
        inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\openButton.png"
        inkscape:export-xdpi="90"
@@ -4179,8 +4180,8 @@
        id="rect2985-5-89"
        width="118"
        height="168"
-       x="804.28571"
-       y="832.93359"
+       x="858.83392"
+       y="1404.6799"
        rx="2.0072447e-015"
        inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\shop\western.png"
        inkscape:export-xdpi="90"
@@ -4905,8 +4906,8 @@
     </g>
     <g
        id="g4523-1"
-       transform="matrix(1.3400956,0,0,1.3400956,2458.902,11.514917)"
-       inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Rediseño\shop_menu_button.png"
+       transform="matrix(1.3400956,0,0,1.3400956,2539.7142,-8.6881333)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\statistics_menu_button.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <rect
@@ -4945,17 +4946,18 @@
        id="rect2985-5-89-8"
        width="124.00681"
        height="174.00681"
-       x="800.70953"
-       y="829.49268"
+       x="855.25775"
+       y="1401.239"
        rx="19"
        inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\shop\western.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <g
        id="g4946"
-       inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Rediseño\shop_mountain_button.png"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\shop_mountain_button.png"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90">
+       inkscape:export-ydpi="90"
+       transform="matrix(1.5534033,0,0,1.5380833,499.44858,-377.22063)">
       <rect
          inkscape:export-ydpi="90"
          inkscape:export-xdpi="90"
@@ -5007,9 +5009,10 @@
     </g>
     <g
        id="g4936"
-       inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Rediseño\shop_desert_button.png"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\shop_desert_button.png"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90">
+       inkscape:export-ydpi="90"
+       transform="matrix(1.5529501,0,0,1.5377188,270.72505,-87.145143)">
       <rect
          inkscape:export-ydpi="90"
          inkscape:export-xdpi="90"
@@ -5065,8 +5068,8 @@
     </g>
     <g
        id="g5055"
-       transform="translate(680.8428,541.44178)"
-       inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Rediseño\shop_western_button.png"
+       transform="matrix(1.5538952,0,0,1.5376981,1331.381,-26.946177)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\shop_western_button.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <rect
@@ -5127,15 +5130,15 @@
        id="rect2985-5-89-2-9-2"
        width="118"
        height="168"
-       x="1151.4741"
-       y="1419.453"
+       x="880.75323"
+       y="1047.7169"
        rx="2.0072447e-015"
        inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\shop\western.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <g
        id="g4703-6"
-       transform="matrix(0.95934959,0,0,0.96,488.66972,139.43729)">
+       transform="matrix(0.95934959,0,0,0.96,217.94885,-232.29884)">
       <image
          inkscape:export-ydpi="90"
          inkscape:export-xdpi="90"
@@ -5168,16 +5171,16 @@
        id="rect2985-5-89-8-8-8-61"
        width="124.00681"
        height="174.00681"
-       x="1147.8979"
-       y="1416.0121"
+       x="877.17706"
+       y="1044.276"
        rx="19"
        inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\shop\western.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <g
        id="g5119"
-       transform="translate(681.85295,540.4316)"
-       inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Rediseño\shop_locked_location.png"
+       transform="matrix(1.5619048,0,0,1.5238095,1068.299,393.15222)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\shop_locked_location.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <rect
@@ -5200,5 +5203,91 @@
          inkscape:connector-curvature="0"
          style="fill:#d4aa00;fill-rule:evenodd" />
     </g>
+    <g
+       id="g4649-9"
+       transform="matrix(1.3400957,0,0,1.3400957,2732.2646,360.38699)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\statistics_reset_statistics.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         ry="18.1"
+         y="932.32031"
+         x="-1839.9606"
+         height="78.571426"
+         width="140"
+         id="rect3264-7-4-4-2-7-9-5-4"
+         style="fill:#a02c2c;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+      <rect
+         ry="18.1"
+         y="936.24884"
+         x="-1845.6749"
+         height="78.571426"
+         width="140"
+         id="rect3264-7-4-4-2-2-6-2-9-1"
+         style="fill:#c83737;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\Menu scene\shop_button.png"
+         sodipodi:linespacing="125%"
+         id="text3050-0-7-9"
+         y="987.81555"
+         x="-1819.5814"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Simplicity;-inkscape-font-specification:Simplicity"
+         xml:space="preserve"><tspan
+           y="987.81555"
+           x="-1819.5814"
+           id="tspan3052-9-81-6"
+           sodipodi:role="line">Reset</tspan></text>
+    </g>
+    <g
+       transform="matrix(1.3400957,0,0,1.3400957,2517.5287,-44.288279)"
+       id="g4618-9"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\statistics_achievements_button.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         ry="18.1"
+         y="1124.2493"
+         x="-1646.0112"
+         height="78.571426"
+         width="140"
+         id="rect3264-7-4-4-2-7-9-4-8"
+         style="fill:#0088aa;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+      <rect
+         ry="18.1"
+         y="1128.1779"
+         x="-1651.7256"
+         height="78.571426"
+         width="140"
+         id="rect3264-7-4-4-2-2-6-2-07-2"
+         style="fill:#37abc8;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\Menu scene\shop_button.png"
+         sodipodi:linespacing="125%"
+         id="text3050-0-4-9-5"
+         y="1175.6915"
+         x="-1643.479"
+         style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Simplicity;-inkscape-font-specification:Simplicity"
+         xml:space="preserve"><tspan
+           style="font-size:24px"
+           y="1175.6915"
+           x="-1643.479"
+           id="tspan3052-9-5-0-5"
+           sodipodi:role="line">Achievements</tspan></text>
+    </g>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="rect3842"
+       width="568.57141"
+       height="471.42856"
+       x="79.999992"
+       y="35.219349"
+       rx="60"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\statistics_background.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
 </svg>

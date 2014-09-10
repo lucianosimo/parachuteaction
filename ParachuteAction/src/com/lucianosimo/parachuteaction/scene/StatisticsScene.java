@@ -79,9 +79,9 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		slowText = new Text(20, 430, resourcesManager.slowCounterFont, "Slowobjectscollected: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		loadSavedPreferences();
 		
-		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(STATISTICS_MENU, resourcesManager.menu_from_statistics_region, vbom), 1.2f, 1);
-		final IMenuItem achivementsButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(STATISTICS_ACHIVEMENTS, resourcesManager.achievements_region, vbom), 1.2f, 1);
-		final IMenuItem resetStatisticsItem = new ScaleMenuItemDecorator(new SpriteMenuItem(RESET_STATISTICS, resourcesManager.resetStatistics_region, vbom), 1.2f, 1);
+		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(STATISTICS_MENU, resourcesManager.statistics_menu_button_region, vbom), 1.2f, 1);
+		final IMenuItem achivementsButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(STATISTICS_ACHIVEMENTS, resourcesManager.statistics_achievements_button_region, vbom), 1.2f, 1);
+		final IMenuItem resetStatisticsItem = new ScaleMenuItemDecorator(new SpriteMenuItem(RESET_STATISTICS, resourcesManager.statistics_reset_statistics_button_region, vbom), 1.2f, 1);
 
 		statisticsChildScene = new MenuScene(camera);
 		statisticsChildScene.setPosition(screenWidth/2, screenHeight/2);
@@ -102,17 +102,17 @@ public class StatisticsScene extends BaseScene implements IOnMenuItemClickListen
 		statisticsChildScene.attachChild(shieldText);
 		statisticsChildScene.attachChild(slowText);
 		
-		menuButtonItem.setPosition(-150, -350);
-		achivementsButtonItem.setPosition(150, -350);
-		resetStatisticsItem.setPosition(0, -210);
-		numberOfSuccessfulJumpsText.setPosition(0, 220);
-		numberOfUnsuccessfulJumpsText.setPosition(0, 180);
-		freeFliedMetersText.setPosition(0, 140);
-		parachuteFliedMetersText.setPosition(0, 100);
-		upperImpulseText.setPosition(0, 60);
-		antigravityText.setPosition(0, 20);
-		shieldText.setPosition(0, -20);
-		slowText.setPosition(0, -60);		
+		menuButtonItem.setPosition(-200, -500);
+		achivementsButtonItem.setPosition(200, -500);
+		resetStatisticsItem.setPosition(0, -250);
+		numberOfSuccessfulJumpsText.setPosition(0, 300);
+		numberOfUnsuccessfulJumpsText.setPosition(0, 255);
+		freeFliedMetersText.setPosition(0, 210);
+		parachuteFliedMetersText.setPosition(0, 165);
+		upperImpulseText.setPosition(0, 120);
+		antigravityText.setPosition(0, 75);
+		shieldText.setPosition(0, 30);
+		slowText.setPosition(0, -15);		
 		
 		statisticsChildScene.setOnMenuItemClickListener(this);
 		setChildScene(statisticsChildScene);

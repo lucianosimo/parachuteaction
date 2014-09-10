@@ -97,8 +97,8 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
 		
-		menuButtonItem.setPosition(-150, -350);
-		coinsText.setPosition(300, 250);
+		menuButtonItem.setPosition(-200, -500);
+		coinsText.setPosition(0, 300);
 		
 		menuChildScene.setOnMenuItemClickListener(this);
 		setChildScene(menuChildScene);
@@ -145,14 +145,14 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 	}
 	
 	private void loadLocations() {
-		desert = new Sprite(-140, 0, resourcesManager.shop_desert_region, vbom);		
-		mountain = new Sprite(0, 0, resourcesManager.shop_mountain_region, vbom);
-		western = new Sprite(140, 0, resourcesManager.shop_western_region, vbom);
+		desert = new Sprite(-215, 25, resourcesManager.shop_desert_region, vbom);		
+		mountain = new Sprite(0, 25, resourcesManager.shop_mountain_region, vbom);
+		western = new Sprite(215, 25, resourcesManager.shop_western_region, vbom);
 		menuChildScene.attachChild(desert);
 		menuChildScene.attachChild(mountain);
 		menuChildScene.attachChild(western);
 		if (!unlockedDesert) {
-			lockedDesert = new Sprite(62, 87, resourcesManager.shop_locked_location_region, vbom) {
+			lockedDesert = new Sprite(100, 140, resourcesManager.shop_locked_location_region, vbom) {
 				@Override
 				public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 					if (pSceneTouchEvent.isActionDown()) {
@@ -170,7 +170,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 			menuChildScene.registerTouchArea(lockedDesert);
 		}
 		if (!unlockedMountain) {
-			lockedMountain = new Sprite(62, 87, resourcesManager.shop_locked_location_region, vbom) {
+			lockedMountain = new Sprite(100, 140, resourcesManager.shop_locked_location_region, vbom) {
 				@Override
 				public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 					if (pSceneTouchEvent.isActionDown()) {
@@ -188,7 +188,7 @@ public class ShopScene extends BaseScene implements IOnMenuItemClickListener{
 			menuChildScene.registerTouchArea(lockedMountain);
 		}
 		if (!unlockedwestern) {
-			lockedwestern = new Sprite(62, 87, resourcesManager.shop_locked_location_region, vbom) {
+			lockedwestern = new Sprite(100, 140, resourcesManager.shop_locked_location_region, vbom) {
 				@Override
 				public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 					if (pSceneTouchEvent.isActionDown()) {
