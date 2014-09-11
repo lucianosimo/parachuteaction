@@ -76,14 +76,15 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		float screenWidth = resourcesManager.camera.getWidth();
 		float screenHeight = resourcesManager.camera.getHeight();
 		
-		Sprite title = new Sprite(-240, 0, resourcesManager.menu_title_region, vbom);
+		Sprite title = new Sprite(0, 0, resourcesManager.menu_title_region, vbom);
 		
-		Sprite cloud = new Sprite(-240, 0, resourcesManager.menu_cloud_region.deepCopy(), vbom) {
+		Sprite cloud = new Sprite(0, 0, resourcesManager.menu_cloud_region.deepCopy(), vbom) {
 			protected void onManagedUpdate(float pSecondsElapsed) {
 				super.onManagedUpdate(pSecondsElapsed);
-				if (this.getX() < LEFT_MARGIN - 166) {
+				if (this.getX() < LEFT_MARGIN - 150) {
+					//n = rand.nextInt(max - min + 1) + min;
 					Random rand = new Random();
-					int randY = rand.nextInt(855) - 427;
+					int randY = rand.nextInt(801) - 400;
 					this.setPosition(RIGHT_MARGIN + 166, randY);
 				}
 			};
@@ -92,12 +93,13 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		cloud.registerUpdateHandler(handler);
 		handler.setVelocity(CLOUD_SPEED,0);
 		
-		Sprite farCloud = new Sprite(-240, 0, resourcesManager.menu_far_cloud_region.deepCopy(), vbom) {
+		Sprite farCloud = new Sprite(0, 0, resourcesManager.menu_far_cloud_region.deepCopy(), vbom) {
 			protected void onManagedUpdate(float pSecondsElapsed) {
 				super.onManagedUpdate(pSecondsElapsed);
-				if (this.getX() < LEFT_MARGIN - 166) {
+				if (this.getX() < LEFT_MARGIN - 70) {
+					//n = rand.nextInt(max - min + 1) + min;
 					Random rand = new Random();
-					int randY = rand.nextInt(855) - 427;
+					int randY = rand.nextInt(801) - 400;
 					this.setPosition(RIGHT_MARGIN + 166, randY);
 				}
 			};
