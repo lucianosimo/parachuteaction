@@ -245,7 +245,7 @@ public class GameScene extends BaseScene{
 		gameOverWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.game_over_window_region, vbom);
 		levelCompleteWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.level_complete_window_region, vbom);
 		pauseWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.pause_window_region, vbom);
-		helpWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.help_window_region, vbom) {
+		helpWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.game_help_window_region, vbom) {
         	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
         		if (pSceneTouchEvent.isActionDown()) {
         			gameHud.setVisible(true);

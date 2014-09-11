@@ -83,7 +83,7 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 
 		loadUnlockedLocations();	
 		
-		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_MENU, resourcesManager.map_menu_region, vbom), 1.2f, 1);				
+		final IMenuItem menuButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_MENU, resourcesManager.map_menu_button_region, vbom), 1.2f, 1);				
 		final IMenuItem beachButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_BEACH, resourcesManager.map_beach_region, vbom), 1.2f, 1);
 		final IMenuItem cityButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_CITY, resourcesManager.map_city_region, vbom), 1.2f, 1);
 		final IMenuItem forestButtonItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MAP_FOREST, resourcesManager.map_forest_region, vbom), 1.2f, 1);
@@ -97,32 +97,34 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 		menuChildScene.addMenuItem(cityButtonItem);
 		menuChildScene.addMenuItem(forestButtonItem);
 		menuChildScene.addMenuItem(randomButtonItem);
-		if (unlockedDesert) {
+		if (true) {
 			menuChildScene.addMenuItem(desertButtonItem);
 		}
-		if (unlockedMountain) {
+		if (true) {
 			menuChildScene.addMenuItem(mountainButtonItem);
 		}
-		if (unlockedwestern) {
+		if (true) {
 			menuChildScene.addMenuItem(westernButtonItem);
 		}
 		
 		menuChildScene.buildAnimations();
 		menuChildScene.setBackgroundEnabled(false);
 		
-		menuButtonItem.setPosition(-150, -350);
-		beachButtonItem.setPosition(-140, 120);
-		cityButtonItem.setPosition(0, 120);
-		forestButtonItem.setPosition(140, 120);
-		randomButtonItem.setPosition(150, -350);
-		if (unlockedDesert) {
-			desertButtonItem.setPosition(-140, -120);
+		menuButtonItem.setPosition(-200, -500);
+		randomButtonItem.setPosition(200, -500);
+		
+		beachButtonItem.setPosition(-215, 175);
+		cityButtonItem.setPosition(0, 175);
+		forestButtonItem.setPosition(215, 175);
+		
+		if (true) {
+			desertButtonItem.setPosition(-215, -175);
 		}
-		if (unlockedMountain) {
-			mountainButtonItem.setPosition(0, -120);
+		if (true) {
+			mountainButtonItem.setPosition(0, -175);
 		}
-		if (unlockedwestern) {
-			westernButtonItem.setPosition(140, -120);
+		if (true) {
+			westernButtonItem.setPosition(215, -175);
 		}
 		
 		menuChildScene.setOnMenuItemClickListener(this);

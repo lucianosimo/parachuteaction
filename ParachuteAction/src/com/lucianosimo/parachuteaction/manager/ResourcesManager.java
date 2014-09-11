@@ -74,7 +74,7 @@ public class ResourcesManager {
 	//Map items
 	public ITextureRegion map_background_region;
 	public ITextureRegion map_random_button_region;
-	public ITextureRegion map_menu_region;
+	public ITextureRegion map_menu_button_region;
 	public ITextureRegion map_beach_region;
 	public ITextureRegion map_city_region;
 	public ITextureRegion map_desert_region;
@@ -214,7 +214,7 @@ public class ResourcesManager {
 	public ITextureRegion level_complete_window_region;
 	public ITextureRegion pause_window_region;
 	public ITextureRegion game_over_window_region;
-	public ITextureRegion help_window_region;
+	public ITextureRegion game_help_window_region;
 	
 	public ITextureRegion map_button_region;
 	public ITextureRegion quit_button_region;
@@ -337,7 +337,7 @@ public class ResourcesManager {
 		backgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		backgroundLocationTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 500, TextureOptions.BILINEAR);
 		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1200, 1200, TextureOptions.BILINEAR);
-		windowsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1000, 1000, TextureOptions.BILINEAR);
+		windowsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 2048, 2048, TextureOptions.BILINEAR);
 		
 		//Background texture objects
 		if (MapScene.getDayOrNight()) {
@@ -388,7 +388,7 @@ public class ResourcesManager {
 		level_complete_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "level_complete_window.png");
 		pause_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "pause_window.png");
 		game_over_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_over_window.png");
-		help_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "help_window.png");
+		game_help_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_help_window.png");
 		map_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "map_button.png");
 		quit_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "quit_button.png");
 		fly_again_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "fly_again_button.png");
@@ -738,17 +738,17 @@ public class ResourcesManager {
 	
 	private void loadMapGraphics() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/map/");
-		mapTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
+		mapTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1500, 1500, TextureOptions.BILINEAR);
 		mapBackgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		
-		map_random_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "random.png");
-		map_menu_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "menu_button.png");
-		map_beach_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "beach.png");
-		map_city_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "city.png");
-		map_desert_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "desert.png");
-		map_forest_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "forest.png");
-		map_mountain_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "mountain.png");
-		map_western_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "western.png");
+		map_random_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "map_random_button.png");
+		map_menu_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "map_menu_button.png");
+		map_beach_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "map_beach_button.png");
+		map_city_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "map_city_button.png");
+		map_desert_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "map_desert_button.png");
+		map_forest_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "map_forest_button.png");
+		map_mountain_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "map_mountain_button.png");
+		map_western_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapTextureAtlas, activity, "map_western_button.png");
 		map_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mapBackgroundTextureAtlas, activity, "map_background.png");
 		
 		try {
