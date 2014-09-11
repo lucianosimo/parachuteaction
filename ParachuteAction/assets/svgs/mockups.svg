@@ -454,9 +454,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.12374369"
-     inkscape:cx="1455.0159"
-     inkscape:cy="608.01291"
+     inkscape:zoom="0.175"
+     inkscape:cx="199.75475"
+     inkscape:cy="-606.33833"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -600,7 +600,7 @@
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\Gamescene\game_background_day.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"
-       transform="translate(1522.8317,84.936933)">
+       transform="translate(-1305.7143,82.85714)">
       <g
          transform="translate(1305.7143,-82.857143)"
          id="g3781">
@@ -4895,7 +4895,7 @@
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\shop_mountain_button.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"
-       transform="matrix(1.5534033,0,0,1.5380833,499.44858,-377.22063)">
+       transform="matrix(1.5534033,0,0,1.5380833,3813.7342,1028.4936)">
       <rect
          inkscape:export-ydpi="90"
          inkscape:export-xdpi="90"
@@ -4950,7 +4950,7 @@
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\shop_desert_button.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"
-       transform="matrix(1.5529501,0,0,1.5377188,270.72505,-87.145143)">
+       transform="matrix(1.5529501,0,0,1.5377188,3585.0107,1318.5691)">
       <rect
          inkscape:export-ydpi="90"
          inkscape:export-xdpi="90"
@@ -5006,7 +5006,7 @@
     </g>
     <g
        id="g5055"
-       transform="matrix(1.5538952,0,0,1.5376981,1331.381,-26.946177)"
+       transform="matrix(1.5538952,0,0,1.5376981,4645.6666,1378.7681)"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\shop_western_button.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -5068,15 +5068,15 @@
        id="rect2985-5-89-2-9-2"
        width="118"
        height="168"
-       x="1460.7532"
-       y="1104.8597"
+       x="4775.0386"
+       y="2510.574"
        rx="2.0072447e-015"
        inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\shop\western.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <g
        id="g4703-6"
-       transform="matrix(0.95934959,0,0,0.96,797.94883,-175.15598)">
+       transform="matrix(0.95934959,0,0,0.96,4112.2345,1230.5583)">
       <image
          inkscape:export-ydpi="90"
          inkscape:export-xdpi="90"
@@ -5109,15 +5109,15 @@
        id="rect2985-5-89-8-8-8-61"
        width="124.00681"
        height="174.00681"
-       x="1457.177"
-       y="1101.4188"
+       x="4771.4624"
+       y="2507.1331"
        rx="19"
        inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\shop\western.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <g
        id="g5119"
-       transform="matrix(1.5619048,0,0,1.5238095,1068.299,393.15222)"
+       transform="matrix(1.5619048,0,0,1.5238095,4382.5846,1798.8665)"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\shop_locked_location.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -9825,8 +9825,8 @@
        id="rect2985-5-89-6"
        width="118"
        height="168"
-       x="1056.7811"
-       y="1215.277"
+       x="4371.0669"
+       y="2620.9912"
        rx="2.0072447e-015"
        inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\shop\western.png"
        inkscape:export-xdpi="90"
@@ -9836,15 +9836,15 @@
        id="rect2985-5-89-8-5"
        width="124.00681"
        height="174.00681"
-       x="1053.205"
-       y="1211.8361"
+       x="4367.4907"
+       y="2617.5503"
        rx="19"
        inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\shop\western.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <g
        id="g4594"
-       transform="matrix(1.5538952,0,0,1.5376981,1112.544,73.148057)"
+       transform="matrix(1.5538952,0,0,1.5376981,4426.8296,1478.8623)"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\map_forest.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -9899,7 +9899,7 @@
     </g>
     <g
        id="g4672"
-       transform="matrix(1.5529501,0,0,1.538404,889.21766,73.829147)"
+       transform="matrix(1.5529501,0,0,1.538404,4203.5033,1479.5434)"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\map_beach.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -9954,7 +9954,7 @@
     </g>
     <g
        id="g4760"
-       transform="matrix(1.5529501,0,0,1.538404,1030.2245,403.65969)"
+       transform="matrix(1.5529501,0,0,1.538404,4344.5101,1809.3739)"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\map_city.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -10412,7 +10412,7 @@
     </g>
     <g
        id="g5065-4"
-       transform="translate(2641.6957,1190.3658)"
+       transform="translate(5955.9813,2596.08)"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\menu_far_cloud.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -10554,7 +10554,7 @@
     </g>
     <g
        id="g5065-4-5"
-       transform="matrix(2.4066192,0,0,2.4066192,4225.4941,-115.85692)"
+       transform="matrix(2.4066192,0,0,2.4066192,7539.7797,1289.8573)"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\menu_cloud.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -10694,5 +10694,506 @@
          d="m -1098.6894,1134.2 c -4.0686,-1.0297 -7.9456,-4.7441 -10.1393,-9.7139 -1.1687,-2.6476 -1.9131,-3.3302 -1.9477,-1.7857 -0.092,4.1292 -10.2531,3.3517 -15.6606,-1.1984 -3.6682,-3.0866 -4.3953,-4.7269 -4.3953,-9.9157 0,-3.4195 0.6429,-6.6146 1.4286,-7.1002 2.4425,-1.5095 1.5925,-2.8832 -2.8132,-4.5461 -5.1023,-1.9259 -9.409,-9.9545 -8.1119,-15.1225 1.8177,-7.2425 5.811,-10.3314 13.3562,-10.3314 6.7913,0 6.9545,-0.1003 6.3922,-3.9313 -1.1431,-7.7886 7.8236,-16.3179 15.4043,-14.6529 3.8386,0.8431 4.3608,1.5639 4.49,6.1977 l 0.1463,5.2436 1.1138,-4.7013 c 2.2465,-9.4817 9.6261,-14.1419 18.5772,-11.7317 5.702,1.5354 10.0165,6.4384 10.0165,11.3828 0,1.5991 0.6429,2.9074 1.4286,2.9074 0.7857,0 1.4285,-1.2631 1.4285,-2.8069 0,-3.3504 4.0062,-5.7666 9.549,-5.7592 5.0509,0.01 12.7678,4.6129 13.9457,8.3243 0.771,2.4293 1.4352,2.6076 4.8756,1.309 8.6914,-3.2806 18.7726,3.4499 18.7726,12.5332 0,2.8374 -0.6886,6.4454 -1.5301,8.0179 -1.1653,2.1774 -0.995,3.6757 0.7143,6.2844 3.8636,5.8966 2.8746,11.8799 -2.8574,17.2858 -3.3522,3.1615 -4.3319,4.8115 -2.8571,4.8115 2.9335,0 2.937,5.5186 0.01,9.7029 -3.1523,4.5005 -11.0852,7.4399 -20.0789,7.4399 -8.1822,0 -8.7967,-0.5498 -5.4944,-4.9158 1.1536,-1.5252 2.0833,-4.0967 2.0661,-5.7143 -0.021,-1.9806 -0.8836,-1.0653 -2.6404,2.8021 -3.9811,8.7636 -12.857,11.6422 -21.7376,7.0498 -3.8509,-1.9914 -4.192,-2.7236 -3.4941,-7.5 l 0.7735,-5.2932 -1.8931,4.9212 c -2.9663,7.7112 -11.3659,12.3971 -18.8341,10.507 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" />
     </g>
+    <g
+       id="g5065-4-1"
+       transform="translate(2059.3968,170.56454)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_far_cloud.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1154.8917,1040.6721)"
+         sodipodi:end="5.3080751"
+         sodipodi:start="2.7823039"
+         d="m 120.75121,122.87807 c -9.9195,-28.066784 3.449,-59.365094 29.85937,-69.906729 15.51834,-6.194104 32.90006,-4.000528 46.62174,5.883671"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="51.08194"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-6-9"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1132.3917,1035.0471)"
+         sodipodi:end="6.3657175"
+         sodipodi:start="2.9809486"
+         d="M 113.16146,112.47397 C 108.20269,82.878825 128.9907,54.999609 159.59278,50.204 c 30.60208,-4.795608 59.42984,15.308391 64.38861,44.903539 0.7287,4.349035 0.90724,8.767691 0.53167,13.158451"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="56.132706"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-1-6"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1105.8738,1041.4757)"
+         sodipodi:end="6.0771319"
+         sodipodi:start="3.9181019"
+         d="m 127.80776,65.74768 c 22.11643,-21.387493 58.29586,-21.693017 80.80901,-0.682407 8.05097,7.513648 13.57963,17.12389 15.88871,27.618713"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-8-9"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1082.5703,1050.315)"
+         sodipodi:end="7.0258191"
+         sodipodi:start="4.210246"
+         d="m 141.06828,56.206443 c 27.66325,-14.43009 62.40233,-4.823767 77.5919,21.456324 11.79499,20.406992 8.57971,45.686803 -7.99218,62.837643"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-2-8"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1081.7667,1071.2079)"
+         sodipodi:end="7.5238273"
+         sodipodi:start="5.5206769"
+         d="m 209.89175,66.293581 c 21.79907,21.679554 20.97097,56.042359 -1.84961,76.751479 -5.97831,5.42516 -13.1246,9.55333 -20.94563,12.09956"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-1-2"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1114.7131,1090.4936)"
+         sodipodi:end="2.5168434"
+         sodipodi:start="0"
+         d="m 225.71428,103.79076 c 0,29.98117 -25.58373,54.28571 -57.14285,54.28571 -18.36364,0 -35.60836,-8.38415 -46.34913,-22.53433"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-9-4-1-5"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1142.0346,1091.2971)"
+         sodipodi:end="3.0638063"
+         sodipodi:start="0"
+         d="m 225.71428,103.79076 c 0,29.98117 -25.58373,54.28571 -57.14285,54.28571 -29.83693,0 -54.6515,-21.80791 -56.97007,-50.06728"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-9-4-8-9-5"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1163.731,1082.4579)"
+         sodipodi:end="3.7822126"
+         sodipodi:start="1.1780973"
+         d="m 190.43905,153.94422 c -29.15684,11.47329 -62.58359,-1.68023 -74.66074,-29.37922 -7.70422,-17.66966 -5.05257,-37.887014 6.98024,-53.220412"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-9-4-8-8-7-4"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1173.0524,1058.3507)"
+         sodipodi:end="4.9922884"
+         sodipodi:start="1.7230838"
+         d="M 159.90288,157.4482 C 128.709,152.90007 107.3024,125.18983 112.0899,95.555639 116.87741,65.92145 146.04609,45.585181 177.23997,50.13331 c 2.40339,0.350419 4.78078,0.846213 7.11768,1.484358"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-9-4-8-8-2-6-91"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1150.573,1012.9287)"
+         sodipodi:end="8.3767061"
+         sodipodi:start="5.914572"
+         d="m 444.22527,355.90502 c 15.67962,28.10253 -4.51628,59.68394 -45.10881,70.53906 -22.20634,5.93835 -47.10028,4.60772 -67.72675,-3.62013"
+         sodipodi:ry="54.548237"
+         sodipodi:rx="78.791901"
+         sodipodi:cy="375.55997"
+         sodipodi:cx="370.72598"
+         id="path5377-2-2"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path5753-9-5"
+         d="m -1098.6894,1134.2 c -4.0686,-1.0297 -7.9456,-4.7441 -10.1393,-9.7139 -1.1687,-2.6476 -1.9131,-3.3302 -1.9477,-1.7857 -0.092,4.1292 -10.2531,3.3517 -15.6606,-1.1984 -3.6682,-3.0866 -4.3953,-4.7269 -4.3953,-9.9157 0,-3.4195 0.6429,-6.6146 1.4286,-7.1002 2.4425,-1.5095 1.5925,-2.8832 -2.8132,-4.5461 -5.1023,-1.9259 -9.409,-9.9545 -8.1119,-15.1225 1.8177,-7.2425 5.811,-10.3314 13.3562,-10.3314 6.7913,0 6.9545,-0.1003 6.3922,-3.9313 -1.1431,-7.7886 7.8236,-16.3179 15.4043,-14.6529 3.8386,0.8431 4.3608,1.5639 4.49,6.1977 l 0.1463,5.2436 1.1138,-4.7013 c 2.2465,-9.4817 9.6261,-14.1419 18.5772,-11.7317 5.702,1.5354 10.0165,6.4384 10.0165,11.3828 0,1.5991 0.6429,2.9074 1.4286,2.9074 0.7857,0 1.4285,-1.2631 1.4285,-2.8069 0,-3.3504 4.0062,-5.7666 9.549,-5.7592 5.0509,0.01 12.7678,4.6129 13.9457,8.3243 0.771,2.4293 1.4352,2.6076 4.8756,1.309 8.6914,-3.2806 18.7726,3.4499 18.7726,12.5332 0,2.8374 -0.6886,6.4454 -1.5301,8.0179 -1.1653,2.1774 -0.995,3.6757 0.7143,6.2844 3.8636,5.8966 2.8746,11.8799 -2.8574,17.2858 -3.3522,3.1615 -4.3319,4.8115 -2.8571,4.8115 2.9335,0 2.937,5.5186 0.01,9.7029 -3.1523,4.5005 -11.0852,7.4399 -20.0789,7.4399 -8.1822,0 -8.7967,-0.5498 -5.4944,-4.9158 1.1536,-1.5252 2.0833,-4.0967 2.0661,-5.7143 -0.021,-1.9806 -0.8836,-1.0653 -2.6404,2.8021 -3.9811,8.7636 -12.857,11.6422 -21.7376,7.0498 -3.8509,-1.9914 -4.192,-2.7236 -3.4941,-7.5 l 0.7735,-5.2932 -1.8931,4.9212 c -2.9663,7.7112 -11.3659,12.3971 -18.8341,10.507 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+    </g>
+    <g
+       id="g5065-4-5-0"
+       transform="matrix(2.4066192,0,0,2.4066192,3588.9095,-1118.5153)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_cloud.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1154.8917,1040.6721)"
+         sodipodi:end="5.3080751"
+         sodipodi:start="2.7823039"
+         d="m 120.75121,122.87807 c -9.9195,-28.066784 3.449,-59.365094 29.85937,-69.906729 15.51834,-6.194104 32.90006,-4.000528 46.62174,5.883671"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="51.08194"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-6-2-8"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1132.3917,1035.0471)"
+         sodipodi:end="6.3657175"
+         sodipodi:start="2.9809486"
+         d="M 113.16146,112.47397 C 108.20269,82.878825 128.9907,54.999609 159.59278,50.204 c 30.60208,-4.795608 59.42984,15.308391 64.38861,44.903539 0.7287,4.349035 0.90724,8.767691 0.53167,13.158451"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="56.132706"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-1-0-3"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1105.8738,1041.4757)"
+         sodipodi:end="6.0771319"
+         sodipodi:start="3.9181019"
+         d="m 127.80776,65.74768 c 22.11643,-21.387493 58.29586,-21.693017 80.80901,-0.682407 8.05097,7.513648 13.57963,17.12389 15.88871,27.618713"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-8-0-9"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1082.5703,1050.315)"
+         sodipodi:end="7.0258191"
+         sodipodi:start="4.210246"
+         d="m 141.06828,56.206443 c 27.66325,-14.43009 62.40233,-4.823767 77.5919,21.456324 11.79499,20.406992 8.57971,45.686803 -7.99218,62.837643"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-2-3-3"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1081.7667,1071.2079)"
+         sodipodi:end="7.5238273"
+         sodipodi:start="5.5206769"
+         d="m 209.89175,66.293581 c 21.79907,21.679554 20.97097,56.042359 -1.84961,76.751479 -5.97831,5.42516 -13.1246,9.55333 -20.94563,12.09956"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-1-9-9"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1114.7131,1090.4936)"
+         sodipodi:end="2.5168434"
+         sodipodi:start="0"
+         d="m 225.71428,103.79076 c 0,29.98117 -25.58373,54.28571 -57.14285,54.28571 -18.36364,0 -35.60836,-8.38415 -46.34913,-22.53433"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-9-4-1-1-6"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1142.0346,1091.2971)"
+         sodipodi:end="3.0638063"
+         sodipodi:start="0"
+         d="m 225.71428,103.79076 c 0,29.98117 -25.58373,54.28571 -57.14285,54.28571 -29.83693,0 -54.6515,-21.80791 -56.97007,-50.06728"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-9-4-8-9-8-7"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1163.731,1082.4579)"
+         sodipodi:end="3.7822126"
+         sodipodi:start="1.1780973"
+         d="m 190.43905,153.94422 c -29.15684,11.47329 -62.58359,-1.68023 -74.66074,-29.37922 -7.70422,-17.66966 -5.05257,-37.887014 6.98024,-53.220412"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-9-4-8-8-7-1-9"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1173.0524,1058.3507)"
+         sodipodi:end="4.9922884"
+         sodipodi:start="1.7230838"
+         d="M 159.90288,157.4482 C 128.709,152.90007 107.3024,125.18983 112.0899,95.555639 116.87741,65.92145 146.04609,45.585181 177.23997,50.13331 c 2.40339,0.350419 4.78078,0.846213 7.11768,1.484358"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-9-4-8-8-2-6-9-9"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1150.573,1012.9287)"
+         sodipodi:end="8.3767061"
+         sodipodi:start="5.914572"
+         d="m 444.22527,355.90502 c 15.67962,28.10253 -4.51628,59.68394 -45.10881,70.53906 -22.20634,5.93835 -47.10028,4.60772 -67.72675,-3.62013"
+         sodipodi:ry="54.548237"
+         sodipodi:rx="78.791901"
+         sodipodi:cy="375.55997"
+         sodipodi:cx="370.72598"
+         id="path5377-2-5-7"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path5753-9-3-6"
+         d="m -1098.6894,1134.2 c -4.0686,-1.0297 -7.9456,-4.7441 -10.1393,-9.7139 -1.1687,-2.6476 -1.9131,-3.3302 -1.9477,-1.7857 -0.092,4.1292 -10.2531,3.3517 -15.6606,-1.1984 -3.6682,-3.0866 -4.3953,-4.7269 -4.3953,-9.9157 0,-3.4195 0.6429,-6.6146 1.4286,-7.1002 2.4425,-1.5095 1.5925,-2.8832 -2.8132,-4.5461 -5.1023,-1.9259 -9.409,-9.9545 -8.1119,-15.1225 1.8177,-7.2425 5.811,-10.3314 13.3562,-10.3314 6.7913,0 6.9545,-0.1003 6.3922,-3.9313 -1.1431,-7.7886 7.8236,-16.3179 15.4043,-14.6529 3.8386,0.8431 4.3608,1.5639 4.49,6.1977 l 0.1463,5.2436 1.1138,-4.7013 c 2.2465,-9.4817 9.6261,-14.1419 18.5772,-11.7317 5.702,1.5354 10.0165,6.4384 10.0165,11.3828 0,1.5991 0.6429,2.9074 1.4286,2.9074 0.7857,0 1.4285,-1.2631 1.4285,-2.8069 0,-3.3504 4.0062,-5.7666 9.549,-5.7592 5.0509,0.01 12.7678,4.6129 13.9457,8.3243 0.771,2.4293 1.4352,2.6076 4.8756,1.309 8.6914,-3.2806 18.7726,3.4499 18.7726,12.5332 0,2.8374 -0.6886,6.4454 -1.5301,8.0179 -1.1653,2.1774 -0.995,3.6757 0.7143,6.2844 3.8636,5.8966 2.8746,11.8799 -2.8574,17.2858 -3.3522,3.1615 -4.3319,4.8115 -2.8571,4.8115 2.9335,0 2.937,5.5186 0.01,9.7029 -3.1523,4.5005 -11.0852,7.4399 -20.0789,7.4399 -8.1822,0 -8.7967,-0.5498 -5.4944,-4.9158 1.1536,-1.5252 2.0833,-4.0967 2.0661,-5.7143 -0.021,-1.9806 -0.8836,-1.0653 -2.6404,2.8021 -3.9811,8.7636 -12.857,11.6422 -21.7376,7.0498 -3.8509,-1.9914 -4.192,-2.7236 -3.4941,-7.5 l 0.7735,-5.2932 -1.8931,4.9212 c -2.9663,7.7112 -11.3659,12.3971 -18.8341,10.507 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+    </g>
+    <g
+       id="g5065-4-5-0-9"
+       transform="matrix(4.3219423,0,0,4.3219423,5079.1262,-3300.1923)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_closer_cloud.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1154.8917,1040.6721)"
+         sodipodi:end="5.3080751"
+         sodipodi:start="2.7823039"
+         d="m 120.75121,122.87807 c -9.9195,-28.066784 3.449,-59.365094 29.85937,-69.906729 15.51834,-6.194104 32.90006,-4.000528 46.62174,5.883671"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="51.08194"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-6-2-8-3"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1132.3917,1035.0471)"
+         sodipodi:end="6.3657175"
+         sodipodi:start="2.9809486"
+         d="M 113.16146,112.47397 C 108.20269,82.878825 128.9907,54.999609 159.59278,50.204 c 30.60208,-4.795608 59.42984,15.308391 64.38861,44.903539 0.7287,4.349035 0.90724,8.767691 0.53167,13.158451"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="56.132706"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-1-0-3-5"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1105.8738,1041.4757)"
+         sodipodi:end="6.0771319"
+         sodipodi:start="3.9181019"
+         d="m 127.80776,65.74768 c 22.11643,-21.387493 58.29586,-21.693017 80.80901,-0.682407 8.05097,7.513648 13.57963,17.12389 15.88871,27.618713"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-8-0-9-7"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1082.5703,1050.315)"
+         sodipodi:end="7.0258191"
+         sodipodi:start="4.210246"
+         d="m 141.06828,56.206443 c 27.66325,-14.43009 62.40233,-4.823767 77.5919,21.456324 11.79499,20.406992 8.57971,45.686803 -7.99218,62.837643"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-2-3-3-6"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1081.7667,1071.2079)"
+         sodipodi:end="7.5238273"
+         sodipodi:start="5.5206769"
+         d="m 209.89175,66.293581 c 21.79907,21.679554 20.97097,56.042359 -1.84961,76.751479 -5.97831,5.42516 -13.1246,9.55333 -20.94563,12.09956"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-1-9-9-6"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1114.7131,1090.4936)"
+         sodipodi:end="2.5168434"
+         sodipodi:start="0"
+         d="m 225.71428,103.79076 c 0,29.98117 -25.58373,54.28571 -57.14285,54.28571 -18.36364,0 -35.60836,-8.38415 -46.34913,-22.53433"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-9-4-1-1-6-5"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1142.0346,1091.2971)"
+         sodipodi:end="3.0638063"
+         sodipodi:start="0"
+         d="m 225.71428,103.79076 c 0,29.98117 -25.58373,54.28571 -57.14285,54.28571 -29.83693,0 -54.6515,-21.80791 -56.97007,-50.06728"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-9-4-8-9-8-7-8"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1163.731,1082.4579)"
+         sodipodi:end="3.7822126"
+         sodipodi:start="1.1780973"
+         d="m 190.43905,153.94422 c -29.15684,11.47329 -62.58359,-1.68023 -74.66074,-29.37922 -7.70422,-17.66966 -5.05257,-37.887014 6.98024,-53.220412"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-9-4-8-8-7-1-9-2"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1173.0524,1058.3507)"
+         sodipodi:end="4.9922884"
+         sodipodi:start="1.7230838"
+         d="M 159.90288,157.4482 C 128.709,152.90007 107.3024,125.18983 112.0899,95.555639 116.87741,65.92145 146.04609,45.585181 177.23997,50.13331 c 2.40339,0.350419 4.78078,0.846213 7.11768,1.484358"
+         sodipodi:ry="54.285713"
+         sodipodi:rx="57.142857"
+         sodipodi:cy="103.79076"
+         sodipodi:cx="168.57143"
+         id="path5191-1-7-4-0-9-4-8-8-2-6-9-9-5"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.28125,0,0,0.28125,-1150.573,1012.9287)"
+         sodipodi:end="8.3767061"
+         sodipodi:start="5.914572"
+         d="m 444.22527,355.90502 c 15.67962,28.10253 -4.51628,59.68394 -45.10881,70.53906 -22.20634,5.93835 -47.10028,4.60772 -67.72675,-3.62013"
+         sodipodi:ry="54.548237"
+         sodipodi:rx="78.791901"
+         sodipodi:cy="375.55997"
+         sodipodi:cx="370.72598"
+         id="path5377-2-5-7-4"
+         style="fill:none;stroke:#000000;stroke-width:3.5999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path5753-9-3-6-4"
+         d="m -1098.6894,1134.2 c -4.0686,-1.0297 -7.9456,-4.7441 -10.1393,-9.7139 -1.1687,-2.6476 -1.9131,-3.3302 -1.9477,-1.7857 -0.092,4.1292 -10.2531,3.3517 -15.6606,-1.1984 -3.6682,-3.0866 -4.3953,-4.7269 -4.3953,-9.9157 0,-3.4195 0.6429,-6.6146 1.4286,-7.1002 2.4425,-1.5095 1.5925,-2.8832 -2.8132,-4.5461 -5.1023,-1.9259 -9.409,-9.9545 -8.1119,-15.1225 1.8177,-7.2425 5.811,-10.3314 13.3562,-10.3314 6.7913,0 6.9545,-0.1003 6.3922,-3.9313 -1.1431,-7.7886 7.8236,-16.3179 15.4043,-14.6529 3.8386,0.8431 4.3608,1.5639 4.49,6.1977 l 0.1463,5.2436 1.1138,-4.7013 c 2.2465,-9.4817 9.6261,-14.1419 18.5772,-11.7317 5.702,1.5354 10.0165,6.4384 10.0165,11.3828 0,1.5991 0.6429,2.9074 1.4286,2.9074 0.7857,0 1.4285,-1.2631 1.4285,-2.8069 0,-3.3504 4.0062,-5.7666 9.549,-5.7592 5.0509,0.01 12.7678,4.6129 13.9457,8.3243 0.771,2.4293 1.4352,2.6076 4.8756,1.309 8.6914,-3.2806 18.7726,3.4499 18.7726,12.5332 0,2.8374 -0.6886,6.4454 -1.5301,8.0179 -1.1653,2.1774 -0.995,3.6757 0.7143,6.2844 3.8636,5.8966 2.8746,11.8799 -2.8574,17.2858 -3.3522,3.1615 -4.3319,4.8115 -2.8571,4.8115 2.9335,0 2.937,5.5186 0.01,9.7029 -3.1523,4.5005 -11.0852,7.4399 -20.0789,7.4399 -8.1822,0 -8.7967,-0.5498 -5.4944,-4.9158 1.1536,-1.5252 2.0833,-4.0967 2.0661,-5.7143 -0.021,-1.9806 -0.8836,-1.0653 -2.6404,2.8021 -3.9811,8.7636 -12.857,11.6422 -21.7376,7.0498 -3.8509,-1.9914 -4.192,-2.7236 -3.4941,-7.5 l 0.7735,-5.2932 -1.8931,4.9212 c -2.9663,7.7112 -11.3659,12.3971 -18.8341,10.507 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+    </g>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.47736275;stroke-opacity:1"
+       id="rect3005-1"
+       width="620.52258"
+       height="369.32272"
+       x="526.42523"
+       y="2122.6069"
+       rx="35.015202"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_level_complete_window.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       id="g5402"
+       transform="matrix(1.4774554,0,0,1.4774554,-274.94076,-1100.2121)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_pause_window.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\pause_window.png"
+         rx="23.700001"
+         y="1898.0764"
+         x="291.78574"
+         height="250"
+         width="420"
+         id="rect3005-2-6"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+      <flowRoot
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\pause_window.png"
+         transform="translate(520.35712,1633.5713)"
+         style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Simplicity;-inkscape-font-specification:Simplicity"
+         id="flowRoot3800-6"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3802-3"><rect
+             y="282.36218"
+             x="-68.571426"
+             height="77.85714"
+             width="116.42857"
+             id="rect3804-3" /></flowRegion><flowPara
+           id="flowPara3806-5">Pause</flowPara></flowRoot>    </g>
+    <g
+       id="g5395"
+       transform="matrix(1.4774364,0,0,1.477288,-601.58684,-1082.9515)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_over_window.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\game_over_window.png"
+         rx="23.700001"
+         y="2162.3623"
+         x="291.07144"
+         height="250"
+         width="420"
+         id="rect3005-0-1"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+      <flowRoot
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\game_over_window.png"
+         transform="translate(536.78569,1437.8571)"
+         style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Simplicity;-inkscape-font-specification:Simplicity"
+         id="flowRoot3808-5"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3810-3"><rect
+             y="743.07648"
+             x="-132.85715"
+             height="125.71429"
+             width="304.28571"
+             id="rect3812-2" /></flowRegion><flowPara
+           id="flowPara3814-8">Game over!</flowPara></flowRoot>    </g>
   </g>
 </svg>

@@ -169,7 +169,7 @@ public class GameScene extends BaseScene{
 	//16 pixels == 1 meter
 	private static final int PIXEL_METER_RATE = 16;
 	private static final int LEFT_MARGIN = 0;
-	private static final int RIGHT_MARGIN = 480;
+	private static final int RIGHT_MARGIN = 720;
 	private static final int CLOSER_CLOUD_SPEED = -70;
 	private static final int FAR_CLOUD_SPEED = -15;
 	private static final int CLOUD_SPEED = -40;
@@ -219,6 +219,8 @@ public class GameScene extends BaseScene{
 		createPhysics();
 		loadLevel(level);
 		firstGame();
+		//screenWidth = resourcesManager.camera.getWidth();
+		//screenHeight = resourcesManager.camera.getHeight();
 		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
         //GameScene.this.attachChild(debug);
 	}
@@ -243,8 +245,8 @@ public class GameScene extends BaseScene{
 	
 	private void createWindows() {
 		gameOverWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.game_over_window_region, vbom);
-		levelCompleteWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.level_complete_window_region, vbom);
-		pauseWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.pause_window_region, vbom);
+		levelCompleteWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.game_level_complete_window_region, vbom);
+		pauseWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.game_pause_window_region, vbom);
 		helpWindow = new Sprite(camera.getCenterX(), camera.getCenterY(), resourcesManager.game_help_window_region, vbom) {
         	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
         		if (pSceneTouchEvent.isActionDown()) {
@@ -364,12 +366,12 @@ public class GameScene extends BaseScene{
 				int hour = rand.nextInt(12) + 8;
 				coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
 				altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);
-				levelStartText.setText("western - " + hour + ":00 hs");
+				levelStartText.setText("Western - " + hour + ":00 hs");
 			} else {
 				int hour = rand.nextInt(5) + 20;
 				coinsText.setColor(Color.WHITE_ARGB_PACKED_INT);
 				altimeterText.setColor(Color.WHITE_ARGB_PACKED_INT);
-				levelStartText.setText("western - " + hour + ":00 hs");
+				levelStartText.setText("Western - " + hour + ":00 hs");
 			}
 		}
 
@@ -542,11 +544,11 @@ public class GameScene extends BaseScene{
 					Random rand = new Random();
 					int randX = rand.nextInt(441) - 220;
 					int randY = rand.nextInt(201) - 100;
-					levelObject = new Sprite(x + randX, y + randY, resourcesManager.cloud_region, vbom) {
+					levelObject = new Sprite(x + randX, y + randY, resourcesManager.game_cloud_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							if (this.getX() < LEFT_MARGIN - 166) {
-								this.setPosition(RIGHT_MARGIN + 166, y);
+							if (this.getX() < LEFT_MARGIN - 200) {
+								this.setPosition(RIGHT_MARGIN + 200, y);
 							}
 						};
 					};
@@ -557,11 +559,11 @@ public class GameScene extends BaseScene{
 					Random rand = new Random();
 					int randX = rand.nextInt(441) - 220;
 					int randY = rand.nextInt(201) - 100;
-					levelObject = new Sprite(x + randX, y + randY, resourcesManager.closerCloud_region, vbom) {
+					levelObject = new Sprite(x + randX, y + randY, resourcesManager.game_closer_cloud_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							if (this.getX() < LEFT_MARGIN - 166) {
-								this.setPosition(RIGHT_MARGIN + 166, y);
+							if (this.getX() < LEFT_MARGIN - 540) {
+								this.setPosition(RIGHT_MARGIN + 540, y);
 							}
 						};
 					};
@@ -573,11 +575,11 @@ public class GameScene extends BaseScene{
 					Random rand = new Random();
 					int randX = rand.nextInt(441) - 220;
 					int randY = rand.nextInt(201) - 100;
-					levelObject = new Sprite(x + randX, y + randY, resourcesManager.farCloud_region, vbom) {
+					levelObject = new Sprite(x + randX, y + randY, resourcesManager.game_far_cloud_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							if (this.getX() < LEFT_MARGIN - 166) {
-								this.setPosition(RIGHT_MARGIN + 166, y);
+							if (this.getX() < LEFT_MARGIN - 125) {
+								this.setPosition(RIGHT_MARGIN + 125, y);
 							}
 						};
 					};
@@ -1391,8 +1393,9 @@ public class GameScene extends BaseScene{
 		GameScene.this.setIgnoreUpdate(true);
 		camera.setChaseEntity(null);
 		pauseWindow.setPosition(camera.getCenterX(), camera.getCenterY());
-		GameScene.this.attachChild(pauseWindow);
+
 		gameHud.setVisible(false);
+		
 		final Sprite resumeButton = new Sprite(345, 45, resourcesManager.resume_button_region, vbom){
 	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 	    		if (pSceneTouchEvent.isActionDown()) {
@@ -1435,14 +1438,17 @@ public class GameScene extends BaseScene{
 	    pauseWindow.attachChild(quitButton);
 	    pauseWindow.attachChild(resumeButton);
 	    pauseWindow.attachChild(mapButton);
+		GameScene.this.attachChild(pauseWindow);
 	}
 	
 	private void displayHelpWindow() {
 		GameScene.this.setIgnoreUpdate(true);
+		
 		camera.setChaseEntity(null);
         availablePause = false;
 		gameHud.setVisible(false);
 		helpWindow.setPosition(camera.getCenterX(), camera.getCenterY());
+
 		GameScene.this.attachChild(helpWindow);
         GameScene.this.registerTouchArea(helpWindow);
 	}

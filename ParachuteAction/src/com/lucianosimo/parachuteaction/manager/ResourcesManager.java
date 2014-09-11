@@ -187,9 +187,9 @@ public class ResourcesManager {
 	public ITextureRegion red_arrow_region;
 
 	//Objects
-	public ITextureRegion cloud_region;
-	public ITextureRegion closerCloud_region;
-	public ITextureRegion farCloud_region;
+	public ITextureRegion game_cloud_region;
+	public ITextureRegion game_closer_cloud_region;
+	public ITextureRegion game_far_cloud_region;
 	public ITextureRegion upperImpulse_region;
 	public ITextureRegion antiGravity_region;
 	public ITextureRegion slow_region;
@@ -212,8 +212,8 @@ public class ResourcesManager {
 	public ITiledTextureRegion coin_region;
 	
 	//Windows
-	public ITextureRegion level_complete_window_region;
-	public ITextureRegion pause_window_region;
+	public ITextureRegion game_level_complete_window_region;
+	public ITextureRegion game_pause_window_region;
 	public ITextureRegion game_over_window_region;
 	public ITextureRegion game_help_window_region;
 	
@@ -337,7 +337,7 @@ public class ResourcesManager {
 		animatedTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1150, 1150, TextureOptions.BILINEAR);
 		backgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
 		backgroundLocationTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 500, TextureOptions.BILINEAR);
-		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1200, 1200, TextureOptions.BILINEAR);
+		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 2048, 2048, TextureOptions.BILINEAR);
 		windowsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 2048, 2048, TextureOptions.BILINEAR);
 		
 		//Background texture objects
@@ -369,9 +369,9 @@ public class ResourcesManager {
 		
 		
 		//Objects texture objects
-		closerCloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "closerCloud.png");
-		farCloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "farCloud.png");
-		cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "cloud.png");
+		game_closer_cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_closer_cloud.png");
+		game_far_cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_far_cloud.png");
+		game_cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_cloud.png");
 		upperImpulse_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "upperImpulse.png");
 		antiGravity_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "antigravity.png");
 		slow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "slow.png");
@@ -386,8 +386,8 @@ public class ResourcesManager {
 		
 		
 		//Windows texture objects
-		level_complete_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "level_complete_window.png");
-		pause_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "pause_window.png");
+		game_level_complete_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_level_complete_window.png");
+		game_pause_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_pause_window.png");
 		game_over_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_over_window.png");
 		game_help_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_help_window.png");
 		map_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "map_button.png");

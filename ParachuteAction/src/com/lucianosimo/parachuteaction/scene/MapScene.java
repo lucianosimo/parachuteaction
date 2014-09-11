@@ -97,13 +97,13 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 		menuChildScene.addMenuItem(cityButtonItem);
 		menuChildScene.addMenuItem(forestButtonItem);
 		menuChildScene.addMenuItem(randomButtonItem);
-		if (true) {
+		if (unlockedDesert) {
 			menuChildScene.addMenuItem(desertButtonItem);
 		}
-		if (true) {
+		if (unlockedMountain) {
 			menuChildScene.addMenuItem(mountainButtonItem);
 		}
-		if (true) {
+		if (unlockedwestern) {
 			menuChildScene.addMenuItem(westernButtonItem);
 		}
 		
@@ -117,13 +117,13 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 		cityButtonItem.setPosition(0, 175);
 		forestButtonItem.setPosition(215, 175);
 		
-		if (true) {
+		if (unlockedDesert) {
 			desertButtonItem.setPosition(-215, -175);
 		}
-		if (true) {
+		if (unlockedMountain) {
 			mountainButtonItem.setPosition(0, -175);
 		}
-		if (true) {
+		if (unlockedwestern) {
 			westernButtonItem.setPosition(215, -175);
 		}
 		
