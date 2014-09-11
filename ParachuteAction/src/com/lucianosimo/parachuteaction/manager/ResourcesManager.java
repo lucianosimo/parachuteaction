@@ -217,11 +217,11 @@ public class ResourcesManager {
 	public ITextureRegion game_over_window_region;
 	public ITextureRegion game_help_window_region;
 	
-	public ITextureRegion map_button_region;
-	public ITextureRegion quit_button_region;
-	public ITextureRegion fly_again_button_region;
-	public ITextureRegion resume_button_region;
-	public ITextureRegion retry_button_region;
+	public ITextureRegion game_map_button_region;
+	public ITextureRegion game_quit_button_region;
+	public ITextureRegion game_fly_again_button_region;
+	public ITextureRegion game_resume_button_region;
+	public ITextureRegion game_retry_button_region;
 	
 	//Game Textures
 	private BuildableBitmapTextureAtlas animatedTextureAtlas;
@@ -390,11 +390,11 @@ public class ResourcesManager {
 		game_pause_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_pause_window.png");
 		game_over_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_over_window.png");
 		game_help_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_help_window.png");
-		map_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "map_button.png");
-		quit_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "quit_button.png");
-		fly_again_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "fly_again_button.png");
-		resume_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "resume_button.png");
-		retry_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "retry_button.png");
+		game_map_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_map_button.png");
+		game_quit_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_quit_button.png");
+		game_fly_again_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_fly_again_button.png");
+		game_resume_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_resume_button.png");
+		game_retry_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_retry_button.png");
 		
 		//Animated texture objects
 		player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(animatedTextureAtlas, activity, "player.png", 4, 1);

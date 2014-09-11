@@ -993,7 +993,7 @@ public class GameScene extends BaseScene{
 							        dead = true;
 							        gameOverWindow.setPosition(camera.getCenterX(), camera.getCenterY());
 									GameScene.this.attachChild(gameOverWindow);
-								    final Sprite retryButton = new Sprite(345, 45, resourcesManager.retry_button_region, vbom){
+								    final Sprite retryButton = new Sprite(510, 75, resourcesManager.game_retry_button_region, vbom){
 								    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 								    		if (pSceneTouchEvent.isActionDown()) {
 								    			gameHud.dispose();
@@ -1005,7 +1005,7 @@ public class GameScene extends BaseScene{
 								    		return true;
 								    	};
 								    };
-								    final Sprite mapButton = new Sprite(220, 45, resourcesManager.map_button_region, vbom){
+								    final Sprite mapButton = new Sprite(310, 75, resourcesManager.game_map_button_region, vbom){
 								    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 								    		if (pSceneTouchEvent.isActionDown()) {
 								    			gameHud.dispose();
@@ -1017,7 +1017,7 @@ public class GameScene extends BaseScene{
 								    		return true;
 								    	};
 								    };
-								    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
+								    final Sprite quitButton = new Sprite(110, 75, resourcesManager.game_quit_button_region, vbom){
 								    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 								    		if (pSceneTouchEvent.isActionDown()) {
 								    			gameHud.dispose();
@@ -1396,7 +1396,7 @@ public class GameScene extends BaseScene{
 
 		gameHud.setVisible(false);
 		
-		final Sprite resumeButton = new Sprite(345, 45, resourcesManager.resume_button_region, vbom){
+		final Sprite resumeButton = new Sprite(510, 75, resourcesManager.game_resume_button_region, vbom){
 	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 	    		if (pSceneTouchEvent.isActionDown()) {
 	    			gameHud.setVisible(true);
@@ -1408,7 +1408,7 @@ public class GameScene extends BaseScene{
 	    		return true;
 	    	};
 	    };
-	    final Sprite mapButton = new Sprite(220, 45, resourcesManager.map_button_region, vbom){
+	    final Sprite mapButton = new Sprite(310, 75, resourcesManager.game_map_button_region, vbom){
 	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 	    		if (pSceneTouchEvent.isActionDown()) {
 	    			gameHud.dispose();
@@ -1420,7 +1420,7 @@ public class GameScene extends BaseScene{
 	    		return true;
 	    	};
 	    };
-	    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
+	    final Sprite quitButton = new Sprite(110, 75, resourcesManager.game_quit_button_region, vbom){
 	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 	    		if (pSceneTouchEvent.isActionDown()) {
 	    			gameHud.dispose();
@@ -1460,7 +1460,7 @@ public class GameScene extends BaseScene{
         availablePause = false;
         levelCompleteWindow.setPosition(camera.getCenterX(), camera.getCenterY());
 		GameScene.this.attachChild(levelCompleteWindow);
-	    final Sprite flyAgainButton = new Sprite(345, 45, resourcesManager.fly_again_button_region, vbom){
+	    final Sprite flyAgainButton = new Sprite(510, 75, resourcesManager.game_fly_again_button_region, vbom){
 	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 	    		if (pSceneTouchEvent.isActionDown()) {
 	    			gameHud.dispose();
@@ -1472,7 +1472,7 @@ public class GameScene extends BaseScene{
 	    		return true;
 	    	};
 	    };
-	    final Sprite mapButton = new Sprite(220, 45, resourcesManager.map_button_region, vbom){
+	    final Sprite mapButton = new Sprite(310, 75, resourcesManager.game_map_button_region, vbom){
 	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 	    		if (pSceneTouchEvent.isActionDown()) {
 	    			gameHud.dispose();
@@ -1484,7 +1484,7 @@ public class GameScene extends BaseScene{
 	    		return true;
 	    	};
 	    };
-	    final Sprite quitButton = new Sprite(95, 45, resourcesManager.quit_button_region, vbom){
+	    final Sprite quitButton = new Sprite(110, 75, resourcesManager.game_quit_button_region, vbom){
 	    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 	    		if (pSceneTouchEvent.isActionDown()) {
 	    			gameHud.dispose();

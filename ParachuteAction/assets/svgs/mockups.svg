@@ -2,7 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:i="&amp;#38;#38;#38;ns_ai;"
+   xmlns:i="&amp;#38;#38;#38;#38;ns_ai;"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -454,9 +454,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.175"
-     inkscape:cx="199.75475"
-     inkscape:cy="-606.33833"
+     inkscape:zoom="0.12374369"
+     inkscape:cx="-137.96607"
+     inkscape:cy="-1567.4915"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -10696,7 +10696,7 @@
     </g>
     <g
        id="g5065-4-1"
-       transform="translate(2059.3968,170.56454)"
+       transform="translate(3780.6967,1948.433)"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_far_cloud.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -10838,7 +10838,7 @@
     </g>
     <g
        id="g5065-4-5-0"
-       transform="matrix(2.4066192,0,0,2.4066192,3588.9095,-1118.5153)"
+       transform="matrix(2.4066192,0,0,2.4066192,5310.2094,659.35318)"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_cloud.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -10980,7 +10980,7 @@
     </g>
     <g
        id="g5065-4-5-0-9"
-       transform="matrix(4.3219423,0,0,4.3219423,5079.1262,-3300.1923)"
+       transform="matrix(4.3219423,0,0,4.3219423,6800.4261,-1522.3238)"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_closer_cloud.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -11125,15 +11125,15 @@
        id="rect3005-1"
        width="620.52258"
        height="369.32272"
-       x="526.42523"
-       y="2122.6069"
+       x="1286.4253"
+       y="1156.8927"
        rx="35.015202"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_level_complete_window.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <g
        id="g5402"
-       transform="matrix(1.4774554,0,0,1.4774554,-274.94076,-1100.2121)"
+       transform="matrix(1.4774554,0,0,1.4774554,849.75827,-1237.7382)"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_pause_window.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -11165,7 +11165,7 @@
            id="flowPara3806-5">Pause</flowPara></flowRoot>    </g>
     <g
        id="g5395"
-       transform="matrix(1.4774364,0,0,1.477288,-601.58684,-1082.9515)"
+       transform="matrix(1.4774364,0,0,1.477288,861.2703,-1214.3801)"
        inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_over_window.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -11195,5 +11195,175 @@
              width="304.28571"
              id="rect3812-2" /></flowRegion><flowPara
            id="flowPara3814-8">Game over!</flowPara></flowRoot>    </g>
+    <g
+       id="g4716"
+       transform="matrix(1.4774554,0,0,1.4774554,1278.1973,165.96657)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_map_button.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\map_button.png"
+         rx="8.5645761"
+         y="1168.3002"
+         x="-182.87465"
+         height="50"
+         width="110"
+         id="rect3816-5-4"
+         style="fill:#2c89a0;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+      <flowRoot
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\map_button.png"
+         transform="translate(-40.017406,1021.6522)"
+         style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Simplicity;-inkscape-font-specification:Simplicity"
+         id="flowRoot3864-4"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3866-8"><rect
+             style="font-size:32px"
+             y="152.36218"
+             x="-113.57143"
+             height="67.85714"
+             width="113.57143"
+             id="rect3868-8" /></flowRegion><flowPara
+           style="font-size:28px"
+           id="flowPara3870-2">Map</flowPara></flowRoot>    </g>
+    <g
+       id="g4709"
+       transform="matrix(1.4774554,0,0,1.4774554,1064.6161,-15.567986)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_fly_again_button.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\fly_again_button.png"
+         rx="8.5645761"
+         y="1171.5144"
+         x="-40.73164"
+         height="50"
+         width="110"
+         id="rect3816-1"
+         style="fill:#2c89a0;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+      <flowRoot
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\fly_again_button.png"
+         transform="translate(85.117594,1024.4866)"
+         style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Simplicity;-inkscape-font-specification:Simplicity"
+         id="flowRoot3864-7-4"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3866-3-5"><rect
+             style="font-size:32px"
+             y="152.36218"
+             x="-113.57143"
+             height="67.85714"
+             width="113.57143"
+             id="rect3868-4-5" /></flowRegion><flowPara
+           style="font-size:28px"
+           id="flowPara3870-0-1">Fly again</flowPara></flowRoot>    </g>
+    <g
+       id="g4723"
+       transform="matrix(1.4774554,0,0,1.4774554,1299.9025,261.79823)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_quit_button.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\quit_button.png"
+         rx="8.5645761"
+         y="1236.8716"
+         x="-186.44606"
+         height="50"
+         width="110"
+         id="rect3816-57-0"
+         style="fill:#2c89a0;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+      <flowRoot
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\quit_button.png"
+         transform="translate(-41.389106,1093.3429)"
+         style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Simplicity;-inkscape-font-specification:Simplicity"
+         id="flowRoot3864-7-8-7"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3866-3-8-1"><rect
+             style="font-size:32px"
+             y="152.36218"
+             x="-113.57143"
+             height="67.85714"
+             width="113.57143"
+             id="rect3868-4-1-1" /></flowRegion><flowPara
+           style="font-size:28px"
+           id="flowPara3870-0-5-5">Quit</flowPara></flowRoot>    </g>
+    <g
+       id="g4730"
+       transform="matrix(1.4774554,0,0,1.4774554,1086.4691,145.93623)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_resume_button.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\resume_button.png"
+         rx="8.5645761"
+         y="1246.1573"
+         x="-53.588818"
+         height="50"
+         width="110"
+         id="rect3816-9-7"
+         style="fill:#2c89a0;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+      <flowRoot
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\resume_button.png"
+         transform="translate(72.896594,1100.4858)"
+         style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Simplicity;-inkscape-font-specification:Simplicity"
+         id="flowRoot3864-7-2-2"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3866-3-3-7"><rect
+             style="font-size:32px"
+             y="152.36218"
+             x="-113.57143"
+             height="67.85714"
+             width="113.57143"
+             id="rect3868-4-2-6" /></flowRegion><flowPara
+           style="font-size:28px"
+           id="flowPara3870-0-4-1">Resume</flowPara></flowRoot>    </g>
+    <g
+       id="g4737"
+       transform="matrix(1.4774554,0,0,1.4774554,1185.1998,-135.37503)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_retry_button.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\retry_button.png"
+         rx="8.5645761"
+         y="1314.7288"
+         x="-125.7317"
+         height="50"
+         width="110"
+         id="rect3816-4-9"
+         style="fill:#2c89a0;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+      <flowRoot
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\retry_button.png"
+         transform="translate(16.468094,1167.6286)"
+         style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Simplicity;-inkscape-font-specification:Simplicity"
+         id="flowRoot3864-7-6-4"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3866-3-6-2"><rect
+             style="font-size:32px"
+             y="152.36218"
+             x="-113.57143"
+             height="67.85714"
+             width="113.57143"
+             id="rect3868-4-6-3" /></flowRegion><flowPara
+           style="font-size:28px"
+           id="flowPara3870-0-2-2">Retry</flowPara></flowRoot>    </g>
   </g>
 </svg>
