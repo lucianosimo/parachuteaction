@@ -2,7 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:i="&amp;#38;#38;#38;#38;ns_ai;"
+   xmlns:i="&amp;#38;#38;#38;#38;#38;ns_ai;"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -454,9 +454,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.12374369"
-     inkscape:cx="-137.96607"
-     inkscape:cy="-1567.4915"
+     inkscape:zoom="0.49497476"
+     inkscape:cx="267.39876"
+     inkscape:cy="200.32693"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -11365,5 +11365,56 @@
              id="rect3868-4-6-3" /></flowRegion><flowPara
            style="font-size:28px"
            id="flowPara3870-0-2-2">Retry</flowPara></flowRoot>    </g>
+    <g
+       id="g4690"
+       transform="translate(-383.85796,1424.3151)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_open_button.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         transform="matrix(1.3400956,0,0,1.3400956,-256.96459,-2000.6867)"
+         id="g4682">
+        <path
+           transform="translate(694.57884,542.62555)"
+           sodipodi:type="arc"
+           style="fill:#800000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-opacity:1"
+           id="path3952-0-1"
+           sodipodi:cx="-37.142857"
+           sodipodi:cy="848.07648"
+           sodipodi:rx="50"
+           sodipodi:ry="50"
+           d="m 12.857143,848.07648 c 0,27.61423 -22.3857621,50 -50,50 -27.614237,0 -50,-22.38577 -50,-50 0,-27.61424 22.385763,-50 50,-50 27.6142379,0 50,22.38576 50,50 z"
+           inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\openButton.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <path
+           sodipodi:type="arc"
+           style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-opacity:1"
+           id="path3952-7"
+           sodipodi:cx="-37.142857"
+           sodipodi:cy="848.07648"
+           sodipodi:rx="50"
+           sodipodi:ry="50"
+           d="m 12.857143,848.07648 c 0,27.61423 -22.3857621,50 -50,50 -27.614237,0 -50,-22.38577 -50,-50 0,-27.61424 22.385763,-50 50,-50 27.6142379,0 50,22.38576 50,50 z"
+           transform="translate(688.86454,544.76835)"
+           inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\openButton.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot3990-4"
+           style="font-size:30px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Simplicity;-inkscape-font-specification:Simplicity"
+           transform="translate(743.86454,673.33975)"
+           inkscape:export-filename="D:\Mate Devs\Juegos\Parachute action\Imagenes\Definitivas V1.0\game\openButton.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"><flowRegion
+             id="flowRegion3992-0"><rect
+               id="rect3994-9"
+               width="169.28572"
+               height="62.142857"
+               x="-125"
+               y="698.79077" /></flowRegion><flowPara
+             id="flowPara3996-4">Open</flowPara></flowRoot>      </g>
+    </g>
   </g>
 </svg>
