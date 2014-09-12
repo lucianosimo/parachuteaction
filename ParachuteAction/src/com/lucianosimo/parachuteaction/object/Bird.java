@@ -12,10 +12,12 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class Bird extends AnimatedSprite{
 
 	private Body body;
+	private FixtureDef fixture;
 	
 	public Bird(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld, ITiledTextureRegion region) {
 		super(pX, pY, region, vbom);
@@ -35,7 +37,9 @@ public class Bird extends AnimatedSprite{
 			new Vector2(-0.29091f*width, +0.51163f*height),
 			new Vector2(-0.52727f*width, +0.02326f*height),
 		};
-		body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
+		fixture = PhysicsFactory.createFixtureDef(0, 0, 0);
+		fixture.filter.groupIndex = -1;
+		body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, fixture);
 		body.setFixedRotation(true);
 		body.setUserData("bird");
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
@@ -47,7 +51,7 @@ public class Bird extends AnimatedSprite{
 	}
 	
 	public void startMoving() {
-		body.setLinearVelocity(new Vector2(-6, 5));
+		body.setLinearVelocity(new Vector2(-9.5f, 4));
 	}
 	
 }

@@ -12,10 +12,12 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class Helicopter extends AnimatedSprite{
 
 	private Body body;
+	private FixtureDef fixture;
 	
 	public Helicopter(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld, ITiledTextureRegion region) {
 		super(pX, pY, region, vbom);
@@ -36,7 +38,9 @@ public class Helicopter extends AnimatedSprite{
 			new Vector2(+0.44444f*width, +0.52239f*height),
 			new Vector2(-0.50926f*width, +0.12438f*height),
 		};
-		body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
+		fixture = PhysicsFactory.createFixtureDef(0, 0, 0);
+		fixture.filter.groupIndex = -1;
+		body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, fixture);
 		body.setFixedRotation(true);
 		body.setUserData("helicopter");
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
@@ -48,7 +52,7 @@ public class Helicopter extends AnimatedSprite{
 	}
 	
 	public void startMoving() {
-		body.setLinearVelocity(new Vector2(-2.5f, body.getLinearVelocity().y));
+		body.setLinearVelocity(new Vector2(-5f, body.getLinearVelocity().y));
 	}
 	
 }

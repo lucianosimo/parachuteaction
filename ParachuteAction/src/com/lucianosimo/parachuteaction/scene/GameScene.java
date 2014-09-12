@@ -178,11 +178,11 @@ public class GameScene extends BaseScene{
 	private static final int ANTIGRAVITY_DURATION = 5;
 	private static final int COINS_VALUE = 100;
 	
-	private static final int HELICOPTER_MOVE_SENSOR = 500;
-	private static final int HELICOPTER_SOUND_SENSOR = 300;
-	private static final int BIRD_MOVE_SENSOR = 400;
-	private static final int BIRD_SOUND_SENSOR = 200;
-	private static final int BALLOON_MOVE_SENSOR = 1500;
+	private static final int HELICOPTER_MOVE_SENSOR = 750;
+	private static final int HELICOPTER_SOUND_SENSOR = 500;
+	private static final int BIRD_MOVE_SENSOR = 750;
+	private static final int BIRD_SOUND_SENSOR = 400;
+	private static final int BALLOON_MOVE_SENSOR = 1750;
 	
 	private static final String TAG_ENTITY = "entity";
 	private static final String TAG_ENTITY_ATTRIBUTE_X = "x";
@@ -219,8 +219,6 @@ public class GameScene extends BaseScene{
 		createPhysics();
 		loadLevel(level);
 		firstGame();
-		//screenWidth = resourcesManager.camera.getWidth();
-		//screenHeight = resourcesManager.camera.getHeight();
 		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
         //GameScene.this.attachChild(debug);
 	}
@@ -271,7 +269,7 @@ public class GameScene extends BaseScene{
 		levelStartText = new Text(200, 600, resourcesManager.levelStartFont, "ForestBeachCityDesertMountainwestern - 15:00Hs", new TextOptions(HorizontalAlign.LEFT), vbom);
 		
 		
-		openButton = new Sprite(550, 1150, resourcesManager.game_open_button_region, vbom){
+		openButton = new Sprite(600, 1200, resourcesManager.game_open_button_region, vbom){
 			@Override
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 				if (pSceneTouchEvent.isActionDown()) {
@@ -296,9 +294,6 @@ public class GameScene extends BaseScene{
 
 		altimeterText.setText("Meters to go: ");
 		coinsText.setText("Coins: " + coins);
-		
-		/*coinsText.setColor(Color.BLACK_ARGB_PACKED_INT);
-		altimeterText.setColor(Color.BLACK_ARGB_PACKED_INT);*/
 		
 		if (MapScene.getLevel() == 1) {
 			if (MapScene.getDayOrNight()) {
@@ -617,7 +612,8 @@ public class GameScene extends BaseScene{
 					//n = rand.nextInt(max - min + 1) + min;
 					Random rand = new Random();
 					if (coinsCounter == 0) {
-						randCoinsX = rand.nextInt(441) - 220;
+						//randCoinsX = rand.nextInt(441) - 220;
+						randCoinsX = rand.nextInt(601) - 300;
 					}
 					coinsCounter++;
 					if (coinsCounter == 5) {
@@ -638,14 +634,14 @@ public class GameScene extends BaseScene{
 					levelObject = coin;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
 					Random rand = new Random();
-					int randX = rand.nextInt(441) - 220;
+					int randX = rand.nextInt(601) - 300;
 					levelObject = new Sprite(x + randX, y, resourcesManager.shield_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
+							if ((player.getY() - this.getY()) < 2250 && (player.getY() - this.getY()) > 640) {
 								greenArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-								greenArrow.setPosition(1000, 0);
+							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
+								greenArrow.setPosition(1500, 0);
 							}
 							if (player.collidesWith(this)) {
 								shieldCounter++;
@@ -669,15 +665,15 @@ public class GameScene extends BaseScene{
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE)) {
 					//n = rand.nextInt(max - min + 1) + min;
 					Random rand = new Random();
-					int randX = rand.nextInt(441) - 220;
+					int randX = rand.nextInt(601) - 300;
 					int randY = rand.nextInt(5001) - 2500;
 					levelObject = new Sprite(x + randX, y + randY, resourcesManager.upperImpulse_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
+							if ((player.getY() - this.getY()) < 2250 && (player.getY() - this.getY()) > 640) {
 								greenArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-								greenArrow.setPosition(1000, 0);
+							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
+								greenArrow.setPosition(1500, 0);
 							}
 							if (player.collidesWith(this)) {
 								upperImpulseCounter++;
@@ -688,15 +684,15 @@ public class GameScene extends BaseScene{
 					};
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITY)) {
 					Random rand = new Random();
-					int randX = rand.nextInt(441) - 220;
+					int randX = rand.nextInt(601) - 300;
 					int randY = rand.nextInt(5001) - 2500;
 					levelObject = new Sprite(x + randX, y + randY, resourcesManager.antiGravity_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
+							if ((player.getY() - this.getY()) < 2250 && (player.getY() - this.getY()) > 640) {
 								greenArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-								greenArrow.setPosition(1000, 0);
+							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
+								greenArrow.setPosition(1500, 0);
 							}
 							if (player.collidesWith(this)) {
 								antigravityCounter++;
@@ -719,15 +715,15 @@ public class GameScene extends BaseScene{
 					};
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SLOW)) {
 					Random rand = new Random();
-					int randX = rand.nextInt(441) - 220;
+					int randX = rand.nextInt(601) - 300;
 					int randY = rand.nextInt(5001) - 2500;
 					levelObject = new Sprite(x + randX, y + randY, resourcesManager.slow_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 427) {
+							if ((player.getY() - this.getY()) < 2250 && (player.getY() - this.getY()) > 640) {
 								greenArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-								greenArrow.setPosition(1000, 0);
+							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
+								greenArrow.setPosition(1500, 0);
 							}
 							if (player.collidesWith(this)) {
 								slowCounter++;
@@ -737,17 +733,17 @@ public class GameScene extends BaseScene{
 						};
 					};
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
-					final Rectangle moveSensor = new Rectangle(240, y + HELICOPTER_MOVE_SENSOR, 480, 0.1f, vbom);
-					final Rectangle soundSensor = new Rectangle(240, y + HELICOPTER_SOUND_SENSOR, 480, 0.1f, vbom);
+					final Rectangle moveSensor = new Rectangle(360, y + HELICOPTER_MOVE_SENSOR, 720, 0.1f, vbom);
+					final Rectangle soundSensor = new Rectangle(360, y + HELICOPTER_SOUND_SENSOR, 720, 0.1f, vbom);
 					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
 					explosion.setVisible(false);					  
 					helicopter = new Helicopter(x, y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 640) {
 								helicopterRedArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-								helicopterRedArrow.setPosition(1000, 0);
+							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
+								helicopterRedArrow.setPosition(1500, 0);
 							}
 							if (player.collidesWith(moveSensor)) {
 								this.startMoving();
@@ -776,17 +772,17 @@ public class GameScene extends BaseScene{
 					GameScene.this.attachChild(explosion);
 					levelObject = helicopter;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER)) {
-					final Rectangle moveSensor = new Rectangle(240, y + HELICOPTER_MOVE_SENSOR, 480, 0.1f, vbom);
-					final Rectangle soundSensor = new Rectangle(240, y + HELICOPTER_SOUND_SENSOR, 480, 0.1f, vbom);
+					final Rectangle moveSensor = new Rectangle(360, y + HELICOPTER_MOVE_SENSOR, 720, 0.1f, vbom);
+					final Rectangle soundSensor = new Rectangle(360, y + HELICOPTER_SOUND_SENSOR, 720, 0.1f, vbom);
 					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
 					explosion.setVisible(false);					
 					leftHelicopter = new LeftHelicopter(x, y, vbom, camera, physicsWorld, resourcesManager.leftHelicopter_region.deepCopy()) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 640) {
 								leftHelicopterRedArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-								leftHelicopterRedArrow.setPosition(1000, 0);
+							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
+								leftHelicopterRedArrow.setPosition(1500, 0);
 							}
 							if (player.collidesWith(moveSensor)) {
 								this.startMoving();
@@ -815,15 +811,15 @@ public class GameScene extends BaseScene{
 					GameScene.this.attachChild(explosion);
 					levelObject = leftHelicopter;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
-					final Rectangle moveSensor = new Rectangle(240, y + BIRD_MOVE_SENSOR, 480, 0.1f, vbom);
-					final Rectangle soundSensor = new Rectangle(240, y + BIRD_SOUND_SENSOR, 480, 0.1f, vbom);
+					final Rectangle moveSensor = new Rectangle(360, y + BIRD_MOVE_SENSOR, 720, 0.1f, vbom);
+					final Rectangle soundSensor = new Rectangle(360, y + BIRD_SOUND_SENSOR, 720, 0.1f, vbom);
 					bird = new Bird(x, y, vbom, camera, physicsWorld, resourcesManager.bird_region.deepCopy()) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 640) {
 								birdRedArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-								birdRedArrow.setPosition(1000, 0);
+							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
+								birdRedArrow.setPosition(1500, 0);
 							}
 							if (player.collidesWith(moveSensor)) {
 								this.startMoving();
@@ -846,15 +842,15 @@ public class GameScene extends BaseScene{
 					};
 					levelObject = bird;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_BIRD)) {
-					final Rectangle moveSensor = new Rectangle(240, y + BIRD_MOVE_SENSOR, 480, 0.1f, vbom);
-					final Rectangle soundSensor = new Rectangle(240, y + BIRD_SOUND_SENSOR, 480, 0.1f, vbom);
+					final Rectangle moveSensor = new Rectangle(360, y + BIRD_MOVE_SENSOR, 720, 0.1f, vbom);
+					final Rectangle soundSensor = new Rectangle(360, y + BIRD_SOUND_SENSOR, 720, 0.1f, vbom);
 					leftBird = new LeftBird(x, y, vbom, camera, physicsWorld, resourcesManager.left_bird_region.deepCopy()) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 640) {
 								birdRedArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-								birdRedArrow.setPosition(1000, 0);
+							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
+								birdRedArrow.setPosition(1500, 0);
 							}
 							if (player.collidesWith(moveSensor)) {
 								this.startMoving();
@@ -877,12 +873,12 @@ public class GameScene extends BaseScene{
 					};
 					levelObject = leftBird;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON)) {
-					final Rectangle moveSensor = new Rectangle(240, y + BALLOON_MOVE_SENSOR, 480, 0.1f, vbom);
+					final Rectangle moveSensor = new Rectangle(360, y + BALLOON_MOVE_SENSOR, 720, 0.1f, vbom);
 					basket = new Sprite(97, -30, resourcesManager.balloon_basket_region, vbom);
 					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
 					explosion.setVisible(false);
 					Random rand = new Random();
-					int randX = rand.nextInt(441) - 220;
+					int randX = rand.nextInt(601) - 300;
 					balloon = new Balloon(x + randX, y, vbom, camera, physicsWorld, resourcesManager.balloon_region.deepCopy()) {
 						
 						protected void onManagedUpdate(float pSecondsElapsed) {
@@ -891,10 +887,10 @@ public class GameScene extends BaseScene{
 								this.startMoving();
 								moveSensor.setPosition(1000, 1000);
 							}
-							if ((player.getY() - this.getY()) < 1000 && (player.getY() - this.getY()) > 427) {
+							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 640) {
 								balloonRedArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 427 && (player.getY() - this.getY()) > 0) {
-								balloonRedArrow.setPosition(1000, 0);
+							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
+								balloonRedArrow.setPosition(1500, 0);
 							}
 							if (player.collidesWith(this)) {
 								if (shield) {
@@ -1035,6 +1031,7 @@ public class GameScene extends BaseScene{
 								    gameOverWindow.attachChild(quitButton);
 								    gameOverWindow.attachChild(retryButton);
 								    gameOverWindow.attachChild(mapButton);
+								    activity.showAd();
 								}
 							});
 							
@@ -1506,6 +1503,7 @@ public class GameScene extends BaseScene{
 	    levelCompleteWindow.attachChild(mapButton);
 	    GameScene.this.attachChild(levelCompleted);
 	    displayAchievements();
+	    activity.showAd();
 	}
 	
 	private void displayAchievements() {

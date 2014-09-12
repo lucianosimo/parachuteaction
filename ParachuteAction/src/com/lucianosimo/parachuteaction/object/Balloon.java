@@ -12,10 +12,12 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class Balloon extends Sprite{
 
 	private Body body;
+	private FixtureDef fixture;
 	
 	public Balloon(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld, ITextureRegion region) {
 		super(pX, pY, region, vbom);
@@ -34,14 +36,16 @@ public class Balloon extends Sprite{
 			new Vector2(-0.00500f*width, +0.53398f*height),
 			new Vector2(-0.43000f*width, +0.41262f*height),
 		};
-		body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
+		fixture = PhysicsFactory.createFixtureDef(0, 0, 0);
+		fixture.filter.groupIndex = -1;
+		body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, fixture);
 		body.setFixedRotation(true);
 		body.setUserData("balloon");
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
 	}
 	
 	public void startMoving() {
-		body.setLinearVelocity(new Vector2(0, 6));
+		body.setLinearVelocity(new Vector2(0, 10));
 	}
 	
 }

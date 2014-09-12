@@ -23,7 +23,7 @@ public abstract class Player extends AnimatedSprite{
 	private static final int MAX_FREEFALL_SPEED = -25;
 	
 	private static final int LEFT_MARGIN = 0;
-	private static final int RIGHT_MARGIN = 480;
+	private static final int RIGHT_MARGIN = 720;
 	
 	public Player(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld) {
 		super(pX, pY, ResourcesManager.getInstance().player_region, vbom);

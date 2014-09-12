@@ -40,7 +40,7 @@ public class MapScene extends BaseScene implements IOnMenuItemClickListener{
 	
 	@Override
 	public void createScene() {
-		activity.showAd();
+		//activity.showAd();
 		createBackground();
 		createMenuChildScene();
 	}
