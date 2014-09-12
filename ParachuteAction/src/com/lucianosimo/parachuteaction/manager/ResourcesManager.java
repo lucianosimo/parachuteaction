@@ -172,15 +172,15 @@ public class ResourcesManager {
 	public Sound coinSound;
 	
 	//Game HUD
-	public ITextureRegion openButton;
+	public ITextureRegion game_open_button_region;
 	
 	//Platforms
-	public ITextureRegion landing_platfom_region;
+	public ITextureRegion game_landing_platfom_region;
 
 	//Backgrounds
 	public ITextureRegion game_background_region;
 	public ITextureRegion darkBackground_region;
-	public ITextureRegion back_location_region;
+	public ITextureRegion game_back_location_region;
 	
 	//Signs
 	public ITextureRegion green_arrow_region;
@@ -336,7 +336,7 @@ public class ResourcesManager {
 		
 		animatedTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1150, 1150, TextureOptions.BILINEAR);
 		backgroundTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 1280, TextureOptions.BILINEAR);
-		backgroundLocationTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 480, 500, TextureOptions.BILINEAR);
+		backgroundLocationTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 720, 750, TextureOptions.BILINEAR);
 		objectsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 2048, 2048, TextureOptions.BILINEAR);
 		windowsTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 2048, 2048, TextureOptions.BILINEAR);
 		
@@ -348,23 +348,23 @@ public class ResourcesManager {
 		}
 		
 		if (MapScene.getLevel() == 1) {
-			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_beach.png");
-			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_beach.png");
+			game_back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "game_back_beach.png");
+			game_landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_landing_platform_beach.png");
 		} else if (MapScene.getLevel() == 2) {
-			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_city.png");
-			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_city.png");
+			game_back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "game_back_city.png");
+			game_landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_landing_platform_city.png");
 		} else if (MapScene.getLevel() == 3) {
-			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_forest.png");
-			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_forest.png");
+			game_back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "game_back_forest.png");
+			game_landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_landing_platform_forest.png");
 		} else if (MapScene.getLevel() == 4) {
-			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_desert.png");
-			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_desert.png");
+			game_back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "game_back_desert.png");
+			game_landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_landing_platform_desert.png");
 		} else if (MapScene.getLevel() == 5) {
-			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_mountain.png");
-			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_mountain.png");
+			game_back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "game_back_mountain.png");
+			game_landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_landing_platform_mountain.png");
 		} else if (MapScene.getLevel() == 6) {
-			back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "back_western.png");
-			landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "landing_platform_western.png");
+			game_back_location_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(backgroundLocationTextureAtlas, activity, "game_back_western.png");
+			game_landing_platfom_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_landing_platform_western.png");
 		}
 		
 		
@@ -378,7 +378,7 @@ public class ResourcesManager {
 		plane_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "plane.png");
 		parachute_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "parachute.png");
 		shield_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "shield.png");
-		openButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "openButton.png");
+		game_open_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_open_button.png");
 		red_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "redArrow.png");
 		green_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "greenArrow.png");
 		balloon_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "balloon.png");

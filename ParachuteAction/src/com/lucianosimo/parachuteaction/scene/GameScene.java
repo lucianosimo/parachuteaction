@@ -271,7 +271,7 @@ public class GameScene extends BaseScene{
 		levelStartText = new Text(200, 600, resourcesManager.levelStartFont, "ForestBeachCityDesertMountainwestern - 15:00Hs", new TextOptions(HorizontalAlign.LEFT), vbom);
 		
 		
-		openButton = new Sprite(600, 1225, resourcesManager.openButton, vbom){
+		openButton = new Sprite(550, 1150, resourcesManager.game_open_button_region, vbom){
 			@Override
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 				if (pSceneTouchEvent.isActionDown()) {
@@ -612,7 +612,7 @@ public class GameScene extends BaseScene{
 					levelObject.registerUpdateHandler(handler);
 					handler.setVelocity(PLANE_SPEED,0);
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BACK_LOCATION)) {
-					levelObject = new Sprite(x, y, resourcesManager.back_location_region, vbom);
+					levelObject = new Sprite(x, y, resourcesManager.game_back_location_region, vbom);
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_COIN)) {
 					//n = rand.nextInt(max - min + 1) + min;
 					Random rand = new Random();
@@ -1045,7 +1045,7 @@ public class GameScene extends BaseScene{
 					player.attachChild(shieldHalo);
 					levelObject = player;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM)) {
-					levelObject = new Sprite(x, y, resourcesManager.landing_platfom_region, vbom) {
+					levelObject = new Sprite(x, y, resourcesManager.game_landing_platfom_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
 							if (player.collidesWith(this)) {
