@@ -201,6 +201,8 @@ public class ResourcesManager {
 	
 	//Shield
 	public ITextureRegion shield_region;
+	public ITextureRegion game_shield_bar_frame_region;
+	public ITextureRegion game_shield_bar_logo_region;
 
 	//Animated
 	public ITiledTextureRegion player_region;
@@ -383,6 +385,8 @@ public class ResourcesManager {
 		green_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "greenArrow.png");
 		balloon_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "balloon.png");
 		balloon_basket_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "balloonBasket.png");
+		game_shield_bar_frame_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_shield_bar_frame.png");
+		game_shield_bar_logo_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_shield_bar_logo.png");
 		
 		
 		//Windows texture objects

@@ -120,6 +120,10 @@ public class GameScene extends BaseScene{
 	private Rectangle shieldBar;
 	private Rectangle shieldBarBackground;
 	
+	//Shield bar
+	private Sprite shieldBarFrame;
+	private Sprite shieldBarLogo;
+	
 	//Achievements
 	private int antigravityCounterBefore = 0;
 	private int antigravityCounterAfter = 0;
@@ -293,6 +297,16 @@ public class GameScene extends BaseScene{
 		balloonRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
 		birdRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
 
+		shieldBar = new Rectangle(720/2 + 720/4 + 100, 1250, 200, 15, vbom);
+		shieldBarBackground = new Rectangle(720/2 + 720/4, 1250, 200, 15, vbom);
+		shieldBarFrame = new Sprite(720/2 + 720/4, 1250, resourcesManager.game_shield_bar_frame_region, vbom);
+		shieldBarLogo = new Sprite(720/2 + 720/4 - 150, 1250, resourcesManager.game_shield_bar_logo_region, vbom);
+		
+		shieldBar.setVisible(false);
+		shieldBarBackground.setVisible(false);
+		shieldBarFrame.setVisible(false);
+		shieldBarLogo.setVisible(false);
+		
 		altimeterText.setAnchorCenter(0, 0);
 		levelStartText.setAnchorCenter(0, 0);
 		coinsText.setAnchorCenter(0, 0);
@@ -384,6 +398,11 @@ public class GameScene extends BaseScene{
 		gameHud.attachChild(helicopterRedArrow);
 		gameHud.attachChild(balloonRedArrow);
 		gameHud.attachChild(birdRedArrow);
+		
+		gameHud.attachChild(shieldBarBackground);
+		gameHud.attachChild(shieldBar);
+		gameHud.attachChild(shieldBarFrame);
+		gameHud.attachChild(shieldBarLogo);
 		
 		gameHud.registerTouchArea(openButton);
 		
@@ -640,6 +659,10 @@ public class GameScene extends BaseScene{
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
 					Random rand = new Random();
 					int randX = rand.nextInt(601) - 300;
+					
+					/*shieldBarFrame = new Sprite(720/2 + 720/4, 1250, resourcesManager.game_shield_bar_frame_region, vbom);
+					shieldBarLogo = new Sprite(720/2 + 720/4 - 150, 1250, resourcesManager.game_shield_bar_logo_region, vbom);*/
+					
 					levelObject = new Sprite(x + randX, y, resourcesManager.shield_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
 							super.onManagedUpdate(pSecondsElapsed);
@@ -657,21 +680,18 @@ public class GameScene extends BaseScene{
 									public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
 										shield = true;
 										
-										shieldBar = new Rectangle(720/2 + 720/4 + 100, 1250, 200, 15, vbom);
-										shieldBarBackground = new Rectangle(720/2 + 720/4, 1250, 200, 15, vbom);
+										shieldBar.setWidth(200);
 										
 										shieldBar.setColor(0.259f, 0.541f, 0.78f);
 										shieldBarBackground.setColor(Color.WHITE_ARGB_PACKED_INT);
 
 										shieldBar.setVisible(true);
 										shieldBarBackground.setVisible(true);
-										//shieldBarFrame.setVisible(true);
-										//shieldBarLogo.setVisible(true);
-										
-										gameHud.attachChild(shieldBarBackground);
-										gameHud.attachChild(shieldBar);
+										shieldBarFrame.setVisible(true);
+										shieldBarLogo.setVisible(true);
 																				
 										engine.registerUpdateHandler(new IUpdateHandler() {
+											final IUpdateHandler upd = this;
 											
 											@Override
 											public void reset() {
@@ -680,10 +700,14 @@ public class GameScene extends BaseScene{
 											
 											@Override
 											public void onUpdate(float pSecondsElapsed) {
-												if (shieldBar.getWidth() > 0) {
-													shieldBar.setSize(shieldBar.getWidth() - pSecondsElapsed * 20, shieldBar.getHeight());
+												if (availablePause) {
+													if (shieldBar.getWidth() > 0) {
+														shieldBar.setSize(shieldBar.getWidth() - pSecondsElapsed * 20, shieldBar.getHeight());
+													} else {
+														engine.unregisterUpdateHandler(upd);
+													}
+													shieldBar.setPosition((720/2 + 720/4 - 100) + shieldBar.getWidth() / 2, shieldBar.getY());
 												}
-												shieldBar.setPosition((720/2 + 720/4 - 100) + shieldBar.getWidth() / 2, shieldBar.getY());
 											}
 										});
 									}
@@ -693,8 +717,8 @@ public class GameScene extends BaseScene{
 										shield = false;
 										shieldBar.setVisible(false);
 										shieldBarBackground.setVisible(false);
-										//shieldBarFrame.setVisible(false);
-										//shieldBarLogo.setVisible(false);										
+										shieldBarFrame.setVisible(false);
+										shieldBarLogo.setVisible(false);
 									}
 								}));
 							}

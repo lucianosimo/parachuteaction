@@ -2,7 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:i="&amp;#38;#38;#38;#38;#38;ns_ai;"
+   xmlns:i="&amp;#38;#38;#38;#38;#38;#38;ns_ai;"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -454,9 +454,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497476"
-     inkscape:cx="267.39876"
-     inkscape:cy="200.32693"
+     inkscape:zoom="1.979899"
+     inkscape:cx="203.69062"
+     inkscape:cy="-15.137117"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -11415,6 +11415,55 @@
                x="-125"
                y="698.79077" /></flowRegion><flowPara
              id="flowPara3996-4">Open</flowPara></flowRoot>      </g>
+    </g>
+    <rect
+       style="fill:#37abc8;fill-opacity:1;stroke:none"
+       id="rect4657"
+       width="200"
+       height="15"
+       x="377.79703"
+       y="1085.1921" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-opacity:1"
+       id="rect4675"
+       width="200"
+       height="15"
+       x="115.08305"
+       y="1112.765"
+       rx="3.5"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_shield_bar_frame.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       id="g4317-1"
+       style="opacity:0.58367345"
+       transform="matrix(0.27950899,0,0,0.27950899,51.613308,941.29315)"
+       inkscape:export-filename="C:\Users\luciano.simo\Desktop\Android\Apps\Parachute action\Rediseño\game_shield_bar_logo.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:open="true"
+         sodipodi:end="11.487028"
+         sodipodi:start="5.2095862"
+         transform="matrix(0.89105569,0,0,0.88506969,73.402494,275.09854)"
+         d="M 90.788543,331.01802 C 137.38845,354.98924 154.66491,410.2309 129.37659,454.40372 104.08828,498.57655 45.811362,514.95319 -0.78854281,490.98198 -47.388448,467.01076 -64.664906,411.7691 -39.376592,367.59628 -14.19092,323.60274 43.748522,307.1492 90.303173,330.77005"
+         sodipodi:ry="91"
+         sodipodi:rx="96"
+         sodipodi:cy="411"
+         sodipodi:cx="45"
+         id="path3297-7"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.70300001;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4302-4"
+         d="m 112.5138,714.92451 c 34.23612,-12.53104 56.5679,-41.18955 58.70793,-75.34028 1.91925,-30.62737 -14.00636,-60.68592 -40.66724,-76.75674 -5.93982,-3.58044 -4.50238,-3.75884 5.75137,-0.71381 35.98327,10.68589 60.78555,42.00008 60.69576,76.63162 -0.0685,26.41102 -15.47708,52.39581 -39.78605,67.09446 -12.0502,7.28628 -24.65895,10.94385 -40.79467,11.8338 l -13.44358,0.74147 9.53648,-3.49052 z"
+         style="opacity:0.44081636;fill:#82e7e1;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4304-0"
+         d="m 50.004975,601.51815 c 0,-5.8146 6.374544,-18.06383 11.777219,-22.63093 4.991337,-4.21939 13.411466,-8.21474 20.396136,-9.67798 l 4.5962,-0.96287 0,6.47633 c 0,5.3887 -0.44514,6.47632 -2.65062,6.47632 -9.25539,0 -23.655448,8.72957 -29.865438,18.10494 -4.222039,6.37412 -4.253497,6.39049 -4.253497,2.21419 z"
+         style="opacity:0.44081636;fill:#82e7e1;fill-opacity:1;fill-rule:evenodd;stroke:none" />
     </g>
   </g>
 </svg>
