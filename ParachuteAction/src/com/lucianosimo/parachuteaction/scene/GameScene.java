@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import org.andengine.engine.camera.hud.HUD;
+import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.handler.physics.PhysicsHandler;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.DelayModifier;
@@ -115,6 +116,10 @@ public class GameScene extends BaseScene{
 	private Sprite helpWindow;
 	private Sprite pauseWindow;
 	
+	//Rectangles
+	private Rectangle shieldBar;
+	private Rectangle shieldBarBackground;
+	
 	//Achievements
 	private int antigravityCounterBefore = 0;
 	private int antigravityCounterAfter = 0;
@@ -209,7 +214,7 @@ public class GameScene extends BaseScene{
 	@Override
 	public void createScene() {
 		//n = rand.nextInt(max - min + 1) + min;
-		//activity.cacheAd();
+		activity.cacheAd();
 		Random rand = new Random();
 		int level = rand.nextInt(4) + 1;
 		resourcesManager.wind.play();
@@ -269,7 +274,7 @@ public class GameScene extends BaseScene{
 		levelStartText = new Text(200, 600, resourcesManager.levelStartFont, "ForestBeachCityDesertMountainwestern - 15:00Hs", new TextOptions(HorizontalAlign.LEFT), vbom);
 		
 		
-		openButton = new Sprite(600, 1200, resourcesManager.game_open_button_region, vbom){
+		openButton = new Sprite(625, 1200, resourcesManager.game_open_button_region, vbom){
 			@Override
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 				if (pSceneTouchEvent.isActionDown()) {
@@ -650,13 +655,46 @@ public class GameScene extends BaseScene{
 									
 									@Override
 									public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
-										shield = true;											
+										shield = true;
+										
+										shieldBar = new Rectangle(720/2 + 720/4 + 100, 1250, 200, 15, vbom);
+										shieldBarBackground = new Rectangle(720/2 + 720/4, 1250, 200, 15, vbom);
+										
+										shieldBar.setColor(0.259f, 0.541f, 0.78f);
+										shieldBarBackground.setColor(Color.WHITE_ARGB_PACKED_INT);
+
+										shieldBar.setVisible(true);
+										shieldBarBackground.setVisible(true);
+										//shieldBarFrame.setVisible(true);
+										//shieldBarLogo.setVisible(true);
+										
+										gameHud.attachChild(shieldBarBackground);
+										gameHud.attachChild(shieldBar);
+																				
+										engine.registerUpdateHandler(new IUpdateHandler() {
+											
+											@Override
+											public void reset() {
+												
+											}
+											
+											@Override
+											public void onUpdate(float pSecondsElapsed) {
+												if (shieldBar.getWidth() > 0) {
+													shieldBar.setSize(shieldBar.getWidth() - pSecondsElapsed * 20, shieldBar.getHeight());
+												}
+												shieldBar.setPosition((720/2 + 720/4 - 100) + shieldBar.getWidth() / 2, shieldBar.getY());
+											}
+										});
 									}
 									
 									@Override
 									public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
 										shield = false;
-										
+										shieldBar.setVisible(false);
+										shieldBarBackground.setVisible(false);
+										//shieldBarFrame.setVisible(false);
+										//shieldBarLogo.setVisible(false);										
 									}
 								}));
 							}

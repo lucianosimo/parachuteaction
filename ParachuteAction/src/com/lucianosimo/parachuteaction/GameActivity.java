@@ -45,7 +45,7 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 		String appId = "53c57c8289b0bb3697c25124";
 		String appSignature = "3f0a28521b32648044a33f149570570df81c89c6";
 		this.cb.onCreate(this, appId, appSignature, this.chartBoostDelegate);
-		CBPreferences.getInstance().setAnimationsOff(true);
+		//CBPreferences.getInstance().setAnimationsOff(true);
 		CBPreferences.getInstance().setOrientation(CBOrientation.PORTRAIT);
 	}
 	
@@ -153,6 +153,10 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 		this.cb.onStart(this);
 		this.cb.cacheInterstitial();
 	}
+    
+    public void cacheAd() {
+    	this.cb.cacheInterstitial();
+    }
 
 	@Override
 	protected void onStop() {

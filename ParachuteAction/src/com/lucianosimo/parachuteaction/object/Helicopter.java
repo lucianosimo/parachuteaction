@@ -52,7 +52,7 @@ public class Helicopter extends AnimatedSprite{
 	}
 	
 	public void startMoving() {
-		body.setLinearVelocity(new Vector2(-5f, body.getLinearVelocity().y));
+		body.setLinearVelocity(new Vector2(-6f, body.getLinearVelocity().y));
 	}
 	
 }

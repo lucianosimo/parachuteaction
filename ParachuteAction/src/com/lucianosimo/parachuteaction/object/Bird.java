@@ -51,7 +51,7 @@ public class Bird extends AnimatedSprite{
 	}
 	
 	public void startMoving() {
-		body.setLinearVelocity(new Vector2(-9.5f, 4));
+		body.setLinearVelocity(new Vector2(-10, 4));
 	}
 	
 }
