@@ -17,16 +17,10 @@ import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.ui.activity.BaseGameActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 
-import com.chartboost.sdk.CBPreferences;
+import com.chartboost.sdk.CBLocation;
 import com.chartboost.sdk.Chartboost;
-import com.chartboost.sdk.Chartboost.CBAgeGateConfirmation;
-import com.chartboost.sdk.ChartboostDelegate;
-import com.chartboost.sdk.Libraries.CBOrientation;
-import com.chartboost.sdk.Model.CBError.CBClickError;
-import com.chartboost.sdk.Model.CBError.CBImpressionError;
 import com.lucianosimo.parachuteaction.manager.ResourcesManager;
 import com.lucianosimo.parachuteaction.manager.SceneManager;
 
@@ -35,18 +29,20 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	private BoundCamera camera;
 	public static float mGravityX = 0;
 	private final static float SPLASH_DURATION = 7f;
+	String appId = "53c57c8289b0bb3697c25124";
+	String appSignature = "3f0a28521b32648044a33f149570570df81c89c6";
 	
-	private Chartboost cb;
+	//private Chartboost cb;
 	
 	@Override
 	protected void onCreate(Bundle pSavedInstanceState) {
 		super.onCreate(pSavedInstanceState);
-		this.cb = Chartboost.sharedChartboost();
-		String appId = "53c57c8289b0bb3697c25124";
-		String appSignature = "3f0a28521b32648044a33f149570570df81c89c6";
+		Chartboost.startWithAppId(this, appId, appSignature);
+	    Chartboost.onCreate(this);
+		/*this.cb = Chartboost.sharedChartboost();
 		this.cb.onCreate(this, appId, appSignature, this.chartBoostDelegate);
 		//CBPreferences.getInstance().setAnimationsOff(true);
-		CBPreferences.getInstance().setOrientation(CBOrientation.PORTRAIT);
+		CBPreferences.getInstance().setOrientation(CBOrientation.PORTRAIT);*/
 	}
 	
 	@Override
@@ -64,6 +60,7 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	@Override
 	protected void onPause() {
 		super.onPause();
+		Chartboost.onPause(this);
 		SceneManager.getInstance().getCurrentScene().handleOnPause();
 		mEngine.getSoundManager().setMasterVolume(0);
 		mEngine.getMusicManager().setMasterVolume(0);
@@ -72,6 +69,7 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	@Override
 	protected synchronized void onResume() {
 		super.onResume();
+		Chartboost.onResume(this);
 		mEngine.getSoundManager().setMasterVolume(1);
 		mEngine.getMusicManager().setMasterVolume(1);
 	}
@@ -108,17 +106,22 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		this.cb.onDestroy(this);
+		Chartboost.onDestroy(this);
+		//this.cb.onDestroy(this);
 		System.exit(0);
 	}
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (this.cb.onBackPressed())
+			/*if (this.cb.onBackPressed())
 		        return false;
-		    else
-			SceneManager.getInstance().getCurrentScene().onBackKeyPressed();
+		    else*/
+			 if (Chartboost.onBackPressed()) {
+				 return false;
+			 } else {
+				 SceneManager.getInstance().getCurrentScene().onBackKeyPressed(); 
+			 }			
 		}
 		return false;
 	}
@@ -150,25 +153,30 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
     @Override
 	protected void onStart() {
 		super.onStart();
-		this.cb.onStart(this);
-		this.cb.cacheInterstitial();
+		Chartboost.onStart(this);
+		Chartboost.cacheInterstitial(CBLocation.LOCATION_DEFAULT);
+		//this.cb.onStart(this);
+		//this.cb.cacheInterstitial();
 	}
     
     public void cacheAd() {
-    	this.cb.cacheInterstitial();
+    	Chartboost.cacheInterstitial(CBLocation.LOCATION_DEFAULT);
+    	//this.cb.cacheInterstitial();
     }
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		this.cb.onStop(this);
+		Chartboost.onStop(this);
+		//this.cb.onStop(this);
 	}
 	
 	public void showAd() {
-		this.cb.showInterstitial(); 
+		Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT);
+		//this.cb.showInterstitial(); 
 	}
 	
-	private ChartboostDelegate chartBoostDelegate = new ChartboostDelegate() {
+	/*private ChartboostDelegate chartBoostDelegate = new ChartboostDelegate() {
 
 		@Override
 		public boolean shouldDisplayInterstitial(String location) {
@@ -296,6 +304,6 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 				CBAgeGateConfirmation callback) {
 			return false;
 		}
-	};
+	};*/
 
 }
