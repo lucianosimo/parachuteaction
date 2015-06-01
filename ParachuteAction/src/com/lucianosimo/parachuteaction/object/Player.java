@@ -10,6 +10,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.lucianosimo.parachuteaction.GameActivity;
 import com.lucianosimo.parachuteaction.manager.ResourcesManager;
 
@@ -19,6 +20,7 @@ public abstract class Player extends AnimatedSprite{
 	private Boolean openParachute = false;
 	private int parachuteSpeed = -17;
 	private int playerCoins = 0;
+	private FixtureDef fixture;
 	
 	private static final int MAX_FREEFALL_SPEED = -25;
 	
@@ -35,9 +37,13 @@ public abstract class Player extends AnimatedSprite{
 	public abstract void onDie();
 	
 	private void createPhysics(final Camera camera, PhysicsWorld physicsWorld) {
-		body = PhysicsFactory.createBoxBody(physicsWorld, this, BodyType.DynamicBody, PhysicsFactory.createFixtureDef(1.0f, 0, 0));
+		fixture = PhysicsFactory.createFixtureDef(1.0f, 0, 0);
+		fixture.filter.groupIndex = 1;
+		
+		body = PhysicsFactory.createBoxBody(physicsWorld, this, BodyType.DynamicBody, fixture);
 		body.setUserData("player");
 		body.setFixedRotation(true);
+		
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false) {
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
@@ -63,6 +69,14 @@ public abstract class Player extends AnimatedSprite{
 				}				
 			}
 		});
+	}
+	
+	public void disablePlayerCollision() {
+		fixture.filter.groupIndex = -1;
+	}
+	
+	public void enablePlayerCollision() {
+		fixture.filter.groupIndex = 1;
 	}
 	
 	public void addPlayerCoins(int coins) {

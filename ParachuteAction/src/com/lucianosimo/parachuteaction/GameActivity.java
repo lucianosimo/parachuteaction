@@ -32,22 +32,15 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	String appId = "53c57c8289b0bb3697c25124";
 	String appSignature = "3f0a28521b32648044a33f149570570df81c89c6";
 	
-	//private Chartboost cb;
-	
 	@Override
 	protected void onCreate(Bundle pSavedInstanceState) {
 		super.onCreate(pSavedInstanceState);
 		Chartboost.startWithAppId(this, appId, appSignature);
 	    Chartboost.onCreate(this);
-		/*this.cb = Chartboost.sharedChartboost();
-		this.cb.onCreate(this, appId, appSignature, this.chartBoostDelegate);
-		//CBPreferences.getInstance().setAnimationsOff(true);
-		CBPreferences.getInstance().setOrientation(CBOrientation.PORTRAIT);*/
 	}
 	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
-		//camera = new BoundCamera(0, 0, 480, 854);
 		camera = new BoundCamera(0, 0, 720, 1280);
 		EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new FillResolutionPolicy(), this.camera);
 		engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
@@ -107,21 +100,17 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 	protected void onDestroy() {
 		super.onDestroy();
 		Chartboost.onDestroy(this);
-		//this.cb.onDestroy(this);
 		System.exit(0);
 	}
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			/*if (this.cb.onBackPressed())
-		        return false;
-		    else*/
-			 if (Chartboost.onBackPressed()) {
-				 return false;
-			 } else {
-				 SceneManager.getInstance().getCurrentScene().onBackKeyPressed(); 
-			 }			
+			if (Chartboost.onBackPressed()) {
+				return false;
+			} else {
+				SceneManager.getInstance().getCurrentScene().onBackKeyPressed(); 
+			}			
 		}
 		return false;
 	}
@@ -155,25 +144,20 @@ public class GameActivity extends BaseGameActivity implements IAccelerationListe
 		super.onStart();
 		Chartboost.onStart(this);
 		Chartboost.cacheInterstitial(CBLocation.LOCATION_DEFAULT);
-		//this.cb.onStart(this);
-		//this.cb.cacheInterstitial();
 	}
     
     public void cacheAd() {
     	Chartboost.cacheInterstitial(CBLocation.LOCATION_DEFAULT);
-    	//this.cb.cacheInterstitial();
     }
 
 	@Override
 	protected void onStop() {
 		super.onStop();
 		Chartboost.onStop(this);
-		//this.cb.onStop(this);
 	}
 	
 	public void showAd() {
 		Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT);
-		//this.cb.showInterstitial(); 
 	}
 	
 	/*private ChartboostDelegate chartBoostDelegate = new ChartboostDelegate() {

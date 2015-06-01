@@ -1,6 +1,5 @@
 package com.lucianosimo.parachuteaction.scene;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -20,16 +19,10 @@ import org.andengine.entity.text.TextOptions;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.util.SAXUtils;
 import org.andengine.util.adt.align.HorizontalAlign;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
-import org.andengine.util.level.EntityLoader;
-import org.andengine.util.level.constants.LevelConstants;
-import org.andengine.util.level.simple.SimpleLevelEntityLoaderData;
-import org.andengine.util.level.simple.SimpleLevelLoader;
 import org.andengine.util.modifier.IModifier;
-import org.xml.sax.Attributes;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -85,6 +78,10 @@ public class GameScene extends BaseScene{
 	private int firstGame = 0;
 	private int coinsCounter = 0;
 	private int randCoinsX = 0;
+	
+	//Constants	
+	private float screenWidth;
+	private float screenHeight;
 
 	//Booleans
 	private boolean firstFall = true;
@@ -193,43 +190,423 @@ public class GameScene extends BaseScene{
 	private static final int BIRD_SOUND_SENSOR = 400;
 	private static final int BALLOON_MOVE_SENSOR = 1750;
 	
-	private static final String TAG_ENTITY = "entity";
-	private static final String TAG_ENTITY_ATTRIBUTE_X = "x";
-	private static final String TAG_ENTITY_ATTRIBUTE_Y = "y";
-	private static final String TAG_ENTITY_ATTRIBUTE_TYPE = "type";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER = "player";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_COIN = "coin";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER = "helicopter";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER = "leftHelicopter";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD = "bird";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_BIRD = "leftBird";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON = "balloon";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOSER_CLOUD = "closerCloud";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FAR_CLOUD = "farCloud";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD = "cloud";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD = "shield";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SLOW = "slow";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE = "upperImpulse";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_ANTIGRAVITY = "antigravity";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLANE = "plane";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BACK_LOCATION = "backLocation";
-	private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM = "landingPlatform";
+	private static final int PLAYER_INITIAL_Y = 64000;
 
 	@Override
 	public void createScene() {
-		//n = rand.nextInt(max - min + 1) + min;
 		activity.cacheAd();
-		Random rand = new Random();
-		int level = rand.nextInt(4) + 1;
+		screenWidth = resourcesManager.camera.getWidth();
+		screenHeight = resourcesManager.camera.getHeight();
+		camera.setBounds(0, 0, screenWidth, 65000);
+		camera.setBoundsEnabled(true);
 		resourcesManager.wind.play();
 		createBackground();
 		createWindows();
 		createHud();
 		createPhysics();
-		loadLevel(level);
+		createFarClouds();
+		createClouds();
+		createPlayer();
+		createPlane();
+		createHelicopters();
+		createShield();
+		createCloserClouds();
 		firstGame();
 		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
         //GameScene.this.attachChild(debug);
+	}
+	
+	private void createFarClouds() {
+		Random rand = new Random();
+		final int cloudY = 63000;
+		final int maxX = 570;
+		final int minX = 1;
+		int randX = rand.nextInt(maxX - minX + 1) - minX;
+		int randY = rand.nextInt(201) - 100;
+		Sprite farCloud = new Sprite(150 + randX, cloudY + randY, resourcesManager.game_far_cloud_region, vbom) {
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+				if (this.getX() < LEFT_MARGIN - 125) {
+					this.setPosition(RIGHT_MARGIN + 125, this.getY());
+				}
+				if ((this.getY() - player.getY()) > screenHeight/2) {
+					Random r = new Random();
+					int randX = r.nextInt(maxX - minX + 1) - minX;
+					this.setX(150 + randX);
+					this.setY(this.getY() - 2000);
+				}
+			};
+		};
+		PhysicsHandler handler = new PhysicsHandler(farCloud);
+		farCloud.registerUpdateHandler(handler);
+		handler.setVelocity(FAR_CLOUD_SPEED,0);
+		GameScene.this.attachChild(farCloud);
+	}
+	
+	private void createClouds() {
+		Random rand = new Random();
+		final int cloudY = 63000;
+		final int maxX = 570;
+		final int minX = 1;
+		int randX = rand.nextInt(maxX - minX + 1) - minX;
+		int randY = rand.nextInt(201) - 100;
+		Sprite cloud = new Sprite(150 + randX, cloudY + randY, resourcesManager.game_cloud_region, vbom) {
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+				if (this.getX() < LEFT_MARGIN - 200) {
+					this.setPosition(RIGHT_MARGIN + 200, this.getY());
+				}
+				if ((this.getY() - player.getY()) > screenHeight/2) {
+					Random r = new Random();
+					int randX = r.nextInt(maxX - minX + 1) - minX;
+					this.setX(150 + randX);
+					this.setY(this.getY() - 2500);
+				}
+			};
+		};
+		PhysicsHandler handler = new PhysicsHandler(cloud);
+		cloud.registerUpdateHandler(handler);
+		handler.setVelocity(CLOUD_SPEED,0);
+		GameScene.this.attachChild(cloud);
+	}
+	
+	private void createPlayer() {
+		int parachuteX = 27;
+		int parachuteY = 140;
+		int shieldX = 20;
+		int shieldY = 50;
+		
+		parachute = new Sprite(parachuteX, parachuteY, ResourcesManager.getInstance().parachute_region, vbom);
+		shieldHalo = new Sprite(shieldX, shieldY, resourcesManager.shield_region, vbom);
+		
+		parachute.setVisible(false);
+		shieldHalo.setVisible(false);
+		
+		oldDistanceToFloor = PLAYER_INITIAL_Y / PIXEL_METER_RATE;
+		
+		player = new Player(screenWidth/2, PLAYER_INITIAL_Y, vbom, camera, physicsWorld) {
+			
+			@Override
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+				engine.runOnUpdateThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						
+						if (!startMoving) {
+							player.stopPlayer();
+							player.setVisible(false);
+						}
+						
+						activateShield();
+						calculateDistanceToFloor();
+						calculateFliedMeters();
+						displayOpenParachuteButton();
+						
+						if (openParachute && player.getFallVelocity() > 0) {
+							player.slowDownPlayer();
+						}
+						
+						if (openParachute) {
+							parachute.setVisible(true);
+							player.openParachute();
+							parachuteFliedMeters = fliedMeters - freeFliedMeters;
+							
+							if (!openParachuteDistanceSaved) {
+								openParachuteDistanceSaved = true;
+								distanceToFloorAtOpenParachute = distanceToFloor;
+								meterCounterForReduceSpeed = distanceToFloor;
+							}
+							
+							//Each 100 px reduce parachute fall speed
+							if (distanceToFloor == meterCounterForReduceSpeed - 100) {
+								meterCounterForReduceSpeed -= 100;
+								player.reduceParachuteSpeed();
+							}
+							
+						} else {
+							distanceToFloorAtOpenParachute = 0;
+							freeFliedMeters = fliedMeters;
+						}
+						oldDistanceToFloor = distanceToFloor;
+					}
+				});
+			};
+			
+			@Override
+			public void onDie() {
+				engine.runOnUpdateThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						saveScoreDataOnDie();
+						GameScene.this.setIgnoreUpdate(true);
+				        camera.setChaseEntity(null);
+				        availablePause = false;
+				        dead = true;
+				        gameOverWindow.setPosition(camera.getCenterX(), camera.getCenterY());
+						GameScene.this.attachChild(gameOverWindow);
+					    final Sprite retryButton = new Sprite(510, 75, resourcesManager.game_retry_button_region, vbom){
+					    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+					    		if (pSceneTouchEvent.isActionDown()) {
+					    			gameHud.dispose();
+									gameHud.setVisible(false);
+									detachChild(gameHud);
+									myGarbageCollection();
+									SceneManager.getInstance().loadGameScene(engine, GameScene.this);
+								}
+					    		return true;
+					    	};
+					    };
+					    final Sprite mapButton = new Sprite(310, 75, resourcesManager.game_map_button_region, vbom){
+					    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+					    		if (pSceneTouchEvent.isActionDown()) {
+					    			gameHud.dispose();
+									gameHud.setVisible(false);
+									detachChild(gameHud);
+									myGarbageCollection();
+									SceneManager.getInstance().loadMapScene(engine, GameScene.this);
+								}
+					    		return true;
+					    	};
+					    };
+					    final Sprite quitButton = new Sprite(110, 75, resourcesManager.game_quit_button_region, vbom){
+					    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+					    		if (pSceneTouchEvent.isActionDown()) {
+					    			gameHud.dispose();
+									gameHud.setVisible(false);
+									detachChild(gameHud);
+									myGarbageCollection();
+									SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
+					    		}
+					    		return true;
+					    	};
+					    };
+					    GameScene.this.registerTouchArea(retryButton);
+					    GameScene.this.registerTouchArea(quitButton);
+					    GameScene.this.registerTouchArea(mapButton);
+					    gameOverWindow.attachChild(quitButton);
+					    gameOverWindow.attachChild(retryButton);
+					    gameOverWindow.attachChild(mapButton);
+					    activity.showAd();
+					}
+				});
+				
+			}
+			
+		};
+		player.attachChild(parachute);
+		player.attachChild(shieldHalo);
+		GameScene.this.attachChild(player);
+	}
+	
+	private void createCloserClouds() {
+		Random rand = new Random();
+		final int cloudY = 62000;
+		final int maxX = 570;
+		final int minX = 1;
+		int randX = rand.nextInt(maxX - minX + 1) - minX;
+		int randY = rand.nextInt(201) - 100;
+		Sprite farCloud = new Sprite(150 + randX, cloudY + randY, resourcesManager.game_closer_cloud_region, vbom) {
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+				if (this.getX() < LEFT_MARGIN - 200) {
+					this.setPosition(RIGHT_MARGIN + 200, this.getY());
+				}
+				if ((this.getY() - player.getY()) > screenHeight/2) {
+					Random r = new Random();
+					int randX = r.nextInt(maxX - minX + 1) - minX;
+					this.setX(150 + randX);
+					this.setY(this.getY() - 2000);
+				}
+			};
+		};
+		PhysicsHandler handler = new PhysicsHandler(farCloud);
+		farCloud.registerUpdateHandler(handler);
+		handler.setVelocity(FAR_CLOUD_SPEED,0);
+		GameScene.this.attachChild(farCloud);
+	}
+	
+	private void activateShield() {
+		if (shield) {
+			shieldHalo.setVisible(true);
+			player.disablePlayerCollision();
+		} else {
+			shieldHalo.setVisible(false);
+			player.enablePlayerCollision();
+		}	
+	}
+	
+	private void calculateDistanceToFloor() {
+		distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
+		altimeterText.setText("Meters to go: " + distanceToFloor);
+	}
+	
+	private void calculateFliedMeters() {
+		if (player.getFallVelocity() < 0) {
+			fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
+		}
+	}
+	
+	private void displayOpenParachuteButton() {
+		if (distanceToFloor < 1500 && distanceToFloor > 1000 && !openParachute) {
+			openButton.setVisible(true);
+			gameHud.registerTouchArea(openButton);
+		} else {
+			openButton.setVisible(false);
+			gameHud.unregisterTouchArea(openButton);
+		}
+	}
+	
+	private void createPlane() {
+		int planeX = 1000;
+		int planeY = 64000;
+		int launchSensorX = -175;
+		int planeSoundSensorX = 240;
+		final Rectangle launchSensor = new Rectangle(launchSensorX, planeY, 0.1f, 1f, vbom);
+		final Rectangle soundSensor = new Rectangle(planeSoundSensorX, planeY, 0.1f, 1f, vbom);
+		
+		Sprite plane = new Sprite(planeX, planeY, resourcesManager.plane_region, vbom) {
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+				if (this.collidesWith(launchSensor)) {
+					if (!startMoving) {
+						startMoving = true;
+						player.setVisible(true);
+						player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, -5));
+						gameHud.detachChild(levelStartText);
+						launchSensor.setPosition(280, 70000);
+					}									
+				}
+				if (this.collidesWith(soundSensor)) {
+					resourcesManager.plane.play();
+					soundSensor.setPosition(240, 70000);
+				}
+			};
+		};
+		PhysicsHandler handler = new PhysicsHandler(plane);
+		plane.registerUpdateHandler(handler);
+		handler.setVelocity(PLANE_SPEED,0);
+		GameScene.this.attachChild(plane);
+		plane.setCullingEnabled(true);
+	}
+	
+	private void createHelicopters() {
+		int helicopterX = 600;
+		int helicopterY = 60000;		
+		final Rectangle moveSensor = new Rectangle(screenWidth/2, helicopterY + HELICOPTER_MOVE_SENSOR, 720, 0.1f, vbom);
+		final Rectangle soundSensor = new Rectangle(screenWidth/2, helicopterY + HELICOPTER_SOUND_SENSOR, 720, 0.1f, vbom);
+		final long[] EXPLOSION_ANIMATE = new long[] {75, 75, 75, 75, 75, 100};
+		
+		explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
+		explosion.setVisible(false);
+		
+		helicopter = new Helicopter(helicopterX, helicopterY, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+				
+				if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 640) {
+					helicopterRedArrow.setPosition(this.getX(), 75);
+				} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
+					helicopterRedArrow.setPosition(1500, 0);
+				}
+				
+				if (player.collidesWith(moveSensor)) {
+					this.startMoving();
+					moveSensor.setPosition(1000, 1000);
+				}
+				
+				if (player.collidesWith(soundSensor)) {
+					resourcesManager.chopper.play();
+					soundSensor.setPosition(1000, 1000);
+				}
+				
+				if (player.collidesWith(this) && shield) {
+					resourcesManager.chopper.stop();
+					
+					explosion.setPosition(this.getX(),this.getY());
+					explosion.setVisible(true);
+					explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
+					
+					this.setIgnoreUpdate(true);
+					this.setVisible(false);
+					
+					physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));								
+				} 
+			};
+		};
+		GameScene.this.attachChild(explosion);
+		GameScene.this.attachChild(helicopter);
+		helicopter.setCullingEnabled(true);
+	}
+	
+	private void createShield() {
+		Random rand = new Random();
+		int randX = rand.nextInt(601) - 300;
+		
+		Sprite shieldSprite = new Sprite(screenWidth/2 + randX, 62000, resourcesManager.shield_region, vbom) {
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+				if ((player.getY() - this.getY()) < 2250 && (player.getY() - this.getY()) > 640) {
+					greenArrow.setPosition(this.getX(), 75);
+				} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
+					greenArrow.setPosition(1500, 0);
+				}
+				if (player.collidesWith(this)) {
+					shieldCounter++;
+					destroySprite(this);
+					player.registerEntityModifier(new DelayModifier(SHIELD_DURATION, new IEntityModifierListener() {
+						
+						@Override
+						public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+							shield = true;
+							
+							shieldBar.setWidth(200);
+							
+							shieldBar.setColor(0.259f, 0.541f, 0.78f);
+							shieldBarBackground.setColor(Color.WHITE_ARGB_PACKED_INT);
+
+							shieldBar.setVisible(true);
+							shieldBarBackground.setVisible(true);
+							shieldBarFrame.setVisible(true);
+							shieldBarLogo.setVisible(true);
+																	
+							engine.registerUpdateHandler(new IUpdateHandler() {
+								final IUpdateHandler upd = this;
+								
+								@Override
+								public void reset() {
+									
+								}
+								
+								@Override
+								public void onUpdate(float pSecondsElapsed) {
+									if (availablePause) {
+										if (shieldBar.getWidth() > 0) {
+											shieldBar.setSize(shieldBar.getWidth() - pSecondsElapsed * 20, shieldBar.getHeight());
+										} else {
+											engine.unregisterUpdateHandler(upd);
+										}
+										shieldBar.setPosition((screenWidth/2 + screenWidth/4 - 100) + shieldBar.getWidth() / 2, shieldBar.getY());
+									}
+								}
+							});
+						}
+						
+						@Override
+						public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
+							shield = false;
+							shieldBar.setVisible(false);
+							shieldBarBackground.setVisible(false);
+							shieldBarFrame.setVisible(false);
+							shieldBarLogo.setVisible(false);
+						}
+					}));
+				}
+			};
+		};
+		GameScene.this.attachChild(shieldSprite);
 	}
 	
 	public void firstGame() {
@@ -297,10 +674,10 @@ public class GameScene extends BaseScene{
 		balloonRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
 		birdRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
 
-		shieldBar = new Rectangle(720/2 + 720/4 + 100, 1250, 200, 15, vbom);
-		shieldBarBackground = new Rectangle(720/2 + 720/4, 1250, 200, 15, vbom);
-		shieldBarFrame = new Sprite(720/2 + 720/4, 1250, resourcesManager.game_shield_bar_frame_region, vbom);
-		shieldBarLogo = new Sprite(720/2 + 720/4 - 150, 1250, resourcesManager.game_shield_bar_logo_region, vbom);
+		shieldBar = new Rectangle(screenWidth/2 + screenWidth/4 + 100, screenHeight - 30, 200, 15, vbom);
+		shieldBarBackground = new Rectangle(screenWidth/2 + screenWidth/4, screenHeight - 30, 200, 15, vbom);
+		shieldBarFrame = new Sprite(screenWidth/2 + screenWidth/4, screenHeight - 30, resourcesManager.game_shield_bar_frame_region, vbom);
+		shieldBarLogo = new Sprite(screenWidth/2 + screenWidth/4 - 150, screenHeight - 30, resourcesManager.game_shield_bar_logo_region, vbom);
 		
 		shieldBar.setVisible(false);
 		shieldBarBackground.setVisible(false);
@@ -535,7 +912,7 @@ public class GameScene extends BaseScene{
 		editor.commit();
 	}
 	
-	//Parse level from XML file
+	/*//Parse level from XML file
 	private void loadLevel (int level) {
 		final SimpleLevelLoader levelLoader = new SimpleLevelLoader(vbom);
 		levelLoader.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(LevelConstants.TAG_LEVEL) {
@@ -557,80 +934,7 @@ public class GameScene extends BaseScene{
 				final int y = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_Y);
 				final String type = SAXUtils.getAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_TYPE);
 				
-				final Sprite levelObject;
-				
-				if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOUD)) {
-					Random rand = new Random();
-					int randX = rand.nextInt(441) - 220;
-					int randY = rand.nextInt(201) - 100;
-					levelObject = new Sprite(x + randX, y + randY, resourcesManager.game_cloud_region, vbom) {
-						protected void onManagedUpdate(float pSecondsElapsed) {
-							super.onManagedUpdate(pSecondsElapsed);
-							if (this.getX() < LEFT_MARGIN - 200) {
-								this.setPosition(RIGHT_MARGIN + 200, y);
-							}
-						};
-					};
-					PhysicsHandler handler = new PhysicsHandler(levelObject);
-					levelObject.registerUpdateHandler(handler);
-					handler.setVelocity(CLOUD_SPEED,0);
-				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_CLOSER_CLOUD)) {
-					Random rand = new Random();
-					int randX = rand.nextInt(441) - 220;
-					int randY = rand.nextInt(201) - 100;
-					levelObject = new Sprite(x + randX, y + randY, resourcesManager.game_closer_cloud_region, vbom) {
-						protected void onManagedUpdate(float pSecondsElapsed) {
-							super.onManagedUpdate(pSecondsElapsed);
-							if (this.getX() < LEFT_MARGIN - 540) {
-								this.setPosition(RIGHT_MARGIN + 540, y);
-							}
-						};
-					};
-					PhysicsHandler handler = new PhysicsHandler(levelObject);
-					levelObject.registerUpdateHandler(handler);
-					handler.setVelocity(CLOSER_CLOUD_SPEED,0);
-				} 
-				else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FAR_CLOUD)) {
-					Random rand = new Random();
-					int randX = rand.nextInt(441) - 220;
-					int randY = rand.nextInt(201) - 100;
-					levelObject = new Sprite(x + randX, y + randY, resourcesManager.game_far_cloud_region, vbom) {
-						protected void onManagedUpdate(float pSecondsElapsed) {
-							super.onManagedUpdate(pSecondsElapsed);
-							if (this.getX() < LEFT_MARGIN - 125) {
-								this.setPosition(RIGHT_MARGIN + 125, y);
-							}
-						};
-					};
-					PhysicsHandler handler = new PhysicsHandler(levelObject);
-					levelObject.registerUpdateHandler(handler);
-					handler.setVelocity(FAR_CLOUD_SPEED,0);
-				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLANE)) {
-					final Rectangle launchSensor = new Rectangle(-175, y, 0.1f, 1f, vbom);
-					final Rectangle soundSensor = new Rectangle(240, y, 0.1f, 1f, vbom);
-					levelObject = new Sprite(x, y, resourcesManager.plane_region, vbom) {
-						protected void onManagedUpdate(float pSecondsElapsed) {
-							super.onManagedUpdate(pSecondsElapsed);
-							//if (this.getX() < 200) {
-							if (this.collidesWith(launchSensor)) {
-								if (!startMoving) {
-									startMoving = true;
-									player.setVisible(true);
-									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, -5));
-									gameHud.detachChild(levelStartText);
-									launchSensor.setPosition(280, 70000);
-								}									
-							}
-							if (this.collidesWith(soundSensor)) {
-								resourcesManager.plane.play();
-								soundSensor.setPosition(240, 70000);
-							}
-						};
-					};
-					PhysicsHandler handler = new PhysicsHandler(levelObject);
-					levelObject.registerUpdateHandler(handler);
-					handler.setVelocity(PLANE_SPEED,0);
-				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BACK_LOCATION)) {
+				if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BACK_LOCATION)) {
 					levelObject = new Sprite(x, y, resourcesManager.game_back_location_region, vbom);
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_COIN)) {
 					//n = rand.nextInt(max - min + 1) + min;
@@ -656,74 +960,6 @@ public class GameScene extends BaseScene{
 					final long[] COIN_ANIMATE = new long[] {100, 100, 100, 100};
 					coin.animate(COIN_ANIMATE, 0, 3, true);
 					levelObject = coin;
-				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_SHIELD)) {
-					Random rand = new Random();
-					int randX = rand.nextInt(601) - 300;
-					
-					/*shieldBarFrame = new Sprite(720/2 + 720/4, 1250, resourcesManager.game_shield_bar_frame_region, vbom);
-					shieldBarLogo = new Sprite(720/2 + 720/4 - 150, 1250, resourcesManager.game_shield_bar_logo_region, vbom);*/
-					
-					levelObject = new Sprite(x + randX, y, resourcesManager.shield_region, vbom) {
-						protected void onManagedUpdate(float pSecondsElapsed) {
-							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 2250 && (player.getY() - this.getY()) > 640) {
-								greenArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
-								greenArrow.setPosition(1500, 0);
-							}
-							if (player.collidesWith(this)) {
-								shieldCounter++;
-								destroySprite(this);
-								player.registerEntityModifier(new DelayModifier(SHIELD_DURATION, new IEntityModifierListener() {
-									
-									@Override
-									public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
-										shield = true;
-										
-										shieldBar.setWidth(200);
-										
-										shieldBar.setColor(0.259f, 0.541f, 0.78f);
-										shieldBarBackground.setColor(Color.WHITE_ARGB_PACKED_INT);
-
-										shieldBar.setVisible(true);
-										shieldBarBackground.setVisible(true);
-										shieldBarFrame.setVisible(true);
-										shieldBarLogo.setVisible(true);
-																				
-										engine.registerUpdateHandler(new IUpdateHandler() {
-											final IUpdateHandler upd = this;
-											
-											@Override
-											public void reset() {
-												
-											}
-											
-											@Override
-											public void onUpdate(float pSecondsElapsed) {
-												if (availablePause) {
-													if (shieldBar.getWidth() > 0) {
-														shieldBar.setSize(shieldBar.getWidth() - pSecondsElapsed * 20, shieldBar.getHeight());
-													} else {
-														engine.unregisterUpdateHandler(upd);
-													}
-													shieldBar.setPosition((720/2 + 720/4 - 100) + shieldBar.getWidth() / 2, shieldBar.getY());
-												}
-											}
-										});
-									}
-									
-									@Override
-									public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-										shield = false;
-										shieldBar.setVisible(false);
-										shieldBarBackground.setVisible(false);
-										shieldBarFrame.setVisible(false);
-										shieldBarLogo.setVisible(false);
-									}
-								}));
-							}
-						};
-					};
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_UPPER_IMPULSE)) {
 					//n = rand.nextInt(max - min + 1) + min;
 					Random rand = new Random();
@@ -794,45 +1030,6 @@ public class GameScene extends BaseScene{
 							}
 						};
 					};
-				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_HELICOPTER)) {
-					final Rectangle moveSensor = new Rectangle(360, y + HELICOPTER_MOVE_SENSOR, 720, 0.1f, vbom);
-					final Rectangle soundSensor = new Rectangle(360, y + HELICOPTER_SOUND_SENSOR, 720, 0.1f, vbom);
-					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
-					explosion.setVisible(false);					  
-					helicopter = new Helicopter(x, y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
-						protected void onManagedUpdate(float pSecondsElapsed) {
-							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 640) {
-								helicopterRedArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
-								helicopterRedArrow.setPosition(1500, 0);
-							}
-							if (player.collidesWith(moveSensor)) {
-								this.startMoving();
-								moveSensor.setPosition(1000, 1000);
-							}
-							if (player.collidesWith(soundSensor)) {
-								resourcesManager.chopper.play();
-								soundSensor.setPosition(1000, 1000);
-							}
-							if (player.collidesWith(this)) {
-								if (shield) {
-									resourcesManager.chopper.stop();
-									playerSpeed = player.getFallVelocity();
-									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, playerSpeed));
-									this.setVisible(false);
-									explosion.setPosition(this.getX(),this.getY());
-									explosion.setVisible(true);
-									final long[] EXPLOSION_ANIMATE = new long[] {75, 75, 75, 75, 75, 100};
-									explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
-									this.setIgnoreUpdate(true);
-									physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
-								}									
-							} 
-						};
-					};
-					GameScene.this.attachChild(explosion);
-					levelObject = helicopter;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER)) {
 					final Rectangle moveSensor = new Rectangle(360, y + HELICOPTER_MOVE_SENSOR, 720, 0.1f, vbom);
 					final Rectangle soundSensor = new Rectangle(360, y + HELICOPTER_SOUND_SENSOR, 720, 0.1f, vbom);
@@ -972,137 +1169,6 @@ public class GameScene extends BaseScene{
 					GameScene.this.attachChild(explosion);
 					balloon.attachChild(basket);
 					levelObject = balloon;
-				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
-					parachute = new Sprite(27, 140, ResourcesManager.getInstance().parachute_region, vbom);
-					shieldHalo = new Sprite(20, 50, resourcesManager.shield_region, vbom);
-					parachute.setVisible(false);
-					shieldHalo.setVisible(false);
-					player = new Player(x, y, vbom, camera, physicsWorld) {
-						
-						@Override
-						protected void onManagedUpdate(float pSecondsElapsed) {
-							super.onManagedUpdate(pSecondsElapsed);
-							engine.runOnUpdateThread(new Runnable() {
-								
-								@Override
-								public void run() {
-									distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
-									if (!startMoving) {
-										player.stopPlayer();
-										player.setVisible(false);
-										player.setPosition(x,y);
-									}
-									if (shield) {
-										shieldHalo.setVisible(true);
-										shieldHalo.setPosition(20, 50);
-									} else {
-										shieldHalo.setVisible(false);
-									}									
-									if (firstFall) {
-										oldDistanceToFloor = distanceToFloor;
-									}
-									firstFall = false;
-									altimeterText.setText("Meters to go: " + distanceToFloor);
-									if (player.getFallVelocity() < 0) {
-										fliedMeters = fliedMeters + (oldDistanceToFloor - distanceToFloor);
-									}
-									if (distanceToFloor < 1500 && distanceToFloor > 1000 && !openParachute) {
-										openButton.setVisible(true);
-										gameHud.registerTouchArea(openButton);
-									} else {
-										openButton.setVisible(false);
-										gameHud.unregisterTouchArea(openButton);
-									}
-									if (openParachute && player.getFallVelocity() > 0) {
-										player.slowDownPlayer();
-									}
-									if (openParachute) {
-										parachute.setVisible(true);
-										player.openParachute();
-										parachuteFliedMeters = fliedMeters - freeFliedMeters;
-										if (!openParachuteDistanceSaved) {
-											openParachuteDistanceSaved = true;
-											distanceToFloorAtOpenParachute = distanceToFloor;
-											meterCounterForReduceSpeed = distanceToFloor;
-										}
-										if (distanceToFloor == meterCounterForReduceSpeed - 100) {
-											meterCounterForReduceSpeed -= 100;
-											player.reduceParachuteSpeed();
-										}
-									} else {
-										distanceToFloorAtOpenParachute = 0;
-										freeFliedMeters = fliedMeters;
-									}
-									oldDistanceToFloor = distanceToFloor;
-								}
-							});
-						};
-						
-						@Override
-						public void onDie() {
-							engine.runOnUpdateThread(new Runnable() {
-								
-								@Override
-								public void run() {
-									saveScoreDataOnDie();
-									GameScene.this.setIgnoreUpdate(true);
-							        camera.setChaseEntity(null);
-							        availablePause = false;
-							        dead = true;
-							        gameOverWindow.setPosition(camera.getCenterX(), camera.getCenterY());
-									GameScene.this.attachChild(gameOverWindow);
-								    final Sprite retryButton = new Sprite(510, 75, resourcesManager.game_retry_button_region, vbom){
-								    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-								    		if (pSceneTouchEvent.isActionDown()) {
-								    			gameHud.dispose();
-												gameHud.setVisible(false);
-												detachChild(gameHud);
-												myGarbageCollection();
-												SceneManager.getInstance().loadGameScene(engine, GameScene.this);
-											}
-								    		return true;
-								    	};
-								    };
-								    final Sprite mapButton = new Sprite(310, 75, resourcesManager.game_map_button_region, vbom){
-								    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-								    		if (pSceneTouchEvent.isActionDown()) {
-								    			gameHud.dispose();
-												gameHud.setVisible(false);
-												detachChild(gameHud);
-												myGarbageCollection();
-												SceneManager.getInstance().loadMapScene(engine, GameScene.this);
-											}
-								    		return true;
-								    	};
-								    };
-								    final Sprite quitButton = new Sprite(110, 75, resourcesManager.game_quit_button_region, vbom){
-								    	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-								    		if (pSceneTouchEvent.isActionDown()) {
-								    			gameHud.dispose();
-												gameHud.setVisible(false);
-												detachChild(gameHud);
-												myGarbageCollection();
-												SceneManager.getInstance().loadMenuScene(engine, GameScene.this);
-								    		}
-								    		return true;
-								    	};
-								    };
-								    GameScene.this.registerTouchArea(retryButton);
-								    GameScene.this.registerTouchArea(quitButton);
-								    GameScene.this.registerTouchArea(mapButton);
-								    gameOverWindow.attachChild(quitButton);
-								    gameOverWindow.attachChild(retryButton);
-								    gameOverWindow.attachChild(mapButton);
-								    activity.showAd();
-								}
-							});
-							
-						}
-						
-					};
-					player.attachChild(parachute);
-					player.attachChild(shieldHalo);
-					levelObject = player;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM)) {
 					levelObject = new Sprite(x, y, resourcesManager.game_landing_platfom_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
@@ -1137,7 +1203,7 @@ public class GameScene extends BaseScene{
 			}
 		});
 		levelLoader.loadLevelFromAsset(activity.getAssets(), "level/" + level + ".xml");
-	}
+	}*/
 	
 	private ContactListener contactListener() {
 		ContactListener contactListener = new ContactListener() {
