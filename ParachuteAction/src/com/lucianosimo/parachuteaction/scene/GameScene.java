@@ -193,7 +193,30 @@ public class GameScene extends BaseScene{
 	
 	private static final int PLAYER_INITIAL_Y = 64000;
 	
+	private static final int CLOUD_INITIAL_X = 360;
+	private static final int FAR_CLOUD_INITIAL_Y = 63000;
+	private static final int CLOUD_INITIAL_Y = 62000;
+	private static final int CLOSER_CLOUD_INITIAL_Y = 63000;
+	private static final int FAR_CLOUD_REGENERATE_DISTANCE_Y = 2250;
+	private static final int CLOUD_REGENERATE_DISTANCE_Y = 2750;
+	private static final int CLOSER_CLOUD_REGENERATE_DISTANCE_Y = 2250;
+	
+	private static final int FAR_CLOUD_LATERAL_LIMIT = 125;
+	private static final int CLOUD_LATERAL_LIMIT = 200;
+	private static final int CLOSER_CLOUD_LATERAL_LIMIT = 200;
+	private static final int FAR_CLOUD_TOP_LIMIT = 700;
+	private static final int CLOUD_TOP_LIMIT = 700;
+	private static final int CLOSER_CLOUD_TOP_LIMIT = 700;
+	
+	private static final int CLOUD_MAX_X = 360;
+	private static final int CLOUD_MIN_X = -360;
+	private static final int CLOUD_MAX_Y = 250;
+	private static final int CLOUD_MIN_Y = -250;
+	
+	private static final int HELICOPTER_INITIAL_Y = 60000;	
 	private static final int HELICOPTER_REGENERATE_DISTANCE_Y = 5000;
+	private static final int HELICOPTER_MAX_X = 650;
+	private static final int HELICOPTER_MIN_X = 450;
 
 	@Override
 	public void createScene() {
@@ -220,23 +243,18 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void createFarClouds() {
-		Random rand = new Random();
-		final int cloudY = 63000;
-		final int maxX = 570;
-		final int minX = 1;
-		int randX = rand.nextInt(maxX - minX + 1) - minX;
-		int randY = rand.nextInt(201) - 100;
-		Sprite farCloud = new Sprite(150 + randX, cloudY + randY, resourcesManager.game_far_cloud_region, vbom) {
+		int randX = cloudXPosition();
+		int randY = cloudYPosition();
+		Sprite farCloud = new Sprite(CLOUD_INITIAL_X + randX, FAR_CLOUD_INITIAL_Y + randY, resourcesManager.game_far_cloud_region, vbom) {
 			protected void onManagedUpdate(float pSecondsElapsed) {
 				super.onManagedUpdate(pSecondsElapsed);
-				if (this.getX() < LEFT_MARGIN - 125) {
-					this.setPosition(RIGHT_MARGIN + 125, this.getY());
+				if (this.getX() < LEFT_MARGIN - FAR_CLOUD_LATERAL_LIMIT) {
+					this.setPosition(RIGHT_MARGIN + FAR_CLOUD_LATERAL_LIMIT, this.getY());
 				}
-				if ((this.getY() - player.getY()) > screenHeight/2) {
-					Random r = new Random();
-					int randX = r.nextInt(maxX - minX + 1) - minX;
-					this.setX(150 + randX);
-					this.setY(this.getY() - 2250);
+				if ((this.getY() - player.getY()) > FAR_CLOUD_TOP_LIMIT) {
+					int randX = cloudXPosition();
+					this.setX(CLOUD_INITIAL_X + randX);
+					this.setY(this.getY() - FAR_CLOUD_REGENERATE_DISTANCE_Y);
 				}
 			};
 		};
@@ -247,23 +265,18 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void createClouds() {
-		Random rand = new Random();
-		final int cloudY = 63000;
-		final int maxX = 570;
-		final int minX = 1;
-		int randX = rand.nextInt(maxX - minX + 1) - minX;
-		int randY = rand.nextInt(201) - 100;
-		Sprite cloud = new Sprite(150 + randX, cloudY + randY, resourcesManager.game_cloud_region, vbom) {
+		int randX = cloudXPosition();
+		int randY = cloudYPosition();
+		Sprite cloud = new Sprite(CLOUD_INITIAL_X + randX, CLOUD_INITIAL_Y + randY, resourcesManager.game_cloud_region, vbom) {
 			protected void onManagedUpdate(float pSecondsElapsed) {
 				super.onManagedUpdate(pSecondsElapsed);
-				if (this.getX() < LEFT_MARGIN - 200) {
-					this.setPosition(RIGHT_MARGIN + 200, this.getY());
+				if (this.getX() < LEFT_MARGIN - CLOUD_LATERAL_LIMIT) {
+					this.setPosition(RIGHT_MARGIN + CLOUD_LATERAL_LIMIT, this.getY());
 				}
-				if ((this.getY() - player.getY()) > screenHeight/2) {
-					Random r = new Random();
-					int randX = r.nextInt(maxX - minX + 1) - minX;
-					this.setX(150 + randX);
-					this.setY(this.getY() - 2750);
+				if ((this.getY() - player.getY()) > CLOUD_TOP_LIMIT) {
+					int randX = cloudXPosition();
+					this.setX(CLOUD_INITIAL_X + randX);
+					this.setY(this.getY() - CLOUD_REGENERATE_DISTANCE_Y);
 				}
 			};
 		};
@@ -405,23 +418,18 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void createCloserClouds() {
-		Random rand = new Random();
-		final int cloudY = 62000;
-		final int maxX = 570;
-		final int minX = 1;
-		int randX = rand.nextInt(maxX - minX + 1) - minX;
-		int randY = rand.nextInt(201) - 100;
-		Sprite farCloud = new Sprite(150 + randX, cloudY + randY, resourcesManager.game_closer_cloud_region, vbom) {
+		int randX = cloudXPosition();
+		int randY = cloudYPosition();
+		Sprite farCloud = new Sprite(CLOUD_INITIAL_X + randX, CLOSER_CLOUD_INITIAL_Y + randY, resourcesManager.game_closer_cloud_region, vbom) {
 			protected void onManagedUpdate(float pSecondsElapsed) {
 				super.onManagedUpdate(pSecondsElapsed);
-				if (this.getX() < LEFT_MARGIN - 200) {
-					this.setPosition(RIGHT_MARGIN + 200, this.getY());
+				if (this.getX() < LEFT_MARGIN - CLOSER_CLOUD_LATERAL_LIMIT) {
+					this.setPosition(RIGHT_MARGIN + CLOSER_CLOUD_LATERAL_LIMIT, this.getY());
 				}
-				if ((this.getY() - player.getY()) > screenHeight/2) {
-					Random r = new Random();
-					int randX = r.nextInt(maxX - minX + 1) - minX;
-					this.setX(150 + randX);
-					this.setY(this.getY() - 2250);
+				if ((this.getY() - player.getY()) > CLOSER_CLOUD_TOP_LIMIT) {
+					int randX = cloudXPosition();
+					this.setX(CLOUD_INITIAL_X + randX);
+					this.setY(this.getY() - CLOSER_CLOUD_REGENERATE_DISTANCE_Y);
 				}
 			};
 		};
@@ -429,6 +437,16 @@ public class GameScene extends BaseScene{
 		farCloud.registerUpdateHandler(handler);
 		handler.setVelocity(FAR_CLOUD_SPEED,0);
 		GameScene.this.attachChild(farCloud);
+	}
+	
+	private int cloudXPosition() {
+		Random rand = new Random();
+		return rand.nextInt(CLOUD_MAX_X - CLOUD_MIN_X + 1) + CLOUD_MIN_X;
+	}
+	
+	private int cloudYPosition() {
+		Random rand = new Random();
+		return rand.nextInt(CLOUD_MAX_Y - CLOUD_MIN_Y + 1) + CLOUD_MIN_Y;
 	}
 	
 	private void activateShield() {
@@ -495,17 +513,21 @@ public class GameScene extends BaseScene{
 		plane.setCullingEnabled(true);
 	}
 	
+	private int helicopterXPosition() {
+		Random rand = new Random();
+		return rand.nextInt(HELICOPTER_MAX_X - HELICOPTER_MIN_X + 1) + HELICOPTER_MIN_X;
+	}
+	
 	private void createHelicopters() {
-		int helicopterX = 600;
-		int helicopterY = 60000;		
-		final Rectangle moveSensor = new Rectangle(screenWidth/2, helicopterY + HELICOPTER_MOVE_SENSOR, 720, 0.1f, vbom);
-		final Rectangle soundSensor = new Rectangle(screenWidth/2, helicopterY + HELICOPTER_SOUND_SENSOR, 720, 0.1f, vbom);
+		int helicopterX = helicopterXPosition();	
+		final Rectangle moveSensor = new Rectangle(screenWidth/2, HELICOPTER_INITIAL_Y + HELICOPTER_MOVE_SENSOR, 720, 0.1f, vbom);
+		final Rectangle soundSensor = new Rectangle(screenWidth/2, HELICOPTER_INITIAL_Y + HELICOPTER_SOUND_SENSOR, 720, 0.1f, vbom);
 		final long[] EXPLOSION_ANIMATE = new long[] {75, 75, 75, 75, 75, 100};
 		
 		explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
 		explosion.setVisible(false);
 		
-		helicopter = new Helicopter(helicopterX, helicopterY, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
+		helicopter = new Helicopter(helicopterX, HELICOPTER_INITIAL_Y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
 			protected void onManagedUpdate(float pSecondsElapsed) {
 				super.onManagedUpdate(pSecondsElapsed);
 				
@@ -546,7 +568,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void regenerateHelicopter(Rectangle moveSensor, Rectangle soundSensor) {
-		int helicopterX = 600;
+		int helicopterX = helicopterXPosition();
 		helicopter.getBody().setTransform(helicopterX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 
 				(helicopter.getY() - HELICOPTER_REGENERATE_DISTANCE_Y) / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, helicopter.getBody().getAngle());
 		helicopter.setPosition(helicopterX, helicopter.getY() - HELICOPTER_REGENERATE_DISTANCE_Y);
