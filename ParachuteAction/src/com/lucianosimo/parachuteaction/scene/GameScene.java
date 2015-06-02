@@ -18,6 +18,7 @@ import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
+import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.align.HorizontalAlign;
 import org.andengine.util.adt.color.Color;
@@ -191,6 +192,8 @@ public class GameScene extends BaseScene{
 	private static final int BALLOON_MOVE_SENSOR = 1750;
 	
 	private static final int PLAYER_INITIAL_Y = 64000;
+	
+	private static final int HELICOPTER_REGENERATE_DISTANCE_Y = 5000;
 
 	@Override
 	public void createScene() {
@@ -210,7 +213,7 @@ public class GameScene extends BaseScene{
 		createPlane();
 		createHelicopters();
 		createShield();
-		createCloserClouds();
+		//createCloserClouds();
 		firstGame();
 		//DebugRenderer debug = new DebugRenderer(physicsWorld, vbom);
         //GameScene.this.attachChild(debug);
@@ -233,7 +236,7 @@ public class GameScene extends BaseScene{
 					Random r = new Random();
 					int randX = r.nextInt(maxX - minX + 1) - minX;
 					this.setX(150 + randX);
-					this.setY(this.getY() - 2000);
+					this.setY(this.getY() - 2250);
 				}
 			};
 		};
@@ -260,7 +263,7 @@ public class GameScene extends BaseScene{
 					Random r = new Random();
 					int randX = r.nextInt(maxX - minX + 1) - minX;
 					this.setX(150 + randX);
-					this.setY(this.getY() - 2500);
+					this.setY(this.getY() - 2750);
 				}
 			};
 		};
@@ -418,7 +421,7 @@ public class GameScene extends BaseScene{
 					Random r = new Random();
 					int randX = r.nextInt(maxX - minX + 1) - minX;
 					this.setX(150 + randX);
-					this.setY(this.getY() - 2000);
+					this.setY(this.getY() - 2250);
 				}
 			};
 		};
@@ -522,6 +525,10 @@ public class GameScene extends BaseScene{
 					soundSensor.setPosition(1000, 1000);
 				}
 				
+				if ((this.getY() - player.getY()) > screenHeight/2 ) {
+					regenerateHelicopter(moveSensor, soundSensor);
+				}
+				
 				if (player.collidesWith(this) && shield) {
 					resourcesManager.chopper.stop();
 					
@@ -529,16 +536,23 @@ public class GameScene extends BaseScene{
 					explosion.setVisible(true);
 					explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
 					
-					this.setIgnoreUpdate(true);
-					this.setVisible(false);
-					
-					physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));								
+					regenerateHelicopter(moveSensor, soundSensor);
 				} 
 			};
 		};
 		GameScene.this.attachChild(explosion);
 		GameScene.this.attachChild(helicopter);
 		helicopter.setCullingEnabled(true);
+	}
+	
+	private void regenerateHelicopter(Rectangle moveSensor, Rectangle soundSensor) {
+		int helicopterX = 600;
+		helicopter.getBody().setTransform(helicopterX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 
+				(helicopter.getY() - HELICOPTER_REGENERATE_DISTANCE_Y) / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, helicopter.getBody().getAngle());
+		helicopter.setPosition(helicopterX, helicopter.getY() - HELICOPTER_REGENERATE_DISTANCE_Y);
+		helicopter.stopMoving();
+		moveSensor.setPosition(screenWidth / 2, helicopter.getY() + HELICOPTER_MOVE_SENSOR);
+		soundSensor.setPosition(screenWidth / 2, helicopter.getY() + HELICOPTER_SOUND_SENSOR);
 	}
 	
 	private void createShield() {
@@ -1228,156 +1242,70 @@ public class GameScene extends BaseScene{
 				final Fixture x2 = contact.getFixtureB();
 				
 				if (x1.getBody().getUserData().equals("bird") && x2.getBody().getUserData().equals("player")) {
-					if (shield) {
-						engine.runOnUpdateThread(new Runnable() {
-							@Override
-							public void run() {
-								playerSpeed = x2.getBody().getLinearVelocity().y;
-								x1.getBody().setActive(false);
-							}
-						});
-					} else {
+					if (!shield) {
 						player.killPlayer();
 						setInactiveBody(x1.getBody());
 					}
 				}
 				
 				if (x1.getBody().getUserData().equals("player") && x2.getBody().getUserData().equals("bird")) {
-					if (shield) {
-						engine.runOnUpdateThread(new Runnable() {
-							@Override
-							public void run() {
-								playerSpeed = x1.getBody().getLinearVelocity().y;
-								x2.getBody().setActive(false);
-							}
-						});
-					} else {
+					if (!shield) {
 						player.killPlayer();
 						setInactiveBody(x2.getBody());
 					}
 				}
 				
 				if (x1.getBody().getUserData().equals("leftBird") && x2.getBody().getUserData().equals("player")) {
-					if (shield) {
-						engine.runOnUpdateThread(new Runnable() {
-							@Override
-							public void run() {
-								playerSpeed = x2.getBody().getLinearVelocity().y;
-								x1.getBody().setActive(false);
-							}
-						});
-					} else {
+					if (!shield) {
 						player.killPlayer();
 						setInactiveBody(x1.getBody());
 					}
 				}
 				
 				if (x1.getBody().getUserData().equals("player") && x2.getBody().getUserData().equals("leftBird")) {
-					if (shield) {
-						engine.runOnUpdateThread(new Runnable() {
-							@Override
-							public void run() {
-								playerSpeed = x1.getBody().getLinearVelocity().y;
-								x2.getBody().setActive(false);
-							}
-						});
-					} else {
+					if (!shield) {
 						player.killPlayer();
 						setInactiveBody(x2.getBody());
 					}
 				}
 				
 				if (x1.getBody().getUserData().equals("helicopter") && x2.getBody().getUserData().equals("player")) {
-					if (shield) {
-						engine.runOnUpdateThread(new Runnable() {
-							@Override
-							public void run() {
-								resourcesManager.explosion.play();
-								playerSpeed = x2.getBody().getLinearVelocity().y;
-								x1.getBody().setActive(false);
-							}
-						});
-					} else {
+					if (!shield) {
 						player.killPlayer();
 						setInactiveBody(x1.getBody());
 					}
 				}
 				
 				if (x1.getBody().getUserData().equals("player") && x2.getBody().getUserData().equals("helicopter")) {
-					if (shield) {
-						engine.runOnUpdateThread(new Runnable() {
-							@Override
-							public void run() {
-								resourcesManager.explosion.play();
-								playerSpeed = x1.getBody().getLinearVelocity().y;
-								x2.getBody().setActive(false);
-							}
-						});
-					} else {
+					if (!shield) {
 						player.killPlayer();
 						setInactiveBody(x2.getBody());
 					}
 				}
 				
 				if (x1.getBody().getUserData().equals("leftHelicopter") && x2.getBody().getUserData().equals("player")) {
-					if (shield) {
-						engine.runOnUpdateThread(new Runnable() {
-							@Override
-							public void run() {
-								resourcesManager.explosion.play();
-								playerSpeed = x2.getBody().getLinearVelocity().y;
-								x1.getBody().setActive(false);
-							}
-						});
-					} else {
+					if (!shield) {
 						player.killPlayer();
 						setInactiveBody(x1.getBody());
 					}
 				}
 				
 				if (x1.getBody().getUserData().equals("player") && x2.getBody().getUserData().equals("leftHelicopter")) {
-					if (shield) {
-						engine.runOnUpdateThread(new Runnable() {
-							@Override
-							public void run() {
-								resourcesManager.explosion.play();
-								playerSpeed = x1.getBody().getLinearVelocity().y;
-								x2.getBody().setActive(false);
-							}
-						});
-					} else {
+					if (!shield) {
 						player.killPlayer();
 						setInactiveBody(x2.getBody());
 					}
 				}
 				
 				if (x1.getBody().getUserData().equals("balloon") && x2.getBody().getUserData().equals("player")) {
-					if (shield) {
-						engine.runOnUpdateThread(new Runnable() {
-							@Override
-							public void run() {
-								resourcesManager.explosion.play();
-								playerSpeed = x2.getBody().getLinearVelocity().y;
-								x1.getBody().setActive(false);
-							}
-						});
-					} else {
+					if (!shield) {
 						player.killPlayer();
 						setInactiveBody(x1.getBody());
 					}
 				}
 				
 				if (x1.getBody().getUserData().equals("player") && x2.getBody().getUserData().equals("balloon")) {
-					if (shield) {
-						engine.runOnUpdateThread(new Runnable() {
-							@Override
-							public void run() {
-								resourcesManager.explosion.play();
-								playerSpeed = x1.getBody().getLinearVelocity().y;
-								x2.getBody().setActive(false);
-							}
-						});
-					} else {
+					if (!shield) {
 						player.killPlayer();
 						setInactiveBody(x2.getBody());
 					}

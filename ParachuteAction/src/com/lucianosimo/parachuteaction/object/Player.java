@@ -72,11 +72,11 @@ public abstract class Player extends AnimatedSprite{
 	}
 	
 	public void disablePlayerCollision() {
-		fixture.filter.groupIndex = -1;
+		body.getFixtureList().get(0).setSensor(true);
 	}
 	
 	public void enablePlayerCollision() {
-		fixture.filter.groupIndex = 1;
+		body.getFixtureList().get(0).setSensor(false);
 	}
 	
 	public void addPlayerCoins(int coins) {
