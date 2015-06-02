@@ -44,6 +44,10 @@ public class LeftHelicopter extends AnimatedSprite{
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
 	}
 	
+	public Body getBody() {
+		return body;
+	}
+	
 	public void startAnimation() {
 		final long[] HELICOPTER_ANIMATE = new long[] {100, 100};
 		animate(HELICOPTER_ANIMATE, 0, 1, true);
@@ -53,4 +57,7 @@ public class LeftHelicopter extends AnimatedSprite{
 		body.setLinearVelocity(new Vector2(6f, body.getLinearVelocity().y));
 	}
 	
+	public void stopMoving() {
+		body.setLinearVelocity(new Vector2(0, 0));
+	}
 }
