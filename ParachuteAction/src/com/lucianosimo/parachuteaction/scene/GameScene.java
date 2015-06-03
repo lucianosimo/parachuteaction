@@ -232,6 +232,17 @@ public class GameScene extends BaseScene{
 	private static final int LEFT_HELICOPTER_REGENERATE_DISTANCE_Y = 5000;
 	private static final int LEFT_HELICOPTER_MAX_X = 270;
 	private static final int LEFT_HELICOPTER_MIN_X = 70;
+	
+	private static final int BALLOON_SHOW_ARROW_DISTANCE = 1500;
+	private static final int BALLOON_HIDE_ARROW_DISTANCE = 640;
+	private static final int BALLOON_ARROW_DISTANCE_TO_BOTTOM = 75;
+	
+	private static final int BALLOON_INITIAL_Y = 55000;	
+	private static final int BALLOON_REGENERATE_DISTANCE_Y = 5000;
+	private static final int BALLOON_MAX_X = 650;
+	private static final int BALLOON_MIN_X = 450;
+	private static final int BALLOON_BASKET_X = 97;
+	private static final int BALLOON_BASKET_Y = -30;
 
 	@Override
 	public void createScene() {
@@ -250,6 +261,7 @@ public class GameScene extends BaseScene{
 		createPlayer();
 		createPlane();
 		createHelicopters();
+		createBalloons();
 		createShield();
 		//createCloserClouds();
 		firstGame();
@@ -521,6 +533,12 @@ public class GameScene extends BaseScene{
 	private void createExplosion() {
 		explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
 		explosion.setVisible(false);
+		GameScene.this.attachChild(explosion);
+	}
+	
+	private int generateRandomPosition(int max, int min) {
+		Random rand = new Random();
+		return rand.nextInt(max - min + 1) + min;
 	}
 	
 	private void createHelicopters() {
@@ -546,18 +564,11 @@ public class GameScene extends BaseScene{
 					helicopterBehaviour(this, moveSensor, soundSensor);				 
 				};
 			};
-
-			GameScene.this.attachChild(explosion);
 			GameScene.this.attachChild(helicopter);
 			helicopter.setCullingEnabled(true);
 		}		
 	}
 
-	private int generateRandomPosition(int max, int min) {
-		Random rand = new Random();
-		return rand.nextInt(max - min + 1) + min;
-	}
-	
 	private void helicopterBehaviour(Helicopter helicopter, Rectangle moveSensor, Rectangle soundSensor) {
 		if ((player.getY() - helicopter.getY()) < HELICOPTER_SHOW_ARROW_DISTANCE && (player.getY() - helicopter.getY()) > HELICOPTER_HIDE_ARROW_DISTANCE) {
 			helicopterRedArrow.setPosition(helicopter.getX(), HELICOPTER_ARROW_DISTANCE_TO_BOTTOM);
@@ -601,6 +612,62 @@ public class GameScene extends BaseScene{
 		helicopter.stopMoving();
 		moveSensor.setPosition(screenWidth / 2, helicopter.getY() + HELICOPTER_MOVE_SENSOR);
 		soundSensor.setPosition(screenWidth / 2, helicopter.getY() + HELICOPTER_SOUND_SENSOR);
+	}
+	
+	private void createBalloons() {
+		final Rectangle moveSensor = new Rectangle(screenWidth/2, BALLOON_INITIAL_Y + BALLOON_MOVE_SENSOR, screenWidth, 0.1f, vbom);
+		basket = new Sprite(BALLOON_BASKET_X, BALLOON_BASKET_Y, resourcesManager.balloon_basket_region, vbom);
+		
+		createExplosion();
+		
+		int randX = generateRandomPosition(BALLOON_MAX_X, BALLOON_MIN_X);		
+		balloon = new Balloon(randX, BALLOON_INITIAL_Y, vbom, camera, physicsWorld, resourcesManager.balloon_region.deepCopy()) {
+			
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+				balloonBehaviour(this, moveSensor);
+			};
+		};
+
+		GameScene.this.attachChild(balloon);
+		balloon.attachChild(basket);
+		balloon.setCullingEnabled(true);
+	}
+	
+	private void balloonBehaviour(Balloon balloon, Rectangle moveSensor) {
+		if (player.collidesWith(moveSensor)) {
+			balloon.startMoving();
+			moveSensor.setPosition(1000, 1000);
+		}
+		if ((player.getY() - balloon.getY()) < BALLOON_SHOW_ARROW_DISTANCE && (player.getY() - balloon.getY()) > BALLOON_HIDE_ARROW_DISTANCE) {
+			balloonRedArrow.setPosition(balloon.getX(), BALLOON_ARROW_DISTANCE_TO_BOTTOM);
+		} else if ((player.getY() - balloon.getY()) < BALLOON_HIDE_ARROW_DISTANCE && (player.getY() - balloon.getY()) > 0) {
+			balloonRedArrow.setPosition(1500, 0);
+		}
+		
+		if ((balloon.getY() - player.getY()) > screenHeight/2 ) {
+			balloon.stopMoving();
+			regenerateBalloon(balloon, moveSensor);
+		}
+		
+		if (player.collidesWith(balloon) && shield) {
+			balloon.stopMoving();
+			explosion.setPosition(balloon.getX(),balloon.getY());
+			explosion.setVisible(true);
+			explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
+			
+			regenerateBalloon(balloon, moveSensor);
+		}
+	}
+	
+	private void regenerateBalloon(Balloon balloon, Rectangle moveSensor) {
+		int balloonX = generateRandomPosition(BALLOON_MAX_X, BALLOON_MIN_X); 
+		
+		balloon.getBody().setTransform(balloonX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 
+				(balloon.getY() - BALLOON_REGENERATE_DISTANCE_Y) / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, balloon.getBody().getAngle());
+		balloon.setPosition(balloonX, balloon.getY() - BALLOON_REGENERATE_DISTANCE_Y);
+		
+		moveSensor.setPosition(screenWidth / 2, balloon.getY() + BALLOON_MOVE_SENSOR);
 	}
 	
 	private void createShield() {
@@ -1193,44 +1260,6 @@ public class GameScene extends BaseScene{
 						};
 					};
 					levelObject = leftBird;
-				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BALLOON)) {
-					final Rectangle moveSensor = new Rectangle(360, y + BALLOON_MOVE_SENSOR, 720, 0.1f, vbom);
-					basket = new Sprite(97, -30, resourcesManager.balloon_basket_region, vbom);
-					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
-					explosion.setVisible(false);
-					Random rand = new Random();
-					int randX = rand.nextInt(601) - 300;
-					balloon = new Balloon(x + randX, y, vbom, camera, physicsWorld, resourcesManager.balloon_region.deepCopy()) {
-						
-						protected void onManagedUpdate(float pSecondsElapsed) {
-							super.onManagedUpdate(pSecondsElapsed);
-							if (player.collidesWith(moveSensor)) {
-								this.startMoving();
-								moveSensor.setPosition(1000, 1000);
-							}
-							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 640) {
-								balloonRedArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
-								balloonRedArrow.setPosition(1500, 0);
-							}
-							if (player.collidesWith(this)) {
-								if (shield) {
-									playerSpeed = player.getFallVelocity();
-									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, playerSpeed));
-									this.setVisible(false);
-									explosion.setPosition(this.getX(),this.getY());
-									explosion.setVisible(true);
-									final long[] EXPLOSION_ANIMATE = new long[] {75, 75, 75, 75, 75, 100};
-									explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
-									this.setIgnoreUpdate(true);
-									physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
-								}
-							}
-						};
-					};
-					GameScene.this.attachChild(explosion);
-					balloon.attachChild(basket);
-					levelObject = balloon;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM)) {
 					levelObject = new Sprite(x, y, resourcesManager.game_landing_platfom_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
@@ -1325,20 +1354,6 @@ public class GameScene extends BaseScene{
 				}
 				
 				if (x1.getBody().getUserData().equals("player") && x2.getBody().getUserData().equals("helicopter")) {
-					if (!shield) {
-						player.killPlayer();
-						setInactiveBody(x2.getBody());
-					}
-				}
-				
-				if (x1.getBody().getUserData().equals("leftHelicopter") && x2.getBody().getUserData().equals("player")) {
-					if (!shield) {
-						player.killPlayer();
-						setInactiveBody(x1.getBody());
-					}
-				}
-				
-				if (x1.getBody().getUserData().equals("player") && x2.getBody().getUserData().equals("leftHelicopter")) {
 					if (!shield) {
 						player.killPlayer();
 						setInactiveBody(x2.getBody());

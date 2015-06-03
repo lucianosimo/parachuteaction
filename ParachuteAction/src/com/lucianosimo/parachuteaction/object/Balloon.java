@@ -19,14 +19,18 @@ public class Balloon extends Sprite{
 	private Body body;
 	private FixtureDef fixture;
 	
+	private static final int SPEED = 11;
+	private static final float BALLOON_WIDTH = 200;
+	private static final float BALLOON_HEIGHT = 206;
+	
 	public Balloon(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld, ITextureRegion region) {
 		super(pX, pY, region, vbom);
 		createPhysics(camera, physicsWorld, region, vbom);
 	}
 	
 	private void createPhysics(final Camera camera, PhysicsWorld physicsWorld, ITextureRegion region, VertexBufferObjectManager vbom) {
-		final float height = 206 / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
-		final float width = 200 / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+		final float width = BALLOON_WIDTH / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+		final float height = BALLOON_HEIGHT / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
 		final Vector2[] v = {
 			new Vector2(-0.54500f*width, +0.01942f*height),
 			new Vector2(-0.25000f*width, -0.49515f*height),
@@ -44,8 +48,16 @@ public class Balloon extends Sprite{
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
 	}
 	
+	public Body getBody() {
+		return body;
+	}
+	
 	public void startMoving() {
-		body.setLinearVelocity(new Vector2(0, 11));
+		body.setLinearVelocity(new Vector2(0, SPEED));
+	}
+	
+	public void stopMoving() {
+		body.setLinearVelocity(new Vector2(0, 0));
 	}
 	
 }
