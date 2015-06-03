@@ -20,6 +20,7 @@ import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.util.adt.align.HorizontalAlign;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
@@ -45,7 +46,6 @@ import com.lucianosimo.parachuteaction.object.Balloon;
 import com.lucianosimo.parachuteaction.object.Bird;
 import com.lucianosimo.parachuteaction.object.Helicopter;
 import com.lucianosimo.parachuteaction.object.LeftBird;
-import com.lucianosimo.parachuteaction.object.LeftHelicopter;
 import com.lucianosimo.parachuteaction.object.Player;
 
 public class GameScene extends BaseScene{
@@ -103,7 +103,6 @@ public class GameScene extends BaseScene{
 	//Instances
 	private Player player;
 	private Helicopter helicopter;
-	private LeftHelicopter leftHelicopter;
 	private Balloon balloon;
 	private Bird bird;
 	private LeftBird leftBird;
@@ -193,6 +192,11 @@ public class GameScene extends BaseScene{
 	
 	private static final int PLAYER_INITIAL_Y = 64000;
 	
+	private static final int PLANE_X = 1000;
+	private static final int PLANE_Y = 64000;
+	private static final int PLANE_LAUNCH_SENSOR_X = -175;
+	private static final int PLANE_SOUND_SENSOR_X = 240;
+	
 	private static final int CLOUD_INITIAL_X = 360;
 	private static final int FAR_CLOUD_INITIAL_Y = 63000;
 	private static final int CLOUD_INITIAL_Y = 62000;
@@ -214,6 +218,10 @@ public class GameScene extends BaseScene{
 	private static final int CLOUD_MIN_Y = -250;
 	
 	private static final long[] EXPLOSION_ANIMATE = new long[] {75, 75, 75, 75, 75, 100};
+	
+	private static final int HELICOPTER_SHOW_ARROW_DISTANCE = 1500;
+	private static final int HELICOPTER_HIDE_ARROW_DISTANCE = 640;
+	private static final int HELICOPTER_ARROW_DISTANCE_TO_BOTTOM = 75;
 	
 	private static final int HELICOPTER_INITIAL_Y = 60000;	
 	private static final int HELICOPTER_REGENERATE_DISTANCE_Y = 5000;
@@ -242,7 +250,6 @@ public class GameScene extends BaseScene{
 		createPlayer();
 		createPlane();
 		createHelicopters();
-		createLeftHelicopters();
 		createShield();
 		//createCloserClouds();
 		firstGame();
@@ -479,14 +486,10 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void createPlane() {
-		int planeX = 1000;
-		int planeY = 64000;
-		int launchSensorX = -175;
-		int planeSoundSensorX = 240;
-		final Rectangle launchSensor = new Rectangle(launchSensorX, planeY, 0.1f, 1f, vbom);
-		final Rectangle soundSensor = new Rectangle(planeSoundSensorX, planeY, 0.1f, 1f, vbom);
+		final Rectangle launchSensor = new Rectangle(PLANE_LAUNCH_SENSOR_X, PLANE_Y, 0.1f, 1f, vbom);
+		final Rectangle soundSensor = new Rectangle(PLANE_SOUND_SENSOR_X, PLANE_Y, 0.1f, 1f, vbom);
 		
-		Sprite plane = new Sprite(planeX, planeY, resourcesManager.plane_region, vbom) {
+		Sprite plane = new Sprite(PLANE_X, PLANE_Y, resourcesManager.plane_region, vbom) {
 			protected void onManagedUpdate(float pSecondsElapsed) {
 				super.onManagedUpdate(pSecondsElapsed);
 				if (this.collidesWith(launchSensor)) {
@@ -511,42 +514,43 @@ public class GameScene extends BaseScene{
 		plane.setCullingEnabled(true);
 	}
 	
-	private void createLeftHelicopters() {
-		int helicopterX = generateRandomPosition(LEFT_HELICOPTER_MAX_X, LEFT_HELICOPTER_MIN_X);	
-		final Rectangle moveSensor = new Rectangle(screenWidth/2, LEFT_HELICOPTER_INITIAL_Y + HELICOPTER_MOVE_SENSOR, 720, 0.1f, vbom);
-		final Rectangle soundSensor = new Rectangle(screenWidth/2, LEFT_HELICOPTER_INITIAL_Y + HELICOPTER_SOUND_SENSOR, 720, 0.1f, vbom);
-		
+	private boolean isRightHelicopter(int index) {
+		return index == 0 ? true : false;
+	}
+	
+	private void createExplosion() {
 		explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
 		explosion.setVisible(false);
-		
-		leftHelicopter = new LeftHelicopter(helicopterX, LEFT_HELICOPTER_INITIAL_Y, vbom, camera, physicsWorld, resourcesManager.leftHelicopter_region.deepCopy()) {
-			protected void onManagedUpdate(float pSecondsElapsed) {
-				super.onManagedUpdate(pSecondsElapsed);
-				leftHelicopterBehaviour(this, moveSensor, soundSensor);				 
-			};
-		};
-		GameScene.this.attachChild(explosion);
-		GameScene.this.attachChild(leftHelicopter);
-		leftHelicopter.setCullingEnabled(true);
 	}
 	
 	private void createHelicopters() {
-		int helicopterX = generateRandomPosition(HELICOPTER_MAX_X, HELICOPTER_MIN_X);	
-		final Rectangle moveSensor = new Rectangle(screenWidth/2, HELICOPTER_INITIAL_Y + HELICOPTER_MOVE_SENSOR, 720, 0.1f, vbom);
-		final Rectangle soundSensor = new Rectangle(screenWidth/2, HELICOPTER_INITIAL_Y + HELICOPTER_SOUND_SENSOR, 720, 0.1f, vbom);
-		
-		explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
-		explosion.setVisible(false);
-		
-		helicopter = new Helicopter(helicopterX, HELICOPTER_INITIAL_Y, vbom, camera, physicsWorld, resourcesManager.helicopter_region.deepCopy()) {
-			protected void onManagedUpdate(float pSecondsElapsed) {
-				super.onManagedUpdate(pSecondsElapsed);
-				helicopterBehaviour(this, moveSensor, soundSensor);				 
+		//i = 0: Right helicopter, i = 1: leftHelicopter
+		for (int i = 0; i < 2; i++) {
+			int helicopterX = isRightHelicopter(i) ? generateRandomPosition(HELICOPTER_MAX_X, HELICOPTER_MIN_X) : generateRandomPosition(LEFT_HELICOPTER_MAX_X, LEFT_HELICOPTER_MIN_X);
+			int helicopterY = isRightHelicopter(i) ? HELICOPTER_INITIAL_Y : LEFT_HELICOPTER_INITIAL_Y;
+			ITiledTextureRegion helicopterRegion = isRightHelicopter(i) ? resourcesManager.helicopter_region : resourcesManager.leftHelicopter_region;
+			
+			final Rectangle moveSensor = new Rectangle(screenWidth/2, HELICOPTER_INITIAL_Y + HELICOPTER_MOVE_SENSOR, screenWidth, 0.1f, vbom);
+			final Rectangle soundSensor = new Rectangle(screenWidth/2, HELICOPTER_INITIAL_Y + HELICOPTER_SOUND_SENSOR, screenWidth, 0.1f, vbom);
+			
+			if (!isRightHelicopter(i)) {
+				moveSensor.setPosition(moveSensor.getX(), LEFT_HELICOPTER_INITIAL_Y + HELICOPTER_MOVE_SENSOR);
+				soundSensor.setPosition(soundSensor.getX(), LEFT_HELICOPTER_INITIAL_Y + HELICOPTER_SOUND_SENSOR);
+			}
+			
+			createExplosion();
+			
+			helicopter = new Helicopter(helicopterX, helicopterY, vbom, camera, physicsWorld, helicopterRegion, isRightHelicopter(i)) {
+				protected void onManagedUpdate(float pSecondsElapsed) {
+					super.onManagedUpdate(pSecondsElapsed);
+					helicopterBehaviour(this, moveSensor, soundSensor);				 
+				};
 			};
-		};
-		GameScene.this.attachChild(explosion);
-		GameScene.this.attachChild(helicopter);
-		helicopter.setCullingEnabled(true);
+
+			GameScene.this.attachChild(explosion);
+			GameScene.this.attachChild(helicopter);
+			helicopter.setCullingEnabled(true);
+		}		
 	}
 
 	private int generateRandomPosition(int max, int min) {
@@ -554,42 +558,10 @@ public class GameScene extends BaseScene{
 		return rand.nextInt(max - min + 1) + min;
 	}
 	
-	private void leftHelicopterBehaviour(LeftHelicopter helicopter, Rectangle moveSensor, Rectangle soundSensor) {
-		if ((player.getY() - helicopter.getY()) < 1500 && (player.getY() - helicopter.getY()) > 640) {
-			helicopterRedArrow.setPosition(helicopter.getX(), 75);
-		} else if ((player.getY() - helicopter.getY()) < 640 && (player.getY() - helicopter.getY()) > 0) {
-			helicopterRedArrow.setPosition(1500, 0);
-		}
-		
-		if (player.collidesWith(moveSensor)) {
-			helicopter.startMoving();
-			moveSensor.setPosition(1000, 1000);
-		}
-		
-		if (player.collidesWith(soundSensor)) {
-			resourcesManager.chopper.play();
-			soundSensor.setPosition(1000, 1000);
-		}
-		
-		if ((helicopter.getY() - player.getY()) > screenHeight/2 ) {
-			regenerateLeftHelicopter(helicopter, moveSensor, soundSensor);
-		}
-		
-		if (player.collidesWith(helicopter) && shield) {
-			resourcesManager.chopper.stop();
-			
-			explosion.setPosition(helicopter.getX(),helicopter.getY());
-			explosion.setVisible(true);
-			explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
-			
-			regenerateLeftHelicopter(helicopter, moveSensor, soundSensor);
-		}
-	}
-	
 	private void helicopterBehaviour(Helicopter helicopter, Rectangle moveSensor, Rectangle soundSensor) {
-		if ((player.getY() - helicopter.getY()) < 1500 && (player.getY() - helicopter.getY()) > 640) {
-			helicopterRedArrow.setPosition(helicopter.getX(), 75);
-		} else if ((player.getY() - helicopter.getY()) < 640 && (player.getY() - helicopter.getY()) > 0) {
+		if ((player.getY() - helicopter.getY()) < HELICOPTER_SHOW_ARROW_DISTANCE && (player.getY() - helicopter.getY()) > HELICOPTER_HIDE_ARROW_DISTANCE) {
+			helicopterRedArrow.setPosition(helicopter.getX(), HELICOPTER_ARROW_DISTANCE_TO_BOTTOM);
+		} else if ((player.getY() - helicopter.getY()) < HELICOPTER_HIDE_ARROW_DISTANCE && (player.getY() - helicopter.getY()) > 0) {
 			helicopterRedArrow.setPosition(1500, 0);
 		}
 		
@@ -616,23 +588,16 @@ public class GameScene extends BaseScene{
 			
 			regenerateHelicopter(helicopter, moveSensor, soundSensor);
 		}
-	}
-	
-	private void regenerateLeftHelicopter(LeftHelicopter helicopter, Rectangle moveSensor, Rectangle soundSensor) {
-		int helicopterX = generateRandomPosition(LEFT_HELICOPTER_MAX_X, LEFT_HELICOPTER_MIN_X);
-		helicopter.getBody().setTransform(helicopterX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 
-				(helicopter.getY() - LEFT_HELICOPTER_REGENERATE_DISTANCE_Y) / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, helicopter.getBody().getAngle());
-		helicopter.setPosition(helicopterX, helicopter.getY() - LEFT_HELICOPTER_REGENERATE_DISTANCE_Y);
-		helicopter.stopMoving();
-		moveSensor.setPosition(screenWidth / 2, helicopter.getY() + HELICOPTER_MOVE_SENSOR);
-		soundSensor.setPosition(screenWidth / 2, helicopter.getY() + HELICOPTER_SOUND_SENSOR);
 	}
 	
 	private void regenerateHelicopter(Helicopter helicopter, Rectangle moveSensor, Rectangle soundSensor) {
-		int helicopterX = generateRandomPosition(HELICOPTER_MAX_X, HELICOPTER_MIN_X);
+		int helicopterX = helicopter.isRightHelicopter() ? generateRandomPosition(HELICOPTER_MAX_X, HELICOPTER_MIN_X) 
+				: generateRandomPosition(LEFT_HELICOPTER_MAX_X, LEFT_HELICOPTER_MIN_X);
+		int regenerateY = helicopter.isRightHelicopter() ? HELICOPTER_REGENERATE_DISTANCE_Y : LEFT_HELICOPTER_REGENERATE_DISTANCE_Y;
+		
 		helicopter.getBody().setTransform(helicopterX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 
-				(helicopter.getY() - HELICOPTER_REGENERATE_DISTANCE_Y) / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, helicopter.getBody().getAngle());
-		helicopter.setPosition(helicopterX, helicopter.getY() - HELICOPTER_REGENERATE_DISTANCE_Y);
+				(helicopter.getY() - regenerateY) / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, helicopter.getBody().getAngle());
+		helicopter.setPosition(helicopterX, helicopter.getY() - regenerateY);
 		helicopter.stopMoving();
 		moveSensor.setPosition(screenWidth / 2, helicopter.getY() + HELICOPTER_MOVE_SENSOR);
 		soundSensor.setPosition(screenWidth / 2, helicopter.getY() + HELICOPTER_SOUND_SENSOR);
