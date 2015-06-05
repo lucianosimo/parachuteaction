@@ -19,30 +19,56 @@ public class Bird extends AnimatedSprite{
 	private Body body;
 	private FixtureDef fixture;
 	
-	public Bird(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld, ITiledTextureRegion region) {
+	private boolean isRightBird;
+	
+	private final static float SPEED_X = 10f;
+	private final static float SPEED_Y = 4f;
+	
+	private final static int BIRD_WIDTH = 86;
+	private final static int BIRD_HEIGHT = 110;
+	
+	private final float width = BIRD_WIDTH / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+	private final float height = BIRD_HEIGHT / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+	
+	private final Vector2[] vectorRight = {
+		new Vector2(-0.31818f*width, -0.27907f*height),
+		new Vector2(+0.01818f*width, -0.51163f*height),
+		new Vector2(+0.48182f*width, -0.16279f*height),
+		new Vector2(+0.51818f*width, +0.18605f*height),
+		new Vector2(-0.00909f*width, +0.52326f*height),
+		new Vector2(-0.29091f*width, +0.51163f*height),
+		new Vector2(-0.52727f*width, +0.02326f*height),
+	};
+	
+	private final Vector2[] vectorLeft = {
+		new Vector2(-0.31818f*width, -0.27907f*height),
+		new Vector2(-0.01818f*width, -0.52326f*height),
+		new Vector2(+0.30909f*width, -0.26744f*height),
+		new Vector2(+0.52727f*width, +0.02326f*height),
+		new Vector2(+0.27273f*width, +0.51163f*height),
+		new Vector2(-0.29091f*width, +0.51163f*height),
+		new Vector2(-0.56364f*width, +0.01163f*height),
+	};
+	
+	public Bird(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld, ITiledTextureRegion region, boolean isRight) {
 		super(pX, pY, region, vbom);
 		startAnimation();
 		createPhysics(camera, physicsWorld);
+		isRightBird = isRight;
 	}
 	
 	private void createPhysics(final Camera camera, PhysicsWorld physicsWorld) {
-		final float height = 86 / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
-		final float width = 110 / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
-		final Vector2[] v = {
-			new Vector2(-0.31818f*width, -0.27907f*height),
-			new Vector2(+0.01818f*width, -0.51163f*height),
-			new Vector2(+0.48182f*width, -0.16279f*height),
-			new Vector2(+0.51818f*width, +0.18605f*height),
-			new Vector2(-0.00909f*width, +0.52326f*height),
-			new Vector2(-0.29091f*width, +0.51163f*height),
-			new Vector2(-0.52727f*width, +0.02326f*height),
-		};
+		final Vector2[] localVector = isRightBird ? vectorRight : vectorLeft;
 		fixture = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixture.filter.groupIndex = -1;
-		body = PhysicsFactory.createPolygonBody(physicsWorld, this, v, BodyType.KinematicBody, fixture);
+		body = PhysicsFactory.createPolygonBody(physicsWorld, this, localVector, BodyType.KinematicBody, fixture);
 		body.setFixedRotation(true);
 		body.setUserData("bird");
 		physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
+	}
+	
+	public Body getBody() {
+		return body;
 	}
 	
 	public void startAnimation() {
@@ -51,7 +77,16 @@ public class Bird extends AnimatedSprite{
 	}
 	
 	public void startMoving() {
-		body.setLinearVelocity(new Vector2(-10, 4));
+		float speedX = isRightBird ? -SPEED_X : SPEED_X;
+		body.setLinearVelocity(new Vector2(speedX, SPEED_Y));
+	}
+	
+	public void stopMoving() {
+		body.setLinearVelocity(new Vector2(0, 0));
+	}
+	
+	public boolean isRightBird() {
+		return isRightBird;
 	}
 	
 }

@@ -45,7 +45,6 @@ import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
 import com.lucianosimo.parachuteaction.object.Balloon;
 import com.lucianosimo.parachuteaction.object.Bird;
 import com.lucianosimo.parachuteaction.object.Helicopter;
-import com.lucianosimo.parachuteaction.object.LeftBird;
 import com.lucianosimo.parachuteaction.object.Player;
 
 public class GameScene extends BaseScene{
@@ -105,7 +104,6 @@ public class GameScene extends BaseScene{
 	private Helicopter helicopter;
 	private Balloon balloon;
 	private Bird bird;
-	private LeftBird leftBird;
 	
 	//Windows
 	private Sprite gameOverWindow;
@@ -151,7 +149,6 @@ public class GameScene extends BaseScene{
 	//HUD Buttons
 	private Sprite openButton;
 	private Sprite greenArrow;
-	private Sprite leftHelicopterRedArrow;
 	private Sprite helicopterRedArrow;
 	private Sprite balloonRedArrow;
 	private Sprite birdRedArrow;
@@ -224,12 +221,12 @@ public class GameScene extends BaseScene{
 	private static final int HELICOPTER_ARROW_DISTANCE_TO_BOTTOM = 75;
 	
 	private static final int HELICOPTER_INITIAL_Y = 60000;	
-	private static final int HELICOPTER_REGENERATE_DISTANCE_Y = 5000;
+	private static final int HELICOPTER_REGENERATE_DISTANCE_Y = 7500;
 	private static final int HELICOPTER_MAX_X = 650;
 	private static final int HELICOPTER_MIN_X = 450;
 	
 	private static final int LEFT_HELICOPTER_INITIAL_Y = 57500;	
-	private static final int LEFT_HELICOPTER_REGENERATE_DISTANCE_Y = 5000;
+	private static final int LEFT_HELICOPTER_REGENERATE_DISTANCE_Y = 7500;
 	private static final int LEFT_HELICOPTER_MAX_X = 270;
 	private static final int LEFT_HELICOPTER_MIN_X = 70;
 	
@@ -238,11 +235,32 @@ public class GameScene extends BaseScene{
 	private static final int BALLOON_ARROW_DISTANCE_TO_BOTTOM = 75;
 	
 	private static final int BALLOON_INITIAL_Y = 55000;	
-	private static final int BALLOON_REGENERATE_DISTANCE_Y = 5000;
+	private static final int BALLOON_REGENERATE_DISTANCE_Y = 7500;
 	private static final int BALLOON_MAX_X = 650;
 	private static final int BALLOON_MIN_X = 450;
 	private static final int BALLOON_BASKET_X = 97;
 	private static final int BALLOON_BASKET_Y = -30;
+	
+	private static final int BIRD_SHOW_ARROW_DISTANCE = 1500;
+	private static final int BIRD_HIDE_ARROW_DISTANCE = 640;
+	private static final int BIRD_ARROW_DISTANCE_TO_BOTTOM = 75;
+	
+	private static final int BIRD_INITIAL_Y = 50000;	
+	private static final int BIRD_REGENERATE_DISTANCE_Y = 7500;
+	private static final int BIRD_MAX_X = 650;
+	private static final int BIRD_MIN_X = 450;
+	
+	private static final int BIRD_X = 700;
+	private static final int LEFT_BIRD_X = 20;
+	
+	private static final int LEFT_BIRD_SHOW_ARROW_DISTANCE = 1500;
+	private static final int LEFT_BIRD_HIDE_ARROW_DISTANCE = 640;
+	private static final int LEFT_BIRD_ARROW_DISTANCE_TO_BOTTOM = 75;
+	
+	private static final int LEFT_BIRD_INITIAL_Y = 45000;	
+	private static final int LEFT_BIRD_REGENERATE_DISTANCE_Y = 7500;
+	private static final int LEFT_BIRD_MAX_X = 650;
+	private static final int LEFT_BIRD_MIN_X = 450;
 
 	@Override
 	public void createScene() {
@@ -262,6 +280,7 @@ public class GameScene extends BaseScene{
 		createPlane();
 		createHelicopters();
 		createBalloons();
+		createBirds();
 		createShield();
 		//createCloserClouds();
 		firstGame();
@@ -530,6 +549,10 @@ public class GameScene extends BaseScene{
 		return index == 0 ? true : false;
 	}
 	
+	private boolean isRightBird(int index) {
+		return index == 0 ? true : false;
+	}
+	
 	private void createExplosion() {
 		explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
 		explosion.setVisible(false);
@@ -670,6 +693,72 @@ public class GameScene extends BaseScene{
 		moveSensor.setPosition(screenWidth / 2, balloon.getY() + BALLOON_MOVE_SENSOR);
 	}
 	
+	private void createBirds() {
+		//i = 0: Right bird, i = 1: Left bird
+		for (int i = 0; i < 2; i++) {
+			//int birdX = isRightBird(i) ? generateRandomPosition(BIRD_MAX_X, BIRD_MIN_X) : generateRandomPosition(LEFT_BIRD_MAX_X, LEFT_BIRD_MIN_X);
+			int birdX = isRightBird(i) ? BIRD_X : LEFT_BIRD_X;
+			int birdY = isRightBird(i) ? BIRD_INITIAL_Y : LEFT_BIRD_INITIAL_Y;
+			ITiledTextureRegion birdRegion = isRightBird(i) ? resourcesManager.bird_region : resourcesManager.left_bird_region;
+			
+			final Rectangle moveSensor = new Rectangle(screenWidth/2, BIRD_INITIAL_Y + BIRD_MOVE_SENSOR, screenWidth, 0.1f, vbom);
+			final Rectangle soundSensor = new Rectangle(screenWidth/2, BIRD_INITIAL_Y + BIRD_SOUND_SENSOR, screenWidth, 0.1f, vbom);
+			
+			if (!isRightBird(i)) {
+				moveSensor.setPosition(moveSensor.getX(), LEFT_BIRD_INITIAL_Y + BIRD_MOVE_SENSOR);
+				soundSensor.setPosition(soundSensor.getX(), LEFT_BIRD_INITIAL_Y + BIRD_SOUND_SENSOR);
+			}
+			
+			bird = new Bird(birdX, birdY, vbom, camera, physicsWorld, birdRegion, isRightBird(i)) {
+				protected void onManagedUpdate(float pSecondsElapsed) {
+					super.onManagedUpdate(pSecondsElapsed);
+					birdBehaviour(this, moveSensor, soundSensor);				 
+				};
+			};
+			GameScene.this.attachChild(bird);
+			bird.setCullingEnabled(true);
+		}
+	}
+	
+	private void birdBehaviour(Bird bird, Rectangle moveSensor, Rectangle soundSensor) {
+		if ((player.getY() - bird.getY()) < BIRD_SHOW_ARROW_DISTANCE && (player.getY() - bird.getY()) > BIRD_HIDE_ARROW_DISTANCE) {
+			birdRedArrow.setPosition(bird.getX(), BIRD_ARROW_DISTANCE_TO_BOTTOM);
+		} else if ((player.getY() - bird.getY()) < BIRD_HIDE_ARROW_DISTANCE && (player.getY() - bird.getY()) > 0) {
+			birdRedArrow.setPosition(1500, 0);
+		}
+		
+		if (player.collidesWith(moveSensor)) {
+			bird.startMoving();
+			moveSensor.setPosition(1000, 1000);
+		}
+		
+		if (player.collidesWith(soundSensor)) {
+			resourcesManager.bird.play();
+			soundSensor.setPosition(1000, 1000);
+		}
+		
+		if ((bird.getY() - player.getY()) > screenHeight/2 ) {
+			regenerateBird(bird, moveSensor, soundSensor);
+		}
+		
+		if (player.collidesWith(bird) && shield) {
+			resourcesManager.bird.play();
+			regenerateBird(bird, moveSensor, soundSensor);
+		}
+	}
+	
+	private void regenerateBird(Bird bird, Rectangle moveSensor, Rectangle soundSensor) {
+		int birdX = bird.isRightBird() ? BIRD_X : LEFT_BIRD_X;
+		int birdRegenerateY = bird.isRightBird() ? BIRD_REGENERATE_DISTANCE_Y : LEFT_BIRD_REGENERATE_DISTANCE_Y;
+		
+		bird.getBody().setTransform(birdX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 
+				(bird.getY() - birdRegenerateY) / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, bird.getBody().getAngle());
+		bird.setPosition(birdX, bird.getY() - birdRegenerateY);
+		bird.stopMoving();
+		moveSensor.setPosition(screenWidth / 2, bird.getY() + BIRD_MOVE_SENSOR);
+		soundSensor.setPosition(screenWidth / 2, bird.getY() + BIRD_SOUND_SENSOR);
+	}
+	
 	private void createShield() {
 		Random rand = new Random();
 		int randX = rand.nextInt(601) - 300;
@@ -798,7 +887,6 @@ public class GameScene extends BaseScene{
 		};
 		
 		greenArrow = new Sprite(1000, 0, resourcesManager.green_arrow_region, vbom);
-		leftHelicopterRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
 		helicopterRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
 		balloonRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
 		birdRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
@@ -900,7 +988,6 @@ public class GameScene extends BaseScene{
 		gameHud.attachChild(coinsText);
 		gameHud.attachChild(openButton);
 		gameHud.attachChild(greenArrow);
-		gameHud.attachChild(leftHelicopterRedArrow);
 		gameHud.attachChild(helicopterRedArrow);
 		gameHud.attachChild(balloonRedArrow);
 		gameHud.attachChild(birdRedArrow);
@@ -1159,45 +1246,6 @@ public class GameScene extends BaseScene{
 							}
 						};
 					};
-				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_HELICOPTER)) {
-					final Rectangle moveSensor = new Rectangle(360, y + HELICOPTER_MOVE_SENSOR, 720, 0.1f, vbom);
-					final Rectangle soundSensor = new Rectangle(360, y + HELICOPTER_SOUND_SENSOR, 720, 0.1f, vbom);
-					explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
-					explosion.setVisible(false);					
-					leftHelicopter = new LeftHelicopter(x, y, vbom, camera, physicsWorld, resourcesManager.leftHelicopter_region.deepCopy()) {
-						protected void onManagedUpdate(float pSecondsElapsed) {
-							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 640) {
-								leftHelicopterRedArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
-								leftHelicopterRedArrow.setPosition(1500, 0);
-							}
-							if (player.collidesWith(moveSensor)) {
-								this.startMoving();
-								moveSensor.setPosition(1000, 1000);
-							}
-							if (player.collidesWith(soundSensor)) {
-								resourcesManager.chopper.play();
-								soundSensor.setPosition(1000, 1000);
-							}
-							if (player.collidesWith(this)) {
-								if (shield) {
-									resourcesManager.chopper.stop();
-									playerSpeed = player.getFallVelocity();
-									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, playerSpeed));
-									this.setVisible(false);
-									explosion.setPosition(this.getX(),this.getY());
-									explosion.setVisible(true);
-									final long[] EXPLOSION_ANIMATE = new long[] {75, 75, 75, 75, 75, 100};
-									explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
-									this.setIgnoreUpdate(true);
-									physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
-								}								
-							}
-						};
-					};
-					GameScene.this.attachChild(explosion);
-					levelObject = leftHelicopter;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
 					final Rectangle moveSensor = new Rectangle(360, y + BIRD_MOVE_SENSOR, 720, 0.1f, vbom);
 					final Rectangle soundSensor = new Rectangle(360, y + BIRD_SOUND_SENSOR, 720, 0.1f, vbom);
