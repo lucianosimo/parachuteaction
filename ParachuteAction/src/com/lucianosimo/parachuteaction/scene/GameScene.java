@@ -45,6 +45,7 @@ import com.lucianosimo.parachuteaction.manager.SceneManager.SceneType;
 import com.lucianosimo.parachuteaction.object.Balloon;
 import com.lucianosimo.parachuteaction.object.Bird;
 import com.lucianosimo.parachuteaction.object.Helicopter;
+import com.lucianosimo.parachuteaction.object.Missile;
 import com.lucianosimo.parachuteaction.object.Player;
 
 public class GameScene extends BaseScene{
@@ -103,6 +104,7 @@ public class GameScene extends BaseScene{
 	private Player player;
 	private Helicopter helicopter;
 	private Balloon balloon;
+	private Missile missile;
 	private Bird bird;
 	
 	//Windows
@@ -150,6 +152,7 @@ public class GameScene extends BaseScene{
 	private Sprite openButton;
 	private Sprite greenArrow;
 	private Sprite helicopterRedArrow;
+	private Sprite missileRedArrow;
 	private Sprite balloonRedArrow;
 	private Sprite birdRedArrow;
 	
@@ -236,10 +239,21 @@ public class GameScene extends BaseScene{
 	
 	private static final int BALLOON_INITIAL_Y = 55000;	
 	private static final int BALLOON_REGENERATE_DISTANCE_Y = 7500;
-	private static final int BALLOON_MAX_X = 650;
-	private static final int BALLOON_MIN_X = 450;
+	private static final int BALLOON_MAX_X = 670;
+	private static final int BALLOON_MIN_X = 50;
 	private static final int BALLOON_BASKET_X = 97;
 	private static final int BALLOON_BASKET_Y = -30;
+	
+	private static final int MISSILE_MOVE_SENSOR = 750;
+	private static final int MISSILE_SOUND_SENSOR = 500;
+	private static final int MISSILE_SHOW_ARROW_DISTANCE = 1500;
+	private static final int MISSILE_HIDE_ARROW_DISTANCE = 640;
+	private static final int MISSILE_ARROW_DISTANCE_TO_BOTTOM = 75;
+	
+	private static final int MISSILE_INITIAL_Y = 50000;	
+	private static final int MISSILE_REGENERATE_DISTANCE_Y = 7500;
+	private static final int MISSILE_MAX_X = 670;
+	private static final int MISSILE_MIN_X = 50;
 	
 	private static final int BIRD_SHOW_ARROW_DISTANCE = 1500;
 	private static final int BIRD_HIDE_ARROW_DISTANCE = 640;
@@ -280,6 +294,7 @@ public class GameScene extends BaseScene{
 		createPlane();
 		createHelicopters();
 		createBalloons();
+		createMissiles();
 		createBirds();
 		createShield();
 		//createCloserClouds();
@@ -338,8 +353,8 @@ public class GameScene extends BaseScene{
 		int shieldX = 20;
 		int shieldY = 50;
 		
-		parachute = new Sprite(parachuteX, parachuteY, ResourcesManager.getInstance().parachute_region, vbom);
-		shieldHalo = new Sprite(shieldX, shieldY, resourcesManager.shield_region, vbom);
+		parachute = new Sprite(parachuteX, parachuteY, ResourcesManager.getInstance().game_parachute_region, vbom);
+		shieldHalo = new Sprite(shieldX, shieldY, resourcesManager.game_shield_region, vbom);
 		
 		parachute.setVisible(false);
 		shieldHalo.setVisible(false);
@@ -520,7 +535,7 @@ public class GameScene extends BaseScene{
 		final Rectangle launchSensor = new Rectangle(PLANE_LAUNCH_SENSOR_X, PLANE_Y, 0.1f, 1f, vbom);
 		final Rectangle soundSensor = new Rectangle(PLANE_SOUND_SENSOR_X, PLANE_Y, 0.1f, 1f, vbom);
 		
-		Sprite plane = new Sprite(PLANE_X, PLANE_Y, resourcesManager.plane_region, vbom) {
+		Sprite plane = new Sprite(PLANE_X, PLANE_Y, resourcesManager.game_plane_region, vbom) {
 			protected void onManagedUpdate(float pSecondsElapsed) {
 				super.onManagedUpdate(pSecondsElapsed);
 				if (this.collidesWith(launchSensor)) {
@@ -554,7 +569,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void createExplosion() {
-		explosion = new AnimatedSprite(0, 0, resourcesManager.explosion_region.deepCopy(), vbom);
+		explosion = new AnimatedSprite(0, 0, resourcesManager.game_explosion_region.deepCopy(), vbom);
 		explosion.setVisible(false);
 		GameScene.this.attachChild(explosion);
 	}
@@ -569,7 +584,7 @@ public class GameScene extends BaseScene{
 		for (int i = 0; i < 2; i++) {
 			int helicopterX = isRightHelicopter(i) ? generateRandomPosition(HELICOPTER_MAX_X, HELICOPTER_MIN_X) : generateRandomPosition(LEFT_HELICOPTER_MAX_X, LEFT_HELICOPTER_MIN_X);
 			int helicopterY = isRightHelicopter(i) ? HELICOPTER_INITIAL_Y : LEFT_HELICOPTER_INITIAL_Y;
-			ITiledTextureRegion helicopterRegion = isRightHelicopter(i) ? resourcesManager.helicopter_region : resourcesManager.leftHelicopter_region;
+			ITiledTextureRegion helicopterRegion = isRightHelicopter(i) ? resourcesManager.game_helicopter_region : resourcesManager.game_left_helicopter_region;
 			
 			final Rectangle moveSensor = new Rectangle(screenWidth/2, HELICOPTER_INITIAL_Y + HELICOPTER_MOVE_SENSOR, screenWidth, 0.1f, vbom);
 			final Rectangle soundSensor = new Rectangle(screenWidth/2, HELICOPTER_INITIAL_Y + HELICOPTER_SOUND_SENSOR, screenWidth, 0.1f, vbom);
@@ -615,6 +630,7 @@ public class GameScene extends BaseScene{
 		
 		if (player.collidesWith(helicopter) && shield) {
 			resourcesManager.chopper.stop();
+			resourcesManager.explosion.play();
 			
 			explosion.setPosition(helicopter.getX(),helicopter.getY());
 			explosion.setVisible(true);
@@ -639,12 +655,12 @@ public class GameScene extends BaseScene{
 	
 	private void createBalloons() {
 		final Rectangle moveSensor = new Rectangle(screenWidth/2, BALLOON_INITIAL_Y + BALLOON_MOVE_SENSOR, screenWidth, 0.1f, vbom);
-		basket = new Sprite(BALLOON_BASKET_X, BALLOON_BASKET_Y, resourcesManager.balloon_basket_region, vbom);
+		basket = new Sprite(BALLOON_BASKET_X, BALLOON_BASKET_Y, resourcesManager.game_balloon_basket_region, vbom);
 		
 		createExplosion();
 		
 		int randX = generateRandomPosition(BALLOON_MAX_X, BALLOON_MIN_X);		
-		balloon = new Balloon(randX, BALLOON_INITIAL_Y, vbom, camera, physicsWorld, resourcesManager.balloon_region.deepCopy()) {
+		balloon = new Balloon(randX, BALLOON_INITIAL_Y, vbom, camera, physicsWorld, resourcesManager.game_balloon_region) {
 			
 			protected void onManagedUpdate(float pSecondsElapsed) {
 				super.onManagedUpdate(pSecondsElapsed);
@@ -675,6 +691,8 @@ public class GameScene extends BaseScene{
 		
 		if (player.collidesWith(balloon) && shield) {
 			balloon.stopMoving();
+			resourcesManager.explosion.play();
+			
 			explosion.setPosition(balloon.getX(),balloon.getY());
 			explosion.setVisible(true);
 			explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
@@ -693,13 +711,76 @@ public class GameScene extends BaseScene{
 		moveSensor.setPosition(screenWidth / 2, balloon.getY() + BALLOON_MOVE_SENSOR);
 	}
 	
+	private void createMissiles() {
+		final Rectangle moveSensor = new Rectangle(screenWidth/2, MISSILE_INITIAL_Y + MISSILE_MOVE_SENSOR, screenWidth, 0.1f, vbom);
+		final Rectangle soundSensor = new Rectangle(screenWidth/2, MISSILE_INITIAL_Y + MISSILE_SOUND_SENSOR, screenWidth, 0.1f, vbom);
+
+		createExplosion();
+		
+		int randX = generateRandomPosition(MISSILE_MAX_X, MISSILE_MIN_X);		
+		missile = new Missile(randX, MISSILE_INITIAL_Y, vbom, camera, physicsWorld, resourcesManager.game_missile_region) {
+			
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+				missileBehaviour(this, moveSensor, soundSensor);
+			};
+		};
+
+		GameScene.this.attachChild(missile);
+		missile.setCullingEnabled(true);
+	}
+	
+	private void missileBehaviour(Missile missile, Rectangle moveSensor, Rectangle soundSensor) {
+		if ((player.getY() - missile.getY()) < MISSILE_SHOW_ARROW_DISTANCE && (player.getY() - missile.getY()) > MISSILE_HIDE_ARROW_DISTANCE) {
+			missileRedArrow.setPosition(missile.getX(), MISSILE_ARROW_DISTANCE_TO_BOTTOM);
+		} else if ((player.getY() - missile.getY()) < MISSILE_HIDE_ARROW_DISTANCE && (player.getY() - missile.getY()) > 0) {
+			missileRedArrow.setPosition(1500, 0);
+		}
+		
+		if (player.collidesWith(moveSensor)) {
+			missile.startMoving();
+			moveSensor.setPosition(1000, 1000);
+		}
+		
+		if (player.collidesWith(soundSensor)) {
+			//resourcesManager.chopper.play();
+			soundSensor.setPosition(1000, 1000);
+		}
+		
+		if ((missile.getY() - player.getY()) > screenHeight/2 ) {
+			regenerateMissile(missile, moveSensor, soundSensor);
+		}
+		
+		if (player.collidesWith(missile) && shield) {
+			//resourcesManager.chopper.stop();
+			resourcesManager.explosion.play();
+			
+			explosion.setPosition(missile.getX(),missile.getY());
+			explosion.setVisible(true);
+			explosion.animate(EXPLOSION_ANIMATE, 0, 5, false);
+			
+			regenerateMissile(missile, moveSensor, soundSensor);
+		}
+	}
+	
+	private void regenerateMissile(Missile missile, Rectangle moveSensor, Rectangle soundSensor) {
+		int missileX = generateRandomPosition(MISSILE_MAX_X, MISSILE_MIN_X); 
+		
+		missile.getBody().setTransform(missileX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 
+				(missile.getY() - MISSILE_REGENERATE_DISTANCE_Y) / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, missile.getBody().getAngle());
+		missile.setPosition(missileX, missile.getY() - MISSILE_REGENERATE_DISTANCE_Y);
+
+		moveSensor.setPosition(screenWidth / 2, missile.getY() + MISSILE_MOVE_SENSOR);
+		soundSensor.setPosition(screenWidth / 2, missile.getY() + MISSILE_SOUND_SENSOR);
+	}
+	
 	private void createBirds() {
 		//i = 0: Right bird, i = 1: Left bird
 		for (int i = 0; i < 2; i++) {
 			//int birdX = isRightBird(i) ? generateRandomPosition(BIRD_MAX_X, BIRD_MIN_X) : generateRandomPosition(LEFT_BIRD_MAX_X, LEFT_BIRD_MIN_X);
 			int birdX = isRightBird(i) ? BIRD_X : LEFT_BIRD_X;
 			int birdY = isRightBird(i) ? BIRD_INITIAL_Y : LEFT_BIRD_INITIAL_Y;
-			ITiledTextureRegion birdRegion = isRightBird(i) ? resourcesManager.bird_region : resourcesManager.left_bird_region;
+			ITiledTextureRegion birdRegion = isRightBird(i) ? resourcesManager.game_bird_region : resourcesManager.game_left_bird_region;
 			
 			final Rectangle moveSensor = new Rectangle(screenWidth/2, BIRD_INITIAL_Y + BIRD_MOVE_SENSOR, screenWidth, 0.1f, vbom);
 			final Rectangle soundSensor = new Rectangle(screenWidth/2, BIRD_INITIAL_Y + BIRD_SOUND_SENSOR, screenWidth, 0.1f, vbom);
@@ -763,7 +844,7 @@ public class GameScene extends BaseScene{
 		Random rand = new Random();
 		int randX = rand.nextInt(601) - 300;
 		
-		Sprite shieldSprite = new Sprite(screenWidth/2 + randX, 62000, resourcesManager.shield_region, vbom) {
+		Sprite shieldSprite = new Sprite(screenWidth/2 + randX, 62000, resourcesManager.game_shield_region, vbom) {
 			protected void onManagedUpdate(float pSecondsElapsed) {
 				super.onManagedUpdate(pSecondsElapsed);
 				if ((player.getY() - this.getY()) < 2250 && (player.getY() - this.getY()) > 640) {
@@ -886,10 +967,11 @@ public class GameScene extends BaseScene{
 			}
 		};
 		
-		greenArrow = new Sprite(1000, 0, resourcesManager.green_arrow_region, vbom);
-		helicopterRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
-		balloonRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
-		birdRedArrow = new Sprite(1000, 0, resourcesManager.red_arrow_region.deepCopy(), vbom);
+		greenArrow = new Sprite(1000, 0, resourcesManager.game_green_arrow_region, vbom);
+		helicopterRedArrow = new Sprite(1000, 0, resourcesManager.game_red_arrow_region.deepCopy(), vbom);
+		missileRedArrow = new Sprite(1000, 0, resourcesManager.game_red_arrow_region.deepCopy(), vbom);
+		balloonRedArrow = new Sprite(1000, 0, resourcesManager.game_red_arrow_region.deepCopy(), vbom);
+		birdRedArrow = new Sprite(1000, 0, resourcesManager.game_red_arrow_region.deepCopy(), vbom);
 
 		shieldBar = new Rectangle(screenWidth/2 + screenWidth/4 + 100, screenHeight - 30, 200, 15, vbom);
 		shieldBarBackground = new Rectangle(screenWidth/2 + screenWidth/4, screenHeight - 30, 200, 15, vbom);
@@ -989,6 +1071,7 @@ public class GameScene extends BaseScene{
 		gameHud.attachChild(openButton);
 		gameHud.attachChild(greenArrow);
 		gameHud.attachChild(helicopterRedArrow);
+		gameHud.attachChild(missileRedArrow);
 		gameHud.attachChild(balloonRedArrow);
 		gameHud.attachChild(birdRedArrow);
 		

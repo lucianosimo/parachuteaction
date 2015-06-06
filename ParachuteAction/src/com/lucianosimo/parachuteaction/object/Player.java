@@ -28,7 +28,7 @@ public abstract class Player extends AnimatedSprite{
 	private static final int RIGHT_MARGIN = 720;
 	
 	public Player(float pX, float pY, VertexBufferObjectManager vbom, Camera camera, PhysicsWorld physicsWorld) {
-		super(pX, pY, ResourcesManager.getInstance().player_region, vbom);
+		super(pX, pY, ResourcesManager.getInstance().game_player_region, vbom);
 		startAnimation();
 		createPhysics(camera, physicsWorld);
 		camera.setChaseEntity(this);
