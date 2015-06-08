@@ -47,6 +47,7 @@ import com.lucianosimo.parachuteaction.object.Bird;
 import com.lucianosimo.parachuteaction.object.Helicopter;
 import com.lucianosimo.parachuteaction.object.Missile;
 import com.lucianosimo.parachuteaction.object.Player;
+import com.lucianosimo.parachuteaction.object.Ufo;
 
 public class GameScene extends BaseScene{
 	
@@ -106,6 +107,7 @@ public class GameScene extends BaseScene{
 	private Balloon balloon;
 	private Missile missile;
 	private Bird bird;
+	private Ufo ufo;
 	
 	//Windows
 	private Sprite gameOverWindow;
@@ -170,6 +172,9 @@ public class GameScene extends BaseScene{
 	
 	//Balloon Basket
 	private Sprite basket;
+	
+	//Ufo halo
+	private Sprite ufoHalo;
 	
 	//Constants	
 	//16 pixels == 1 meter
@@ -275,6 +280,12 @@ public class GameScene extends BaseScene{
 	private static final int LEFT_BIRD_REGENERATE_DISTANCE_Y = 7500;
 	private static final int LEFT_BIRD_MAX_X = 650;
 	private static final int LEFT_BIRD_MIN_X = 450;
+	
+	private static final int UFO_MOVE_SENSOR_INITIAL_Y = 60000;
+	private static final int UFO_MAX_X = 670;
+	private static final int UFO_MIN_X = 50;
+	private static final int UFO_HALO_X = 70;
+	private static final int UFO_HALO_Y = -250;
 
 	@Override
 	public void createScene() {
@@ -292,10 +303,11 @@ public class GameScene extends BaseScene{
 		createClouds();
 		createPlayer();
 		createPlane();
-		createHelicopters();
+		/*createHelicopters();
 		createBalloons();
 		createMissiles();
-		createBirds();
+		createBirds();*/
+		createUfo();
 		createShield();
 		//createCloserClouds();
 		firstGame();
@@ -838,6 +850,53 @@ public class GameScene extends BaseScene{
 		bird.stopMoving();
 		moveSensor.setPosition(screenWidth / 2, bird.getY() + BIRD_MOVE_SENSOR);
 		soundSensor.setPosition(screenWidth / 2, bird.getY() + BIRD_SOUND_SENSOR);
+	}
+	
+	private void createUfo() {
+		float ufoInitialY = PLAYER_INITIAL_Y + screenHeight/2 + 200;
+		
+		final Rectangle moveDownSensor = new Rectangle(screenWidth/2, UFO_MOVE_SENSOR_INITIAL_Y, screenWidth, 0.1f, vbom);
+		final Rectangle stopDownSensor = new Rectangle(screenWidth/2, UFO_MOVE_SENSOR_INITIAL_Y - 2500, screenWidth, 0.1f, vbom);
+		final Rectangle moveUpSensor = new Rectangle(screenWidth/2, UFO_MOVE_SENSOR_INITIAL_Y - 7500, screenWidth, 0.1f, vbom);
+		final Rectangle stopUpSensor = new Rectangle(screenWidth/2, UFO_MOVE_SENSOR_INITIAL_Y - 10000, screenWidth, 0.1f, vbom);
+		
+		ufoHalo = new Sprite(UFO_HALO_X, UFO_HALO_Y, resourcesManager.game_ufo_halo_region, vbom);
+		ufoHalo.setVisible(false);
+		
+		int randX = generateRandomPosition(UFO_MAX_X, UFO_MIN_X);		
+		ufo = new Ufo(randX, ufoInitialY, vbom, camera, physicsWorld, resourcesManager.game_ufo_region) {
+			
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				super.onManagedUpdate(pSecondsElapsed);
+				
+				if (!ufo.isAttacking()) {
+					ufo.getBody().setTransform(ufo.getX() / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 
+							(player.getY() + screenHeight/2 + 200) / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, ufo.getBody().getAngle());
+					ufo.setPosition(ufo.getX(), player.getY() + screenHeight/2 + 200);
+				}
+				
+				if (player.collidesWith(moveDownSensor)) {
+					ufo.moveDown();
+					ufo.setAttacking(true);
+				}
+				if (player.collidesWith(stopDownSensor)) {
+					ufo.sameSpeedAsPlayer(player.getFallVelocity());
+					ufoHalo.setVisible(true);
+				}
+				if (player.collidesWith(stopUpSensor)) {
+					ufo.stopMoving();
+					ufo.setAttacking(false);
+				}				
+				if (player.collidesWith(moveUpSensor)) {
+					ufo.moveUp();
+					ufoHalo.setVisible(false);
+				}
+			};
+		};
+
+		ufo.attachChild(ufoHalo);
+		GameScene.this.attachChild(ufo);
+		ufo.setCullingEnabled(true);
 	}
 	
 	private void createShield() {

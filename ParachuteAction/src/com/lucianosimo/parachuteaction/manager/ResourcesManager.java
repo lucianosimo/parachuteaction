@@ -198,6 +198,8 @@ public class ResourcesManager {
 	public ITextureRegion game_balloon_region;
 	public ITextureRegion game_balloon_basket_region;
 	public ITextureRegion game_missile_region;
+	public ITextureRegion game_ufo_region;
+	public ITextureRegion game_ufo_halo_region;
 	
 	//Shield
 	public ITextureRegion game_shield_region;
@@ -374,21 +376,30 @@ public class ResourcesManager {
 		game_closer_cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_closer_cloud.png");
 		game_far_cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_far_cloud.png");
 		game_cloud_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_cloud.png");
-		game_upper_impulse_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_upper_impulse.png");
-		game_anti_gravity_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_antigravity.png");
-		game_slow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_slow.png");
 		game_plane_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_plane.png");
-		game_parachute_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_parachute.png");
-		game_shield_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_shield.png");
 		game_open_button_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_open_button.png");
-		game_red_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_red_arrow.png");
-		game_green_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_green_arrow.png");
-		game_balloon_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_balloon.png");
-		game_missile_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_missile.png");
-		game_balloon_basket_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_balloon_basket.png");
 		game_shield_bar_frame_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_shield_bar_frame.png");
 		game_shield_bar_logo_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_shield_bar_logo.png");
 		
+		//PowerUps
+		game_upper_impulse_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_upper_impulse.png");
+		game_anti_gravity_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_antigravity.png");
+		game_slow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_slow.png");
+		game_shield_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_shield.png");
+		
+		//Parachute
+		game_parachute_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_parachute.png");
+		
+		//Arrows
+		game_red_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_red_arrow.png");
+		game_green_arrow_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_green_arrow.png");
+		
+		//Enemies
+		game_balloon_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_balloon.png");
+		game_balloon_basket_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_balloon_basket.png");
+		game_missile_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_missile.png");
+		game_ufo_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_ufo.png");
+		game_ufo_halo_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(objectsTextureAtlas, activity, "game_ufo_halo.png");
 		
 		//Windows texture objects
 		game_level_complete_window_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(windowsTextureAtlas, activity, "game_level_complete_window.png");
