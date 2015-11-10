@@ -197,6 +197,11 @@ public class GameScene extends BaseScene{
 	
 	private static final int PLAYER_INITIAL_Y = 64000;
 	
+	private static final int LANDING_PLATFORM_X = 360;
+	private static final int LANDING_PLATFORM_Y = 45;
+	private static final int LANDING_BACKGROUND_X = 360;
+	private static final int LANDING_BACKGROUND_Y = 420;
+	
 	private static final int PLANE_X = 1000;
 	private static final int PLANE_Y = 64000;
 	private static final int PLANE_LAUNCH_SENSOR_X = -175;
@@ -229,14 +234,41 @@ public class GameScene extends BaseScene{
 	private static final int HELICOPTER_ARROW_DISTANCE_TO_BOTTOM = 75;
 	
 	private static final int HELICOPTER_INITIAL_Y = 60000;	
-	private static final int HELICOPTER_REGENERATE_DISTANCE_Y = 7500;
+	private static final int HELICOPTER_REGENERATE_DISTANCE_Y = 8000;
 	private static final int HELICOPTER_MAX_X = 650;
 	private static final int HELICOPTER_MIN_X = 450;
 	
-	private static final int LEFT_HELICOPTER_INITIAL_Y = 57500;	
-	private static final int LEFT_HELICOPTER_REGENERATE_DISTANCE_Y = 7500;
+	private static final int LEFT_HELICOPTER_INITIAL_Y = 58000;	
+	private static final int LEFT_HELICOPTER_REGENERATE_DISTANCE_Y = 8000;
 	private static final int LEFT_HELICOPTER_MAX_X = 270;
 	private static final int LEFT_HELICOPTER_MIN_X = 70;
+	
+	private static final int BIRD_SHOW_ARROW_DISTANCE = 1500;
+	private static final int BIRD_HIDE_ARROW_DISTANCE = 640;
+	private static final int BIRD_ARROW_DISTANCE_TO_BOTTOM = 75;
+	
+	private static final int BIRD_INITIAL_Y = 56000;	
+	private static final int BIRD_REGENERATE_DISTANCE_Y = 8000;
+	//private static final int BIRD_MAX_X = 650;
+	//private static final int BIRD_MIN_X = 450;
+	
+	private static final int BIRD_X = 700;
+	private static final int LEFT_BIRD_X = 20;
+	
+	//private static final int LEFT_BIRD_SHOW_ARROW_DISTANCE = 1500;
+	//private static final int LEFT_BIRD_HIDE_ARROW_DISTANCE = 640;
+	//private static final int LEFT_BIRD_ARROW_DISTANCE_TO_BOTTOM = 75;
+	
+	private static final int LEFT_BIRD_INITIAL_Y = 54000;	
+	private static final int LEFT_BIRD_REGENERATE_DISTANCE_Y = 8000;
+	//private static final int LEFT_BIRD_MAX_X = 650;
+	//private static final int LEFT_BIRD_MIN_X = 450;
+	
+	private static final int UFO_MOVE_SENSOR_INITIAL_Y = 60000;
+	private static final int UFO_MAX_X = 670;
+	private static final int UFO_MIN_X = 50;
+	private static final int UFO_HALO_X = 70;
+	private static final int UFO_HALO_Y = -250;
 	
 	private static final int BALLOON_SHOW_ARROW_DISTANCE = 1500;
 	private static final int BALLOON_HIDE_ARROW_DISTANCE = 640;
@@ -259,33 +291,6 @@ public class GameScene extends BaseScene{
 	private static final int MISSILE_REGENERATE_DISTANCE_Y = 7500;
 	private static final int MISSILE_MAX_X = 670;
 	private static final int MISSILE_MIN_X = 50;
-	
-	private static final int BIRD_SHOW_ARROW_DISTANCE = 1500;
-	private static final int BIRD_HIDE_ARROW_DISTANCE = 640;
-	private static final int BIRD_ARROW_DISTANCE_TO_BOTTOM = 75;
-	
-	private static final int BIRD_INITIAL_Y = 50000;	
-	private static final int BIRD_REGENERATE_DISTANCE_Y = 7500;
-	private static final int BIRD_MAX_X = 650;
-	private static final int BIRD_MIN_X = 450;
-	
-	private static final int BIRD_X = 700;
-	private static final int LEFT_BIRD_X = 20;
-	
-	private static final int LEFT_BIRD_SHOW_ARROW_DISTANCE = 1500;
-	private static final int LEFT_BIRD_HIDE_ARROW_DISTANCE = 640;
-	private static final int LEFT_BIRD_ARROW_DISTANCE_TO_BOTTOM = 75;
-	
-	private static final int LEFT_BIRD_INITIAL_Y = 45000;	
-	private static final int LEFT_BIRD_REGENERATE_DISTANCE_Y = 7500;
-	private static final int LEFT_BIRD_MAX_X = 650;
-	private static final int LEFT_BIRD_MIN_X = 450;
-	
-	private static final int UFO_MOVE_SENSOR_INITIAL_Y = 60000;
-	private static final int UFO_MAX_X = 670;
-	private static final int UFO_MIN_X = 50;
-	private static final int UFO_HALO_X = 70;
-	private static final int UFO_HALO_Y = -250;
 
 	@Override
 	public void createScene() {
@@ -296,6 +301,7 @@ public class GameScene extends BaseScene{
 		camera.setBoundsEnabled(true);
 		resourcesManager.wind.play();
 		createBackground();
+		createFloor();
 		createWindows();
 		createHud();
 		createPhysics();
@@ -303,11 +309,11 @@ public class GameScene extends BaseScene{
 		createClouds();
 		createPlayer();
 		createPlane();
-		/*createHelicopters();
+		createHelicopters();
 		createBalloons();
 		createMissiles();
-		createBirds();*/
-		createUfo();
+		createBirds();
+		//createUfo();
 		createShield();
 		//createCloserClouds();
 		firstGame();
@@ -523,7 +529,7 @@ public class GameScene extends BaseScene{
 	}
 	
 	private void calculateDistanceToFloor() {
-		distanceToFloor = (int) player.getY() / PIXEL_METER_RATE;
+		distanceToFloor = ((int) player.getY() / PIXEL_METER_RATE) - 8;
 		altimeterText.setText("Meters to go: " + distanceToFloor);
 	}
 	
@@ -629,6 +635,15 @@ public class GameScene extends BaseScene{
 		if (player.collidesWith(moveSensor)) {
 			helicopter.startMoving();
 			moveSensor.setPosition(1000, 1000);
+		}
+		
+		if (helicopter.getY() <= 7500) {
+			helicopter.stopMoving();
+			helicopter.getBody().setTransform(100000 / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 
+					helicopter.getY() / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, helicopter.getBody().getAngle());
+			helicopter.setPosition(100000, helicopter.getY());
+			helicopter.stopMoving();
+			helicopterRedArrow.setVisible(false);
 		}
 		
 		if (player.collidesWith(soundSensor)) {
@@ -830,6 +845,15 @@ public class GameScene extends BaseScene{
 			soundSensor.setPosition(1000, 1000);
 		}
 		
+		if (bird.getY() <= 7500) {
+			bird.stopMoving();
+			bird.getBody().setTransform(100000 / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 
+					bird.getY() / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, bird.getBody().getAngle());
+			bird.setPosition(100000, bird.getY());
+			bird.stopMoving();
+			birdRedArrow.setVisible(false);
+		}
+		
 		if ((bird.getY() - player.getY()) > screenHeight/2 ) {
 			regenerateBird(bird, moveSensor, soundSensor);
 		}
@@ -983,6 +1007,36 @@ public class GameScene extends BaseScene{
 		ParallaxBackground background = new ParallaxBackground(0, 0, 0);
 		background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(resourcesManager.camera.getWidth() / 2, resourcesManager.camera.getHeight() / 2, resourcesManager.game_background_region, vbom)));
 		this.setBackground(background);
+	}
+	
+	private void createFloor() {
+		Sprite game_landing_background = new Sprite(LANDING_BACKGROUND_X, LANDING_BACKGROUND_Y, resourcesManager.game_back_location_region, vbom);
+		Sprite game_landing_platform = new Sprite(LANDING_PLATFORM_X, LANDING_PLATFORM_Y, resourcesManager.game_landing_platfom_region, vbom) {
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				if (player.collidesWith(this)) {
+					engine.runOnUpdateThread(new Runnable() {
+						@Override
+						public void run() {
+							if (distanceToFloorAtOpenParachute >= 1000) {
+								loadCounters();
+								loadedCountersBefore = true;
+								saveScoreData();
+								loadCounters();
+								availablePause = false;
+								displayLevelCompleted();
+							}
+							
+							//Cambiar esto sino el personaje traspasa la base
+							if (distanceToFloorAtOpenParachute < 1000 || !openParachute){
+								player.killPlayer();
+							}
+						}
+					});
+				}
+			};
+		};
+		GameScene.this.attachChild(game_landing_platform);
+		GameScene.this.attachChild(game_landing_background);
 	}
 	
 	private void createWindows() {
@@ -1388,68 +1442,6 @@ public class GameScene extends BaseScene{
 							}
 						};
 					};
-				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_BIRD)) {
-					final Rectangle moveSensor = new Rectangle(360, y + BIRD_MOVE_SENSOR, 720, 0.1f, vbom);
-					final Rectangle soundSensor = new Rectangle(360, y + BIRD_SOUND_SENSOR, 720, 0.1f, vbom);
-					bird = new Bird(x, y, vbom, camera, physicsWorld, resourcesManager.bird_region.deepCopy()) {
-						protected void onManagedUpdate(float pSecondsElapsed) {
-							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 640) {
-								birdRedArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
-								birdRedArrow.setPosition(1500, 0);
-							}
-							if (player.collidesWith(moveSensor)) {
-								this.startMoving();
-								moveSensor.setPosition(1000, 1000);
-							}
-							if (player.collidesWith(soundSensor)) {
-								resourcesManager.bird.play();
-								soundSensor.setPosition(1000, 1000);
-							}							
-							if (player.collidesWith(this)) {
-								if (shield) {
-									playerSpeed = player.getFallVelocity();
-									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, playerSpeed));
-									this.setVisible(false);
-									this.setIgnoreUpdate(true);
-									physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
-								}								
-							}
-						};
-					};
-					levelObject = bird;
-				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LEFT_BIRD)) {
-					final Rectangle moveSensor = new Rectangle(360, y + BIRD_MOVE_SENSOR, 720, 0.1f, vbom);
-					final Rectangle soundSensor = new Rectangle(360, y + BIRD_SOUND_SENSOR, 720, 0.1f, vbom);
-					leftBird = new LeftBird(x, y, vbom, camera, physicsWorld, resourcesManager.left_bird_region.deepCopy()) {
-						protected void onManagedUpdate(float pSecondsElapsed) {
-							super.onManagedUpdate(pSecondsElapsed);
-							if ((player.getY() - this.getY()) < 1500 && (player.getY() - this.getY()) > 640) {
-								birdRedArrow.setPosition(this.getX(), 75);
-							} else if ((player.getY() - this.getY()) < 640 && (player.getY() - this.getY()) > 0) {
-								birdRedArrow.setPosition(1500, 0);
-							}
-							if (player.collidesWith(moveSensor)) {
-								this.startMoving();
-								moveSensor.setPosition(1000, 1000);
-							}
-							if (player.collidesWith(soundSensor)) {
-								resourcesManager.bird.play();
-								soundSensor.setPosition(1000, 1000);
-							}
-							if (player.collidesWith(this)) {
-								if (shield) {
-									playerSpeed = player.getFallVelocity();
-									player.getPlayerBody().setLinearVelocity(new Vector2(player.getPlayerBody().getLinearVelocity().x, playerSpeed));
-									this.setVisible(false);
-									this.setIgnoreUpdate(true);
-									physicsWorld.unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this));
-								}								
-							}
-						};
-					};
-					levelObject = leftBird;
 				} else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_LANDING_PLATFORM)) {
 					levelObject = new Sprite(x, y, resourcesManager.game_landing_platfom_region, vbom) {
 						protected void onManagedUpdate(float pSecondsElapsed) {
